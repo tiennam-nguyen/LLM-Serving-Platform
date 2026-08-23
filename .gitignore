@@ -1,0 +1,70 @@
+# Byte-compiled / optimized / C-extensions
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Caches and tooling
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+*.coverage.*
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE / Editor configuration & local state
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Environment variables & secrets (CRITICAL: never commit actual secrets)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+*.crt
+
+# Build & packaging artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+
+# Frontend / Web application (future milestones)
+apps/web/node_modules/
+apps/web/.next/
+apps/web/out/
+apps/web/dist/
+apps/web/build/
+apps/web/.turbo/
+
+# Model weights, caches, and checkpoints (CRITICAL: do not commit weights to Git)
+models/
+hf_cache/
+.cache/
+*.bin
+*.safetensors
+*.pt
+*.pth
+*.onnx
+*.gguf
+
+# Experiment raw data and logs (exclude large raw runs while keeping structure and manifests)
+experiments/raw/*.jsonl
+experiments/raw/*.parquet
+experiments/raw/*.csv
+*.log
+logs/
