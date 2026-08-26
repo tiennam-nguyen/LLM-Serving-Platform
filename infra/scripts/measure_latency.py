@@ -1,6 +1,9 @@
+import os
 import time
 import requests
 import json
+
+BASE_URL = os.getenv("VLLM_BASE_URL", "http://127.0.1.1:8000")
 
 def stream_and_measure():
     payload = {
@@ -15,7 +18,7 @@ def stream_and_measure():
     token_count = 0
 
     # Kích hoạt kết nối SSE
-    response = requests.post("http://localhost:8000/v1/chat/completions", json=payload, stream=True)
+    response = requests.post(f"{BASE_URL}/v1/chat/completions", json=payload, stream=True)
     
     for chunk in response.iter_lines():
         if chunk:

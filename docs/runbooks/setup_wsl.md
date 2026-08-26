@@ -52,6 +52,15 @@
 
 ---
 
+### ❌ Lỗi 5: `Connection refused` khi gọi `127.0.0.1:8000` hoặc `localhost:8000` trong WSL2
+- **Nguyên nhân:** Cấu hình `.wslconfig` đang bật `networkingMode=mirrored`. Ở chế độ này, WSL2 định tuyến `127.0.0.1` qua adapter ảo `loopback0` về phía Windows host (bảng định tuyến table 127). Khi server vLLM lắng nghe bên trong WSL2, truy cập `127.0.0.1` sẽ bị từ chối kết nối (`Connection refused`).
+- **Khắc phục:**
+  1. Sử dụng IP `127.0.1.1` (IP gắn với hostname WSL trong `/etc/hosts`) hoặc IP máy `192.168.x.x` thay vì `127.0.0.1`.
+  2. Truyền `--host 0.0.0.0` khi khởi chạy vLLM server.
+  3. Cấu hình biến môi trường `VLLM_BASE_URL="http://127.0.1.1:8000"` cho các test script.
+
+---
+
 ## 3. Cấu Hình Chuẩn Cho Dự Án (`pyproject.toml`)
 
 Để cài đặt lại từ đầu trên một máy mới hoặc thư mục mới một cách mượt mà nhất, tệp `pyproject.toml` nên được cấu hình sẵn như sau:
@@ -94,3 +103,5 @@ uv run python main.py
 1. **Python Version:** Với các dự án Deep Learning / Large Language Model (vLLM, PyTorch), nên ưu tiên dùng **Python 3.12** thay vì bản Python mới nhất (3.13).
 2. **Kích thước & Trọng số:** Trọng số mô hình được lưu tự động tại `~/.cache/huggingface/hub/`. Khi xóa virtual environment `.venv` hoặc làm sạch cache pip/uv, trọng số mô hình đã tải **không bị mất**, lần chạy sau không cần tải lại từ internet.
 3. **GPU Turing (RTX 20xx / GTX 16xx):** Luôn ghi nhớ truyền `dtype="float16"` cho mô hình.
+4. **WSL2 Mirrored Networking:** Nếu dùng `networkingMode=mirrored`, gọi API nội bộ WSL2 bằng `127.0.1.1:8000` hoặc IP LAN thay cho `127.0.0.1`.
+
