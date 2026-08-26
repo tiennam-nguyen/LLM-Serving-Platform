@@ -7,8 +7,8 @@ name = "llm-serving-platform"
 version = "0.1.0.dev0"
 description = "Adaptive LLM Serving Platform for Observable Multi-GPU Inference"
 readme = "README.md"
-# Python >=3.10 is required for modern typing features and alignment with modern LLM serving runtimes (e.g. vLLM)
-requires-python = ">=3.10"
+# To suit vLLM (>=0.13.0)
+requires-python = ">=3.12,<3.13"
 license = { text = "MIT" }
 authors = [
     { name = "Tien Nam Nguyen", email = "nguyentiennam011106@gmail.com" }
@@ -21,7 +21,10 @@ classifiers = [
     "Operating System :: OS Independent",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
-dependencies = []
+dependencies = [
+    "vllm",
+    "transformers<4.49.0",
+]
 
 [project.optional-dependencies]
 dev = [
@@ -53,3 +56,7 @@ minversion = "8.0"
 testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = "-ra -q"
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
