@@ -1,9 +1,21 @@
 """Workers module boundary.
 
-Future responsibility:
-    Defines runtime adapter boundaries for backend LLM serving engines
-    (vLLM, mock workers, and future runtimes).
-
-    Encapsulates engine-specific communication protocols so that upstream routing
-    and gateway logic remain engine-agnostic.
+Defines runtime adapter boundaries for backend LLM serving engines
+(vLLM, mock workers, and future runtimes).
 """
+
+from llm_serving_platform.workers.base import (
+    InferenceWorker,
+    WorkerException,
+    WorkerTimeoutError,
+    WorkerUnavailableError,
+)
+from llm_serving_platform.workers.vllm_adapter import VLLMWorkerAdapter
+
+__all__ = [
+    "InferenceWorker",
+    "VLLMWorkerAdapter",
+    "WorkerException",
+    "WorkerTimeoutError",
+    "WorkerUnavailableError",
+]
