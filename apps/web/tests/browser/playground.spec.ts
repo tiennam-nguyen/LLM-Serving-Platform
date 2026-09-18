@@ -1,0 +1,54 @@
+import { expect, test } from "@playwright/test";
+
+test("progressive SSE, multi-turn history, inspector selection, abort and errors", async ({ page, request }) => {
+  await page.goto("/");
+  await expect(page.getByText("ONLINE", { exact: true })).toBeVisible();
+  const prompt = page.getByRole("textbox");
+  await expect(page.getByRole("button", { name: /SEND/ })).toBeDisabled();
+  await prompt.fill("   "); await prompt.press("Enter");
+  await expect(page.getByRole("article")).toHaveCount(0);
+  await prompt.fill("hello"); await prompt.press("Enter");
+  const first = page.getByRole("article", { name: "Response 1", exact: true });
+  await expect(first).toContainText("First content.");
+  await expect(page.getByRole("button", { name: /ABORT/ })).toBeVisible();
+  await expect(first).not.toContainText("History:");
+  console.log("RELAY: first content visible while upstream remains open");
+  await expect(first).toContainText("History: 1.");
+  await expect(page.getByRole("button", { name: /SEND/ })).toBeVisible();
+  await expect(page.getByText("fixture-1", { exact: true })).toBeVisible();
+  await expect(first.locator("pre")).toContainText("print('hello')");
+  await prompt.fill("follow up"); await prompt.press("Enter");
+  await expect(page.getByRole("article", { name: "Response 2", exact: true })).toContainText("History: 3.");
+  await page.getByRole("button", { name: "Inspect request 1", exact: true }).click();
+  await expect(page.getByText("fixture-1", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Actions for request 2" }).click();
+  await page.getByRole("button", { name: "Inspect request", exact: true }).click();
+  await expect(page.getByText("fixture-3", { exact: true })).toBeVisible();
+  const before = await (await request.get("http://127.0.0.1:8081/stats")).json();
+  await prompt.fill("abort"); await prompt.press("Enter");
+  const third = page.getByRole("article", { name: "Response 3", exact: true });
+  await expect(third).toContainText("First content.");
+  await page.getByRole("button", { name: /ABORT/ }).click();
+  await expect(third).toContainText("ABORTED / PARTIAL RESPONSE RETAINED");
+  await expect(third).toContainText("First content.");
+  await expect.poll(async () => (await (await request.get("http://127.0.0.1:8081/stats")).json()).cancelled).toBe(before.cancelled + 1);
+  console.log("RELAY: browser abort closed upstream; partial response retained");
+  await prompt.fill("error"); await prompt.press("Enter");
+  await expect(page.getByRole("article", { name: "Response 4", exact: true }).getByRole("alert")).toContainText("Controlled worker failure");
+  await expect(page.getByRole("button", { name: "Retry", exact: true })).toBeEnabled();
+  await page.getByRole("button", { name: "Retry", exact: true }).click();
+  await expect(page.getByRole("article", { name: "Response 5", exact: true })).toContainText("Controlled worker failure");
+  await page.screenshot({ path: "test-results/desktop.png", fullPage: true });
+});
+
+test("phone layout keeps composer and request inspection reachable", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.getByRole("textbox").fill("hello");
+  await page.getByRole("button", { name: /SEND/ }).click();
+  await expect(page.getByRole("article", { name: "Response 1" })).toContainText("History: 1.");
+  await page.getByRole("button", { name: "Inspect request 1", exact: true }).click();
+  await expect(page.getByText("fixture-1", { exact: true })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await page.screenshot({ path: "test-results/phone.png", fullPage: true });
+});

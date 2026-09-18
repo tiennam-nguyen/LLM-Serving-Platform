@@ -1,0 +1,40 @@
+:root{
+  /* chassis / metal */
+  --bench:        #8f97a2;
+  --chassis:      #c3c9d1;
+  --chassis-hi:   #d8dde3;
+  --panel:        #e3e8ee;
+  --panel-hi:     #f0f4f8;
+  --panel-lo:     #d5dbe3;
+  --bubble:       #dde3ec;
+  --recess-lt:    #eef1f5;
+  --recess-dk:    #14171c;
+  --recess-dk-2:  #1b2027;
+  --edge-hi:      #ffffff;
+  --edge-lo:      #7b8695;
+  --line:         #b3bcc8;
+  --line-dk:      #98a2af;
+
+  /* ink */
+  --ink:          #0f172a;
+  --ink-2:        #5b6675;
+  --ink-3:        #8b96a5;
+
+  /* signals */
+  --orange:       #ea580c;
+  --amber:        #f59e0b;
+  --amber-hi:     #fbbf24;
+  --green:        #059669;
+  --green-hi:     #10b981;
+  --red:          #dc2626;
+  --red-hi:       #ef4444;
+
+  --cut-lg: 16px;
+  --cut-md: 10px;
+  --cut-sm: 7px;
+
+  --mono: ui-monospace, "JetBrains Mono", "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* bead-blasted grain */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+}

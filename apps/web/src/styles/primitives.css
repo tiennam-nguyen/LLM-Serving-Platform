@@ -1,0 +1,104 @@
+/* ---------- chamfer utility (the "cut metal slice") ---------- */
+.chamfer{
+  clip-path: polygon(
+    var(--cut,10px) 0, 100% 0,
+    100% calc(100% - var(--cut,10px)),
+    calc(100% - var(--cut,10px)) 100%,
+    0 100%, 0 var(--cut,10px));
+}
+
+/* ---------- raised machined plate: 1px edge layer + face ---------- */
+.plate{
+  --cut: var(--cut-md);
+  position:relative; padding:1px;
+  background: linear-gradient(150deg,
+    #ffffff 0%, #cdd4dc 22%, #8b96a4 52%, #6d7887 78%, #a9b2be 100%);
+}
+.plate > .face{
+  --cut: inherit;
+  position:relative; width:100%; height:100%;
+  clip-path: polygon(
+    var(--cut,10px) 0, 100% 0,
+    100% calc(100% - var(--cut,10px)),
+    calc(100% - var(--cut,10px)) 100%,
+    0 100%, 0 var(--cut,10px));
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, rgba(15,23,42,.022) 1px 2px),
+    linear-gradient(180deg, var(--panel-hi) 0%, var(--panel) 42%, var(--panel-lo) 100%);
+}
+/* specular glint running along the two chamfer cuts */
+.plate > .face::before{
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:5;
+  background:
+    linear-gradient(135deg,
+      transparent 0 calc(var(--cut,10px)*.7 - 1.2px),
+      rgba(255,255,255,.95) calc(var(--cut,10px)*.7 - 1.2px) calc(var(--cut,10px)*.7 + .4px),
+      transparent calc(var(--cut,10px)*.7 + .4px))
+      top left / calc(var(--cut,10px)*2.4) calc(var(--cut,10px)*2.4) no-repeat,
+    linear-gradient(315deg,
+      transparent 0 calc(var(--cut,10px)*.7 - 1.2px),
+      rgba(15,23,42,.30) calc(var(--cut,10px)*.7 - 1.2px) calc(var(--cut,10px)*.7 + .4px),
+      transparent calc(var(--cut,10px)*.7 + .4px))
+      bottom right / calc(var(--cut,10px)*2.4) calc(var(--cut,10px)*2.4) no-repeat;
+}
+
+/* ---------- recessed milled pocket ---------- */
+.recess{
+  background:
+    repeating-linear-gradient(0deg, rgba(15,23,42,.015) 0 1px, rgba(255,255,255,.05) 1px 2px),
+    linear-gradient(180deg, #e9edf2 0%, var(--recess-lt) 100%);
+  border:1px solid var(--line-dk);
+  box-shadow:
+    inset 0 2px 5px rgba(15,23,42,.16),
+    inset 0 -1px 0 rgba(255,255,255,.85),
+    0 1px 0 rgba(255,255,255,.75);
+}
+.recess-dark{
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.022) 0 1px, rgba(0,0,0,.05) 1px 2px),
+    linear-gradient(180deg, var(--recess-dk) 0%, var(--recess-dk-2) 100%);
+  border:1px solid #0a0d11;
+  box-shadow:
+    inset 0 3px 9px rgba(0,0,0,.65),
+    inset 0 -1px 0 rgba(255,255,255,.07),
+    0 1px 0 rgba(255,255,255,.7);
+}
+
+/* ---------- engraved / etched text ---------- */
+.etch{ color:var(--ink-2); text-shadow: 0 1px 0 rgba(255,255,255,.7); }
+.etch-dk{ color:#93a0af; text-shadow: 0 -1px 0 rgba(0,0,0,.8); }
+
+/* ---------- rivet screws ---------- */
+.screw{
+  position:absolute; width:9px; height:9px; border-radius:50%; z-index:6;
+  background: radial-gradient(circle at 34% 30%, #fdfeff 0%, #d3dae2 34%, #97a1ae 68%, #6c7684 100%);
+  box-shadow:
+    inset 0 1px 2px rgba(15,23,42,.55),
+    inset 0 -1px 1px rgba(255,255,255,.65),
+    0 1px 0 rgba(255,255,255,.75);
+}
+.screw::after{
+  content:''; position:absolute; inset:0; margin:auto;
+  width:6px; height:1px; background:#57616e;
+  box-shadow: 0 1px 0 rgba(255,255,255,.55);
+  transform: rotate(38deg);
+}
+.screw.tl{ top:6px; left:7px; } .screw.tr{ top:6px; right:7px; }
+.screw.bl{ bottom:6px; left:7px; } .screw.br{ bottom:6px; right:7px; }
+.screw.tr::after{ transform: rotate(-24deg); }
+.screw.bl::after{ transform: rotate(72deg); }
+
+/* ---------- LEDs (razor sharp, no neon blur) ---------- */
+.led{
+  display:inline-block; width:8px; height:8px; border-radius:50%;
+  position:relative; flex:none;
+  background: radial-gradient(circle at 34% 30%, rgba(255,255,255,.95) 0 12%, var(--lc,#059669) 46%, color-mix(in srgb, var(--lc,#059669) 62%, #000) 100%);
+  box-shadow:
+    0 0 0 1px rgba(15,23,42,.45),
+    inset 0 -1px 1px rgba(0,0,0,.45),
+    0 0 4px 0 color-mix(in srgb, var(--lc,#059669) 55%, transparent);
+}
+.led-green{ --lc: var(--green-hi); }
+.led-amber{ --lc: var(--amber-hi); }
+.led-red{ --lc: var(--red-hi); }
+.led-off{ --lc: #6b7480; box-shadow: 0 0 0 1px rgba(15,23,42,.45), inset 0 -1px 1px rgba(0,0,0,.4); }
