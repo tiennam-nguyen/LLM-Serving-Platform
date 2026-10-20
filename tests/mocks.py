@@ -4,7 +4,7 @@ import asyncio
 import json
 from typing import Any, AsyncIterator, Dict, List, Optional
 
-from llm_serving_platform.workers.base import (
+from src.llm_serving_platform.workers.base import (
     InferenceWorker,
     WorkerException,
 )
