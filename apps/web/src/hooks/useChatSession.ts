@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { checkHealth, streamChat } from "../lib/gateway/client";
+import { checkHealth, fetchRequestTrace, streamChat } from "../lib/gateway/client";
 import type { ChatTurn, Health } from "../lib/gateway/types";
 import { cancel, isRunning, transition, type RequestRecord } from "../lib/telemetry/request-record";
 
@@ -46,14 +46,13 @@ export function useChatSession(model: string) {
     setActive(true);
     const id = crypto.randomUUID();
     const request: RequestRecord = {
-      localId: id, sequence: ++sequence.current, requestId: null, model: targetModel,
+      localId: id, sequence: ++sequence.current, requestId: null, workerId: null, model: targetModel,
       status: "submitting", submittedAt: performance.now(), content: "", history, warnings: [],
     };
     setMessages(current => {
       const next: FeedMessage[] = [...current];
       if (user !== undefined) next.push({ id: crypto.randomUUID(), role: "user", content: user });
       next.push({ id, role: "assistant", request });
-      // Bound feed and records together so every visible response stays inspectable.
       while (next.filter(m => m.role === "assistant").length > SESSION_LIMIT) {
         const oldest = next.findIndex(m => m.role === "assistant");
         next.splice(0, oldest + 1);
@@ -61,11 +60,18 @@ export function useChatSession(model: string) {
       return next;
     });
     select(id);
+    let capturedRequestId: string | null = null;
     try {
       await streamChat({ model: targetModel, messages: history, signal: abort.signal,
-        onHeaders: (requestId, accepted) => {
+        onHeaders: (requestId, accepted, workerId) => {
+          capturedRequestId = requestId;
           const now = performance.now();
-          update(id, r => ({ ...r, requestId, acceptedAt: accepted ? now : undefined }));
+          update(id, r => ({
+            ...r,
+            requestId,
+            workerId: workerId ?? r.workerId ?? null,
+            acceptedAt: accepted ? now : undefined,
+          }));
         },
         onEvent: event => {
           const now = performance.now();
@@ -73,6 +79,16 @@ export function useChatSession(model: string) {
           if (event.type === "error") void refreshHealth();
         },
       });
+      if (capturedRequestId) {
+        const serverTrace = await fetchRequestTrace(capturedRequestId);
+        if (serverTrace) {
+          update(id, r => ({
+            ...r,
+            workerId: r.workerId ?? serverTrace.worker_id,
+            serverTrace,
+          }));
+        }
+      }
     } catch (error) {
       const now = performance.now();
       update(id, r => abort.signal.aborted ? cancel(r, now) : transition(r, {
@@ -87,11 +103,9 @@ export function useChatSession(model: string) {
   function send(text: string) {
     if (!text.trim() || active || !model) return;
     const last = [...messages].reverse().find(m => m.role === "assistant");
-    // Continue the latest branch. Failed/aborted text remains visible but is not fed back.
     const history: ChatTurn[] = last?.role === "assistant"
       ? [...last.request.history, ...(last.request.status === "completed"
         ? [{ role: "assistant" as const, content: last.request.content }] : [])] : [];
-    // Bound context along with the session ledger, always beginning at a user turn.
     const recent = history.slice(-SESSION_LIMIT * 2);
     if (recent[0]?.role === "assistant") recent.shift();
     void generate([...recent, { role: "user", content: text.trim() }], model, text.trim());

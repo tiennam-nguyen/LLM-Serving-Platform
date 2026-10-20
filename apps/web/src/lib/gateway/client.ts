@@ -1,7 +1,8 @@
 import { SSEParser } from "./sse";
-import type { ChatTurn, Health, StreamEvent } from "./types";
+import type { ChatTurn, Health, ServerTrace, StreamEvent } from "./types";
 
-const base = (process.env.NEXT_PUBLIC_GATEWAY_URL || "/api/gateway").replace(/\/$/, "");
+const base = (process.env.NEXT_PUBLIC_GATEWAY_URL || "http://127.0.0.1:8080").replace(/\/$/, "");
+
 export async function checkHealth(signal: AbortSignal): Promise<Health> {
   const response = await fetch(`${base}/health`, { signal, cache: "no-store" });
   if (response.status === 503) return "DEGRADED";
@@ -9,9 +10,23 @@ export async function checkHealth(signal: AbortSignal): Promise<Health> {
   const value = await response.json();
   return value.status === "healthy" && value.worker === "up" ? "ONLINE" : "DEGRADED";
 }
+
+export async function fetchRequestTrace(requestId: string, signal?: AbortSignal): Promise<ServerTrace | null> {
+  try {
+    const response = await fetch(`${base}/v1/traces/${encodeURIComponent(requestId)}`, {
+      signal,
+      cache: "no-store",
+    });
+    if (!response.ok) return null;
+    return (await response.json()) as ServerTrace;
+  } catch {
+    return null;
+  }
+}
+
 export async function streamChat(options: {
   model: string; messages: ChatTurn[]; signal: AbortSignal;
-  onHeaders: (id: string | null, accepted: boolean) => void;
+  onHeaders: (id: string | null, accepted: boolean, workerId?: string | null) => void;
   onEvent: (event: StreamEvent) => void;
 }): Promise<void> {
   const response = await fetch(`${base}/v1/chat/completions`, {
@@ -19,7 +34,13 @@ export async function streamChat(options: {
     headers: { "Content-Type": "application/json", Accept: "text/event-stream" },
     body: JSON.stringify({ model: options.model, messages: options.messages, stream: true }),
   });
-  options.onHeaders(response.headers.get("X-Request-ID"), response.ok);
+  const requestId = response.headers.get("X-Request-ID");
+  const workerId = response.headers.get("X-Worker-ID");
+  if (workerId !== null) {
+    options.onHeaders(requestId, response.ok, workerId);
+  } else {
+    options.onHeaders(requestId, response.ok);
+  }
   if (!response.ok) {
     let message = `Gateway returned HTTP ${response.status}`;
     try {

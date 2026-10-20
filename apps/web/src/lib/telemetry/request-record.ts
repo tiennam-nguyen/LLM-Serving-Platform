@@ -1,10 +1,10 @@
-import type { ChatTurn, StreamEvent, Usage } from "../gateway/types";
+import type { ChatTurn, ServerTrace, StreamEvent, Usage } from "../gateway/types";
 
 export type RequestStatus = "submitting" | "streaming" | "completed" | "failed" | "cancelled";
 export type RequestRecord = {
-  localId: string; sequence: number; requestId: string | null; model: string;
-  status: RequestStatus; submittedAt: number; acceptedAt?: number;
-  firstContentAt?: number; completedAt?: number; usage?: Usage;
+  localId: string; sequence: number; requestId: string | null; workerId?: string | null;
+  model: string; status: RequestStatus; submittedAt: number; acceptedAt?: number;
+  firstContentAt?: number; completedAt?: number; usage?: Usage; serverTrace?: ServerTrace;
   error?: { code?: number; message: string }; warnings: string[];
   content: string; history: ChatTurn[];
 };

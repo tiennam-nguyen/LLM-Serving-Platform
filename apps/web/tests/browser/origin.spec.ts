@@ -1,15 +1,17 @@
 import { expect, test } from "@playwright/test";
 
-test("direct browser request is blocked by missing CORS headers", async ({ page }) => {
-  const errors: string[] = [];
-  page.on("console", msg => { if (msg.type() === "error") errors.push(msg.text()); });
+test("direct browser request succeeds with Backend CORS and exposes X-Worker-ID", async ({ page }) => {
   await page.goto("/");
   const url = process.env.CORS_PROBE_URL || "http://127.0.0.1:8081/health";
-  const result = await page.evaluate(async (url) => {
-    try { await fetch(url); return "unexpected success"; }
-    catch (error) { return String(error); }
+  const result = await page.evaluate(async (targetUrl) => {
+    const resp = await fetch(targetUrl);
+    return {
+      status: resp.status,
+      workerId: resp.headers.get("X-Worker-ID"),
+      body: await resp.json(),
+    };
   }, url);
-  expect(result).toContain("Failed to fetch");
-  console.log("DIRECT BROWSER RESULT:", url, result, errors.filter(e => e.includes("CORS")));
-  expect(errors.some(e => e.includes("CORS"))).toBe(true);
+  expect(result.status).toBe(200);
+  expect(result.body.status).toBe("healthy");
+  expect(result.workerId).toBeTruthy();
 });

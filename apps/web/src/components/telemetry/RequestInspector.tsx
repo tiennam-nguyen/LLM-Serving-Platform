@@ -15,6 +15,8 @@ function RequestLifecycle({ request: r }: { request: RequestRecord }) {
 export function RequestInspector({ request, requests, select }: {
   request?: RequestRecord; requests: RequestRecord[]; select: (id: string) => void;
 }) {
+  const workerId = request?.workerId ?? request?.serverTrace?.worker_id ?? "NOT REPORTED";
+  const st = request?.serverTrace;
   return <aside aria-label="Request inspector"><Plate className="inspector">
     <header className="panel-header"><h2>REQUEST INSTRUMENTATION <span>{"// SPEC TRACE"}</span></h2>
       <span className={`status-pill ${request?.status ?? "idle"}`}>{request?.status === "cancelled" ? "ABORTED" : request?.status.toUpperCase() ?? "IDLE"}</span></header>
@@ -29,11 +31,15 @@ export function RequestInspector({ request, requests, select }: {
       </section>
       <dl className="trace recess-dark">
         <div><dt>REQUEST ID</dt><dd className="signal">{request?.requestId ?? "NOT REPORTED"}</dd></div>
+        <div><dt>WORKER ID</dt><dd className="signal">{workerId}</dd></div>
         <div><dt>MODEL</dt><dd>{request?.model ?? "—"}</dd></div>
         <div className="usage-grid">{([
           ["PROMPT TOKENS", request?.usage?.promptTokens], ["COMPLETION TOKENS", request?.usage?.completionTokens], ["TOTAL TOKENS", request?.usage?.totalTokens],
         ] as const).map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value ?? "—"}</dd></div>)}</div>
-        <div className="trace-note">Usage: {request?.usage ? "REPORTED FIELDS ONLY" : "NOT REPORTED"}<br />Hardware / server phases: NOT REPORTED</div>
+        <div className="trace-note">
+          Usage: {request?.usage ? "REPORTED FIELDS ONLY" : "NOT REPORTED"}<br />
+          {st ? `Server TTFT: ${st.metrics_ms.ttft_ms ?? "—"} ms · E2E: ${st.metrics_ms.e2e_ms ?? "—"} ms · Routing: ${st.metrics_ms.routing_ms ?? "—"} ms` : "Hardware / server phases: NOT REPORTED"}
+        </div>
       </dl>
       <section className="instrument-section"><h3>SESSION REQUESTS <span>/ LAST 50</span></h3>
         <table className="ledger"><caption className="sr-only">Requests initiated in this browser session</caption>
@@ -46,7 +52,7 @@ export function RequestInspector({ request, requests, select }: {
         </table>
         {!requests.length && <p className="unavailable">NO REQUESTS IN THIS SESSION</p>}
       </section>
-      <p className="deck-foot etch">LOCAL SESSION ONLY · NO SERVER PHASE ESTIMATES</p>
+      <p className="deck-foot etch">LOCAL SESSION ONLY · SERVER TRACE WHEN AVAILABLE</p>
     </div>
   </Plate></aside>;
 }
