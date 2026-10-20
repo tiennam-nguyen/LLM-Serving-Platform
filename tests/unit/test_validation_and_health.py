@@ -6,8 +6,8 @@ import httpx
 import pytest
 from httpx import ASGITransport, AsyncClient
 
-from llm_serving_platform.gateway.main import create_app, get_worker
-from llm_serving_platform.workers.vllm_adapter import VLLMWorkerAdapter
+from src.llm_serving_platform.gateway.main import create_app, get_worker
+from src.llm_serving_platform.workers.vllm_adapter import VLLMWorkerAdapter
 from tests.mocks import MockInferenceWorker
 
 
