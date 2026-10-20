@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -e
-export VLLM_BASE_URL="${VLLM_BASE_URL:-http://127.0.1.1:8000}"
+if [ -f .env ]; then
+    set -a
+    source .env
+    set +a
+fi
+
+export VLLM_BASE_URL="${VLLM_BASE_URL:-http://127.0.0.1:8000}"
 export GATEWAY_PORT="${GATEWAY_PORT:-8080}"
 export GATEWAY_HOST="${GATEWAY_HOST:-0.0.0.0}"
 
