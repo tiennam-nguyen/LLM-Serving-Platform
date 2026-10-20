@@ -42,7 +42,7 @@ async def safe_event_generator(
     client_ip: str,
     trace: Optional[RequestTrace] = None,
     trace_store: Optional[InMemoryTraceStore] = None,
-) -> AsyncIterator[str]:
+) -> AsyncIterator[str,None]:
     """Stream SSE events from worker, recording Week 3 trace milestones and handling errors."""
     model_name = payload.get("model", "unknown")
     worker_id = getattr(worker, "worker_id", "worker-vllm-0")

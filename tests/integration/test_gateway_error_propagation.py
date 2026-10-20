@@ -7,12 +7,12 @@ import httpx
 import pytest
 from httpx import ASGITransport, AsyncClient
 
-from llm_serving_platform.gateway.main import create_app, get_worker
-from llm_serving_platform.workers.base import (
+from src.llm_serving_platform.gateway.main import create_app, get_worker
+from src.llm_serving_platform.workers.base import (
     WorkerTimeoutError,
     WorkerUnavailableError,
 )
-from llm_serving_platform.workers.vllm_adapter import VLLMWorkerAdapter
+from src.llm_serving_platform.workers.vllm_adapter import VLLMWorkerAdapter
 from tests.mocks import MockInferenceWorker
 
 
@@ -193,24 +193,44 @@ async def test_vllm_adapter_streaming_and_error_handling():
 
 @pytest.mark.asyncio
 async def test_client_cancellation_raises_cancelled_error():
-    """Verify that asyncio.CancelledError is re-raised cleanly without yielding error payloads."""
+    """Verify that asyncio.CancelledError is re-raised cleanly and marks trace cancelled."""
     import asyncio
 
-    from llm_serving_platform.gateway.main import safe_event_generator
+    from src.llm_serving_platform.gateway.streaming import safe_event_generator
+    from src.llm_serving_platform.telemetry.trace import InMemoryTraceStore, RequestTrace
 
     class CancellingWorker(MockInferenceWorker):
         async def stream_chat(self, payload, request_id):
             yield 'data: {"token": "hello"}\n\n'
             raise asyncio.CancelledError()
 
-    worker = CancellingWorker()
-    gen = safe_event_generator(worker, {"model": "test"}, "req-cancel", "127.0.0.1")
+    worker = CancellingWorker(worker_id="worker-cancel-0")
+    trace = RequestTrace(request_id="req-cancel", model="test")
+    trace.mark_arrival()
+    trace.mark_routing_start()
+    trace.mark_routing_end(worker_id="worker-cancel-0")
+    store = InMemoryTraceStore()
+
+    gen = safe_event_generator(
+        worker,
+        {"model": "test"},
+        "req-cancel",
+        "127.0.0.1",
+        trace=trace,
+        trace_store=store,
+    )
 
     # First token yields normally
     first_chunk = await anext(gen)
     assert "hello" in first_chunk
 
-    # Second pull raises CancelledError
+    # Second pull raises CancelledError and records cancelled trace milestone
     with pytest.raises(asyncio.CancelledError):
         await anext(gen)
+
+    saved = store.get("req-cancel")
+    assert saved is not None
+    assert saved.status == "cancelled"
+    assert saved.first_token is not None
+    assert saved.last_token is not None
 

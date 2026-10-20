@@ -132,12 +132,16 @@ async def test_gateway_health_check(mock_worker, test_app):
         resp = await client.get("/health")
         assert resp.status_code == 200
         assert resp.json() == {"status": "healthy", "worker": "up"}
-
+        assert "X-Worker-ID" in resp.headers
+        assert resp.headers["X-Worker-ID"] == mock_worker.worker_id
+        
         # Unhealthy worker
         mock_worker.is_healthy = False
         resp_unhealthy = await client.get("/health")
         assert resp_unhealthy.status_code == 503
         assert resp_unhealthy.json() == {"status": "unhealthy", "worker": "down"}
+        assert "X-Worker-ID" in resp_unhealthy.headers
+        assert resp_unhealthy.headers["X-Worker-ID"] == mock_worker.worker_id
 
 
 @pytest.mark.asyncio
