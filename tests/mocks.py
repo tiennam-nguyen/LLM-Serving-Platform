@@ -21,6 +21,7 @@ class MockInferenceWorker(InferenceWorker):
         mid_stream_error: Optional[WorkerException] = None,
         chunk_delay_s: float = 0.0,
         is_healthy: bool = True,
+        worker_id: str = "worker-mock-0",
     ) -> None:
         self.canned_chunks = canned_chunks or ["Hello", " world", " from", " mock", "!"]
         self.raise_error_before_stream = raise_error_before_stream
@@ -28,6 +29,7 @@ class MockInferenceWorker(InferenceWorker):
         self.mid_stream_error = mid_stream_error
         self.chunk_delay_s = chunk_delay_s
         self.is_healthy = is_healthy
+        self.worker_id = worker_id
 
         # Tracking for assertions
         self.received_requests: List[Dict[str, Any]] = []
