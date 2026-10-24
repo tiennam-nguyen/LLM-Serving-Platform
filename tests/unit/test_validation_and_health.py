@@ -6,8 +6,8 @@ import httpx
 import pytest
 from httpx import ASGITransport, AsyncClient
 
-from src.llm_serving_platform.gateway.main import create_app, get_worker
-from src.llm_serving_platform.workers.vllm_adapter import VLLMWorkerAdapter
+from llm_serving_platform.gateway.main import create_app, get_worker
+from llm_serving_platform.workers.vllm_adapter import VLLMWorkerAdapter
 from tests.mocks import MockInferenceWorker
 
 
@@ -134,7 +134,7 @@ async def test_gateway_health_check(mock_worker, test_app):
         assert resp.json() == {"status": "healthy", "worker": "up"}
         assert "X-Worker-ID" in resp.headers
         assert resp.headers["X-Worker-ID"] == mock_worker.worker_id
-        
+
         # Unhealthy worker
         mock_worker.is_healthy = False
         resp_unhealthy = await client.get("/health")

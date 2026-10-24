@@ -2,49 +2,45 @@
 
 ## 1. Overview
 
-The **Adaptive LLM Serving Platform** is an observable, reproducible, multi-worker LLM inference serving platform designed to manage and route distributed LLM workloads across multiple GPU nodes.
+The **Adaptive LLM Serving Platform** is an observable, reproducible, multi-worker LLM inference serving platform designed to manage, trace, and route LLM workloads across GPU nodes.
 
-The system emphasizes a **modular monolith** architecture, keeping a clean separation between data-plane inference routing and control-plane management, with serving runtimes sitting behind standardized worker adapters.
+The system follows a **modular monolith** architecture with strict separation of concerns (`SOLID`) between the **data-plane HTTP/SSE gateway**, **pluggable routing policies**, **runtime-agnostic worker adapters**, **6-milestone per-request telemetry**, and the **Next.js operator console (`apps/web`)**.
 
 ---
 
-## 2. Current Status
+## 2. Current Status: Week 3 Completed (Gate A Ready)
 
 > [!NOTE]
-> **Status**: Initial Repository Bootstrap (Pre-feature development).
+> **Status**: Week 3 Complete — End-to-End Web Walking Skeleton (`Browser → Gateway → Worker → GPU`).
 >
-> This repository is currently at the initial bootstrap stage. No serving runtime, gateway proxy, GPU inference workload, or database is active yet. Week 1 implementation begins immediately following this bootstrap.
+> - **Week 1 (Single-GPU vLLM Baseline)**: Completed (`Qwen/Qwen2.5-0.5B-Instruct` on CUDA `float16`, launch scripts, latency measurement).
+> - **Week 2 (Data-Plane Inference Gateway)**: Completed (OpenAI-compatible `POST /v1/chat/completions` SSE proxy, `InferenceWorker` / `VLLMWorkerAdapter`, `X-Request-ID`, structured JSON logging, timeout/error propagation).
+> - **Week 3 (Minimal End-to-End Web Flow & Request Trace)**: Completed (Next.js Instrumentation Deck UI, multi-turn streaming, abort/retry, `X-Worker-ID`, 6-milestone `RequestTrace` exposed via `GET /v1/traces/{request_id}`, and dual-mode `--no-gpu` / live GPU verification).
+> - **Next Milestone**: Week 4 — Worker Registry, Health State Machine (`HEALTHY`/`DEGRADED`/`UNHEALTHY`/`OFFLINE`), and Round-Robin `RoutingPolicy`.
 
 ---
 
-## 3. Semester Engineering Target
-
-The semester goal is to deliver an observable, reproducible, multi-worker LLM serving platform capable of serving concurrent requests across heterogeneous/multi-GPU nodes with transparent metrics, reproducible benchmarks, and dynamic routing.
-
-### Milestone Progression
+## 3. Semester Engineering Progression
 
 ```text
-1 GPU / 1 worker (vLLM baseline)
+[x] Week 1: 1 GPU / 1 worker (vLLM baseline)
     ↓
-Unified gateway
+[x] Week 2: Unified data-plane gateway + VLLMWorkerAdapter
     ↓
-Web E2E (minimal operator/chat UI)
+[x] Week 3: Web E2E operator/chat UI + 6-milestone RequestTrace
     ↓
-Worker registry + health + Round-Robin routing
+[ ] Week 4: Worker registry + health state machine + Round-Robin routing
     ↓
-LAN PoC (multi-node networking)
+[ ] Week 5: Stabilization & integration buffer (Gate A lock)
     ↓
-2+ independent GPU replicas
+[ ] Week 6: LAN PoC (multi-host networking & failure recovery)
     ↓
-Least-Loaded routing policy
+[ ] Week 7: 2+ independent GPU replicas + Least-Loaded routing policy
     ↓
-Observability + reproducible benchmark runner
+[ ] Week 8–9: Observability + reproducible benchmark runner
     ↓
-Optional adaptive routing research (cache-aware / SLO-aware)
+[ ] Week 11–12: Final routing experiments & feature freeze
 ```
-
-> [!IMPORTANT]
-> The engineering baseline (multi-worker serving, observability, reproducible benchmarking) stands on its own. Advanced cache-aware or SLO-aware routing policies are exploratory and are **not on the critical path** for project success.
 
 ---
 
@@ -56,107 +52,100 @@ Optional adaptive routing research (cache-aware / SLO-aware)
 │   └── llm_serving_platform/       # Root Python package (modular monolith)
 │       ├── __init__.py
 │       ├── __main__.py             # Bootstrap verification CLI entrypoint
-│       ├── gateway/                # Future data-plane HTTP entrypoint
-│       ├── control/                # Future control plane & operator management
-│       ├── benchmark/              # Future workload replay & benchmark orchestration
-│       ├── routing/                # Future RoutingPolicy abstractions & policies
-│       ├── workers/                # Future runtime adapters (vLLM, mock)
-│       ├── telemetry/              # Future metrics & state collection
-│       └── common/                 # Shared cross-cutting primitives
+│       ├── gateway/                # FastAPI data-plane HTTP/SSE entrypoint (main, schemas, streaming)
+│       ├── routing/                # RoutingPolicy ABC & SingleWorkerRouter (Week 4: RoundRobin)
+│       ├── workers/                # InferenceWorker ABC & VLLMWorkerAdapter
+│       ├── telemetry/              # 6-milestone RequestTrace & InMemoryTraceStore
+│       ├── control/                # Control plane boundary (Week 4: WorkerRegistry & HealthMonitor)
+│       ├── benchmark/              # Workload replay & benchmark orchestration boundary
+│       └── common/                 # 12-Factor GatewayConfig (.env loader) & structured JSON logging
 │
 ├── apps/
-│   └── web/                        # Future minimal Web UI walking skeleton
-│
-├── benchmarks/
-│   ├── configs/                    # Workload generator configuration files
-│   ├── traces/                     # Workload trace datasets
-│   └── workloads/                  # Workload definitions and arrival patterns
-│
-├── experiments/
-│   ├── manifests/                  # Experiment specification manifests
-│   ├── raw/                        # Raw execution logs and latency records
-│   ├── processed/                  # Aggregated metrics and processed tables
-│   └── figures/                    # Generated charts and visualization figures
+│   └── web/                        # Next.js / React / TypeScript Instrumentation Deck & Chat Playground
 │
 ├── infra/
-│   ├── compose/                    # Local multi-service compose specifications
+│   ├── compose/                    # Hardened Dockerfiles, seccomp profile & Docker Compose (gpu / no-gpu)
 │   ├── monitoring/                 # Monitoring and metrics configuration
-│   └── scripts/                    # Lab environment and infrastructure setup scripts
-│
-├── scripts/                        # Developer utility scripts
+│   └── scripts/                    # Launch scripts & dual-mode verification (verify_week3_e2e.py, etc.)
 │
 ├── tests/
-│   ├── unit/                       # Unit tests and package structure verification
-│   └── integration/                # Future multi-component integration tests
+│   ├── conftest.py                 # Pytest --no-gpu and --prompt fixtures
+│   ├── mocks.py                    # In-memory MockInferenceWorker
+│   ├── unit/                       # Unit tests (validation, health, CORS, traces, package structure)
+│   └── integration/                # Integration & dual-mode E2E tests
 │
 ├── docs/
+│   ├── architecture.md             # Week 3 Architecture Snapshot & component boundaries
+│   ├── report_outline_week3.md     # Week 3 Report Outline & milestone evidence summary
 │   ├── adr/                        # Architecture Decision Records
 │   ├── api/                        # API specifications & interface contracts
 │   ├── experiments/                # Experiment methodology & reproducibility guides
-│   ├── runbooks/                   # Operational runbooks & setup procedures
-│   └── architecture.md             # System architecture & boundary design
+│   └── runbooks/                   # Operational runbooks (WSL2 + vLLM GPU setup)
 │
-├── .editorconfig                   # Editor and IDE formatting rules
-├── .env.example                    # Template environment variables
-├── .gitignore                      # Git exclusion rules
-├── CONTRIBUTING.md                 # Contribution and workflow guidelines
-├── SECURITY.md                     # Lab security and secret management policy
-├── pyproject.toml                  # Python package configuration & dependencies
+├── .github/workflows/ci.yml        # GitHub Actions CI (CPU / --no-gpu backend + frontend suites)
+├── pyproject.toml                  # Python package configuration, dependencies & Ruff/Pytest settings
 └── README.md                       # Project documentation entry point
 ```
 
 ---
 
-## 5. Local Setup & Developer Commands
+## 5. Local Setup & Verification Commands
 
-### Prerequisites
-
-- Python 3.10+ (Python 3.11 recommended)
-- Git
-
-### Setup Virtual Environment
+### 5.1 Python Backend Setup
 
 ```bash
-# 1. Create virtual environment
+# Create and activate virtual environment (Python 3.11 or 3.12)
 python -m venv .venv
+source .venv/bin/activate  # Windows PowerShell: .\.venv\Scripts\Activate.ps1
 
-# 2. Activate virtual environment
-# Windows (PowerShell):
-.\.venv\Scripts\Activate.ps1
-# Linux / macOS:
-source .venv/bin/activate
-
-# 3. Install editable package with development tools
+# Install package in editable mode (use .[ci] on CPU-only machines without CUDA/vLLM)
 python -m pip install -e ".[dev]"
 ```
 
-### Verification & Smoke Test
+### 5.2 Dual-Mode Verification (GPU vs. `--no-gpu` and Custom Prompt `-m`)
+
+All verification scripts support **two modes**:
+1. **Default Mode (Live GPU)**: Connects to the live Gateway (`http://127.0.0.1:8080`) and vLLM GPU worker (`http://127.0.0.1:8000`), sending a single default prompt (or a custom prompt via `-m "..."`).
+2. **No-GPU Mode (`--no-gpu`)**: Uses the in-process `MockInferenceWorker` so CI pipelines and laptops without an NVIDIA GPU can verify the full Gateway, Routing, SSE Streaming, and 6-milestone Trace pipeline.
 
 ```bash
-# Run package bootstrap entrypoint
-python -m llm_serving_platform
-# Expected output: LLM Serving Platform bootstrap OK
+# 1. Run pytest in CPU/CI mode (no GPU required)
+python -m pytest --no-gpu
+
+# 2. Run pytest with a custom prompt
+python -m pytest --no-gpu --prompt "Giải thích KV-cache trong 2 câu."
+
+# 3. Run Week 3 E2E verification script in --no-gpu mode
+python infra/scripts/verify_week3_e2e.py --no-gpu
+python infra/scripts/verify_week3_e2e.py --no-gpu -m "Giải thích cơ chế Continuous Batching."
+
+# 4. Run Week 3 E2E verification script on Live GPU (when vLLM + Gateway are running)
+python infra/scripts/verify_week3_e2e.py
+python infra/scripts/verify_week3_e2e.py -m "Giải thích ngắn gọn PagedAttention trong vLLM."
+
+# 5. Run Ruff linter and formatter checks
+python -m ruff check .
+python -m ruff format --check .
 ```
 
-### Testing and Linting
+### 5.3 Frontend (`apps/web`) Setup & Verification
 
 ```bash
-# Run test suite
-python -m pytest
-
-# Run linter checks
-python -m ruff check .
-
-# Run code format check
-python -m ruff format --check .
+cd apps/web
+npm ci
+npm run lint
+npm run typecheck
+npm test
+npm run build
+npm run test:browser
 ```
 
 ---
 
-## 6. Next Milestone: Week 1
+## 6. Next Milestone: Week 4
 
-**Week 1 Target**: Environment setup and single-GPU vLLM serving baseline.
-1. Lab environment verification (NVIDIA drivers, CUDA, PyTorch).
-2. Direct standalone vLLM instance bring-up on 1 GPU.
-3. First streamed request benchmark and metrics recording.
-4. Record environment parameters and launch/cleanup runbook in `docs/runbooks/`.
+**Week 4 Target**: Multi-Worker Registry, Health Monitoring, and Round-Robin Routing.
+1. Implement `WorkerRegistry` (`worker_id`, `node_id`, `endpoint`, `model`, `gpu_id`, `status`, `last_seen`).
+2. Add active health checking with state transitions (`HEALTHY`, `DEGRADED`, `UNHEALTHY`, `OFFLINE`).
+3. Implement `RoundRobinRouter(RoutingPolicy)` skipping unhealthy workers.
+4. Expose Worker/Topology status view in the Web UI.

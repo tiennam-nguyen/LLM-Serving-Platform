@@ -68,9 +68,10 @@ class VLLMWorkerAdapter(InferenceWorker):
 
                 async for raw_line in response.aiter_lines():
                     line = raw_line.strip()
-                    if not line:
+                    if not line or line.startswith(":"):
+                        # Skip blank lines and SSE keepalive comments
                         continue
-                    if line.startswith("data:"):
+                    if line.startswith("data:") or line.startswith("event:"):
                         yield f"{line}\n\n"
                     else:
                         yield f"data: {line}\n\n"

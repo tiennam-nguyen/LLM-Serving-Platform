@@ -16,6 +16,7 @@ export type ServerTrace = {
     routing_ms: number | null;
     ttft_ms: number | null;
     tpot_ms: number | null;
+    inter_content_chunk_ms?: number | null;
     e2e_ms: number | null;
   };
 };

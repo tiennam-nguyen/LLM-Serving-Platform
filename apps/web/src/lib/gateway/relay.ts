@@ -35,6 +35,8 @@ export async function relay(request: Request, path: "/health" | "/v1/chat/comple
     });
     const id = upstream.headers.get("X-Request-ID");
     if (id) headers.set("X-Request-ID", id);
+    const workerId = upstream.headers.get("X-Worker-ID");
+    if (workerId) headers.set("X-Worker-ID", workerId);
     if (!upstream.body) { cleanup(); return new Response(null, { status: upstream.status, headers }); }
     const reader = upstream.body.getReader();
     const body = new ReadableStream<Uint8Array>({

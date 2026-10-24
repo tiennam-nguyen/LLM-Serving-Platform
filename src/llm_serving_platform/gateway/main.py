@@ -13,7 +13,7 @@ from llm_serving_platform.common.config import GatewayConfig
 from llm_serving_platform.common.logging import log_structured_event
 from llm_serving_platform.gateway.schemas import ChatCompletionRequest
 from llm_serving_platform.gateway.streaming import safe_event_generator
-from llm_serving_platform.routing.router import SingleWorkerRouter
+from llm_serving_platform.routing.router import RoutingPolicy, SingleWorkerRouter
 from llm_serving_platform.telemetry.trace import InMemoryTraceStore, RequestTrace
 from llm_serving_platform.workers.base import InferenceWorker
 from llm_serving_platform.workers.vllm_adapter import VLLMWorkerAdapter
@@ -62,6 +62,21 @@ async def get_worker(request: Request) -> InferenceWorker:
         )
         request.app.state.worker = worker
     return worker
+
+
+async def get_router(
+    request: Request,
+    worker: InferenceWorker = Depends(get_worker),
+) -> RoutingPolicy:
+    """Dependency provider for the routing policy, decoupled from HTTP controller logic."""
+    router: RoutingPolicy | None = getattr(request.app.state, "router", None)
+    if isinstance(router, SingleWorkerRouter) and router.worker is worker:
+        return router
+    if router is not None and not isinstance(router, SingleWorkerRouter):
+        return router
+    router = SingleWorkerRouter(worker)
+    request.app.state.router = router
+    return router
 
 
 async def get_trace_store(request: Request) -> InMemoryTraceStore:
@@ -173,7 +188,7 @@ def create_app(config: GatewayConfig | None = None) -> FastAPI:
     async def chat_completions(
         request: Request,
         request_payload: ChatCompletionRequest,
-        worker: InferenceWorker = Depends(get_worker),
+        router: RoutingPolicy = Depends(get_router),
         trace_store: InMemoryTraceStore = Depends(get_trace_store),
     ):
         """OpenAI-compatible streaming chat completion endpoint."""
@@ -191,8 +206,7 @@ def create_app(config: GatewayConfig | None = None) -> FastAPI:
         trace = RequestTrace(request_id=request_id, model=model_name)
         trace.mark_arrival()
 
-        # 2. Route request and mark routing_start / routing_end
-        router = SingleWorkerRouter(worker)
+        # 2. Route request via injected RoutingPolicy and mark routing_start / routing_end
         target_worker = router.select_worker(trace)
         worker_id = trace.worker_id
         trace_store.save(trace)

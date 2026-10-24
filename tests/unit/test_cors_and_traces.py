@@ -3,10 +3,10 @@ from pathlib import Path
 import pytest
 from httpx import ASGITransport, AsyncClient
 
-from src.llm_serving_platform.common.config import GatewayConfig, load_dotenv_file
-from src.llm_serving_platform.gateway.main import create_app, get_worker
-from src.llm_serving_platform.telemetry.trace import InMemoryTraceStore, RequestTrace
-from src.llm_serving_platform.workers.base import WorkerUnavailableError
+from llm_serving_platform.common.config import GatewayConfig, load_dotenv_file
+from llm_serving_platform.gateway.main import create_app, get_worker
+from llm_serving_platform.telemetry.trace import InMemoryTraceStore, RequestTrace
+from llm_serving_platform.workers.base import WorkerUnavailableError
 from tests.mocks import MockInferenceWorker
 
 
@@ -89,7 +89,8 @@ async def test_backend_cors_preflight_and_exposed_headers():
             assert milestones[key] is not None, f"Missing milestone: {key}"
         assert trace_data["metrics_ms"]["routing_ms"] is not None
         assert trace_data["metrics_ms"]["ttft_ms"] is not None
-        assert trace_data["metrics_ms"]["tpot_ms"] is not None
+        assert trace_data["metrics_ms"]["tpot_ms"] is None
+        assert trace_data["metrics_ms"]["inter_content_chunk_ms"] is not None
         assert trace_data["metrics_ms"]["e2e_ms"] is not None
 
         # 4. Verify /v1/traces list endpoint

@@ -7,12 +7,12 @@ import httpx
 import pytest
 from httpx import ASGITransport, AsyncClient
 
-from src.llm_serving_platform.gateway.main import create_app, get_worker
-from src.llm_serving_platform.workers.base import (
+from llm_serving_platform.gateway.main import create_app, get_worker
+from llm_serving_platform.workers.base import (
     WorkerTimeoutError,
     WorkerUnavailableError,
 )
-from src.llm_serving_platform.workers.vllm_adapter import VLLMWorkerAdapter
+from llm_serving_platform.workers.vllm_adapter import VLLMWorkerAdapter
 from tests.mocks import MockInferenceWorker
 
 
@@ -196,8 +196,8 @@ async def test_client_cancellation_raises_cancelled_error():
     """Verify that asyncio.CancelledError is re-raised cleanly and marks trace cancelled."""
     import asyncio
 
-    from src.llm_serving_platform.gateway.streaming import safe_event_generator
-    from src.llm_serving_platform.telemetry.trace import InMemoryTraceStore, RequestTrace
+    from llm_serving_platform.gateway.streaming import safe_event_generator
+    from llm_serving_platform.telemetry.trace import InMemoryTraceStore, RequestTrace
 
     class CancellingWorker(MockInferenceWorker):
         async def stream_chat(self, payload, request_id):
@@ -233,4 +233,3 @@ async def test_client_cancellation_raises_cancelled_error():
     assert saved.status == "cancelled"
     assert saved.first_token is not None
     assert saved.last_token is not None
-

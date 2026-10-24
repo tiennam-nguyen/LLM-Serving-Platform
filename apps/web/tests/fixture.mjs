@@ -68,7 +68,7 @@ const server = createServer(async (req, res) => {
       first_token: arrivalIso,
       last_token: null,
     },
-    metrics_ms: { routing_ms: 0.1, ttft_ms: 12.5, tpot_ms: 4.2, e2e_ms: null },
+    metrics_ms: { routing_ms: 0.1, ttft_ms: 12.5, tpot_ms: null, inter_content_chunk_ms: 4.2, e2e_ms: null },
   };
   traces.set(reqId, traceObj);
 

@@ -1,8 +1,9 @@
-"""Exit Gate Verification Script for Week 2 Data Plane Gateway.
+"""Exit Gate Verification Script for Data Plane Gateway.
 
-Executes 30 streaming chat completion requests through the Gateway,
-measures Time-to-First-Token (TTFT) and End-to-End (E2E) latency,
-and outputs a structured validation summary table.
+Supports two execution modes:
+1. Default (Live GPU): Sends requests to a running Gateway + vLLM GPU backend.
+2. `--no-gpu` (or `--mock`): Runs in-process against MockInferenceWorker for CI/CPU validation.
+ Also supports custom prompt injection via `-m "your prompt"` / `--prompt "your prompt"`.
 """
 
 import argparse
@@ -12,7 +13,6 @@ import os
 import sys
 import time
 from pathlib import Path
-from typing import List, Optional
 
 import httpx
 
@@ -23,6 +23,8 @@ if str(REPO_ROOT) not in sys.path:
 if str(REPO_ROOT / "src") not in sys.path:
     sys.path.insert(0, str(REPO_ROOT / "src"))
 
+DEFAULT_PROMPT = "Giải thích ngắn gọn cơ chế Continuous Batching."
+
 
 class RequestMetric:
     """Stores performance and status metrics for a single inference request."""
@@ -30,11 +32,12 @@ class RequestMetric:
     def __init__(self, index: int, request_id: str) -> None:
         self.index = index
         self.request_id = request_id
+        self.worker_id: str = ""
         self.success = False
         self.ttft_ms: float = 0.0
         self.e2e_ms: float = 0.0
-        self.token_count: int = 0
-        self.error_message: Optional[str] = None
+        self.chunk_count: int = 0
+        self.error_message: str | None = None
 
 
 async def send_streaming_request(
@@ -43,6 +46,7 @@ async def send_streaming_request(
     index: int,
     model: str,
     timeout_s: float,
+    prompt: str = DEFAULT_PROMPT,
 ) -> RequestMetric:
     """Send a single streaming chat completion request and measure latencies."""
     request_id = f"exit-gate-req-{index:02d}"
@@ -53,7 +57,7 @@ async def send_streaming_request(
         "messages": [
             {
                 "role": "user",
-                "content": f"Request {index}: Giải thích ngắn gọn cơ chế Continuous Batching.",
+                "content": f"Request {index}: {prompt}",
             }
         ],
         "stream": True,
@@ -66,7 +70,7 @@ async def send_streaming_request(
     }
 
     start_time = time.perf_counter()
-    first_token_time: Optional[float] = None
+    first_token_time: float | None = None
 
     try:
         async with client.stream(
@@ -76,6 +80,7 @@ async def send_streaming_request(
             headers=headers,
             timeout=timeout_s,
         ) as response:
+            metric.worker_id = response.headers.get("X-Worker-ID", "")
             if response.status_code != 200:
                 body = await response.aread()
                 err_text = body.decode("utf-8", errors="replace")
@@ -99,21 +104,27 @@ async def send_streaming_request(
                             metric.error_message = data["error"].get("message", "Unknown error")
                             break
 
-                        if first_token_time is None:
-                            first_token_time = time.perf_counter()
-                            metric.ttft_ms = (first_token_time - start_time) * 1000
-
-                        metric.token_count += 1
+                        choices = data.get("choices", [])
+                        has_text = bool(
+                            choices
+                            and isinstance(choices[0], dict)
+                            and choices[0].get("delta", {}).get("content")
+                        )
+                        if has_text:
+                            if first_token_time is None:
+                                first_token_time = time.perf_counter()
+                                metric.ttft_ms = (first_token_time - start_time) * 1000
+                            metric.chunk_count += 1
                     except json.JSONDecodeError:
                         continue
 
         end_time = time.perf_counter()
         metric.e2e_ms = (end_time - start_time) * 1000
 
-        if metric.error_message is None and metric.token_count > 0:
+        if metric.error_message is None and metric.chunk_count > 0:
             metric.success = True
-        elif metric.error_message is None and metric.token_count == 0:
-            metric.error_message = "No tokens received"
+        elif metric.error_message is None and metric.chunk_count == 0:
+            metric.error_message = "No content chunks received"
 
     except Exception as exc:
         metric.error_message = str(exc)
@@ -122,7 +133,7 @@ async def send_streaming_request(
     return metric
 
 
-def calculate_percentile(data: List[float], p: float) -> float:
+def calculate_percentile(data: list[float], p: float) -> float:
     """Calculate the p-th percentile from a list of float metrics."""
     if not data:
         return 0.0
@@ -132,14 +143,14 @@ def calculate_percentile(data: List[float], p: float) -> float:
     return sorted_data[idx]
 
 
-def print_results_table(metrics: List[RequestMetric]) -> bool:
+def print_results_table(metrics: list[RequestMetric], target_requests: int) -> bool:
     """Format and print the benchmark results table and summary statistics."""
     print("\n" + "=" * 90)
-    print("          WEEK 2 DATA PLANE GATEWAY - EXIT GATE VERIFICATION REPORT")
+    print("          DATA PLANE GATEWAY - EXIT GATE VERIFICATION REPORT")
     print("=" * 90)
     header = (
         f"{'Req #':<6} | {'Request ID':<20} | {'Status':<8} | "
-        f"{'TTFT (ms)':<11} | {'E2E (ms)':<11} | {'Tokens':<6} | {'Notes'}"
+        f"{'TTFT (ms)':<11} | {'E2E (ms)':<11} | {'Chunks':<6} | {'Notes'}"
     )
     print(header)
     print("-" * 90)
@@ -148,12 +159,12 @@ def print_results_table(metrics: List[RequestMetric]) -> bool:
         status_str = "PASS" if m.success else "FAIL"
         ttft_str = f"{m.ttft_ms:.2f}" if m.success else "N/A"
         e2e_str = f"{m.e2e_ms:.2f}"
-        note = m.error_message or "OK"
+        note = m.error_message or (m.worker_id or "OK")
         if len(note) > 16:
             note = note[:13] + "..."
         row = (
             f"{m.index:<6} | {m.request_id:<20} | {status_str:<8} | "
-            f"{ttft_str:<11} | {e2e_str:<11} | {m.token_count:<6} | {note}"
+            f"{ttft_str:<11} | {e2e_str:<11} | {m.chunk_count:<6} | {note}"
         )
         print(row)
 
@@ -181,20 +192,23 @@ def print_results_table(metrics: List[RequestMetric]) -> bool:
         print(table_hdr)
         print("-" * 90)
         ttft_row = (
-            f"{'TTFT':<15} | {min(ttfts):<10.2f} | {sum(ttfts)/len(ttfts):<10.2f} | "
+            f"{'TTFT':<15} | {min(ttfts):<10.2f} | {sum(ttfts) / len(ttfts):<10.2f} | "
             f"{calculate_percentile(ttfts, 95):<10.2f} | {max(ttfts):<10.2f}"
         )
         print(ttft_row)
         e2e_row = (
-            f"{'E2E Latency':<15} | {min(e2es):<10.2f} | {sum(e2es)/len(e2es):<10.2f} | "
+            f"{'E2E Latency':<15} | {min(e2es):<10.2f} | {sum(e2es) / len(e2es):<10.2f} | "
             f"{calculate_percentile(e2es, 95):<10.2f} | {max(e2es):<10.2f}"
         )
         print(e2e_row)
 
     print("=" * 90)
-    passed = success_count == total_reqs and total_reqs == 30
+    passed = success_count == total_reqs and total_reqs == target_requests
     if passed:
-        print(">>> EXIT GATE STATUS: PASSED (Target 30/30 successfully met) <<<\n")
+        print(
+            f">>> EXIT GATE STATUS: PASSED "
+            f"(Target {success_count}/{target_requests} successfully met) <<<\n"
+        )
     else:
         print(f">>> EXIT GATE STATUS: FAILED ({success_count}/{total_reqs} passed) <<<\n")
 
@@ -207,9 +221,10 @@ async def run_verification(
     model: str = "Qwen/Qwen2.5-0.5B-Instruct",
     concurrency: int = 1,
     timeout_s: float = 60.0,
+    prompt: str = DEFAULT_PROMPT,
 ) -> bool:
     """Execute live requests against the running gateway."""
-    print(f"Starting Exit Gate Verification against: {gateway_url}")
+    print(f"Starting Exit Gate Verification (LIVE GPU) against: {gateway_url}")
     print(f"Target: {num_requests} requests, Model: {model}, Concurrency: {concurrency}")
 
     limits = httpx.Limits(max_keepalive_connections=50, max_connections=200)
@@ -230,27 +245,31 @@ async def run_verification(
                     index=idx,
                     model=model,
                     timeout_s=timeout_s,
+                    prompt=prompt,
                 )
 
         tasks = [worker(i + 1) for i in range(num_requests)]
-        metrics: List[RequestMetric] = []
+        metrics: list[RequestMetric] = []
         for coro in asyncio.as_completed(tasks):
             m = await coro
             metrics.append(m)
             status_tag = "OK" if m.success else f"FAIL ({m.error_message})"
             log_line = (
-                f"  [{m.index:02d}/30] ID: {m.request_id} - {status_tag} "
+                f"  [{m.index:02d}/{num_requests:02d}] ID: {m.request_id} - {status_tag} "
                 f"(TTFT: {m.ttft_ms:.1f}ms, E2E: {m.e2e_ms:.1f}ms)"
             )
             print(log_line)
 
         metrics.sort(key=lambda x: x.index)
-        return print_results_table(metrics)
+        return print_results_table(metrics, target_requests=num_requests)
 
 
-async def run_mock_verification(num_requests: int = 30) -> bool:
+async def run_mock_verification(
+    num_requests: int = 30,
+    prompt: str = DEFAULT_PROMPT,
+) -> bool:
     """Run verification in-process using an ASGI TestClient and MockInferenceWorker."""
-    print("Running Exit Gate Verification with in-process MockInferenceWorker...")
+    print("Running Exit Gate Verification (--no-gpu mode with MockInferenceWorker)...")
     from llm_serving_platform.gateway.main import create_app, get_worker
     from tests.mocks import MockInferenceWorker
 
@@ -263,7 +282,7 @@ async def run_mock_verification(num_requests: int = 30) -> bool:
 
     transport = httpx.ASGITransport(app=app)
     async with httpx.AsyncClient(transport=transport, base_url="http://mock-gateway") as client:
-        metrics: List[RequestMetric] = []
+        metrics: list[RequestMetric] = []
         for i in range(1, num_requests + 1):
             m = await send_streaming_request(
                 client=client,
@@ -271,21 +290,22 @@ async def run_mock_verification(num_requests: int = 30) -> bool:
                 index=i,
                 model="mock-qwen",
                 timeout_s=10.0,
+                prompt=prompt,
             )
             metrics.append(m)
             status_tag = "OK" if m.success else f"FAIL ({m.error_message})"
             log_line = (
-                f"  [{m.index:02d}/30] ID: {m.request_id} - {status_tag} "
+                f"  [{m.index:02d}/{num_requests:02d}] ID: {m.request_id} - {status_tag} "
                 f"(TTFT: {m.ttft_ms:.1f}ms, E2E: {m.e2e_ms:.1f}ms)"
             )
             print(log_line)
 
         metrics.sort(key=lambda x: x.index)
-        return print_results_table(metrics)
+        return print_results_table(metrics, target_requests=num_requests)
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Week 2 Gateway Exit Gate Verification")
+    parser = argparse.ArgumentParser(description="Gateway Exit Gate Verification")
     parser.add_argument(
         "--gateway-url",
         default=os.getenv("GATEWAY_URL", "http://127.0.0.1:8080"),
@@ -293,8 +313,14 @@ def main() -> None:
     )
     parser.add_argument(
         "--model",
-        default="Qwen/Qwen2.5-0.5B-Instruct",
+        default=os.getenv("MODEL_NAME", "Qwen/Qwen2.5-0.5B-Instruct"),
         help="Model ID to request",
+    )
+    parser.add_argument(
+        "-m",
+        "--prompt",
+        default=DEFAULT_PROMPT,
+        help="Prompt message to send in each request",
     )
     parser.add_argument(
         "--requests",
@@ -309,14 +335,16 @@ def main() -> None:
         help="Concurrent streams (default: 1)",
     )
     parser.add_argument(
+        "--no-gpu",
         "--mock",
+        dest="no_gpu",
         action="store_true",
-        help="Run in-process against MockInferenceWorker without needing live server",
+        help="Run in-process against MockInferenceWorker without needing live GPU server",
     )
     args = parser.parse_args()
 
-    if args.mock:
-        success = asyncio.run(run_mock_verification(num_requests=args.requests))
+    if args.no_gpu:
+        success = asyncio.run(run_mock_verification(num_requests=args.requests, prompt=args.prompt))
     else:
         success = asyncio.run(
             run_verification(
@@ -324,6 +352,7 @@ def main() -> None:
                 num_requests=args.requests,
                 model=args.model,
                 concurrency=args.concurrency,
+                prompt=args.prompt,
             )
         )
 

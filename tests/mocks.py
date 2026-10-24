@@ -4,7 +4,7 @@ import asyncio
 import json
 from typing import Any, AsyncIterator, Dict, List, Optional
 
-from src.llm_serving_platform.workers.base import (
+from llm_serving_platform.workers.base import (
     InferenceWorker,
     WorkerException,
 )
@@ -35,9 +35,7 @@ class MockInferenceWorker(InferenceWorker):
         self.received_requests: List[Dict[str, Any]] = []
         self.received_request_ids: List[str] = []
 
-    async def stream_chat(
-        self, payload: Dict[str, Any], request_id: str
-    ) -> AsyncIterator[str]:
+    async def stream_chat(self, payload: Dict[str, Any], request_id: str) -> AsyncIterator[str]:
         self.received_requests.append(payload)
         self.received_request_ids.append(request_id)
 

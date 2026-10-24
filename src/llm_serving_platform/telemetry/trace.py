@@ -20,7 +20,8 @@ class RequestTrace:
     worker_id: str = ""
     status: str = "in_flight"
     token_chunks: int = 0
-    error: Optional[str] = None
+    completion_tokens: int | None = None
+    error: str | None = None
 
     # ISO-8601 UTC wall-clock timestamps for each milestone
     arrival: Optional[str] = None
@@ -86,7 +87,8 @@ class RequestTrace:
         return None
 
     @property
-    def tpot_ms(self) -> Optional[float]:
+    def inter_content_chunk_ms(self) -> float | None:
+        """Mean interval between non-empty SSE content chunks (not equated with tokens)."""
         if (
             self._first_token_mono is not None
             and self._last_token_mono is not None
@@ -99,7 +101,23 @@ class RequestTrace:
             )
         return None
 
-    def to_dict(self) -> Dict[str, Any]:
+    @property
+    def tpot_ms(self) -> float | None:
+        """True Time Per Output Token (only computed when exact completion_tokens > 1 is known)."""
+        if (
+            self._first_token_mono is not None
+            and self._last_token_mono is not None
+            and self.completion_tokens is not None
+            and self.completion_tokens > 1
+        ):
+            return round(
+                ((self._last_token_mono - self._first_token_mono) / (self.completion_tokens - 1))
+                * 1000.0,
+                2,
+            )
+        return None
+
+    def to_dict(self) -> dict[str, Any]:
         """Serialize trace milestones and computed durations for API/logging."""
         return {
             "request_id": self.request_id,
@@ -107,6 +125,7 @@ class RequestTrace:
             "worker_id": self.worker_id,
             "status": self.status,
             "token_chunks": self.token_chunks,
+            "completion_tokens": self.completion_tokens,
             "error": self.error,
             "milestones": {
                 "arrival": self.arrival,
@@ -120,6 +139,7 @@ class RequestTrace:
                 "routing_ms": self.routing_ms,
                 "ttft_ms": self.ttft_ms,
                 "tpot_ms": self.tpot_ms,
+                "inter_content_chunk_ms": self.inter_content_chunk_ms,
                 "e2e_ms": self.e2e_ms,
             },
         }

@@ -1,31 +1,95 @@
-# System Architecture & Design Intent
+# System Architecture & Week 3 Snapshot
 
-This document outlines the high-level architecture, design principles, and component boundaries for the **Adaptive LLM Serving Platform**.
+This document records the architecture principles, active **Week 3 implementation snapshot**, and target **Week 4+ multi-worker expansion topology** for the **Adaptive LLM Serving Platform**.
 
 ---
 
-## 1. Architectural Principles
+## 1. Architectural Principles (SOLID & Clean Boundaries)
 
 1. **Modular Monolith First**:
-   The platform is structured as a cohesive Python package with explicit, decoupled module boundaries (`gateway`, `control`, `routing`, `workers`, `telemetry`, `benchmark`, `common`). We avoid premature distributed microservices or multi-repo fragmentation.
+   The backend is structured as an installable `src`-layout Python package (`llm_serving_platform`) with explicit module boundaries (`gateway`, `routing`, `workers`, `telemetry`, `control`, `benchmark`, `common`). All internal and test imports use the canonical `llm_serving_platform.*` namespace.
 
 2. **Decoupled Data Plane and Control Plane**:
-   The **data plane** (the fast path handling live inference requests) must never perform synchronous database queries or heavy external lookups. Routing decisions are made strictly in-memory using lightweight state snapshots.
+   The **data plane** (`gateway`, `routing`, `workers`, `telemetry`) processes live HTTP/SSE inference streams strictly in memory without synchronous database calls on the critical path.
 
-3. **Pluggable Routing Policies**:
-   Routing logic is separated from HTTP transport. The router consumes incoming request characteristics and in-memory worker state snapshots to return a chosen worker target without hardcoding routing algorithms into HTTP request handlers.
+3. **Dependency Inversion for Routing (`RoutingPolicy` ABC)**:
+   HTTP route handlers in `gateway/main.py` depend on the abstract `RoutingPolicy` interface (`Depends(get_router)`), never instantiating concrete routers inside request handlers. In Week 3, `SingleWorkerRouter` implements `RoutingPolicy`; in Week 4 and Week 7, `RoundRobinRouter` and `LeastLoadedRouter` swap in without modifying the HTTP controller.
 
-4. **Runtime-Agnostic Worker Adapters**:
-   Serving runtimes (initially vLLM) sit behind a standard worker adapter interface. The core gateway and router communicate with adapters rather than binding to runtime-specific HTTP endpoints.
+4. **Runtime-Agnostic Worker Adapters (`InferenceWorker` ABC)**:
+   Serving engines sit behind `InferenceWorker` (`stream_chat`, `check_health`). `VLLMWorkerAdapter` encapsulates vLLM's OpenAI-compatible HTTP/SSE wire protocol and maps `httpx` network/timeout failures into typed `WorkerTimeoutError` (504) and `WorkerUnavailableError` (503) exceptions. `MockInferenceWorker` implements the exact same contract for deterministic `--no-gpu` testing.
 
-5. **Reproducibility by Default**:
-   All benchmark runs and experimental evaluations record precise environment manifests: git commit hash, hardware topology, model identifier, routing policy, arrival process, random seed, and generation hyperparameters.
+5. **Honest Telemetry & Metric Semantics**:
+    client-observed timings (`FIRST CONTENT`, `E2E DURATION` in `apps/web`) are kept distinct from server-observed monotonic trace milestones (`RequestTrace` in `telemetry/trace.py`). Because a single SSE `data:` frame is not guaranteed to equal one model token, chunk spacing is published honestly as `inter_content_chunk_ms`, while `tpot_ms` remains `None` unless true `completion_tokens > 1` is reported by the runtime.
 
 ---
 
-## 2. Component Topology
+## 2. Week 3 Active Topology Snapshot (Current Implementation)
 
-### Request Data Path vs. Control Path
+In Week 3, the platform operates an end-to-end single-worker walking skeleton from the browser to the GPU worker with full request correlation (`X-Request-ID`, `X-Worker-ID`) and a 6-milestone server trace store.
+
+### 2.1 Week 3 Request & Trace Flow
+
+```text
++-------------------------------------------------------------------------+
+|                   Browser: Next.js Web UI (apps/web)                    |
+|  - PlaygroundDeck / useChatSession (multi-turn, AbortController, retry) |
+|  - SSEParser (partial chunks, CRLF, multiline SSE, explicit usage)      |
+|  - RequestInspector (client FIRST CONTENT/E2E + server trace display)   |
++------------------------------------+------------------------------------+
+                                     |
+        1. POST /v1/chat/completions |  3. GET /v1/traces/{request_id}
+           (SSE stream + CORS headers|     (fetches 6-milestone server trace
+            X-Request-ID, X-Worker-ID|      after stream completion)
+                                     v
++-------------------------------------------------------------------------+
+|               FastAPI Data-Plane Gateway (gateway/main.py)              |
+|  - CORSMiddleware (outermost) + request_id_middleware                   |
+|  - ChatCompletionRequest validation (gateway/schemas.py)                |
+|  - safe_event_generator SSE orchestrator (gateway/streaming.py)         |
++-----------------+----------------------------------+--------------------+
+                  |                                  |
+                  | 2a. select_worker(trace)         | 2b. save/get trace
+                  v                                  v
++----------------------------------+  +-----------------------------------+
+|      RoutingPolicy (routing/)    |  |   InMemoryTraceStore (telemetry/) |
+|  - Week 3: SingleWorkerRouter    |  |  - Bounded FIFO (max_size=500)    |
+|  - Marks routing_start &         |  |  - Stores RequestTrace:           |
+|    routing_end(worker_id)        |  |    arrival -> routing_start ->    |
++-----------------+----------------+  |    routing_end -> worker_start -> |
+                  |                   |    first_token -> last_token      |
+                  |                   +-----------------------------------+
+                  v
++-------------------------------------------------------------------------+
+|                   InferenceWorker Adapter (workers/)                    |
+|  - Live GPU Mode : VLLMWorkerAdapter -> http://127.0.0.1:8000 (vLLM)    |
+|  - No-GPU Mode   : MockInferenceWorker (in-process deterministic SSE)   |
++------------------------------------+------------------------------------+
+                                     |
+                                     v (Live GPU Mode)
++-------------------------------------------------------------------------+
+|            vLLM OpenAI API Server on NVIDIA GPU (float16)               |
+|            Model: Qwen/Qwen2.5-0.5B-Instruct (Continuous Batching)      |
++-------------------------------------------------------------------------+
+```
+
+### 2.2 Week 3 Trace Milestones (`RequestTrace`)
+
+Every streaming request records 6 UTC ISO-8601 timestamps alongside internal `time.perf_counter()` monotonic timestamps:
+
+| Milestone | Recorded By | Description |
+| :--- | :--- | :--- |
+| `arrival` | `gateway/main.py` | Request validated and accepted at Gateway entrypoint. |
+| `routing_start` | `routing/router.py` | Router begins evaluating candidate worker(s). |
+| `routing_end` | `routing/router.py` | Target `worker_id` selected (`routing_ms = routing_end - routing_start`). |
+| `worker_start` | `gateway/streaming.py` | `safe_event_generator` opens upstream stream to `InferenceWorker`. |
+| `first_token` | `gateway/streaming.py` | First non-empty assistant content chunk received (`ttft_ms = first_token - arrival`). |
+| `last_token` | `gateway/streaming.py` | Stream reaches terminal state (`completed`, `cancelled`, or `error`; `e2e_ms = last_token - arrival`). |
+
+---
+
+## 3. Target Multi-Worker Topology (Week 4 – Week 12 Roadmap)
+
+Starting in Week 4 (`WorkerRegistry` + `RoundRobinRouter`) and Week 7 (`LeastLoadedRouter` across 2+ GPU replicas), the `RoutingPolicy` boundary expands from a single worker to a dynamic pool of health-checked workers:
 
 ```text
 +-----------------------+       +-------------------------+
@@ -37,68 +101,38 @@ This document outlines the high-level architecture, design principles, and compo
                              v
            +-----------------------------------+
            |        Serving Gateway            | (Data Plane: Protocol termination,
-           +-----------------+-----------------+  streaming, validation)
+           +-----------------+-----------------+  streaming, validation, tracing)
                              |
                              v
            +-----------------------------------+
-           |         Router Engine             | (Evaluates RoutingPolicy in-memory)
+           |     RoutingPolicy Engine          | (Week 4: RoundRobinRouter
+           |  + WorkerRegistry Health Snapshot |  Week 7: LeastLoadedRouter)
            +-----------------+-----------------+
                              |
             +----------------+----------------+
             |                                 |
             v                                 v
 +-----------------------+         +-----------------------+
-|  Worker Adapter #1    |         |  Worker Adapter #2    | (Encapsulates engine protocol)
+|  VLLMWorkerAdapter #1 |         |  VLLMWorkerAdapter #2 |
 +-----------+-----------+         +-----------+-----------+
             |                                 |
             v                                 v
 +-----------------------+         +-----------------------+
-|   vLLM Instance #1    |         |   vLLM Instance #2    | (GPU Serving Runtimes)
+|   vLLM Replica #1     |         |   vLLM Replica #2     |
 +-----------------------+         +-----------------------+
 ```
 
-### Telemetry & In-Memory Routing Feedback Loop
-
-```text
-+-------------------------+         +-------------------------+
-|    vLLM Instance #1     |         |    vLLM Instance #2     |
-+------------+------------+         +------------+------------+
-             |                                   |
-             v                                   v
-+-------------------------------------------------------------+
-|                     Telemetry Subsystem                     |
-|  (Collects TTFT, ITL, queue depth, GPU utilization metrics) |
-+------------------------------+------------------------------+
-                               |
-                               v
-+-------------------------------------------------------------+
-|              In-Memory State Snapshot Buffer                |
-|       (Atomic, thread-safe, fast in-memory worker state)    |
-+------------------------------+------------------------------+
-                               |
-                               v
-+-------------------------------------------------------------+
-|                     Router Engine                           |
-|       (Consumes state snapshot to route next request)       |
-+-------------------------------------------------------------+
-```
-
 ---
 
-## 3. Module Boundaries & Responsibilities
+## 4. Module Boundaries & Responsibilities
 
-| Module | Boundary Role | Key Constraints |
+| Module | Boundary Role | Week 3 Implementation Status |
 | :--- | :--- | :--- |
-| `gateway` | Data-plane entry point | Handles client HTTP/SSE streaming; no business routing logic. |
-| `control` | Control-plane management | Manages cluster configuration and worker topology; out of the fast path. |
-| `routing` | Policy execution | Pure algorithmic routing (`RoundRobin`, `LeastLoaded`, etc.); no direct I/O. |
-| `workers` | Serving engine abstraction | Standardizes API communication with vLLM / mock runtimes. |
-| `telemetry` | Metrics and observability | Collects latency, token rates, and GPU state into fast in-memory snapshots. |
-| `benchmark` | Workload replay | Generates synthetic / trace workloads and records latency profiles. |
-| `common` | Shared cross-cutting types | Minimal utility types, base models, and shared constants. |
-
----
-
-## 4. Current Status
-
-At initial repository bootstrap, these boundaries are represented as package structures with module docstrings. Implementation begins with Week 1 (single-GPU vLLM baseline).
+| `gateway` | Data-plane HTTP/SSE entrypoint | **Active**: `main.py`, `schemas.py`, `streaming.py` (`/health`, `/v1/chat/completions`, `/v1/traces`). |
+| `routing` | Worker selection policy | **Active**: `RoutingPolicy` ABC + `SingleWorkerRouter` (`router.py`). |
+| `workers` | Serving runtime abstraction | **Active**: `InferenceWorker` ABC (`base.py`), `VLLMWorkerAdapter` (`vllm_adapter.py`), `MockInferenceWorker` (`tests/mocks.py`). |
+| `telemetry` | Per-request tracing & metrics | **Active**: `RequestTrace` (6 milestones + honest `inter_content_chunk_ms`/`tpot_ms`) & `InMemoryTraceStore` (`trace.py`). |
+| `common` | Config & structured logging | **Active**: `GatewayConfig` + `.env` loader (`config.py`), JSON logger (`logging.py`). |
+| `control` | Cluster & worker registry | **Planned (Week 4)**: `WorkerRegistry` & health state machine (`HEALTHY`/`DEGRADED`/`UNHEALTHY`/`OFFLINE`). |
+| `benchmark` | Reproducible workload runner | **Planned (Week 8–9)**: Trace replay, Poisson/burst arrival generators, percentile aggregator. |
+| `apps/web` | Operator console & playground | **Active**: Next.js 16 / React 19 UI with SSE streaming, abort/retry, and `RequestInspector`. |

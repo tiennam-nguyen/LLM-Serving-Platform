@@ -2,15 +2,19 @@
 
 import asyncio
 import json
-from typing import Any, AsyncIterator, Dict, Optional
+from collections.abc import AsyncIterator
+from typing import Any
 
 from llm_serving_platform.common.logging import log_structured_event
 from llm_serving_platform.telemetry.trace import InMemoryTraceStore, RequestTrace
 from llm_serving_platform.workers.base import InferenceWorker, WorkerException
 
 
-def _is_content_chunk(sse_chunk: str) -> bool:
-    """Return True if an SSE chunk carries non-empty assistant delta content or mock token."""
+def _inspect_sse_chunk(sse_chunk: str) -> tuple[bool, int | None]:
+    """Inspect an SSE chunk for non-empty assistant content and explicit completion_tokens usage."""
+    has_content = False
+    completion_tokens: int | None = None
+
     for raw_line in sse_chunk.splitlines():
         line = raw_line.strip()
         if not line.startswith("data:"):
@@ -20,29 +24,44 @@ def _is_content_chunk(sse_chunk: str) -> bool:
             continue
         try:
             parsed = json.loads(data_str)
-            if isinstance(parsed, dict):
-                if "error" in parsed:
-                    return False
-                choices = parsed.get("choices")
-                if isinstance(choices, list) and choices:
-                    delta = choices[0].get("delta", {})
+            if not isinstance(parsed, dict) or "error" in parsed:
+                continue
+
+            choices = parsed.get("choices")
+            if isinstance(choices, list) and choices:
+                first_choice = choices[0]
+                if isinstance(first_choice, dict):
+                    delta = first_choice.get("delta", {})
                     if isinstance(delta, dict) and delta.get("content"):
-                        return True
-                if "token" in parsed:
-                    return True
+                        has_content = True
+            elif "token" in parsed and parsed.get("token"):
+                has_content = True
+
+            usage = parsed.get("usage")
+            if isinstance(usage, dict):
+                comp = usage.get("completion_tokens")
+                if isinstance(comp, int) and not isinstance(comp, bool) and comp >= 0:
+                    completion_tokens = comp
         except json.JSONDecodeError:
             continue
-    return False
+
+    return has_content, completion_tokens
+
+
+def _is_content_chunk(sse_chunk: str) -> bool:
+    """Return True if an SSE chunk carries non-empty assistant delta content or mock token."""
+    has_content, _ = _inspect_sse_chunk(sse_chunk)
+    return has_content
 
 
 async def safe_event_generator(
     worker: InferenceWorker,
-    payload: Dict[str, Any],
+    payload: dict[str, Any],
     request_id: str,
     client_ip: str,
-    trace: Optional[RequestTrace] = None,
-    trace_store: Optional[InMemoryTraceStore] = None,
-) -> AsyncIterator[str,None]:
+    trace: RequestTrace | None = None,
+    trace_store: InMemoryTraceStore | None = None,
+) -> AsyncIterator[str]:
     """Stream SSE events from worker, recording Week 3 trace milestones and handling errors."""
     model_name = payload.get("model", "unknown")
     worker_id = getattr(worker, "worker_id", "worker-vllm-0")
@@ -59,9 +78,12 @@ async def safe_event_generator(
 
     try:
         async for chunk in worker.stream_chat(payload, request_id):
-            if _is_content_chunk(chunk):
+            has_content, completion_tokens = _inspect_sse_chunk(chunk)
+            if has_content:
                 trace.mark_first_token()
                 trace.token_chunks += 1
+            if completion_tokens is not None:
+                trace.completion_tokens = completion_tokens
             yield chunk
 
         trace.mark_last_token(status="completed")
