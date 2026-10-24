@@ -155,7 +155,6 @@ def stream_and_measure(
 def main() -> None:
     parser = argparse.ArgumentParser(description="Measure streaming TTFT and E2E latency.")
     parser.add_argument(
-        "-m",
         "--prompt",
         default=DEFAULT_PROMPT,
         help="Prompt message to send (default: 1-sentence Vietnamese prompt).",

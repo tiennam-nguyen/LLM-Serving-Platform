@@ -3,7 +3,7 @@
 Supports two execution modes:
 1. Default (Live GPU): Sends requests to a running Gateway + vLLM GPU backend.
 2. `--no-gpu` (or `--mock`): Runs in-process against MockInferenceWorker for CI/CPU validation.
- Also supports custom prompt injection via `-m "your prompt"` / `--prompt "your prompt"`.
+ Also supports custom prompt injection via `--prompt "your prompt"`.
 """
 
 import argparse
@@ -317,7 +317,6 @@ def main() -> None:
         help="Model ID to request",
     )
     parser.add_argument(
-        "-m",
         "--prompt",
         default=DEFAULT_PROMPT,
         help="Prompt message to send in each request",

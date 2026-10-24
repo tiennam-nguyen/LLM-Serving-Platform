@@ -1,11 +1,11 @@
-"""Unified Test Runner for Local GPU (default + -m), No-GPU (--no-gpu), and CI (--ci).
+"""Unified Test Runner for Local GPU (default + --prompt), No-GPU (--no-gpu), and CI (--ci).
 
 Usage:
   1. Default (Live GPU mode + 1 default prompt):
      python infra/scripts/run_test_suite.py
 
-  2. Live GPU mode with custom prompt (-m):
-     python infra/scripts/run_test_suite.py -m "Giải thích ngắn gọn PagedAttention trong 2 câu."
+  2. Live GPU mode with custom prompt (--prompt):
+     python infra/scripts/run_test_suite.py --prompt "Giải thích PagedAttention trong 2 câu."
 
   3. No-GPU mode (runs unit/integration tests + mock E2E without GPU, no prompt needed):
      python infra/scripts/run_test_suite.py --no-gpu
@@ -43,7 +43,7 @@ def _run_cmd(cmd: list[str], cwd: Path = REPO_ROOT, title: str = "") -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Unified Test Runner (GPU default with optional -m, or --no-gpu mock mode)."
+        description="Unified Test Runner (Live GPU with --prompt, or --no-gpu mock mode)."
     )
     parser.add_argument(
         "--no-gpu",
@@ -53,7 +53,6 @@ def main() -> None:
         help="Run in CPU/mock mode without requiring a live vLLM GPU server.",
     )
     parser.add_argument(
-        "-m",
         "--prompt",
         default=None,
         help="Custom prompt string for Live GPU E2E verification (ignored when --no-gpu is set).",
@@ -74,7 +73,7 @@ def main() -> None:
 
     if args.no_gpu and args.prompt is not None:
         print(
-            "[!] Note: -m/--prompt is ignored in --no-gpu mode because MockInferenceWorker "
+            "[!] Note: --prompt is ignored in --no-gpu mode because MockInferenceWorker "
             "uses deterministic canned chunks."
         )
 
@@ -100,7 +99,7 @@ def main() -> None:
         e2e_cmd = [
             py,
             "infra/scripts/verify_week3_e2e.py",
-            "-m",
+            "--prompt",
             effective_prompt,
             "--gateway-url",
             args.gateway_url,

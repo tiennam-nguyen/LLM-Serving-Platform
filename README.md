@@ -102,10 +102,10 @@ source .venv/bin/activate  # Windows PowerShell: .\.venv\Scripts\Activate.ps1
 python -m pip install -e ".[dev]"
 ```
 
-### 5.2 Dual-Mode Verification (GPU vs. `--no-gpu` and Custom Prompt `-m`)
+### 5.2 Dual-Mode Verification (GPU vs. `--no-gpu` and Custom Prompt `--prompt`)
 
 All verification scripts support **two modes**:
-1. **Default Mode (Live GPU)**: Connects to the live Gateway (`http://127.0.0.1:8080`) and vLLM GPU worker (`http://127.0.0.1:8000`), sending a single default prompt (or a custom prompt via `-m "..."`).
+1. **Default Mode (Live GPU)**: Connects to the live Gateway (`http://127.0.0.1:8080`) and vLLM GPU worker (`http://127.0.0.1:8000`), sending a single default prompt (or a custom prompt via `--prompt "..."`).
 2. **No-GPU Mode (`--no-gpu`)**: Uses the in-process `MockInferenceWorker` so CI pipelines and laptops without an NVIDIA GPU can verify the full Gateway, Routing, SSE Streaming, and 6-milestone Trace pipeline.
 
 ```bash
@@ -117,11 +117,11 @@ python -m pytest --no-gpu --prompt "Giải thích KV-cache trong 2 câu."
 
 # 3. Run Week 3 E2E verification script in --no-gpu mode
 python infra/scripts/verify_week3_e2e.py --no-gpu
-python infra/scripts/verify_week3_e2e.py --no-gpu -m "Giải thích cơ chế Continuous Batching."
+python infra/scripts/verify_week3_e2e.py --no-gpu --prompt "Giải thích cơ chế Continuous Batching."
 
 # 4. Run Week 3 E2E verification script on Live GPU (when vLLM + Gateway are running)
 python infra/scripts/verify_week3_e2e.py
-python infra/scripts/verify_week3_e2e.py -m "Giải thích ngắn gọn PagedAttention trong vLLM."
+python infra/scripts/verify_week3_e2e.py --prompt "Giải thích ngắn gọn PagedAttention trong vLLM."
 
 # 5. Run Ruff linter and formatter checks
 python -m ruff check .

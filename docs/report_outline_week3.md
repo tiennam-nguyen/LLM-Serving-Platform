@@ -47,7 +47,7 @@
 - **4.3. Tuần 3 — Luồng Web End-to-End & Quan sát Vòng đời Request**:
   - Xây dựng ứng dụng Next.js `apps/web` kết nối trực tiếp tới Gateway qua CORS.
   - Ghi nhận 6 mốc thời gian (`arrival`, `routing_start`, `routing_end`, `worker_start`, `first_token`, `last_token`) và đối chiếu cùng một `request_id` giữa trình duyệt (`RequestInspector`) và backend (`/v1/traces/{request_id}`).
-  - Cơ chế kiểm thử kép (Dual-Mode Verification): Chạy thật với GPU (mặc định, hỗ trợ truyền câu lệnh `-m "prompt"`) và chạy giả lập không cần GPU (`--no-gpu`) trên CI.
+  - Cơ chế kiểm thử kép (Dual-Mode Verification): Chạy thật với GPU (mặc định, hỗ trợ truyền câu lệnh `--prompt "prompt"`) và chạy giả lập không cần GPU (`--no-gpu`) trên CI.
 
 ### Chương 5. Phương pháp Thực nghiệm & Đánh giá (Methodology & Evaluation — Tuần 8–12)
 - **5.1. Cấu hình phần cứng và môi trường thực nghiệm (Experiment Manifest)**.

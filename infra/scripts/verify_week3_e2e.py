@@ -4,8 +4,8 @@ Usage examples:
   1. Default mode (Live GPU, 1 default prompt):
      python infra/scripts/verify_week3_e2e.py
 
-  2. Live GPU with custom prompt (-m):
-     python infra/scripts/verify_week3_e2e.py -m "Giải thích KV cache trong 2 câu."
+  2. Live GPU with custom prompt (--prompt):
+     python infra/scripts/verify_week3_e2e.py --prompt "Giải thích KV cache trong 2 câu."
 
   3. No-GPU mode for CI / CPU machines (--no-gpu):
      python infra/scripts/verify_week3_e2e.py --no-gpu
@@ -239,7 +239,6 @@ def main() -> None:
         description="Verify Week 3 E2E flow and correlate Request ID with backend trace."
     )
     parser.add_argument(
-        "-m",
         "--prompt",
         default=DEFAULT_PROMPT,
         help="Prompt string to send (default: 1-sentence Vietnamese prompt).",
