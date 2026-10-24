@@ -16,25 +16,20 @@ from llm_serving_platform.gateway.streaming import safe_event_generator
 from llm_serving_platform.routing.router import RoutingPolicy, SingleWorkerRouter
 from llm_serving_platform.telemetry.trace import InMemoryTraceStore, RequestTrace
 from llm_serving_platform.workers.base import InferenceWorker
-from llm_serving_platform.workers.vllm_adapter import VLLMWorkerAdapter
+from llm_serving_platform.workers.factory import create_worker
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Manage the lifecycle of the shared httpx client, default worker, and trace store."""
-    config = GatewayConfig()
+    """Manage the lifecycle of the shared httpx client, configured worker, and trace store."""
+    config: GatewayConfig = getattr(app.state, "config", None) or GatewayConfig()
     limits = httpx.Limits(max_keepalive_connections=50, max_connections=200)
     timeout = httpx.Timeout(config.worker_timeout_s, connect=5.0)
     client = httpx.AsyncClient(limits=limits, timeout=timeout)
 
     app.state.config = config
     app.state.client = client
-    app.state.worker = VLLMWorkerAdapter(
-        base_url=config.vllm_base_url,
-        client=client,
-        timeout=config.worker_timeout_s,
-        worker_id=config.worker_id,
-    )
+    app.state.worker = create_worker(config=config, client=client)
     if not hasattr(app.state, "trace_store"):
         app.state.trace_store = InMemoryTraceStore(max_size=500)
 
@@ -49,17 +44,12 @@ async def get_worker(request: Request) -> InferenceWorker:
     if worker is None:
         cfg: GatewayConfig = getattr(request.app.state, "config", None) or GatewayConfig()
         client: httpx.AsyncClient | None = getattr(request.app.state, "client", None)
-        if client is None:
+        if client is None and not cfg.no_gpu:
             limits = httpx.Limits(max_keepalive_connections=50, max_connections=200)
             timeout = httpx.Timeout(cfg.worker_timeout_s, connect=5.0)
             client = httpx.AsyncClient(limits=limits, timeout=timeout)
             request.app.state.client = client
-        worker = VLLMWorkerAdapter(
-            base_url=cfg.vllm_base_url,
-            client=client,
-            timeout=cfg.worker_timeout_s,
-            worker_id=cfg.worker_id,
-        )
+        worker = create_worker(config=cfg, client=client)
         request.app.state.worker = worker
     return worker
 

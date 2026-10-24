@@ -6,8 +6,8 @@ import httpx
 import pytest
 from httpx import ASGITransport, AsyncClient
 
-from llm_serving_platform.gateway.main import create_app, get_worker
-from tests.mocks import MockInferenceWorker
+from llm_serving_platform.common.config import GatewayConfig
+from llm_serving_platform.gateway.main import create_app
 
 
 @pytest.mark.asyncio
@@ -16,14 +16,10 @@ async def test_dual_mode_week3_e2e_trace_and_stream(no_gpu: bool, prompt_text: s
     model_name = os.getenv("MODEL_NAME", "Qwen/Qwen2.5-0.5B-Instruct")
     request_id = "pytest-week3-e2e-01"
 
-    app = create_app()
     if no_gpu:
-        mock_worker = MockInferenceWorker(
-            canned_chunks=["Continuous", " batching", " ghép", " động", " các", " request."],
-            worker_id="worker-mock-ci-0",
-        )
-        app.dependency_overrides[get_worker] = lambda: mock_worker
+        app = create_app(GatewayConfig(no_gpu=True))
     else:
+        app = create_app(GatewayConfig(no_gpu=False))
         vllm_url = os.getenv("VLLM_BASE_URL", "http://127.0.0.1:8000").rstrip("/")
         try:
             async with httpx.AsyncClient(timeout=2.0) as probe:
@@ -57,12 +53,14 @@ async def test_dual_mode_week3_e2e_trace_and_stream(no_gpu: bool, prompt_text: s
         )
         assert response.status_code == 200
         assert response.headers.get("X-Request-ID") == request_id
-        assert response.headers.get("X-Worker-ID") is not None
+        worker_id = response.headers.get("X-Worker-ID")
+        assert worker_id is not None and len(worker_id) > 0
 
         trace_resp = await client.get(f"/v1/traces/{request_id}")
         assert trace_resp.status_code == 200
         trace = trace_resp.json()
         assert trace["request_id"] == request_id
+        assert trace["worker_id"] == worker_id
         assert trace["status"] == "completed"
         assert trace["token_chunks"] >= 1
         for key in (

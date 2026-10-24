@@ -1,9 +1,9 @@
-"""Exit Gate Verification Script for Data Plane Gateway.
+"""Exit Gate Verification Script for Data Plane Gateway (Week 2 Milestone Gate).
 
 Supports two execution modes:
 1. Default (Live GPU): Sends requests to a running Gateway + vLLM GPU backend.
 2. `--no-gpu` (or `--mock`): Runs in-process against MockInferenceWorker for CI/CPU validation.
- Also supports custom prompt injection via `--prompt "your prompt"`.
+Also supports custom prompt injection via `--prompt "your prompt"`.
 """
 
 import argparse
@@ -14,15 +14,22 @@ import sys
 import time
 from pathlib import Path
 
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 import httpx
 
-# Ensure project root and src/ are in sys.path
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 if str(REPO_ROOT / "src") not in sys.path:
     sys.path.insert(0, str(REPO_ROOT / "src"))
 
+from llm_serving_platform.common.config import GatewayConfig, load_dotenv_file  # noqa: E402
+
+load_dotenv_file()
 DEFAULT_PROMPT = "Giải thích ngắn gọn cơ chế Continuous Batching."
 
 
@@ -268,18 +275,11 @@ async def run_mock_verification(
     num_requests: int = 30,
     prompt: str = DEFAULT_PROMPT,
 ) -> bool:
-    """Run verification in-process using an ASGI TestClient and MockInferenceWorker."""
+    """Run verification in-process using GatewayConfig(no_gpu=True) and MockInferenceWorker."""
     print("Running Exit Gate Verification (--no-gpu mode with MockInferenceWorker)...")
-    from llm_serving_platform.gateway.main import create_app, get_worker
-    from tests.mocks import MockInferenceWorker
+    from llm_serving_platform.gateway.main import create_app
 
-    mock_worker = MockInferenceWorker(
-        canned_chunks=["Batching", " mechanism", " dynamically", " groups", " tokens", "."],
-        chunk_delay_s=0.005,
-    )
-    app = create_app()
-    app.dependency_overrides[get_worker] = lambda: mock_worker
-
+    app = create_app(GatewayConfig(no_gpu=True))
     transport = httpx.ASGITransport(app=app)
     async with httpx.AsyncClient(transport=transport, base_url="http://mock-gateway") as client:
         metrics: list[RequestMetric] = []

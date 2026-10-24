@@ -54,6 +54,8 @@ services:
     environment:
       - GATEWAY_HOST=0.0.0.0
       - GATEWAY_PORT=8080
+      - NO_GPU=${NO_GPU:-0}
+      - WORKER_MODE=${WORKER_MODE:-}
       - VLLM_BASE_URL=${VLLM_BASE_URL:-http://vllm-worker:8000}
       - WORKER_ID=${WORKER_ID:-worker-vllm-0}
       - MODEL_NAME=${MODEL_NAME:-Qwen/Qwen2.5-0.5B-Instruct}

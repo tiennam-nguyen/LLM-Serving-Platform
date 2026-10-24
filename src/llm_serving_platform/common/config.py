@@ -63,6 +63,17 @@ def _parse_float_env(env_key: str, default: float) -> float:
         return default
 
 
+def _parse_bool_env(env_key: str, default: bool = False) -> bool:
+    raw = os.getenv(env_key, "").strip().lower()
+    if not raw:
+        return default
+    if raw in {"1", "true", "yes", "on", "mock", "no-gpu", "no_gpu"}:
+        return True
+    if raw in {"0", "false", "no", "off", "gpu", "live"}:
+        return False
+    return default
+
+
 @dataclass(frozen=True)
 class GatewayConfig:
     """Immutable configuration for the Data-Plane API Gateway loaded from .env / environment."""
@@ -80,6 +91,12 @@ class GatewayConfig:
     )
     model_name: str = field(
         default_factory=lambda: os.getenv("MODEL_NAME", "Qwen/Qwen2.5-0.5B-Instruct")
+    )
+    no_gpu: bool = field(
+        default_factory=lambda: (
+            _parse_bool_env("NO_GPU", False)
+            or os.getenv("WORKER_MODE", "").strip().lower() in {"mock", "no-gpu", "no_gpu", "cpu"}
+        )
     )
     cors_allowed_origins: List[str] = field(
         default_factory=lambda: _parse_csv_env(

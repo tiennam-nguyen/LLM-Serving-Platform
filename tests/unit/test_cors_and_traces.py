@@ -7,7 +7,9 @@ from llm_serving_platform.common.config import GatewayConfig, load_dotenv_file
 from llm_serving_platform.gateway.main import create_app, get_worker
 from llm_serving_platform.telemetry.trace import InMemoryTraceStore, RequestTrace
 from llm_serving_platform.workers.base import WorkerUnavailableError
-from tests.mocks import MockInferenceWorker
+from llm_serving_platform.workers.factory import create_worker
+from llm_serving_platform.workers.mock_adapter import MockInferenceWorker
+from llm_serving_platform.workers.vllm_adapter import VLLMWorkerAdapter
 
 
 def test_dotenv_loader_reads_env_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
@@ -17,18 +19,33 @@ def test_dotenv_loader_reads_env_file(tmp_path: Path, monkeypatch: pytest.Monkey
         "# Comment line\n"
         "export GATEWAY_PORT=9090 # inline comment\n"
         'WORKER_ID="worker-test-dotenv"\n'
-        "VLLM_TIMEOUT_S=invalid_float\n",
+        "VLLM_TIMEOUT_S=invalid_float\n"
+        "NO_GPU=1\n",
         encoding="utf-8",
     )
     monkeypatch.delenv("GATEWAY_PORT", raising=False)
     monkeypatch.delenv("WORKER_ID", raising=False)
     monkeypatch.delenv("VLLM_TIMEOUT_S", raising=False)
+    monkeypatch.delenv("NO_GPU", raising=False)
 
     load_dotenv_file(env_file, override=True)
     cfg = GatewayConfig()
     assert cfg.gateway_port == 9090
     assert cfg.worker_id == "worker-test-dotenv"
     assert cfg.worker_timeout_s == 60.0
+    assert cfg.no_gpu is True
+
+
+def test_worker_factory_no_gpu_and_live_gpu_modes(monkeypatch: pytest.MonkeyPatch):
+    """Verify create_worker selects MockInferenceWorker for no_gpu and VLLMWorkerAdapter for GPU."""
+    monkeypatch.delenv("WORKER_ID", raising=False)
+    no_gpu_worker = create_worker(GatewayConfig(no_gpu=True))
+    assert isinstance(no_gpu_worker, MockInferenceWorker)
+    assert no_gpu_worker.worker_id == "worker-mock-0"
+
+    gpu_worker = create_worker(GatewayConfig(no_gpu=False, worker_id="worker-gpu-live"))
+    assert isinstance(gpu_worker, VLLMWorkerAdapter)
+    assert gpu_worker.worker_id == "worker-gpu-live"
 
 
 @pytest.mark.asyncio

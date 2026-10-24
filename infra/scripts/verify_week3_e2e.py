@@ -16,6 +16,11 @@ import asyncio
 import json
 import os
 import sys
+import time
+import uuid
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
 
 if sys.platform == "win32":
     try:
@@ -23,21 +28,14 @@ if sys.platform == "win32":
         sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
-import time
-import uuid
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any
 
 import httpx
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 if str(REPO_ROOT / "src") not in sys.path:
     sys.path.insert(0, str(REPO_ROOT / "src"))
 
-from llm_serving_platform.common.config import load_dotenv_file  # noqa: E402
+from llm_serving_platform.common.config import GatewayConfig, load_dotenv_file  # noqa: E402
 
 load_dotenv_file()
 
@@ -57,26 +55,9 @@ async def run_week3_e2e_check(
     mode_label = "no-gpu-mock" if no_gpu else "live-gpu"
 
     if no_gpu:
-        from llm_serving_platform.gateway.main import create_app, get_worker
-        from tests.mocks import MockInferenceWorker
+        from llm_serving_platform.gateway.main import create_app
 
-        mock_worker = MockInferenceWorker(
-            canned_chunks=[
-                "Continuous",
-                " Batching",
-                " ghép",
-                " các",
-                " request",
-                " theo",
-                " từng",
-                " bước",
-                " decode.",
-            ],
-            chunk_delay_s=0.008,
-            worker_id="worker-mock-0",
-        )
-        app = create_app()
-        app.dependency_overrides[get_worker] = lambda: mock_worker
+        app = create_app(GatewayConfig(no_gpu=True))
         client_ctx = httpx.AsyncClient(
             transport=httpx.ASGITransport(app=app),
             base_url="http://mock-gateway",
@@ -193,7 +174,9 @@ async def run_week3_e2e_check(
         health_ok
         and stream_error is None
         and resp_request_id == req_id
+        and bool(resp_worker_id)
         and server_trace.get("request_id") == req_id
+        and server_trace.get("worker_id") == resp_worker_id
         and server_trace.get("status") == "completed"
         and all_milestones_present
         and chunk_count > 0
@@ -268,16 +251,24 @@ def main() -> None:
     parser.add_argument(
         "--output",
         default=None,
-        help="Optional path to save JSON evidence.",
+        help="Optional path to save JSON evidence (pass --save-evidence for default path).",
+    )
+    parser.add_argument(
+        "--save-evidence",
+        action="store_true",
+        help="Save JSON evidence to experiments/raw/week3_e2e_{gpu|no_gpu}_evidence.json.",
     )
     args = parser.parse_args()
 
-    default_out = (
-        REPO_ROOT / "experiments" / "raw" / "week3_e2e_no_gpu_evidence.json"
-        if args.no_gpu
-        else REPO_ROOT / "experiments" / "raw" / "week3_e2e_gpu_evidence.json"
-    )
-    out_path = Path(args.output) if args.output else default_out
+    out_path: Path | None = None
+    if args.output:
+        out_path = Path(args.output)
+    elif args.save_evidence:
+        out_path = (
+            REPO_ROOT / "experiments" / "raw" / "week3_e2e_no_gpu_evidence.json"
+            if args.no_gpu
+            else REPO_ROOT / "experiments" / "raw" / "week3_e2e_gpu_evidence.json"
+        )
 
     try:
         evidence = asyncio.run(
@@ -315,7 +306,8 @@ def main() -> None:
     print(f"  Server TPOT          : {st_metrics['tpot_ms']}")
     print(f"  Server E2E           : {st_metrics['e2e_ms']} ms")
     print(f"  Response Preview     : {evidence['client_observed']['response_preview']}")
-    print(f"  Evidence Saved To    : {out_path}")
+    if out_path is not None:
+        print(f"  Evidence Saved To    : {out_path}")
     print("=" * 80)
     print(f">>> WEEK 3 EXIT GATE: {'PASSED' if evidence['passed'] else 'FAILED'} <<<")
     sys.exit(0 if evidence["passed"] else 1)

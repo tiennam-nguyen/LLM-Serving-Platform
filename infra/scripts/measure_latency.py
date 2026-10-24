@@ -5,6 +5,8 @@ import asyncio
 import json
 import os
 import sys
+import time
+from pathlib import Path
 
 if sys.platform == "win32":
     try:
@@ -12,18 +14,14 @@ if sys.platform == "win32":
         sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
-import time
-from pathlib import Path
 
 import httpx
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 if str(REPO_ROOT / "src") not in sys.path:
     sys.path.insert(0, str(REPO_ROOT / "src"))
 
-from llm_serving_platform.common.config import load_dotenv_file  # noqa: E402
+from llm_serving_platform.common.config import GatewayConfig, load_dotenv_file  # noqa: E402
 
 load_dotenv_file()
 DEFAULT_PROMPT = "Giải thích ngắn gọn cơ chế Continuous Batching."
@@ -67,24 +65,9 @@ async def _measure_async(
     content_chunks = 0
 
     if no_gpu:
-        from llm_serving_platform.gateway.main import create_app, get_worker
-        from tests.mocks import MockInferenceWorker
+        from llm_serving_platform.gateway.main import create_app
 
-        mock_worker = MockInferenceWorker(
-            canned_chunks=[
-                "Continuous",
-                " Batching",
-                " cho phép",
-                " ghép",
-                " các",
-                " request",
-                " ở mức",
-                " iteration.",
-            ],
-            chunk_delay_s=0.005,
-        )
-        app = create_app()
-        app.dependency_overrides[get_worker] = lambda: mock_worker
+        app = create_app(GatewayConfig(no_gpu=True))
         client_ctx = httpx.AsyncClient(
             transport=httpx.ASGITransport(app=app),
             base_url="http://mock-gateway",
@@ -131,7 +114,7 @@ async def _measure_async(
     if content_chunks > 1 and first_content_time is not None:
         inter_chunk_ms = ((end_time - first_content_time) / (content_chunks - 1)) * 1000
         print(f"[Dữ kiện] Inter-Content-Chunk Interval: {inter_chunk_ms:.2f} ms")
-    return 0
+    return 0 if content_chunks > 0 else 1
 
 
 def stream_and_measure(

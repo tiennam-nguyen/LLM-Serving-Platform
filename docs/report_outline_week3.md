@@ -2,7 +2,7 @@
 
 **Tên đề tài**: Nền tảng LLM Serving có khả năng quan sát và điều phối trên hạ tầng đa GPU (*Adaptive LLM Serving Platform for Observable Multi-GPU Inference*)  
 **Nhóm thực hiện**: 02 sinh viên  
-**Mốc hiện tại**: Hoàn thành Tuần 3 (Walking Skeleton End-to-End: Browser → Gateway → Worker → GPU)
+**Mốc hiện tại**: Hoàn thành Tuần 3 (Walking Skeleton End-to-End: Browser → Gateway → Worker → GPU / No-GPU Dual-Mode)
 
 ---
 
@@ -30,12 +30,14 @@
 - **2.3. Các chiến lược điều phối (Routing Policies)**: Single-Worker (Baseline Tuần 3), Round-Robin (Tuần 4), Least-Loaded (Tuần 7), và Cache-Aware (Tuần 11).
 
 ### Chương 3. Phân tích Yêu cầu & Thiết kế Kiến trúc Hệ thống (System Architecture)
-- **3.1. Nguyên lý thiết kế**: Modular Monolith, tách biệt Data Plane (fast path không chạm DB) và Control Plane, áp dụng nguyên lý SOLID (Dependency Inversion qua `InferenceWorker` và `RoutingPolicy`).
+- **3.1. Nguyên lý thiết kế**: Modular Monolith, tách biệt Data Plane (fast path không chạm DB) và Control Plane, áp dụng nguyên lý SOLID:
+  - *Dependency Inversion & Factory Pattern*: Gateway phụ thuộc vào giao diện trừu tượng `InferenceWorker` và `RoutingPolicy`, khởi tạo worker thông qua `create_worker(config, client)` (`workers/factory.py`) thay vì gắn cứng vào `VLLMWorkerAdapter`.
+  - *Open-Closed Principle trong Kiểm thử Lũy tiến*: Hệ thống kiểm thử định nghĩa bảng `MILESTONE_GATES` (`w1`, `w2`, `w3`, ...) trong một entrypoint duy nhất (`infra/scripts/verify.py`), cho phép bổ sung các cổng nghiệm thu Tuần 4–15 mà không xóa hay phá vỡ các bài kiểm thử của các tuần trước.
 - **3.2. Kiến trúc tổng thể và các phân hệ**:
   - `apps/web`: Giao diện điều khiển và kiểm thử tương tác (Instrumentation Deck).
   - `gateway`: Cổng giao tiếp chuẩn OpenAI-compatible SSE, quản lý CORS, `X-Request-ID`, `X-Worker-ID`, xử lý lỗi và ngắt kết nối (abort propagation).
   - `routing`: Giao diện `RoutingPolicy` và các thuật toán chọn worker trong bộ nhớ.
-  - `workers`: Lớp bọc `InferenceWorker` (`VLLMWorkerAdapter` cho GPU thật và `MockInferenceWorker` cho kiểm thử phi GPU `--no-gpu`).
+  - `workers`: Lớp bọc `InferenceWorker` (`VLLMWorkerAdapter` cho GPU thật, `MockInferenceWorker` trong `workers/mock_adapter.py` cho chế độ `--no-gpu`, và `create_worker` trong `workers/factory.py`).
   - `telemetry`: Bộ thu thập 6 mốc vòng đời request (`RequestTrace`) và kho lưu trữ giới hạn kích thước (`InMemoryTraceStore`).
   - `control` & `benchmark`: Quản lý danh mục worker, kiểm tra sức khỏe (Week 4) và bộ chạy thực nghiệm tái lập (Week 8–9).
 
@@ -44,10 +46,13 @@
 - **4.2. Tuần 2 — Xây dựng Data-Plane Inference Gateway**:
   - Chuẩn hóa schema đầu vào (`ChatCompletionRequest`), middleware gán `X-Request-ID`, chuyển tiếp dòng sự kiện SSE (`safe_event_generator`).
   - Ánh xạ lỗi tầng mạng/worker (`WorkerTimeoutError` 504, `WorkerUnavailableError` 503) thành sự kiện lỗi SSE an toàn.
-- **4.3. Tuần 3 — Luồng Web End-to-End & Quan sát Vòng đời Request**:
+- **4.3. Tuần 3 — Luồng Web End-to-End, Quan sát Vòng đời Request & Kiến trúc Kiểm thử Hợp nhất**:
   - Xây dựng ứng dụng Next.js `apps/web` kết nối trực tiếp tới Gateway qua CORS.
   - Ghi nhận 6 mốc thời gian (`arrival`, `routing_start`, `routing_end`, `worker_start`, `first_token`, `last_token`) và đối chiếu cùng một `request_id` giữa trình duyệt (`RequestInspector`) và backend (`/v1/traces/{request_id}`).
-  - Cơ chế kiểm thử kép (Dual-Mode Verification): Chạy thật với GPU (mặc định, hỗ trợ truyền câu lệnh `--prompt "prompt"`) và chạy giả lập không cần GPU (`--no-gpu`) trên CI.
+  - **Cơ chế Kiểm thử & Vận hành Kép (Dual-Mode GPU / No-GPU)** trên cả 3 phương thức:
+    1. *Kiểm thử tự động E2E hoặc từng phần (`infra/scripts/verify.py`)*: Mặc định chạy với GPU thật; thêm `--no-gpu` để chạy với `MockInferenceWorker`; hỗ trợ `--target {all,lint,unit,integration,w1,w2,w3,gates,web}`.
+    2. *Kiểm thử tự động trên GitHub Actions CI (`.github/workflows/ci.yml`)*: Gọi duy nhất lệnh `python infra/scripts/verify.py --no-gpu` (mặc định không cần GPU trên cloud runner).
+    3. *Kiểm thử tương tác với vai trò người dùng trên trình duyệt (`infra/scripts/dev_stack.py`)*: Mở port `8080` (Gateway) và `3000` (Web UI) ở chế độ mặc định có GPU (`python infra/scripts/dev_stack.py`) hoặc không có GPU (`python infra/scripts/dev_stack.py --no-gpu`).
 
 ### Chương 5. Phương pháp Thực nghiệm & Đánh giá (Methodology & Evaluation — Tuần 8–12)
 - **5.1. Cấu hình phần cứng và môi trường thực nghiệm (Experiment Manifest)**.
@@ -66,7 +71,7 @@
 ### 1. Sơ đồ luồng dữ liệu thực tế ở Tuần 3
 
 ```text
-[Trình duyệt (Next.js Port 3000)]
+[Trình duyệt (Next.js Port 3000)]  <-- (Mở bằng dev_stack.py hoặc dev_stack.py --no-gpu)
        │
        │ (1) POST /v1/chat/completions (stream=True)
        │     Response Headers: X-Request-ID, X-Worker-ID
@@ -76,8 +81,9 @@
        ├──> [SingleWorkerRouter.select_worker()] -> mark_routing_start / mark_routing_end
        ├──> [safe_event_generator()]             -> mark_worker_start
        │           │
-       │           ├── (Chế độ mặc định GPU) ──> [VLLMWorkerAdapter] ──> [vLLM Server (Port 8000, GPU)]
-       │           └── (Chế độ --no-gpu CI)  ──> [MockInferenceWorker (In-Memory)]
+       │           └──> [create_worker(config, client)] (workers/factory.py)
+       │                     ├── (Mặc định: Có GPU) ──> [VLLMWorkerAdapter] ──> [vLLM Server (:8000, GPU)]
+       │                     └── (Cờ --no-gpu / CI) ──> [MockInferenceWorker (workers/mock_adapter.py)]
        │
        ├──> Nhận chunk nội dung đầu tiên         -> mark_first_token (Tính Server TTFT)
        ├──> Kết thúc stream ([DONE]/Abort/Error) -> mark_last_token  (Tính Server E2E, Inter-Chunk)
@@ -90,6 +96,6 @@
 
 ### 2. Các giới hạn đã biết tại Tuần 3 (Known Limitations)
 
-1. **Single-Worker Routing (`SingleWorkerRouter`)**: Ở Tuần 3, hệ thống định tuyến tới 1 worker cấu hình sẵn (`worker-vllm-0`). Danh mục nhiều worker (`WorkerRegistry`), kiểm tra sức khỏe chủ động và thuật toán `RoundRobinRouter` sẽ được triển khai ở **Tuần 4**.
+1. **Single-Worker Routing (`SingleWorkerRouter`)**: Ở Tuần 3, hệ thống định tuyến tới 1 worker cấu hình sẵn (`worker-vllm-0` ở chế độ GPU hoặc `worker-mock-0` ở chế độ `--no-gpu`). Danh mục nhiều worker (`WorkerRegistry`), kiểm tra sức khỏe chủ động và thuật toán `RoundRobinRouter` sẽ được triển khai ở **Tuần 4**.
 2. **Đo lường `inter_content_chunk_ms` thay vì `tpot_ms` mặc định**: Do một sự kiện SSE từ vLLM không phải lúc nào cũng tương ứng chính xác 1 token (có thể gộp token hoặc gửi frame rỗng khởi tạo role), backend công bố `inter_content_chunk_ms` và giữ `tpot_ms = None` trừ khi luồng SSE có trả về `usage.completion_tokens` tường minh.
 3. **Lưu trữ Trace trong bộ nhớ (`InMemoryTraceStore`)**: Trace của 500 request gần nhất và lịch sử chat 50 lượt trên trình duyệt được giữ trong RAM theo đúng phạm vi P0 của Giai đoạn I; chưa sử dụng cơ sở dữ liệu ngoài để tránh làm chậm đường truyền suy luận.
