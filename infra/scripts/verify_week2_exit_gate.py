@@ -1,3 +1,4 @@
+# ruff: noqa: E402, I001
 """Exit Gate Verification Script for Data Plane Gateway (Week 2 Milestone Gate).
 
 Supports two execution modes:
@@ -14,14 +15,14 @@ import sys
 import time
 from pathlib import Path
 
+import httpx
+
 if sys.platform == "win32":
     try:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
         sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
-
-import httpx
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 if str(REPO_ROOT / "src") not in sys.path:

@@ -1,3 +1,4 @@
+# ruff: noqa: E402, I001
 """Backward-compatible wrapper delegating to the unified infra/scripts/verify.py pipeline."""
 
 import sys

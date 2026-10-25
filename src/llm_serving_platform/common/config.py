@@ -95,7 +95,8 @@ class GatewayConfig:
     no_gpu: bool = field(
         default_factory=lambda: (
             _parse_bool_env("NO_GPU", False)
-            or os.getenv("WORKER_MODE", "").strip().lower() in {"mock", "no-gpu", "no_gpu", "cpu"}
+            or os.getenv("WORKER_MODE", "").strip().lower()
+            in {"mock", "no-gpu", "no_gpu", "cpu"}
         )
     )
     cors_allowed_origins: List[str] = field(

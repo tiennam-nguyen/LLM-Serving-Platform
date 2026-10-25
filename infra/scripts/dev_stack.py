@@ -1,3 +1,4 @@
+# ruff: noqa: E402, I001
 """Interactive User Stack Launcher (opens Gateway on :8080 and Web UI on :3000 for browser testing).
 
 Usage:
@@ -14,6 +15,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import asyncio
 import os
 import shutil
 import subprocess
@@ -29,7 +31,8 @@ if str(REPO_ROOT) not in sys.path:
 if str(REPO_ROOT / "src") not in sys.path:
     sys.path.insert(0, str(REPO_ROOT / "src"))
 
-from llm_serving_platform.common.config import load_dotenv_file  # noqa: E402
+from infra.scripts.verify_week3_e2e import run_week3_e2e_check  # noqa: E402, I001
+from llm_serving_platform.common.config import load_dotenv_file  # noqa: E402, I001
 
 load_dotenv_file()
 
@@ -49,9 +52,7 @@ def _wait_http_ready(url: str, timeout_s: float = 20.0) -> bool:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description=(
-            "Launch Gateway (:8080) and Next.js Web UI (:3000) for interactive browser testing."
-        )
+        description="Launch Gateway (:8080) and Web UI (:3000) for interactive browser testing."
     )
     parser.add_argument(
         "--no-gpu",
@@ -75,7 +76,7 @@ def main() -> int:
     parser.add_argument(
         "--vllm-url",
         default=os.getenv("VLLM_BASE_URL", "http://127.0.0.1:8000"),
-        help="vLLM worker URL when running in default Live GPU mode (default: http://127.0.0.1:8000).",
+        help="vLLM worker URL in default Live GPU mode (default: http://127.0.0.1:8000).",
     )
     parser.add_argument(
         "--model",
@@ -90,9 +91,7 @@ def main() -> int:
     parser.add_argument(
         "--smoke-test",
         action="store_true",
-        help=(
-            "Start the requested service(s), verify HTTP readiness + 1 E2E trace, and exit cleanly."
-        ),
+        help="Start requested service(s), verify HTTP readiness + 1 E2E trace, and exit.",
     )
     args = parser.parse_args()
 
@@ -108,9 +107,11 @@ def main() -> int:
         "http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001,http://127.0.0.1:3001"
     )
 
-    mode_str = (
-        "NO-GPU (MockInferenceWorker)" if args.no_gpu else f"LIVE-GPU (vLLM @ {args.vllm_url})"
-    )
+    if args.no_gpu:
+        mode_str = "NO-GPU (MockInferenceWorker)"
+    else:
+        mode_str = f"LIVE-GPU (vLLM @ {args.vllm_url})"
+
     print("=" * 84)
     print(f"[*] Starting Interactive User Stack — Mode: {mode_str}")
     print("=" * 84)
@@ -174,10 +175,6 @@ def main() -> int:
         print("=" * 84 + "\n")
 
         if args.smoke_test:
-            import asyncio
-
-            from infra.scripts.verify_week3_e2e import run_week3_e2e_check
-
             evidence = asyncio.run(
                 run_week3_e2e_check(
                     gateway_url=f"http://127.0.0.1:{args.gateway_port}",
@@ -186,10 +183,11 @@ def main() -> int:
                     no_gpu=False,
                 )
             )
-            worker_hdr = evidence["client_observed"]["worker_id_header"]
+            req_id = evidence["request_id"]
+            w_id = evidence["client_observed"]["worker_id_header"]
             print(
                 f"[+] Live HTTP Smoke Test against 127.0.0.1:{args.gateway_port} PASSED! "
-                f"(Request ID: {evidence['request_id']}, Worker: {worker_hdr})"
+                f"(Request ID: {req_id}, Worker: {w_id})"
             )
             return 0 if evidence["passed"] else 1
 

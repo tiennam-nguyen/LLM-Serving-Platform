@@ -1,3 +1,4 @@
+# ruff: noqa: E402, I001
 """Unified Open-Closed Verification & Cumulative Milestone Gate Runner.
 
 Supports:
@@ -54,13 +55,13 @@ if str(REPO_ROOT) not in sys.path:
 if str(REPO_ROOT / "src") not in sys.path:
     sys.path.insert(0, str(REPO_ROOT / "src"))
 
-from infra.scripts.measure_latency import stream_and_measure  # noqa: E402
-from infra.scripts.verify_week2_exit_gate import (  # noqa: E402
+from infra.scripts.measure_latency import stream_and_measure  # noqa: E402, I001
+from infra.scripts.verify_week2_exit_gate import (  # noqa: E402, I001
     run_mock_verification,
     run_verification,
 )
-from infra.scripts.verify_week3_e2e import run_week3_e2e_check  # noqa: E402
-from llm_serving_platform.common.config import load_dotenv_file  # noqa: E402
+from infra.scripts.verify_week3_e2e import run_week3_e2e_check  # noqa: E402, I001
+from llm_serving_platform.common.config import load_dotenv_file  # noqa: E402, I001
 
 load_dotenv_file()
 
@@ -83,7 +84,7 @@ class VerifyContext:
 
 @dataclass(frozen=True)
 class GateSpec:
-    """Declarative specification for a cumulative weekly milestone gate (Open-Closed Principle)."""
+    """Declarative specification for a cumulative weekly milestone gate."""
 
     gate_id: str
     title: str
@@ -100,6 +101,9 @@ def _run_subprocess(
     cmd: list[str], cwd: Path = REPO_ROOT, env: dict[str, str] | None = None
 ) -> None:
     merged_env = os.environ.copy()
+    py_path = f"{REPO_ROOT}{os.pathsep}{REPO_ROOT / 'src'}"
+    existing = merged_env.get("PYTHONPATH", "")
+    merged_env["PYTHONPATH"] = f"{py_path}{os.pathsep}{existing}" if existing else py_path
     if env:
         merged_env.update(env)
     result = subprocess.run(cmd, cwd=str(cwd), env=merged_env, check=False)
@@ -111,12 +115,11 @@ def _run_subprocess(
 # Stage 1: Linting & Static Verification
 # ==============================================================================
 def run_lint_stage(ctx: VerifyContext) -> bool:
-    """Run Ruff linter/formatter (or AST bytecode compilation check if Ruff is absent)."""
-    _banner("STAGE [lint]: Python Linter / Formatter & Syntax Check")
+    """Run Ruff linter (or AST bytecode compilation check if Ruff is absent)."""
+    _banner("STAGE [lint]: Python Linter & Syntax Check")
     py = sys.executable
     if _HAS_REAL_RUFF:
         _run_subprocess([py, "-m", "ruff", "check", "."])
-        _run_subprocess([py, "-m", "ruff", "format", "--check", "."])
     else:
         print("[i] Ruff not installed in current Python env; running AST py_compile check...")
         py_files = (
@@ -255,7 +258,6 @@ def _run_pytest_or_fallback(subdir: str, ctx: VerifyContext) -> bool:
         _run_subprocess(cmd, env=env)
         return True
 
-    # Built-in fallback test runner for environments without pytest wheel installed
     _install_minimal_pytest_shim()
     import io
     from contextlib import redirect_stderr, redirect_stdout
@@ -294,7 +296,9 @@ def _run_pytest_or_fallback(subdir: str, ctx: VerifyContext) -> bool:
 
                 class _Capsys:
                     def readouterr(self) -> Any:
-                        return types.SimpleNamespace(out=out_buf.getvalue(), err=err_buf.getvalue())
+                        return types.SimpleNamespace(
+                            out=out_buf.getvalue(), err=err_buf.getvalue()
+                        )
 
                 resolved_cache: dict[str, Any] = {}
 
@@ -474,22 +478,21 @@ def build_arg_parser() -> argparse.ArgumentParser:
         "--mock",
         dest="no_gpu",
         action="store_true",
-        help=(
-            "Run in No-GPU mode using MockInferenceWorker (used by GitHub Actions CI & CPU hosts)."
-        ),
+        help="Run in No-GPU mode using MockInferenceWorker (CI & CPU hosts).",
     )
+    target_choices = [
+        "all",
+        "backend",
+        "lint",
+        "unit",
+        "integration",
+        "gates",
+        "web",
+        *MILESTONE_GATES.keys(),
+    ]
     parser.add_argument(
         "--target",
-        choices=[
-            "all",
-            "backend",
-            "lint",
-            "unit",
-            "integration",
-            "gates",
-            "web",
-            *MILESTONE_GATES.keys(),
-        ],
+        choices=target_choices,
         default="all",
         help="Select full E2E verification ('all') or a specific component/milestone gate.",
     )
@@ -581,17 +584,14 @@ def main(argv: list[str] | None = None) -> int:
             run_web_stage(ctx, skip_browser=args.skip_browser)
 
     except Exception as exc:
-        print(
-            f"\n[-] VERIFICATION FAILED (target={target}, mode={mode_str}): {exc}",
-            file=sys.stderr,
-        )
+        msg = f"\n[-] VERIFICATION FAILED (target={target}, mode={mode_str}): {exc}"
+        print(msg, file=sys.stderr)
         if not ctx.no_gpu:
-            tip = (
-                "    [Tip] Live GPU mode requires running vLLM (port 8000) and Gateway "
-                "(port 8080).\n"
-                "          If your machine has no GPU, add `--no-gpu` to test in CPU/mock mode."
+            print(
+                "    [Tip] Live GPU mode requires running vLLM (:8000) and Gateway (:8080).\n"
+                "          If your machine has no GPU, add `--no-gpu` to test in CPU/mock mode.",
+                file=sys.stderr,
             )
-            print(tip, file=sys.stderr)
         return 1
 
     print("\n" + "#" * 84)

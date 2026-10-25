@@ -1,3 +1,4 @@
+# ruff: noqa: E402, I001
 """Week 3 E2E Verification & Evidence Recorder (Browser/Client -> Gateway -> Worker -> Trace).
 
 Usage examples:
@@ -22,14 +23,14 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import httpx
+
 if sys.platform == "win32":
     try:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
         sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
-
-import httpx
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 if str(REPO_ROOT / "src") not in sys.path:

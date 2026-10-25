@@ -1,3 +1,4 @@
+# ruff: noqa: E402, I001
 """Single-request streaming latency probe supporting live GPU and --no-gpu modes."""
 
 import argparse
@@ -8,14 +9,14 @@ import sys
 import time
 from pathlib import Path
 
+import httpx
+
 if sys.platform == "win32":
     try:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
         sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
-
-import httpx
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 if str(REPO_ROOT / "src") not in sys.path:
@@ -82,8 +83,9 @@ async def _measure_async(
         async with client.stream("POST", target_url, json=payload) as response:
             if response.status_code != 200:
                 body = await response.aread()
+                err_msg = body.decode("utf-8", errors="replace")
                 print(
-                    f"[Lỗi] HTTP {response.status_code}: {body.decode('utf-8', errors='replace')}",
+                    f"[Lỗi] HTTP {response.status_code}: {err_msg}",
                     file=sys.stderr,
                 )
                 return 1

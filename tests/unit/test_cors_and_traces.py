@@ -23,10 +23,10 @@ def test_dotenv_loader_reads_env_file(tmp_path: Path, monkeypatch: pytest.Monkey
         "NO_GPU=1\n",
         encoding="utf-8",
     )
-    monkeypatch.delenv("GATEWAY_PORT", raising=False)
-    monkeypatch.delenv("WORKER_ID", raising=False)
-    monkeypatch.delenv("VLLM_TIMEOUT_S", raising=False)
-    monkeypatch.delenv("NO_GPU", raising=False)
+    # Seed keys first so pytest monkeypatch records their prior state even when absent in CI
+    for env_key in ("GATEWAY_PORT", "WORKER_ID", "VLLM_TIMEOUT_S", "NO_GPU"):
+        monkeypatch.setenv(env_key, "")
+        monkeypatch.delenv(env_key, raising=False)
 
     load_dotenv_file(env_file, override=True)
     cfg = GatewayConfig()
@@ -38,6 +38,7 @@ def test_dotenv_loader_reads_env_file(tmp_path: Path, monkeypatch: pytest.Monkey
 
 def test_worker_factory_no_gpu_and_live_gpu_modes(monkeypatch: pytest.MonkeyPatch):
     """Verify create_worker selects MockInferenceWorker for no_gpu and VLLMWorkerAdapter for GPU."""
+    monkeypatch.setenv("WORKER_ID", "")
     monkeypatch.delenv("WORKER_ID", raising=False)
     no_gpu_worker = create_worker(GatewayConfig(no_gpu=True))
     assert isinstance(no_gpu_worker, MockInferenceWorker)
