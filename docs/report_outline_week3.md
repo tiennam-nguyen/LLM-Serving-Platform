@@ -32,6 +32,7 @@
 ### Chương 3. Phân tích Yêu cầu & Thiết kế Kiến trúc Hệ thống (System Architecture)
 - **3.1. Nguyên lý thiết kế**: Modular Monolith, tách biệt Data Plane (fast path không chạm DB) và Control Plane, áp dụng nguyên lý SOLID:
   - *Dependency Inversion & Factory Pattern*: Gateway phụ thuộc vào giao diện trừu tượng `InferenceWorker` và `RoutingPolicy`, khởi tạo worker thông qua `create_worker(config, client)` (`workers/factory.py`) thay vì gắn cứng vào `VLLMWorkerAdapter`.
+  - *Tách biệt Dependency Core và GPU Runtime (`pyproject.toml`)*: Các thư viện lõi của Data-Plane Gateway (`fastapi`, `httpx`, `uvicorn`, `pydantic`) được khai báo làm dependency mặc định, trong khi `vllm` và `transformers<4.49.0` được tách vào nhóm tùy chọn `[project.optional-dependencies].gpu` để tránh xung đột `pip` trên các máy chỉ có CPU hoặc GitHub Actions runner.
   - *Open-Closed Principle trong Kiểm thử Lũy tiến*: Hệ thống kiểm thử định nghĩa bảng `MILESTONE_GATES` (`w1`, `w2`, `w3`, ...) trong một entrypoint duy nhất (`infra/scripts/verify.py`), cho phép bổ sung các cổng nghiệm thu Tuần 4–15 mà không xóa hay phá vỡ các bài kiểm thử của các tuần trước.
 - **3.2. Kiến trúc tổng thể và các phân hệ**:
   - `apps/web`: Giao diện điều khiển và kiểm thử tương tác (Instrumentation Deck).
@@ -51,7 +52,7 @@
   - Ghi nhận 6 mốc thời gian (`arrival`, `routing_start`, `routing_end`, `worker_start`, `first_token`, `last_token`) và đối chiếu cùng một `request_id` giữa trình duyệt (`RequestInspector`) và backend (`/v1/traces/{request_id}`).
   - **Cơ chế Kiểm thử & Vận hành Kép (Dual-Mode GPU / No-GPU)** trên cả 3 phương thức:
     1. *Kiểm thử tự động E2E hoặc từng phần (`infra/scripts/verify.py`)*: Mặc định chạy với GPU thật; thêm `--no-gpu` để chạy với `MockInferenceWorker`; hỗ trợ `--target {all,lint,unit,integration,w1,w2,w3,gates,web}`.
-    2. *Kiểm thử tự động trên GitHub Actions CI (`.github/workflows/ci.yml`)*: Gọi duy nhất lệnh `python infra/scripts/verify.py --no-gpu` (mặc định không cần GPU trên cloud runner).
+    2. *Kiểm thử tự động trên GitHub Actions CI (`.github/workflows/ci.yml`)*: Gọi duy nhất lệnh `python infra/scripts/verify.py --no-gpu` (mặc định không cần GPU trên cloud runner, hỗ trợ `use_gpu=true` qua `workflow_dispatch` cho self-hosted GPU runner), sử dụng bộ action chuẩn Node 24 (`actions/checkout@v5`, `actions/setup-python@v6`, `actions/setup-node@v6`) và `package-lock.json` đồng bộ đa nền tảng Windows/Linux.
     3. *Kiểm thử tương tác với vai trò người dùng trên trình duyệt (`infra/scripts/dev_stack.py`)*: Mở port `8080` (Gateway) và `3000` (Web UI) ở chế độ mặc định có GPU (`python infra/scripts/dev_stack.py`) hoặc không có GPU (`python infra/scripts/dev_stack.py --no-gpu`).
 
 ### Chương 5. Phương pháp Thực nghiệm & Đánh giá (Methodology & Evaluation — Tuần 8–12)
