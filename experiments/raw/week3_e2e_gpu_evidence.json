@@ -1,0 +1,73 @@
+{
+  "timestamp_utc": "2026-10-26T11:17:38.135273+00:00",
+  "mode": "live-gpu",
+  "passed": true,
+  "request_id": "w3-e2e-6576d942",
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "prompt": "Giải thích ngắn gọn cơ chế Continuous Batching trong 2 câu.",
+  "health_check": {
+    "healthy": true,
+    "worker_id_header": "worker-vllm-0"
+  },
+  "client_observed": {
+    "request_id_header": "w3-e2e-6576d942",
+    "worker_id_header": "worker-vllm-0",
+    "cors_allow_origin": "http://127.0.0.1:3000",
+    "accepted_ms": 5.38,
+    "first_content_ms": 352.6,
+    "e2e_ms": 1946.31,
+    "content_chunks": 128,
+    "response_preview": "Để giải thích ngắn gọn cơ chế Continuous Batching trong 2 câu, tôi có thể dán mã lại như sau:\n\n\"Học sinh chọn bài học phù hợp với sở thích, thách thức, và nhu cầu cá nhân, từ đó tinh up dựa vào năng l",
+    "error": null
+  },
+  "server_trace": {
+    "request_id": "w3-e2e-6576d942",
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "worker_id": "worker-vllm-0",
+    "status": "completed",
+    "token_chunks": 128,
+    "completion_tokens": null,
+    "error": null,
+    "milestones": {
+      "arrival": "2026-10-26T11:17:36.161373+00:00",
+      "routing_start": "2026-10-26T11:17:36.161385+00:00",
+      "routing_end": "2026-10-26T11:17:36.161389+00:00",
+      "worker_start": "2026-10-26T11:17:36.162191+00:00",
+      "first_token": "2026-10-26T11:17:36.509206+00:00",
+      "last_token": "2026-10-26T11:17:38.103469+00:00"
+    },
+    "metrics_ms": {
+      "routing_ms": 0.003,
+      "ttft_ms": 347.84,
+      "tpot_ms": null,
+      "inter_content_chunk_ms": 12.55,
+      "e2e_ms": 1942.1
+    }
+  },
+  "gateway_log_correlation": {
+    "verified": true,
+    "events": [
+      {
+        "timestamp": "2026-10-26T11:17:36.161445+00:00",
+        "event": "chat_stream_started",
+        "request_id": "w3-e2e-6576d942",
+        "worker_id": "worker-vllm-0",
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-10-26T11:17:38.103501+00:00",
+        "event": "chat_stream_completed",
+        "request_id": "w3-e2e-6576d942",
+        "worker_id": "worker-vllm-0",
+        "status": "completed"
+      }
+    ],
+    "note": "Exact request/worker IDs, completed status and all six milestones match the structured gateway log. Client IP and prompt content omitted."
+  },
+  "git_revision": "8cb323fb74f8942b6b4f06fa0c27f1af73f9752a",
+  "gpu": "NVIDIA GeForce RTX 2050",
+  "driver_version": "577.05",
+  "worker_endpoint": "http://127.0.1.1:8000",
+  "command": "python infra/scripts/verify_week3_e2e.py --save-evidence",
+  "performance_claim": "None; one functional acceptance request, not a benchmark."
+}
