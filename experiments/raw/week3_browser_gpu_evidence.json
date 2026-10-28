@@ -1,0 +1,342 @@
+{
+  "git_revision": "8cb323fb74f8942b6b4f06fa0c27f1af73f9752a",
+  "timestamp_utc": "2026-10-26T11:18:25.924Z",
+  "mode": "live-gpu-browser",
+  "passed": true,
+  "gpu": "NVIDIA GeForce RTX 2050",
+  "driver_version": "577.05",
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "browser": "Chromium 153.0.8010.12",
+  "browser_method": "Installed Playwright chromium.launch; existing live stack; no fixture config, interception, or simulated stream",
+  "web_url": "http://127.0.0.1:3000",
+  "gateway_url": "http://127.0.0.1:8080",
+  "request_id": "c26ac75b-5ad8-484b-986e-ed34b30b733d",
+  "worker_id": "worker-vllm-0",
+  "client_first_content_ms": 242,
+  "client_e2e_ms": 925,
+  "streaming_observed": true,
+  "rendered_content_observations": [
+    {
+      "time_ms": 2583.100000000093,
+      "length": 10,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2591.399999999907,
+      "length": 19,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2606.100000000093,
+      "length": 22,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2619.6999999997206,
+      "length": 24,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2636.7999999998137,
+      "length": 34,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2650,
+      "length": 39,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2665.2999999998137,
+      "length": 42,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2681.100000000093,
+      "length": 50,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2696,
+      "length": 59,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2710.7999999998137,
+      "length": 63,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2745.399999999907,
+      "length": 68,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2751.399999999907,
+      "length": 77,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2756.6999999997206,
+      "length": 82,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2768.100000000093,
+      "length": 90,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2779.100000000093,
+      "length": 93,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2800.399999999907,
+      "length": 103,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2813.7999999998137,
+      "length": 106,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2825.2999999998137,
+      "length": 114,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2844.5,
+      "length": 123,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2861.600000000093,
+      "length": 130,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2876.7999999998137,
+      "length": 136,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2887.600000000093,
+      "length": 139,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2921.600000000093,
+      "length": 149,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2936,
+      "length": 156,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2948.399999999907,
+      "length": 162,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2958.1999999997206,
+      "length": 172,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2969.5,
+      "length": 173,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2980.5,
+      "length": 183,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 2992,
+      "length": 186,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3002.7999999998137,
+      "length": 198,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3013.600000000093,
+      "length": 203,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3019.1999999997206,
+      "length": 208,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3022.899999999907,
+      "length": 209,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3031.1999999997206,
+      "length": 217,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3041.6999999997206,
+      "length": 220,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3053.399999999907,
+      "length": 226,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3064.5,
+      "length": 231,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3075,
+      "length": 245,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3087.399999999907,
+      "length": 251,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3105.2999999998137,
+      "length": 252,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3109.6999999997206,
+      "length": 257,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3123.600000000093,
+      "length": 266,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3135.6999999997206,
+      "length": 280,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3143.7999999998137,
+      "length": 286,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3162.899999999907,
+      "length": 289,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3173,
+      "length": 293,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3182.899999999907,
+      "length": 302,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3194.1999999997206,
+      "length": 307,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3206.600000000093,
+      "length": 310,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3218.899999999907,
+      "length": 319,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3230.5,
+      "length": 329,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3242.2999999998137,
+      "length": 341,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3254.1999999997206,
+      "length": 342,
+      "status": "streaming"
+    },
+    {
+      "time_ms": 3275.2999999998137,
+      "length": 342,
+      "status": "completed"
+    }
+  ],
+  "server_trace_status": "completed",
+  "milestones_present": true,
+  "server_trace": {
+    "request_id": "c26ac75b-5ad8-484b-986e-ed34b30b733d",
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "worker_id": "worker-vllm-0",
+    "status": "completed",
+    "token_chunks": 56,
+    "completion_tokens": null,
+    "error": null,
+    "milestones": {
+      "arrival": "2026-10-26T18:18:24.21023+07:00",
+      "routing_start": "2026-10-26T18:18:24.210258+07:00",
+      "routing_end": "2026-10-26T18:18:24.210266+07:00",
+      "worker_start": "2026-10-26T18:18:24.21178+07:00",
+      "first_token": "2026-10-26T18:18:24.447855+07:00",
+      "last_token": "2026-10-26T18:18:25.167883+07:00"
+    },
+    "metrics_ms": {
+      "routing_ms": 0.007,
+      "ttft_ms": 237.61,
+      "tpot_ms": null,
+      "inter_content_chunk_ms": 13.09,
+      "e2e_ms": 957.64
+    }
+  },
+  "gateway_log_correlation": {
+    "verified": true,
+    "events": [
+      {
+        "timestamp": "2026-10-26T18:18:24.210312+07:00",
+        "event": "chat_stream_started",
+        "request_id": "c26ac75b-5ad8-484b-986e-ed34b30b733d",
+        "worker_id": "worker-vllm-0",
+        "status": "started"
+      },
+      {
+        "timestamp": "2026-10-26T18:18:25.167908+07:00",
+        "event": "chat_stream_completed",
+        "request_id": "c26ac75b-5ad8-484b-986e-ed34b30b733d",
+        "worker_id": "worker-vllm-0",
+        "status": "completed"
+      }
+    ],
+    "note": "Exact request/worker IDs, completed status and all six milestones match the structured gateway log. Client IP and prompt content omitted."
+  },
+  "screenshot": "experiments/figures/week3_browser_gpu.png",
+  "performance_claim": "None; one functional acceptance request, not a benchmark",
+  "probe_command": "cd apps/web && node test-results/live-gate-a.mjs",
+  "probe_sha256": "5e11c7c6f45fea941beed9282ade512f698c80ae4d1198fb22731020256dc59c",
+  "screenshot_sha256": "5d78011a10dca2b2c2c43722c8e430e4702d24878c58a65b66f68aa836d3663d",
+  "timing_scope": "Client durations are the rounded inspector display values. READ: client.ts:streamChat ends on DONE; gateway/streaming.py:safe_event_generator marks the server terminal state after upstream iteration ends. Completion boundaries differ; the numerical difference here was not separately diagnosed. Single functional request; no benchmark conclusion."
+}

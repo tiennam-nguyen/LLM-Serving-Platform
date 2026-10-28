@@ -1,6 +1,9 @@
 """Telemetry module boundary.
 
-Future responsibility:
-    Captures runtime metrics (TTFT, ITL, request latency, throughput, worker GPU utilization)
-    and produces in-memory state snapshots used by dynamic routing policies and export sinks.
+Captures per-request 6-milestone lifecycle traces (arrival, routing_start, routing_end,
+worker_start, first_token, last_token) and derived server latencies.
 """
+
+from llm_serving_platform.telemetry.trace import InMemoryTraceStore, RequestTrace
+
+__all__ = ["InMemoryTraceStore", "RequestTrace"]

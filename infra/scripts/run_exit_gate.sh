@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -e
-GATEWAY_URL="${1:-http://127.0.1.1:8080}"
+if [ -f .env ]; then
+    set -a
+    source .env
+    set +a
+fi
+
+GATEWAY_URL="${1:-${GATEWAY_URL:-http://127.0.0.1:8080}}"
 
 echo "[*] Kiểm tra Gateway Health tại ${GATEWAY_URL}/health..."
 if ! curl -s -f "${GATEWAY_URL}/health" > /dev/null; then

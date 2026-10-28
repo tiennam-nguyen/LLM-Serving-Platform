@@ -20,10 +20,12 @@ class VLLMWorkerAdapter(InferenceWorker):
         base_url: str = "http://127.0.0.1:8000",
         client: Optional[httpx.AsyncClient] = None,
         timeout: float = 60.0,
+        worker_id: str = "worker-vllm-0",
     ) -> None:
         self.base_url = base_url.rstrip("/")
         self._client = client
         self.timeout = timeout
+        self.worker_id = worker_id
 
     @property
     def client(self) -> httpx.AsyncClient:
@@ -36,9 +38,7 @@ class VLLMWorkerAdapter(InferenceWorker):
     def client(self, value: httpx.AsyncClient) -> None:
         self._client = value
 
-    async def stream_chat(
-        self, payload: Dict[str, Any], request_id: str
-    ) -> AsyncIterator[str]:
+    async def stream_chat(self, payload: Dict[str, Any], request_id: str) -> AsyncIterator[str]:
         """Forward chat completion requests to vLLM and stream SSE chunks.
 
         Uses async context manager stream to ensure safe connection cleanup.
@@ -68,9 +68,10 @@ class VLLMWorkerAdapter(InferenceWorker):
 
                 async for raw_line in response.aiter_lines():
                     line = raw_line.strip()
-                    if not line:
+                    if not line or line.startswith(":"):
+                        # Skip blank lines and SSE keepalive comments
                         continue
-                    if line.startswith("data:"):
+                    if line.startswith("data:") or line.startswith("event:"):
                         yield f"{line}\n\n"
                     else:
                         yield f"data: {line}\n\n"
@@ -82,9 +83,7 @@ class VLLMWorkerAdapter(InferenceWorker):
         except WorkerException:
             raise
         except httpx.RequestError as exc:
-            raise WorkerUnavailableError(
-                f"Failed to communicate with vLLM worker: {exc}"
-            ) from exc
+            raise WorkerUnavailableError(f"Failed to communicate with vLLM worker: {exc}") from exc
 
     async def check_health(self) -> bool:
         """Check if the vLLM backend server is healthy."""

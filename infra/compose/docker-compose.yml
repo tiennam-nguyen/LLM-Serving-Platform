@@ -1,0 +1,104 @@
+name: llm-serving-platform
+
+services:
+  # Optional GPU Worker (enabled with: docker compose --profile gpu up)
+  vllm-worker:
+    image: vllm/vllm-openai:latest
+    profiles: ["gpu"]
+    command:
+      - "--model"
+      - "${MODEL_NAME:-Qwen/Qwen2.5-0.5B-Instruct}"
+      - "--dtype"
+      - "float16"
+      - "--gpu-memory-utilization"
+      - "0.6"
+      - "--max-model-len"
+      - "2048"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "8000"
+    ports:
+      - "127.0.0.1:8000:8000"
+    ipc: host
+    shm_size: "4gb"
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    security_opt:
+      - no-new-privileges:true
+    # Cgroup v2 resource constraints
+    cpus: 4.0
+    mem_limit: 12g
+    pids_limit: 2048
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+      - ~/.cache/huggingface:/root/.cache/huggingface
+    networks:
+      - serving-net
+
+  gateway:
+    build:
+      context: ../..
+      dockerfile: infra/compose/Dockerfile.gateway
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    environment:
+      - GATEWAY_HOST=0.0.0.0
+      - GATEWAY_PORT=8080
+      - NO_GPU=${NO_GPU:-0}
+      - WORKER_MODE=${WORKER_MODE:-}
+      - VLLM_BASE_URL=${VLLM_BASE_URL:-http://vllm-worker:8000}
+      - WORKER_ID=${WORKER_ID:-worker-vllm-0}
+      - MODEL_NAME=${MODEL_NAME:-Qwen/Qwen2.5-0.5B-Instruct}
+      - CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+    ports:
+      - "127.0.0.1:8080:8080"
+    # Hardened Linux security & namespace/cgroup isolation
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    cpus: 2.0
+    mem_limit: 1g
+    memswap_limit: 1g
+    pids_limit: 256
+    networks:
+      - serving-net
+
+  web:
+    build:
+      context: ../..
+      dockerfile: infra/compose/Dockerfile.web
+      args:
+        NEXT_PUBLIC_DEFAULT_MODEL: ${MODEL_NAME:-Qwen/Qwen2.5-0.5B-Instruct}
+        NEXT_PUBLIC_GATEWAY_URL: http://127.0.0.1:8080
+    init: true
+    environment:
+      - GATEWAY_URL=http://gateway:8080
+    ports:
+      - "127.0.0.1:3000:3000"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    cpus: 2.0
+    mem_limit: 1g
+    memswap_limit: 1g
+    pids_limit: 256
+    depends_on:
+      - gateway
+    networks:
+      - serving-net
+
+networks:
+  serving-net:
+    driver: bridge

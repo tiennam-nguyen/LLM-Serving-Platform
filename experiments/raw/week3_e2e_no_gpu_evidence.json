@@ -1,0 +1,47 @@
+{
+  "timestamp_utc": "2026-10-24T14:06:32.302332+00:00",
+  "mode": "no-gpu-mock",
+  "passed": true,
+  "request_id": "w3-e2e-3543839d",
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "prompt": "Giải thích ngắn gọn cơ chế Continuous Batching trong 2 câu.",
+  "health_check": {
+    "healthy": true,
+    "worker_id_header": "worker-mock-0"
+  },
+  "client_observed": {
+    "request_id_header": "w3-e2e-3543839d",
+    "worker_id_header": "worker-mock-0",
+    "cors_allow_origin": "http://127.0.0.1:3000",
+    "accepted_ms": 145.77,
+    "first_content_ms": 146.0,
+    "e2e_ms": 146.24,
+    "content_chunks": 9,
+    "response_preview": "Continuous Batching ghép các request theo từng bước decode.",
+    "error": null
+  },
+  "server_trace": {
+    "request_id": "w3-e2e-3543839d",
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "worker_id": "worker-mock-0",
+    "status": "completed",
+    "token_chunks": 9,
+    "completion_tokens": null,
+    "error": null,
+    "milestones": {
+      "arrival": "2026-10-24T14:06:32.154450+00:00",
+      "routing_start": "2026-10-24T14:06:32.154464+00:00",
+      "routing_end": "2026-10-24T14:06:32.154467+00:00",
+      "worker_start": "2026-10-24T14:06:32.154634+00:00",
+      "first_token": "2026-10-24T14:06:32.172840+00:00",
+      "last_token": "2026-10-24T14:06:32.297640+00:00"
+    },
+    "metrics_ms": {
+      "routing_ms": 0.003,
+      "ttft_ms": 18.4,
+      "tpot_ms": null,
+      "inter_content_chunk_ms": 15.6,
+      "e2e_ms": 143.2
+    }
+  }
+}

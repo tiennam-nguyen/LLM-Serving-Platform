@@ -36,7 +36,16 @@ This document outlines the operational security guidelines and safety rules for 
 
 ---
 
-## 5. Reporting Security Concerns
+## 5. Runtime Version Policy (CVE-2026-111497 Node.js Patch)
+
+- **Minimum Patched Node.js Versions**: To remediate `CVE-2026-111497` (CVSS 9.8, 23 October 2026), all local environments, Docker images, and CI runners must use patched Node.js releases:
+  - **Node.js 22.x LTS**: `>= 22.23.4` (`node:22.23.4-slim` in `infra/compose/Dockerfile.web`, `>=22.23.4 <23.0.0` in `.github/workflows/ci.yml`)
+  - **Node.js 24.x LTS**: `>= 24.22.1`
+  - **Node.js 26.x Current**: `>= 26.12.1`
+
+---
+
+## 6. Reporting Security Concerns
 
 To report a vulnerability or accidental secret exposure within the project, contact the project maintainers directly:
 - **Maintainer**: Tien Nam Nguyen (`nguyentiennam011106@gmail.com`)

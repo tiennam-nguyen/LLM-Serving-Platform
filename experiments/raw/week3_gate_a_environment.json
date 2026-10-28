@@ -1,0 +1,94 @@
+{
+  "git_revision": "8cb323fb74f8942b6b4f06fa0c27f1af73f9752a",
+  "branch": "w3-complete",
+  "mode": "gate-a-environment-check",
+  "gate_status": "PASS",
+  "services_after_run": "Test worker, gateway, and web stopped. No listeners remained on Linux8000/8080/3000; Windows3000/8080 stopped responding. GPU memory returned to7 MiB.",
+  "checked_date": "2026-10-26",
+  "linux_context": "Existing Ubuntu WSL2 distribution; existing mounted checkout retained",
+  "kernel": "6.6.87.2-microsoft-standard-WSL2 x86_64 GNU/Linux",
+  "gpu": "NVIDIA GeForce RTX 2050",
+  "gpu_memory_total_mib": 4096,
+  "gpu_memory_used_mib_at_initial_check": 7,
+  "driver_version": "577.05",
+  "python3_version": "3.12.3",
+  "uv_version": "0.12.5",
+  "linux_python_command": "not on PATH before virtual environment activation",
+  "linux_node_command": "not on PATH",
+  "npm_resolution": "Existing Windows npm/Node launcher invoked by WSL",
+  "npm_version": "11.6.2",
+  "windows_node_version": "24.13.0",
+  "setup_observations": [
+    {
+      "command": "uv run --frozen python --version",
+      "result": "uv replaced an incompatible Windows-format .venv with a Linux environment; installed 139 locked packages. A duplicate subsequent uv-run import check was cancelled after direct activated-environment checks began."
+    },
+    {
+      "command": "uv sync --frozen --extra gpu --extra dev --dry-run",
+      "exit_code": 1,
+      "result": "error: Extra `gpu` is not defined in the `optional-dependencies` table for `llm-serving-platform`",
+      "source_observation": "pyproject.toml declares gpu; uv.lock has vllm/transformers as base dependencies and provides-extras only dev; neither file changed"
+    },
+    {
+      "command": "cd apps/web && npm ci",
+      "exit_code": 0,
+      "result": "513 packages added, 514 audited. EBADENGINE: Node24.13.0 does not meet root frontend engine range. Audit:2 moderate,5 high,1 critical; next is the direct critical finding. No audit fix applied."
+    },
+    {
+      "command": "uv sync --frozen --extra dev",
+      "exit_code": 0,
+      "result": "Installed locked pytest-asyncio1.4.0 and ruff0.16.4 without changing uv.lock"
+    }
+  ],
+  "torch_version": "2.5.1+cu124",
+  "torch_cuda_available": true,
+  "torch_gpu_name": "NVIDIA GeForce RTX 2050",
+  "vllm_version": "0.7.3",
+  "worker_launch": {
+    "command": "UV_FROZEN=1 UV_NO_SYNC=1 bash infra/scripts/start_worker_wsl.sh",
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "dtype": "float16",
+    "gpu_memory_utilization": 0.6,
+    "max_model_len": 2048,
+    "swap_space_gib": 1,
+    "fallback": null,
+    "log": "experiments/raw/week3_worker.log (local ignored log)"
+  },
+  "regression_checks": {
+    "python infra/scripts/verify.py --target lint --no-gpu": "PASS with Ruff after dev-extra sync; initial run used AST fallback",
+    "python infra/scripts/verify.py --target unit --no-gpu": "23 passed after dev-extra sync; initial11 failed/12passed due missingpytest-asyncio"
+  },
+  "live_vllm_verified": true,
+  "live_gateway_verified": true,
+  "worker_endpoint": "http://127.0.1.1:8000",
+  "network_fallback": "vLLM listener confirmed at0.0.0.0:8000; Linux127.0.0.1:8000 refused; documented127.0.1.1:8000 returnedHTTP200 and correct Qwen model. VLLM_BASE_URL changed only for this run.",
+  "gateway_health": {
+    "status_code": 200,
+    "worker_id": "worker-vllm-0",
+    "status": "healthy",
+    "worker": "up"
+  },
+  "live_recorder": {
+    "command": "python infra/scripts/verify_week3_e2e.py --save-evidence",
+    "passed": true,
+    "request_id": "w3-e2e-6576d942",
+    "evidence": "experiments/raw/week3_e2e_gpu_evidence.json"
+  },
+  "live_browser_verified": true,
+  "performance_claim": "None; functional acceptance only",
+  "live_browser_request_id": "c26ac75b-5ad8-484b-986e-ed34b30b733d",
+  "gpu_memory_used_mib_after_acceptance": 1336,
+  "gateway_launch": {
+    "command": "python infra/scripts/dev_stack.py",
+    "mode": "LIVE-GPU",
+    "VLLM_BASE_URL": "http://127.0.1.1:8000",
+    "logging": "UVICORN_LOG_CONFIG pointed to a temporary Uvicorn logging config to enable existing structured gateway INFO events; no application logging code changed."
+  },
+  "application_changes": "None; only evidence artifacts added.",
+  "limitations": [
+    "gpu extra is absent from uv.lock despite pyproject declaration; frozen base dependencies plus the valid frozen dev extra were used without changing versions.",
+    "Existing Windows Node24.13.0/npm11.6.2 launcher was used from WSL; root frontend engine range is unmet. Functional browser path passed in this characterized environment.",
+    "npm audit reported8 vulnerabilities:2 moderate,5 high,1 critical (direct next package critical). Remediation and supported-Node validation were outside this acceptance run.",
+    "No production reliability, model-answer quality, throughput or GPU-comparison claim is established by this run."
+  ]
+}

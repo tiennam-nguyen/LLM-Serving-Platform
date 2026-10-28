@@ -30,10 +30,10 @@ class WorkerUnavailableError(WorkerException):
 class InferenceWorker(ABC):
     """Abstract base class defining the contract for all inference runtime workers."""
 
+    worker_id: str = "worker-unknown"
+
     @abstractmethod
-    async def stream_chat(
-        self, payload: Dict[str, Any], request_id: str
-    ) -> AsyncIterator[str]:
+    async def stream_chat(self, payload: Dict[str, Any], request_id: str) -> AsyncIterator[str]:
         """Stream chat completion tokens formatted as SSE events.
 
         Args:
@@ -41,7 +41,7 @@ class InferenceWorker(ABC):
             request_id: Unique correlation ID for tracing the request.
 
         Yields:
-            Raw SSE event lines (e.g. `data: {...}\\n\\n` or `data: [DONE]\\n\\n`).
+            Raw SSE event lines (e.g. `data: {...}\n\n` or `data: [DONE]\n\n`).
 
         Raises:
             WorkerTimeoutError: If the worker fails to respond within the configured timeout.
