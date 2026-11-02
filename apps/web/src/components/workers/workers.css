@@ -1,0 +1,13 @@
+.workers-view { max-width: 1000px; margin: 30px auto; padding: 0 16px; }
+.workers-view nav { margin-bottom: 18px; }
+.workers-view a { color: #813005; }
+.workers-body { padding: 20px; }
+.worker-list { display: grid; gap: 14px; list-style: none; padding: 0; margin: 0; }
+.worker-list li { padding: 16px; min-width: 0; overflow-wrap: anywhere; }
+.worker-list h2 { font-size: 15px; }
+.worker-list dd { margin-bottom: 12px; }
+.worker-status { font-weight: bold; }
+.worker-status.healthy { color: #056041; }
+.worker-status.starting { color: #753308; }
+.worker-status.unhealthy { color: #9e2020; }
+@media (max-width: 560px) { .workers-view .panel-header { flex-wrap: wrap; } }

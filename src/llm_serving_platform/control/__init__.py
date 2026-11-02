@@ -1,10 +1,5 @@
-"""Control plane module boundary.
+"""In-memory worker registry, independent health probes, and read-only worker API.
 
-Future responsibility:
-    Manages operator-facing configuration, cluster topologies, node registration,
-    and administrative controls.
-
-    Architectural constraint:
-    Must remain conceptually separate from the inference fast path. The data-plane
-    request path must not depend on control plane or database lookups during routing.
+Future routing may consume cached healthy runtime candidates. Probes, network
+management, and persistence must remain outside the inference fast path.
 """
