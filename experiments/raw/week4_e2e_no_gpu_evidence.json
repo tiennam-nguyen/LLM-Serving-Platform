@@ -1,0 +1,59 @@
+{
+  "timestamp_utc": "2026-11-06T11:50:37.150898+00:00",
+  "mode": "no-gpu-mock",
+  "passed": true,
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "initial_workers": [
+    {
+      "worker_id": "worker-mock-0",
+      "endpoint": "mock://worker-mock-0",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "status": "HEALTHY",
+      "last_checked_at": "2026-11-06T11:50:37.098003Z"
+    },
+    {
+      "worker_id": "worker-mock-1",
+      "endpoint": "mock://worker-mock-1",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "status": "HEALTHY",
+      "last_checked_at": "2026-11-06T11:50:37.098003Z"
+    }
+  ],
+  "degraded_workers": [
+    {
+      "worker_id": "worker-mock-0",
+      "endpoint": "mock://worker-mock-0",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "status": "UNHEALTHY",
+      "last_checked_at": "2026-11-06T11:50:37.127537Z"
+    },
+    {
+      "worker_id": "worker-mock-1",
+      "endpoint": "mock://worker-mock-1",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "status": "HEALTHY",
+      "last_checked_at": "2026-11-06T11:50:37.127537Z"
+    }
+  ],
+  "round_robin_sequence": [
+    "worker-mock-0",
+    "worker-mock-1",
+    "worker-mock-0",
+    "worker-mock-1"
+  ],
+  "failover_sequence": [
+    "worker-mock-1",
+    "worker-mock-1",
+    "worker-mock-1"
+  ],
+  "all_unhealthy_check": {
+    "health_status_code": 503,
+    "chat_status_code": 503,
+    "chat_worker_id": "none",
+    "trace_status": "error"
+  },
+  "recovery_check": {
+    "chat_status_code": 200,
+    "chat_worker_id": "worker-mock-0"
+  }
+}

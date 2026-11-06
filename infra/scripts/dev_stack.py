@@ -2,10 +2,10 @@
 """Interactive User Stack Launcher (opens Gateway on :8080 and Web UI on :3000 for browser testing).
 
 Usage:
-  1. Default Mode (Live GPU - connects Gateway :8080 to live vLLM GPU worker on :8000):
+  1. Default Mode (Live GPU - connects Gateway :8080 to live vLLM GPU worker(s)):
      python infra/scripts/dev_stack.py
 
-  2. No-GPU Mode (--no-gpu - runs real Gateway :8080 with MockInferenceWorker + Web UI :3000):
+  2. No-GPU Mode (--no-gpu - runs real Gateway :8080 with MockInferenceWorker pool + Web UI :3000):
      python infra/scripts/dev_stack.py --no-gpu
 
   3. Gateway-Only Mode (if you want to start only the Gateway on :8080):
@@ -32,17 +32,24 @@ if str(REPO_ROOT / "src") not in sys.path:
     sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from infra.scripts.verify_week3_e2e import run_week3_e2e_check  # noqa: E402, I001
+from infra.scripts.verify_week4_e2e import run_week4_e2e_check  # noqa: E402, I001
 from llm_serving_platform.common.config import load_dotenv_file  # noqa: E402, I001
 
 load_dotenv_file()
 
 
-def _wait_http_ready(url: str, timeout_s: float = 20.0) -> bool:
+def _wait_http_ready(
+    url: str,
+    proc: subprocess.Popen[bytes] | None = None,
+    timeout_s: float = 20.0,
+) -> bool:
     deadline = time.time() + timeout_s
     while time.time() < deadline:
+        if proc is not None and proc.poll() is not None:
+            return False
         try:
             resp = httpx.get(url, timeout=1.5)
-            if resp.status_code in {200, 503}:
+            if resp.status_code in {200, 503} and "X-Request-ID" in resp.headers:
                 return True
         except httpx.HTTPError:
             pass
@@ -59,7 +66,18 @@ def main() -> int:
         "--mock",
         dest="no_gpu",
         action="store_true",
-        help="Run Gateway with in-memory MockInferenceWorker (no GPU or vLLM required).",
+        help="Run Gateway with in-memory MockInferenceWorker pool (no GPU or vLLM required).",
+    )
+    parser.add_argument(
+        "--mock-workers",
+        type=int,
+        default=int(os.getenv("MOCK_WORKER_COUNT", "2")),
+        help="Number of MockInferenceWorker instances in --no-gpu mode (default: 2).",
+    )
+    parser.add_argument(
+        "--worker-endpoints",
+        default=os.getenv("WORKER_ENDPOINTS", ""),
+        help="Optional comma-separated worker endpoints for multi-worker GPU/mock pool.",
     )
     parser.add_argument(
         "--gateway-port",
@@ -91,7 +109,7 @@ def main() -> int:
     parser.add_argument(
         "--smoke-test",
         action="store_true",
-        help="Start requested service(s), verify HTTP readiness + 1 E2E trace, and exit.",
+        help="Start requested service(s), verify HTTP readiness + Week 3/4 E2E routes, and exit.",
     )
     args = parser.parse_args()
 
@@ -102,15 +120,18 @@ def main() -> int:
     env["VLLM_BASE_URL"] = args.vllm_url
     env["MODEL_NAME"] = args.model
     env["NO_GPU"] = "1" if args.no_gpu else "0"
+    env["MOCK_WORKER_COUNT"] = str(max(1, args.mock_workers))
+    if args.worker_endpoints:
+        env["WORKER_ENDPOINTS"] = args.worker_endpoints
     env["CORS_ALLOWED_ORIGINS"] = (
         f"http://localhost:{args.web_port},http://127.0.0.1:{args.web_port},"
         "http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001,http://127.0.0.1:3001"
     )
 
     if args.no_gpu:
-        mode_str = "NO-GPU (MockInferenceWorker)"
+        mode_str = f"NO-GPU ({max(1, args.mock_workers)}x MockInferenceWorker + RoundRobinRouter)"
     else:
-        mode_str = f"LIVE-GPU (vLLM @ {args.vllm_url})"
+        mode_str = f"LIVE-GPU (vLLM @ {args.worker_endpoints or args.vllm_url} + RoundRobinRouter)"
 
     print("=" * 84)
     print(f"[*] Starting Interactive User Stack — Mode: {mode_str}")
@@ -148,16 +169,17 @@ def main() -> int:
         processes.append(gw_proc)
 
         gw_health_url = f"http://127.0.0.1:{args.gateway_port}/health"
-        if not _wait_http_ready(gw_health_url, timeout_s=15.0):
+        if not _wait_http_ready(gw_health_url, proc=gw_proc, timeout_s=15.0):
             print("[-] FastAPI Gateway failed to become ready.", file=sys.stderr)
             return 1
         print(f"[+] FastAPI Gateway ready at http://127.0.0.1:{args.gateway_port}")
 
         if not args.gateway_only:
-            npm_bin = shutil.which("npm") or "npm"
+            npm_bin = shutil.which("npm.cmd") or shutil.which("npm") or "npm"
             web_env = env.copy()
             web_env["NEXT_PUBLIC_DEFAULT_MODEL"] = args.model
             web_env["NEXT_PUBLIC_GATEWAY_URL"] = f"http://127.0.0.1:{args.gateway_port}"
+            web_env["NEXT_PUBLIC_CONTROL_API_URL"] = f"http://127.0.0.1:{args.gateway_port}"
             web_env["GATEWAY_URL"] = f"http://127.0.0.1:{args.gateway_port}"
             web_cmd = [npm_bin, "run", "dev", "--", "--port", str(args.web_port)]
             print(f"[*] Launching Next.js Web UI on http://127.0.0.1:{args.web_port} ...")
@@ -166,30 +188,40 @@ def main() -> int:
 
         print("\n" + "=" * 84)
         print(">>> STACK IS LIVE FOR INTERACTIVE BROWSER TESTING <<<")
-        print(f"  - Mode        : {mode_str}")
+        print(f"  - Mode             : {mode_str}")
         if not args.gateway_only:
-            print(f"  - Web UI URL  : http://127.0.0.1:{args.web_port}")
-        print(f"  - Gateway URL : http://127.0.0.1:{args.gateway_port}/health")
-        print(f"  - Traces URL  : http://127.0.0.1:{args.gateway_port}/v1/traces")
+            print(f"  - Playground UI    : http://127.0.0.1:{args.web_port}")
+            print(f"  - Workers Topology : http://127.0.0.1:{args.web_port}/workers")
+        print(f"  - Gateway Health   : http://127.0.0.1:{args.gateway_port}/health")
+        print(f"  - Control API      : http://127.0.0.1:{args.gateway_port}/control/v1/workers")
+        print(f"  - Traces API       : http://127.0.0.1:{args.gateway_port}/v1/traces")
         print("  Press Ctrl+C to stop all services.")
         print("=" * 84 + "\n")
 
         if args.smoke_test:
-            evidence = asyncio.run(
+            base_gw = f"http://127.0.0.1:{args.gateway_port}"
+            ev3 = asyncio.run(
                 run_week3_e2e_check(
-                    gateway_url=f"http://127.0.0.1:{args.gateway_port}",
+                    gateway_url=base_gw,
                     model=args.model,
-                    prompt="Kiểm tra kết nối trực tiếp tới Gateway port thật.",
+                    prompt="Kiểm tra kết nối trực tiếp tới Gateway port thật (Week 3).",
                     no_gpu=False,
                 )
             )
-            req_id = evidence["request_id"]
-            w_id = evidence["client_observed"]["worker_id_header"]
+            ev4 = asyncio.run(
+                run_week4_e2e_check(
+                    gateway_url=base_gw,
+                    model=args.model,
+                    prompt="Kiểm tra kết nối trực tiếp tới Gateway port thật (Week 4).",
+                    no_gpu=False,
+                )
+            )
             print(
                 f"[+] Live HTTP Smoke Test against 127.0.0.1:{args.gateway_port} PASSED! "
-                f"(Request ID: {req_id}, Worker: {w_id})"
+                f"(Registered Workers: {[w['worker_id'] for w in ev4['initial_workers']]}, "
+                f"Round-Robin Sequence: {ev4['round_robin_sequence']})"
             )
-            return 0 if evidence["passed"] else 1
+            return 0 if (ev3["passed"] and ev4["passed"]) else 1
 
         while True:
             for p in processes:
