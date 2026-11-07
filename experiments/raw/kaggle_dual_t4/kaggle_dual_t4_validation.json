@@ -1,0 +1,338 @@
+{
+  "passed": true,
+  "environment": {
+    "timestamp_utc": "2026-11-07T08:30:53.919182+00:00",
+    "python": "3.13.16",
+    "accelerator": "NvidiaTeslaT4",
+    "repository": "https://github.com/tiennam-nguyen/LLM-Serving-Platform.git",
+    "git_revision": "db60212fadeaf71f8c0092a65dffd6c5629fa1d0",
+    "harness_sha256": "326343bcad3f08dcacb0738f19baa61264a6943eb9878b1803635d7dd3055ffa",
+    "gpu_inventory": "0, GPU-baa09c2c-5742-9252-1953-89f36c97ae47, Tesla T4, 15360, 580.178.04\n1, GPU-3e0a8b6c-016b-4b7b-d6cd-c7568d66ee19, Tesla T4, 15360, 580.178.04",
+    "before_install": {
+      "torch": "2.11.0+cu130",
+      "cuda": "13.0",
+      "devices": [
+        "Tesla T4",
+        "Tesla T4"
+      ]
+    },
+    "git_status": "",
+    "serving_python": "Python 3.12.16",
+    "installed": {
+      "torch": "2.14.0",
+      "vllm": "0.33.0",
+      "transformers": "5.20.2",
+      "fastapi": "0.136.3",
+      "httpx": "0.28.1"
+    },
+    "after_install": {
+      "torch": "2.14.0+cu130",
+      "cuda": "13.0",
+      "devices": [
+        "Tesla T4",
+        "Tesla T4"
+      ]
+    }
+  },
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "worker_launch": {
+    "worker-vllm-0": {
+      "CUDA_VISIBLE_DEVICES": "0",
+      "args": [
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "Qwen/Qwen2.5-3B-Instruct",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8000",
+        "--tensor-parallel-size",
+        "1",
+        "--dtype",
+        "float16",
+        "--gpu-memory-utilization",
+        "0.85",
+        "--max-model-len",
+        "4096"
+      ],
+      "visible_devices": [
+        "Tesla T4"
+      ]
+    },
+    "worker-vllm-1": {
+      "CUDA_VISIBLE_DEVICES": "1",
+      "args": [
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "Qwen/Qwen2.5-3B-Instruct",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8001",
+        "--tensor-parallel-size",
+        "1",
+        "--dtype",
+        "float16",
+        "--gpu-memory-utilization",
+        "0.85",
+        "--max-model-len",
+        "4096"
+      ],
+      "visible_devices": [
+        "Tesla T4"
+      ]
+    }
+  },
+  "scope": "same-node real-replica failover experiment; NOT two-host LAN validation",
+  "worker_health": {
+    "worker-vllm-0": 200,
+    "worker-vllm-1": 200
+  },
+  "gpu_mapping_before": {
+    "worker-vllm-0": {
+      "gpu_index": 0,
+      "gpu_uuid": "GPU-baa09c2c-5742-9252-1953-89f36c97ae47",
+      "server_pid": 244,
+      "compute_processes": [
+        [
+          "GPU-baa09c2c-5742-9252-1953-89f36c97ae47",
+          "291",
+          "VLLM::EngineCore",
+          "12350"
+        ]
+      ]
+    },
+    "worker-vllm-1": {
+      "gpu_index": 1,
+      "gpu_uuid": "GPU-3e0a8b6c-016b-4b7b-d6cd-c7568d66ee19",
+      "server_pid": 487,
+      "compute_processes": [
+        [
+          "GPU-3e0a8b6c-016b-4b7b-d6cd-c7568d66ee19",
+          "516",
+          "VLLM::EngineCore",
+          "12688"
+        ]
+      ]
+    }
+  },
+  "initial_workers": [
+    {
+      "worker_id": "worker-vllm-0",
+      "endpoint": "http://127.0.0.1:8000",
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "status": "HEALTHY",
+      "last_checked_at": "2026-11-07T08:42:37.570716Z"
+    },
+    {
+      "worker_id": "worker-vllm-1",
+      "endpoint": "http://127.0.0.1:8001",
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "status": "HEALTHY",
+      "last_checked_at": "2026-11-07T08:42:37.571125Z"
+    }
+  ],
+  "baseline": {
+    "sequence": [
+      "worker-vllm-0",
+      "worker-vllm-1",
+      "worker-vllm-0",
+      "worker-vllm-1"
+    ],
+    "requests": [
+      {
+        "status_code": 200,
+        "request_id": "baseline-86ee8f8a488f4618b69cc09bc151f713",
+        "worker_id": "worker-vllm-0",
+        "cors_origin": "http://127.0.0.1:3000",
+        "chunks": 64,
+        "trace_correlated": true
+      },
+      {
+        "status_code": 200,
+        "request_id": "baseline-943fec513bee450caf739c767b330738",
+        "worker_id": "worker-vllm-1",
+        "cors_origin": "http://127.0.0.1:3000",
+        "chunks": 64,
+        "trace_correlated": true
+      },
+      {
+        "status_code": 200,
+        "request_id": "baseline-0a6a9f6ed5414d36b89b30bad20adb80",
+        "worker_id": "worker-vllm-0",
+        "cors_origin": "http://127.0.0.1:3000",
+        "chunks": 64,
+        "trace_correlated": true
+      },
+      {
+        "status_code": 200,
+        "request_id": "baseline-c4890beca1d8436a9ec78aa646b7a856",
+        "worker_id": "worker-vllm-1",
+        "cors_origin": "http://127.0.0.1:3000",
+        "chunks": 64,
+        "trace_correlated": true
+      }
+    ]
+  },
+  "worker0_down_registry": [
+    {
+      "worker_id": "worker-vllm-0",
+      "endpoint": "http://127.0.0.1:8000",
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "status": "UNHEALTHY",
+      "last_checked_at": "2026-11-07T08:42:54.181189Z"
+    },
+    {
+      "worker_id": "worker-vllm-1",
+      "endpoint": "http://127.0.0.1:8001",
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "status": "HEALTHY",
+      "last_checked_at": "2026-11-07T08:42:54.181634Z"
+    }
+  ],
+  "gpu_mapping_worker0_down": {
+    "worker-vllm-1": {
+      "gpu_index": 1,
+      "gpu_uuid": "GPU-3e0a8b6c-016b-4b7b-d6cd-c7568d66ee19",
+      "server_pid": 487,
+      "compute_processes": [
+        [
+          "GPU-3e0a8b6c-016b-4b7b-d6cd-c7568d66ee19",
+          "516",
+          "VLLM::EngineCore",
+          "12688"
+        ]
+      ]
+    }
+  },
+  "failover": {
+    "sequence": [
+      "worker-vllm-1",
+      "worker-vllm-1",
+      "worker-vllm-1",
+      "worker-vllm-1"
+    ],
+    "requests": [
+      {
+        "status_code": 200,
+        "request_id": "failover-5062893937be4eb2a7c4b90ec0b09906",
+        "worker_id": "worker-vllm-1",
+        "cors_origin": "http://127.0.0.1:3000",
+        "chunks": 64,
+        "trace_correlated": true
+      },
+      {
+        "status_code": 200,
+        "request_id": "failover-4a7a907519ac44269b9166b381f50a0d",
+        "worker_id": "worker-vllm-1",
+        "cors_origin": "http://127.0.0.1:3000",
+        "chunks": 64,
+        "trace_correlated": true
+      },
+      {
+        "status_code": 200,
+        "request_id": "failover-4ad1f4f4fb32475898eb827c087919ae",
+        "worker_id": "worker-vllm-1",
+        "cors_origin": "http://127.0.0.1:3000",
+        "chunks": 64,
+        "trace_correlated": true
+      },
+      {
+        "status_code": 200,
+        "request_id": "failover-a3c2865e1ab44ad099803dc300669c27",
+        "worker_id": "worker-vllm-1",
+        "cors_origin": "http://127.0.0.1:3000",
+        "chunks": 64,
+        "trace_correlated": true
+      }
+    ]
+  },
+  "recovered_registry": [
+    {
+      "worker_id": "worker-vllm-0",
+      "endpoint": "http://127.0.0.1:8000",
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "status": "HEALTHY",
+      "last_checked_at": "2026-11-07T08:44:12.295154Z"
+    },
+    {
+      "worker_id": "worker-vllm-1",
+      "endpoint": "http://127.0.0.1:8001",
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "status": "HEALTHY",
+      "last_checked_at": "2026-11-07T08:44:12.294300Z"
+    }
+  ],
+  "gpu_mapping_recovered": {
+    "worker-vllm-0": {
+      "gpu_index": 0,
+      "gpu_uuid": "GPU-baa09c2c-5742-9252-1953-89f36c97ae47",
+      "server_pid": 680,
+      "compute_processes": [
+        [
+          "GPU-baa09c2c-5742-9252-1953-89f36c97ae47",
+          "709",
+          "VLLM::EngineCore",
+          "12688"
+        ]
+      ]
+    },
+    "worker-vllm-1": {
+      "gpu_index": 1,
+      "gpu_uuid": "GPU-3e0a8b6c-016b-4b7b-d6cd-c7568d66ee19",
+      "server_pid": 487,
+      "compute_processes": [
+        [
+          "GPU-3e0a8b6c-016b-4b7b-d6cd-c7568d66ee19",
+          "516",
+          "VLLM::EngineCore",
+          "12688"
+        ]
+      ]
+    }
+  },
+  "post_recovery": {
+    "sequence": [
+      "worker-vllm-0",
+      "worker-vllm-1",
+      "worker-vllm-0",
+      "worker-vllm-1"
+    ],
+    "requests": [
+      {
+        "status_code": 200,
+        "request_id": "post_recovery-f31a55bab0c241a0a6a1dc881fbbd958",
+        "worker_id": "worker-vllm-0",
+        "cors_origin": "http://127.0.0.1:3000",
+        "chunks": 64,
+        "trace_correlated": true
+      },
+      {
+        "status_code": 200,
+        "request_id": "post_recovery-9d4d14b8e7f94679b8d3a1260370a7d9",
+        "worker_id": "worker-vllm-1",
+        "cors_origin": "http://127.0.0.1:3000",
+        "chunks": 64,
+        "trace_correlated": true
+      },
+      {
+        "status_code": 200,
+        "request_id": "post_recovery-0a3da43b2f674a2a880f8993650e8baa",
+        "worker_id": "worker-vllm-0",
+        "cors_origin": "http://127.0.0.1:3000",
+        "chunks": 64,
+        "trace_correlated": true
+      },
+      {
+        "status_code": 200,
+        "request_id": "post_recovery-d0700534b79244f695267bdc0ac4ab56",
+        "worker_id": "worker-vllm-1",
+        "cors_origin": "http://127.0.0.1:3000",
+        "chunks": 64,
+        "trace_correlated": true
+      }
+    ]
+  }
+}

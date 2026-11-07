@@ -1,0 +1,45 @@
+{
+  "timestamp_utc": "2026-11-07T08:42:45.490214+00:00",
+  "mode": "live-gpu",
+  "passed": true,
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "initial_workers": [
+    {
+      "worker_id": "worker-vllm-0",
+      "endpoint": "http://127.0.0.1:8000",
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "status": "HEALTHY",
+      "last_checked_at": "2026-11-07T08:42:37.799405Z"
+    },
+    {
+      "worker_id": "worker-vllm-1",
+      "endpoint": "http://127.0.0.1:8001",
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "status": "HEALTHY",
+      "last_checked_at": "2026-11-07T08:42:37.799757Z"
+    }
+  ],
+  "round_robin_sequence": [
+    "worker-vllm-0",
+    "worker-vllm-1",
+    "worker-vllm-0",
+    "worker-vllm-1"
+  ],
+  "live_scope": {
+    "healthy_worker_count": 2,
+    "strict_round_robin_cycle_verified": true,
+    "multi_worker_round_robin_verified": true,
+    "single_worker_live_sanity_verified": false,
+    "trace_correlation_verified": true,
+    "require_multi_worker": true
+  },
+  "failover_sequence": [],
+  "all_unhealthy_check": {
+    "verified": false,
+    "reason": "Active live worker stop/restart is deferred to the Week 5 two-machine LAN PoC."
+  },
+  "recovery_check": {
+    "verified": false,
+    "reason": "Active live recovery is deferred to the Week 5 two-machine LAN PoC."
+  }
+}

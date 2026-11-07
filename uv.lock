@@ -840,7 +840,6 @@ dev = [
     { name = "ruff" },
 ]
 gpu = [
-    { name = "transformers" },
     { name = "vllm" },
 ]
 
@@ -858,7 +857,6 @@ requires-dist = [
     { name = "pytest-asyncio", marker = "extra == 'dev'", specifier = ">=0.23.0" },
     { name = "ruff", marker = "extra == 'ci'", specifier = ">=0.4.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.4.0" },
-    { name = "transformers", marker = "extra == 'gpu'", specifier = "<4.49.0" },
     { name = "uvicorn", specifier = ">=0.29.0" },
     { name = "uvicorn", marker = "extra == 'ci'", specifier = ">=0.29.0" },
     { name = "vllm", marker = "extra == 'gpu'" },
@@ -2611,7 +2609,6 @@ version = "0.0.28.post3"
 source = { registry = "https://download.pytorch.org/whl/cu124" }
 dependencies = [
     { name = "numpy" },
-    { name = "torch", version = "2.5.1", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "python_version < '0'" },
     { name = "torch", version = "2.5.1+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" } },
 ]
 wheels = [
@@ -2629,7 +2626,6 @@ dependencies = [
     { name = "pytest" },
     { name = "sentencepiece" },
     { name = "tiktoken" },
-    { name = "torch", version = "2.5.1", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "python_version < '0'" },
     { name = "torch", version = "2.5.1+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" } },
     { name = "transformers" },
 ]
