@@ -1,5 +1,7 @@
 """FastAPI API Gateway entrypoint for LLM Serving Platform."""
 
+import asyncio
+import contextlib
 import uuid
 from contextlib import asynccontextmanager
 
@@ -11,47 +13,75 @@ from fastapi.responses import JSONResponse, StreamingResponse
 
 from llm_serving_platform.common.config import GatewayConfig
 from llm_serving_platform.common.logging import log_structured_event
+from llm_serving_platform.control.api import create_control_router
+from llm_serving_platform.control.health import HealthMonitor
+from llm_serving_platform.control.registry import WorkerRegistry
 from llm_serving_platform.gateway.schemas import ChatCompletionRequest
 from llm_serving_platform.gateway.streaming import safe_event_generator
-from llm_serving_platform.routing.router import RoutingPolicy, SingleWorkerRouter
+from llm_serving_platform.routing.router import (
+    RoundRobinRouter,
+    RoutingPolicy,
+    SingleWorkerRouter,
+)
 from llm_serving_platform.telemetry.trace import InMemoryTraceStore, RequestTrace
-from llm_serving_platform.workers.base import InferenceWorker
-from llm_serving_platform.workers.factory import create_worker
+from llm_serving_platform.workers.base import InferenceWorker, WorkerUnavailableError
+from llm_serving_platform.workers.factory import create_worker, populate_registry
+from llm_serving_platform.workers.vllm_adapter import VLLMWorkerAdapter
+
+
+def _build_http_client(config: GatewayConfig) -> httpx.AsyncClient:
+    limits = httpx.Limits(max_keepalive_connections=50, max_connections=200)
+    timeout = httpx.Timeout(config.worker_timeout_s, connect=5.0)
+    return httpx.AsyncClient(limits=limits, timeout=timeout)
+
+
+def _attach_http_client(registry: WorkerRegistry, client: httpx.AsyncClient) -> None:
+    for _, worker in registry.probe_targets():
+        if isinstance(worker, VLLMWorkerAdapter):
+            worker.client = client
+
+
+async def _periodic_health_loop(monitor: HealthMonitor, interval_s: float) -> None:
+    while True:
+        await asyncio.sleep(interval_s)
+        await monitor.check_once()
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Manage the lifecycle of the shared httpx client, configured worker, and trace store."""
-    config: GatewayConfig = getattr(app.state, "config", None) or GatewayConfig()
-    limits = httpx.Limits(max_keepalive_connections=50, max_connections=200)
-    timeout = httpx.Timeout(config.worker_timeout_s, connect=5.0)
-    client = httpx.AsyncClient(limits=limits, timeout=timeout)
+    """Manage the lifecycle of the shared httpx client, health monitor loop, and trace store."""
+    config: GatewayConfig = app.state.config
+    client: httpx.AsyncClient | None = None
+    if not config.no_gpu:
+        client = _build_http_client(config)
+        app.state.client = client
+        _attach_http_client(app.state.registry, client)
 
-    app.state.config = config
-    app.state.client = client
-    app.state.worker = create_worker(config=config, client=client)
-    if not hasattr(app.state, "trace_store"):
-        app.state.trace_store = InMemoryTraceStore(max_size=500)
+    await app.state.health_monitor.check_once()
+    app.state.initial_health_checked = True
 
-    yield
+    health_task: asyncio.Task[None] | None = None
+    if config.health_check_interval_s > 0:
+        health_task = asyncio.create_task(
+            _periodic_health_loop(app.state.health_monitor, config.health_check_interval_s)
+        )
+    app.state.health_task = health_task
 
-    await client.aclose()
+    try:
+        yield
+    finally:
+        if health_task is not None:
+            health_task.cancel()
+            with contextlib.suppress(asyncio.CancelledError):
+                await health_task
+        if client is not None:
+            await client.aclose()
+            app.state.client = None
 
 
 async def get_worker(request: Request) -> InferenceWorker:
-    """Async dependency provider for the inference worker (avoids threadpool hop)."""
-    worker: InferenceWorker | None = getattr(request.app.state, "worker", None)
-    if worker is None:
-        cfg: GatewayConfig = getattr(request.app.state, "config", None) or GatewayConfig()
-        client: httpx.AsyncClient | None = getattr(request.app.state, "client", None)
-        if client is None and not cfg.no_gpu:
-            limits = httpx.Limits(max_keepalive_connections=50, max_connections=200)
-            timeout = httpx.Timeout(cfg.worker_timeout_s, connect=5.0)
-            client = httpx.AsyncClient(limits=limits, timeout=timeout)
-            request.app.state.client = client
-        worker = create_worker(config=cfg, client=client)
-        request.app.state.worker = worker
-    return worker
+    """Async dependency provider for the primary inference worker (backward compatible)."""
+    return request.app.state.worker
 
 
 async def get_router(
@@ -59,26 +89,25 @@ async def get_router(
     worker: InferenceWorker = Depends(get_worker),
 ) -> RoutingPolicy:
     """Dependency provider for the routing policy, decoupled from HTTP controller logic."""
-    router: RoutingPolicy | None = getattr(request.app.state, "router", None)
-    if isinstance(router, SingleWorkerRouter) and router.worker is worker:
-        return router
-    if router is not None and not isinstance(router, SingleWorkerRouter):
-        return router
-    router = SingleWorkerRouter(worker)
-    request.app.state.router = router
-    return router
+    if get_worker in request.app.dependency_overrides:
+        return SingleWorkerRouter(worker)
+
+    if not getattr(request.app.state, "initial_health_checked", False):
+        await request.app.state.health_monitor.check_once()
+        request.app.state.initial_health_checked = True
+
+    return request.app.state.router
 
 
 async def get_trace_store(request: Request) -> InMemoryTraceStore:
     """Async dependency provider for the in-memory request trace store."""
-    store: InMemoryTraceStore | None = getattr(request.app.state, "trace_store", None)
-    if store is None:
-        store = InMemoryTraceStore(max_size=500)
-        request.app.state.trace_store = store
-    return store
+    return request.app.state.trace_store
 
 
-def create_app(config: GatewayConfig | None = None) -> FastAPI:
+def create_app(
+    config: GatewayConfig | None = None,
+    registry: WorkerRegistry | None = None,
+) -> FastAPI:
     """Application factory for the API Gateway."""
     cfg = config or GatewayConfig()
     app = FastAPI(
@@ -89,6 +118,32 @@ def create_app(config: GatewayConfig | None = None) -> FastAPI:
     )
     app.state.config = cfg
     app.state.trace_store = InMemoryTraceStore(max_size=500)
+    # Network resources are lifespan-owned. App construction must not allocate an AsyncClient.
+    app.state.client = None
+
+    active_registry = registry if registry is not None else WorkerRegistry()
+    if registry is None:
+        workers = populate_registry(active_registry, cfg, client=None)
+        app.state.worker = workers[0]
+        app.state.initial_health_checked = cfg.no_gpu
+    else:
+        targets = active_registry.probe_targets()
+        app.state.worker = (
+            targets[0][1] if targets else create_worker(config=cfg, client=app.state.client)
+        )
+        app.state.initial_health_checked = True
+
+    app.state.registry = active_registry
+    app.state.health_monitor = HealthMonitor(
+        active_registry,
+        timeout_s=cfg.health_check_timeout_s,
+    )
+    app.state.router = (
+        SingleWorkerRouter(app.state.worker)
+        if cfg.routing_policy in {"single", "single_worker"}
+        else RoundRobinRouter(active_registry)
+    )
+    app.include_router(create_control_router(active_registry))
 
     @app.exception_handler(RequestValidationError)
     async def validation_exception_handler(request: Request, exc: RequestValidationError):
@@ -142,10 +197,26 @@ def create_app(config: GatewayConfig | None = None) -> FastAPI:
     )
 
     @app.get("/health")
-    async def health(worker: InferenceWorker = Depends(get_worker)):
-        """Check the health status of the Gateway and backend worker."""
-        worker_id = getattr(worker, "worker_id", "worker-vllm-0")
-        is_healthy = await worker.check_health()
+    async def health(
+        request: Request,
+        worker: InferenceWorker = Depends(get_worker),
+    ):
+        """Check the health status of the Gateway and backend worker pool."""
+        if get_worker in request.app.dependency_overrides:
+            worker_id = getattr(worker, "worker_id", "worker-vllm-0")
+            is_healthy = await worker.check_health()
+        else:
+            await request.app.state.health_monitor.check_once()
+            request.app.state.initial_health_checked = True
+            healthy = request.app.state.registry.healthy_workers()
+            records = request.app.state.registry.list_workers()
+            is_healthy = bool(healthy)
+            worker_id = (
+                getattr(healthy[0], "worker_id", "worker-vllm-0")
+                if healthy
+                else (records[0].worker_id if records else "none")
+            )
+
         if not is_healthy:
             return JSONResponse(
                 status_code=503,
@@ -197,7 +268,26 @@ def create_app(config: GatewayConfig | None = None) -> FastAPI:
         trace.mark_arrival()
 
         # 2. Route request via injected RoutingPolicy and mark routing_start / routing_end
-        target_worker = router.select_worker(trace)
+        try:
+            target_worker = router.select_worker(trace)
+        except WorkerUnavailableError as exc:
+            trace.mark_last_token(status="error", error=str(exc))
+            trace_store.save(trace)
+            log_structured_event(
+                event="routing_no_healthy_worker",
+                request_id=request_id,
+                client_ip=client_ip,
+                model=model_name,
+                worker_id="none",
+                status="error",
+                extra={"error": str(exc), "code": exc.status_code, **trace.to_dict()},
+            )
+            return JSONResponse(
+                status_code=exc.status_code,
+                content={"error": {"message": str(exc), "code": exc.status_code}},
+                headers={"X-Request-ID": request_id, "X-Worker-ID": "none"},
+            )
+
         worker_id = trace.worker_id
         trace_store.save(trace)
 

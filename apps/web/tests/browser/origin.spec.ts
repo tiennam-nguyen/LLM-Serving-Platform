@@ -15,3 +15,13 @@ test("direct browser request succeeds with Backend CORS and exposes X-Worker-ID"
   expect(result.body.status).toBe("healthy");
   expect(result.workerId).toBeTruthy();
 });
+
+test("workers topology page renders control-plane registry and navigates back to playground", async ({ page }) => {
+  await page.goto("/workers");
+  await expect(page.getByRole("heading", { name: "WORKERS / CONTROL PLANE" })).toBeVisible();
+  await expect(page.getByText("fixture-worker-0", { exact: true })).toBeVisible();
+  await expect(page.getByText("fixture-worker-1", { exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Refresh" })).toBeEnabled();
+  await page.getByRole("link", { name: /Playground/ }).click();
+  await expect(page).toHaveURL(/\/$/);
+});

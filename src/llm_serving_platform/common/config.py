@@ -99,6 +99,23 @@ class GatewayConfig:
             in {"mock", "no-gpu", "no_gpu", "cpu"}
         )
     )
+    worker_endpoints: List[str] = field(
+        default_factory=lambda: _parse_csv_env("WORKER_ENDPOINTS", [])
+    )
+    mock_worker_count: int = field(
+        default_factory=lambda: max(1, _parse_int_env("MOCK_WORKER_COUNT", 2))
+    )
+    routing_policy: str = field(
+        default_factory=lambda: (
+            os.getenv("ROUTING_POLICY", "round_robin").strip().lower() or "round_robin"
+        )
+    )
+    health_check_interval_s: float = field(
+        default_factory=lambda: _parse_float_env("HEALTH_CHECK_INTERVAL_S", 10.0)
+    )
+    health_check_timeout_s: float = field(
+        default_factory=lambda: max(0.1, _parse_float_env("HEALTH_CHECK_TIMEOUT_S", 5.0))
+    )
     cors_allowed_origins: List[str] = field(
         default_factory=lambda: _parse_csv_env(
             "CORS_ALLOWED_ORIGINS",

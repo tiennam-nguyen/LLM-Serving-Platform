@@ -1,6 +1,9 @@
 """Worker factory decoupling Gateway HTTP wiring from concrete worker runtime implementations."""
 
-from typing import Optional
+from __future__ import annotations
+
+from dataclasses import replace
+from typing import TYPE_CHECKING, Optional
 
 import httpx
 
@@ -8,6 +11,9 @@ from llm_serving_platform.common.config import GatewayConfig
 from llm_serving_platform.workers.base import InferenceWorker
 from llm_serving_platform.workers.mock_adapter import MockInferenceWorker
 from llm_serving_platform.workers.vllm_adapter import VLLMWorkerAdapter
+
+if TYPE_CHECKING:
+    from llm_serving_platform.control.registry import WorkerRegistry
 
 DEFAULT_NO_GPU_CHUNKS = [
     "Continuous",
@@ -44,3 +50,33 @@ def create_worker(
         timeout=config.worker_timeout_s,
         worker_id=config.worker_id,
     )
+
+
+def populate_registry(
+    registry: WorkerRegistry,
+    config: GatewayConfig,
+    client: Optional[httpx.AsyncClient] = None,
+) -> list[InferenceWorker]:
+    """Register configured worker pool in WorkerRegistry by reusing create_worker."""
+    if config.no_gpu:
+        specs = [
+            (f"worker-mock-{i}", f"mock://worker-mock-{i}")
+            for i in range(max(1, config.mock_worker_count))
+        ]
+    elif config.worker_endpoints:
+        specs = [
+            tuple(ep.split("=", 1)) if "=" in ep else (f"worker-vllm-{i}", ep)
+            for i, ep in enumerate(config.worker_endpoints)
+        ]
+    else:
+        specs = [(config.worker_id, config.vllm_base_url)]
+
+    workers: list[InferenceWorker] = []
+    for w_id, endpoint in specs:
+        worker_cfg = replace(config, worker_id=w_id.strip(), vllm_base_url=endpoint.strip())
+        worker = create_worker(config=worker_cfg, client=client)
+        registry.register(worker, endpoint.strip(), config.model_name)
+        if config.no_gpu:
+            registry.record_health(worker.worker_id, True)
+        workers.append(worker)
+    return workers

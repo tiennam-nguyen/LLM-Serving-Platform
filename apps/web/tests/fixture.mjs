@@ -2,7 +2,24 @@
 import { createServer } from "node:http";
 
 let cancelled = 0;
+let rrCursor = 0;
 const traces = new Map();
+const fixtureWorkers = [
+  {
+    worker_id: "fixture-worker-0",
+    endpoint: "mock://fixture-worker-0",
+    model: "fixture-model",
+    status: "HEALTHY",
+    last_checked_at: "2026-11-02T00:00:00Z",
+  },
+  {
+    worker_id: "fixture-worker-1",
+    endpoint: "mock://fixture-worker-1",
+    model: "fixture-model",
+    status: "HEALTHY",
+    last_checked_at: "2026-11-02T00:00:00Z",
+  },
+];
 
 function setCorsHeaders(req, res) {
   const origin = req.headers.origin || "http://127.0.0.1:3001";
@@ -31,6 +48,23 @@ const server = createServer(async (req, res) => {
     res.end(JSON.stringify({ status: "healthy", worker: "up" }));
     return;
   }
+  if (req.url === "/control/v1/workers") {
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify(fixtureWorkers));
+    return;
+  }
+  if (req.url?.startsWith("/control/v1/workers/")) {
+    const workerId = decodeURIComponent(req.url.slice("/control/v1/workers/".length));
+    const found = fixtureWorkers.find((w) => w.worker_id === workerId);
+    if (!found) {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ detail: "Worker not found" }));
+      return;
+    }
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify(found));
+    return;
+  }
   if (req.url?.startsWith("/v1/traces/")) {
     const reqId = decodeURIComponent(req.url.slice("/v1/traces/".length));
     const trace = traces.get(reqId);
@@ -54,11 +88,13 @@ const server = createServer(async (req, res) => {
   const payload = JSON.parse(raw);
   const prompt = payload.messages.at(-1).content;
   const reqId = `fixture-${payload.messages.length}`;
+  const selectedWorker = fixtureWorkers[rrCursor % fixtureWorkers.length].worker_id;
+  rrCursor += 1;
   const arrivalIso = new Date().toISOString();
 
   const traceObj = {
     request_id: reqId,
-    worker_id: "fixture-worker-0",
+    worker_id: selectedWorker,
     status: "in_flight",
     milestones: {
       arrival: arrivalIso,
@@ -75,7 +111,7 @@ const server = createServer(async (req, res) => {
   res.writeHead(200, {
     "Content-Type": "text/event-stream",
     "X-Request-ID": reqId,
-    "X-Worker-ID": "fixture-worker-0",
+    "X-Worker-ID": selectedWorker,
     "Access-Control-Allow-Origin": req.headers.origin || "http://127.0.0.1:3001",
     "Access-Control-Expose-Headers": "X-Request-ID, X-Worker-ID",
   });

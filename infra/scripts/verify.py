@@ -15,6 +15,7 @@ Supports:
      python infra/scripts/verify.py --target w1 [--no-gpu]
      python infra/scripts/verify.py --target w2 [--no-gpu]
      python infra/scripts/verify.py --target w3 [--no-gpu]
+     python infra/scripts/verify.py --target w4 [--no-gpu]
      python infra/scripts/verify.py --target gates [--no-gpu]
      python infra/scripts/verify.py --target backend [--no-gpu]
      python infra/scripts/verify.py --target web [--no-gpu]
@@ -61,6 +62,7 @@ from infra.scripts.verify_week2_exit_gate import (  # noqa: E402, I001
     run_verification,
 )
 from infra.scripts.verify_week3_e2e import run_week3_e2e_check  # noqa: E402, I001
+from infra.scripts.verify_week4_e2e import run_week4_e2e_check  # noqa: E402, I001
 from llm_serving_platform.common.config import load_dotenv_file  # noqa: E402, I001
 
 load_dotenv_file()
@@ -140,6 +142,10 @@ def _install_minimal_pytest_shim() -> None:
     """Install a lightweight pytest module shim if running in a VM without pytest installed."""
     if "pytest" in sys.modules or _HAS_REAL_PYTEST:
         return
+
+    from datetime import datetime
+    from fastapi.encoders import ENCODERS_BY_TYPE
+    ENCODERS_BY_TYPE[datetime] = lambda dt: dt.isoformat().replace("+00:00", "Z")
 
     shim = types.ModuleType("pytest")
 
@@ -410,9 +416,32 @@ def gate_week3_e2e_trace_correlation(ctx: VerifyContext) -> bool:
     return True
 
 
+def gate_week4_registry_and_round_robin(ctx: VerifyContext) -> bool:
+    """Week 4 Exit Gate: WorkerRegistry, HealthMonitor, Round-Robin & Unhealthy Exclusion."""
+    mode = "NO-GPU" if ctx.no_gpu else "LIVE-GPU"
+    _banner(f"GATE [w4]: Week 4 WorkerRegistry, Health Check & Round-Robin ({mode})")
+    evidence = asyncio.run(
+        run_week4_e2e_check(
+            gateway_url=ctx.gateway_url,
+            model=ctx.model,
+            prompt=ctx.prompt,
+            no_gpu=ctx.no_gpu,
+            output_path=None,
+        )
+    )
+    print(
+        f"  [w4] Workers: {[w['worker_id'] for w in evidence['initial_workers']]} | "
+        f"RR Sequence: {evidence['round_robin_sequence']} | "
+        f"Failover: {evidence['failover_sequence']}"
+    )
+    if not evidence.get("passed"):
+        raise RuntimeError("Week 4 Exit Gate failed.")
+    return True
+
+
 # ------------------------------------------------------------------------------
 # OPEN-CLOSED MILESTONE REGISTRY:
-# In Week 4+, append `"w4": GateSpec(...)` here without deleting w1, w2, or w3!
+# In Week 5+, append `"w5": GateSpec(...)` here without deleting w1-w4!
 # ------------------------------------------------------------------------------
 MILESTONE_GATES: dict[str, GateSpec] = {
     "w1": GateSpec(
@@ -430,6 +459,11 @@ MILESTONE_GATES: dict[str, GateSpec] = {
         title="Week 3: E2E CORS, Worker ID & 6-Milestone Trace Correlation",
         runner=gate_week3_e2e_trace_correlation,
     ),
+    "w4": GateSpec(
+        gate_id="w4",
+        title="Week 4: WorkerRegistry, HealthMonitor & Round-Robin Failover",
+        runner=gate_week4_registry_and_round_robin,
+    ),
 }
 
 
@@ -438,9 +472,7 @@ MILESTONE_GATES: dict[str, GateSpec] = {
 # ==============================================================================
 def run_web_stage(ctx: VerifyContext, skip_browser: bool = False) -> bool:
     """Run Frontend ESLint, TypeScript typecheck, Vitest unit tests, Next build, and Playwright."""
-    mode = "NO-GPU" if ctx.no_gpu else "LIVE-GPU"
-    _banner(f"STAGE [web]: Frontend & Browser E2E Suite ({mode})")
-    npm_bin = shutil.which("npm") or "npm"
+    npm_bin = shutil.which("npm.cmd") or shutil.which("npm") or "npm"
     web_dir = REPO_ROOT / "apps" / "web"
 
     node_ver_proc = subprocess.run(
