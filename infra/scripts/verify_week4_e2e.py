@@ -357,7 +357,10 @@ async def run_week4_e2e_check(
             "failover_sequence": [],
             "all_unhealthy_check": {
                 "verified": False,
-                "reason": "Active live worker stop/restart is deferred to the Week 5 two-machine LAN PoC.",
+                "reason": (
+                    "Active live worker stop/restart is deferred to the "
+                    "Week 5 two-machine LAN PoC."
+                ),
             },
             "recovery_check": {
                 "verified": False,

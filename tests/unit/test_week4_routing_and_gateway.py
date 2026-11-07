@@ -5,10 +5,9 @@ from datetime import datetime, timezone
 
 import httpx
 import pytest
-
-import llm_serving_platform.gateway.main as gateway_main
 from httpx import ASGITransport, AsyncClient
 
+import llm_serving_platform.gateway.main as gateway_main
 from llm_serving_platform.common.config import GatewayConfig
 from llm_serving_platform.control.registry import WorkerRegistry, WorkerStatus
 from llm_serving_platform.gateway.main import create_app, lifespan
