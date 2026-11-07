@@ -51,9 +51,11 @@ async def _periodic_health_loop(monitor: HealthMonitor, interval_s: float) -> No
 async def lifespan(app: FastAPI):
     """Manage the lifecycle of the shared httpx client, health monitor loop, and trace store."""
     config: GatewayConfig = app.state.config
-    client = _build_http_client(config)
-    app.state.client = client
-    _attach_http_client(app.state.registry, client)
+    client: httpx.AsyncClient | None = None
+    if not config.no_gpu:
+        client = _build_http_client(config)
+        app.state.client = client
+        _attach_http_client(app.state.registry, client)
 
     await app.state.health_monitor.check_once()
     app.state.initial_health_checked = True
@@ -72,7 +74,9 @@ async def lifespan(app: FastAPI):
             health_task.cancel()
             with contextlib.suppress(asyncio.CancelledError):
                 await health_task
-        await client.aclose()
+        if client is not None:
+            await client.aclose()
+            app.state.client = None
 
 
 async def get_worker(request: Request) -> InferenceWorker:
@@ -114,11 +118,12 @@ def create_app(
     )
     app.state.config = cfg
     app.state.trace_store = InMemoryTraceStore(max_size=500)
-    app.state.client = None if cfg.no_gpu else _build_http_client(cfg)
+    # Network resources are lifespan-owned. App construction must not allocate an AsyncClient.
+    app.state.client = None
 
     active_registry = registry if registry is not None else WorkerRegistry()
     if registry is None:
-        workers = populate_registry(active_registry, cfg, client=app.state.client)
+        workers = populate_registry(active_registry, cfg, client=None)
         app.state.worker = workers[0]
         app.state.initial_health_checked = cfg.no_gpu
     else:

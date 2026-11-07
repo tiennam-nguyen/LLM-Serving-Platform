@@ -17,7 +17,7 @@ The system follows a **modular monolith** architecture with strict separation of
 > - **Week 2 (Data-Plane Inference Gateway)**: Completed (OpenAI-compatible `POST /v1/chat/completions` SSE proxy, `InferenceWorker` / `VLLMWorkerAdapter`, `X-Request-ID`, structured JSON logging, timeout/error propagation).
 > - **Week 3 (Minimal End-to-End Web Flow, Request Trace & Unified Verification)**: Completed (Next.js Instrumentation Deck UI, multi-turn streaming, abort/retry, `X-Worker-ID`, 6-milestone `RequestTrace` via `GET /v1/traces/{request_id}`, `create_worker` factory, unified `verify.py` runner, and `dev_stack.py` interactive browser launcher).
 > - **Week 4 (Worker Registry, Health Monitor, Round-Robin & Workers Topology UI)**: Completed (`WorkerRegistry`, `HealthMonitor` with startup + periodic background checks, `GET /control/v1/workers` & `GET /control/v1/workers/{id}`, `RoundRobinRouter` with automatic unhealthy-worker exclusion & HTTP 503 empty-pool handling, `/workers` Web UI, and cumulative gate `w4`).
-> - **Next Milestone**: Week 5 — Stabilization & Integration Buffer (Gate A Lock).
+> - **Next Milestone**: Week 5 — Two-machine LAN PoC: remote endpoints, health over LAN, Round-Robin across hosts, failure/restart recovery.
 
 ---
 
@@ -32,15 +32,21 @@ The system follows a **modular monolith** architecture with strict separation of
     ↓
 [x] Week 4: Worker registry + health monitor + Round-Robin routing + /workers UI
     ↓
-[ ] Week 5: Stabilization & integration buffer (Gate A lock)
+[ ] Week 5: Two-machine LAN PoC (remote endpoints + failure/restart recovery)
     ↓
-[ ] Week 6: LAN PoC (multi-host networking & failure recovery)
+[ ] Week 6: Primary multi-worker testbed + Least-Loaded routing
     ↓
-[ ] Week 7: 2+ independent GPU replicas + Least-Loaded routing policy
+[ ] Week 7: Observability + experiment artifacts
     ↓
-[ ] Week 8–9: Observability + reproducible benchmark runner
+[ ] Week 8: Controlled benchmark suite
     ↓
-[ ] Week 11–12: Final routing experiments & feature freeze
+[ ] Week 9: P0 consolidation + optional Cache-Only (BUFFER + feature freeze)
+    ↓
+[ ] Week 10: Final experiment campaign
+    ↓
+[ ] Week 11: Hardening + release candidate + report integration
+    ↓
+[ ] Week 12: Final release + defense-ready package
 ```
 
 ---
@@ -132,7 +138,15 @@ python infra/scripts/verify.py --target web --no-gpu     # Frontend lint, typech
 
 ### 5.3 Mode 2: GitHub Actions CI (`.github/workflows/ci.yml`)
 
-GitHub Actions (`.github/workflows/ci.yml`) remains unchanged from Week 3 thanks to the Open-Closed `MILESTONE_GATES` registry in `infra/scripts/verify.py`: it automatically runs `python infra/scripts/verify.py --no-gpu` on every push/PR (now including Gate `w4`), and supports `use_gpu: "true" | "false"` via `workflow_dispatch`.
+GitHub-hosted CI is intentionally **CPU/mock-only**. It exposes five named checks in the Actions UI—Python lint/static, backend unit, backend integration, cumulative W1→W4 gates, and frontend/browser—and publishes the same results in the GitHub job summary. This keeps CI deterministic and does not pretend a hosted runner has access to the lab/Kaggle GPU topology.
+
+Real GPU validation is run manually on actual hardware. Week 4 does **not** require two physical GPUs; its full failure/recovery gate is verified deterministically with mock workers. When 2+ live workers are available, use:
+
+```bash
+python infra/scripts/verify_week4_e2e.py --gateway-url http://127.0.0.1:8080 --require-multi-worker --save-evidence
+```
+
+That command strictly checks the live healthy-worker snapshot, cyclic Round-Robin placement, CORS, request IDs, and trace correlation. Active worker stop/restart and recovery across hosts are deliberately deferred to the **Week 5 two-machine LAN PoC**.
 
 ### 5.4 Mode 3: Interactive Browser User Testing (`infra/scripts/dev_stack.py`)
 

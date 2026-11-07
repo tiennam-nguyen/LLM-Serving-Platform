@@ -1,6 +1,6 @@
 # System Architecture & Week 4 Snapshot
 
-This document records the architecture principles, active **Week 4 implementation snapshot**, **SOLID Worker Pool Factory & Unified Verification Architecture**, and target **Week 6–12 distributed expansion topology** for the **Adaptive LLM Serving Platform**.
+This document records the architecture principles, active **Week 4 implementation snapshot**, **SOLID Worker Pool Factory & Unified Verification Architecture**, and target **Week 5–12 distributed expansion topology** for the **Adaptive LLM Serving Platform**.
 
 ---
 
@@ -17,16 +17,16 @@ This document records the architecture principles, active **Week 4 implementatio
    HTTP route handlers in `gateway/main.py` depend on the abstract `RoutingPolicy` interface (`Depends(get_router)`), never instantiating concrete routers inside request handlers.
    - In **Week 3**, `SingleWorkerRouter` served as the single-worker walking skeleton.
    - In **Week 4**, `RoundRobinRouter(registry)` implements `RoutingPolicy`, consuming cached `HEALTHY` worker instances from `WorkerRegistry.healthy_workers()`, cycling sequentially across healthy candidates, excluding `UNHEALTHY`/`STARTING` workers automatically, and raising `WorkerUnavailableError` (HTTP 503) when zero healthy workers remain.
-   - In **Week 7**, `LeastLoadedRouter` swaps into `create_router()` without modifying the HTTP controller.
+   - In **Week 6**, `LeastLoadedRouter` swaps into `create_router()` without modifying the HTTP controller.
 
 4. **Runtime-Agnostic Worker Pool Factory (`InferenceWorker` ABC + `create_worker` / `populate_registry`)**:
    Serving engines sit behind `InferenceWorker` (`stream_chat`, `check_health`). `workers/factory.py` decouples the Gateway and Registry from concrete worker implementations:
-   - **Live GPU Mode (Default, `no_gpu=False`)**: Instantiates one or more `VLLMWorkerAdapter` instances from `WORKER_ENDPOINTS` (or single `VLLM_BASE_URL` / `WORKER_ID`), encapsulating vLLM's OpenAI-compatible HTTP/SSE wire protocol and mapping `httpx` network/timeout failures into typed `WorkerTimeoutError` (504) and `WorkerUnavailableError` (503) exceptions.
+   - **Live GPU Mode (Default, `no_gpu=False`)**: Instantiates one or more `VLLMWorkerAdapter` instances from `WORKER_ENDPOINTS` (or single `VLLM_BASE_URL` / `WORKER_ID`). App construction allocates no network client; FastAPI lifespan creates exactly one shared `httpx.AsyncClient`, attaches it to all live adapters, and closes it on shutdown. The adapter encapsulates vLLM's OpenAI-compatible HTTP/SSE wire protocol and maps network/timeout failures into typed `WorkerTimeoutError` (504) and `WorkerUnavailableError` (503) exceptions.
    - **No-GPU Mode (`--no-gpu` / `NO_GPU=1` / `WORKER_MODE=mock`)**: Instantiates a configurable pool of `MockInferenceWorker` instances (`MOCK_WORKER_COUNT=2` by default: `worker-mock-0`, `worker-mock-1`) directly inside the FastAPI Gateway process. This enables deterministic multi-worker Round-Robin CI testing AND full interactive browser testing (`http://127.0.0.1:3000` and `http://127.0.0.1:3000/workers` -> `:8080`) on CPU-only laptops without a physical GPU.
    - **Clean Dependency Packaging (`pyproject.toml`)**: Core Data-Plane & Control-Plane Gateway dependencies (`fastapi`, `httpx`, `uvicorn`, `pydantic`) are separated from heavy CUDA/worker dependencies (`[project.optional-dependencies].gpu` containing `vllm` and `transformers<4.49.0`).
 
 5. **Open-Closed Cumulative Verification Pipeline (`infra/scripts/verify.py`)**:
-   All quality stages (`lint`, `unit`, `integration`, `gates`, `web`) and cumulative weekly exit gates (`w1`, `w2`, `w3`, `w4`, and future `w5+`) are orchestrated through a single declarative registry (`MILESTONE_GATES`) in `infra/scripts/verify.py`. Future weeks add new gate entries without deleting or breaking prior weekly gates, and `.github/workflows/ci.yml` invokes this single entrypoint (`python infra/scripts/verify.py --no-gpu` by default, or live GPU via `workflow_dispatch`).
+   All quality stages (`lint`, `unit`, `integration`, `gates`, `web`) and cumulative weekly exit gates (`w1`, `w2`, `w3`, `w4`, and future `w5+`) are orchestrated through a single declarative registry (`MILESTONE_GATES`) in `infra/scripts/verify.py`. Future weeks add new gate entries without deleting or breaking prior weekly gates, and `.github/workflows/ci.yml` invokes the same entrypoint in explicit CPU/mock stages. Hosted CI intentionally does not claim live-GPU evidence; live hardware checks are executed separately on the available GPU topology.
 
 6. **Honest Telemetry & Metric Semantics**:
    Client-observed timings (`FIRST CONTENT`, `E2E DURATION` in `apps/web`) are kept distinct from server-observed monotonic trace milestones (`RequestTrace` in `telemetry/trace.py`). Because a single SSE `data:` frame is not guaranteed to equal one model token, chunk spacing is published honestly as `inter_content_chunk_ms`, while `tpot_ms` remains `None` unless true `completion_tokens > 1` is reported by the runtime.
@@ -54,7 +54,7 @@ In Week 4, the platform operates a multi-worker Control Plane (`WorkerRegistry` 
 +-----------------------------------------------------------------------------------+
 |                    FastAPI Gateway (gateway/main.py)                              |
 |  - CORSMiddleware (outermost) + request_id_middleware                             |
-|  - Lifespan: populate_registry() -> check_once() -> _periodic_health_loop()       |
+|  - App factory: populate_registry(); lifespan: attach one client -> health loop   |
 +-----------------+-------------------------------+---------------+-----------------+
                   |                               |               |
    2a. select_worker(trace)        2b. save/get   |               | Read snapshots
@@ -91,10 +91,10 @@ In Week 4, the platform operates a multi-worker Control Plane (`WorkerRegistry` 
 | :--- | :--- | :--- |
 | `gateway` | Data-plane HTTP/SSE entrypoint & lifespan wiring | **Active**: `main.py`, `schemas.py`, `streaming.py` (`/health`, `/v1/chat/completions`, `/v1/traces`, mounts `/control/v1/workers`, manages `HealthMonitor` lifespan loop & 503 empty-pool handling). |
 | `control` | Worker registry, health monitor & read-only API | **Active**: `WorkerRegistry` & `WorkerRecord` (`registry.py`), concurrent `HealthMonitor` (`health.py`), `create_control_router` (`api.py`). |
-| `routing` | Pluggable worker selection policy | **Active**: `RoutingPolicy` ABC, `RoundRobinRouter`, `SingleWorkerRouter`, and `create_router` (`router.py`). |
+| `routing` | Pluggable worker selection policy | **Active**: `RoutingPolicy` ABC, `RoundRobinRouter`, and `SingleWorkerRouter` (`router.py`). |
 | `workers` | Serving runtime abstraction & pool factory | **Active**: `InferenceWorker` ABC (`base.py`), `VLLMWorkerAdapter` (`vllm_adapter.py`), `MockInferenceWorker` (`mock_adapter.py`), `create_worker`, `populate_registry` (`factory.py`). |
 | `telemetry` | Per-request tracing & metrics | **Active**: `RequestTrace` (6 milestones + honest `inter_content_chunk_ms`/`tpot_ms`) & `InMemoryTraceStore` (`trace.py`). |
 | `common` | Config & structured logging | **Active**: `GatewayConfig` (`no_gpu`, `worker_endpoints`, `mock_worker_count`, `routing_policy`, `health_check_interval_s`, `health_check_timeout_s`) (`config.py`), JSON logger (`logging.py`). |
 | `apps/web` | Operator console, playground & topology UI | **Active**: Next.js 16 / React 19 Playground (`/`) + Control-Plane Workers Topology view (`/workers`). |
 | `infra/scripts` | Unified verification & interactive dev stack | **Active**: `verify.py` (cumulative gates `w1`–`w4`), `verify_week4_e2e.py`, `dev_stack.py` (multi-worker interactive stack). |
-| `benchmark` | Reproducible workload runner | **Planned (Week 8–9)**: Trace replay, Poisson/burst arrival generators, percentile aggregator. |
+| `benchmark` | Reproducible workload runner | **Planned (Week 8)**: controlled replay/benchmark suite after Week 7 observability and experiment artifacts. |

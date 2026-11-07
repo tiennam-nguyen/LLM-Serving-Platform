@@ -2,7 +2,7 @@
 
 **Tên đề tài**: Nền tảng LLM Serving có khả năng quan sát và điều phối trên hạ tầng đa GPU (*Adaptive LLM Serving Platform for Observable Multi-GPU Inference*)  
 **Nhóm thực hiện**: 02 sinh viên  
-**Mốc hiện tại**: Hoàn thành Tuần 4 (Control-Plane `WorkerRegistry`, `HealthMonitor`, `RoundRobinRouter`, `/control/v1/workers` & Giao diện `/workers` Dual-Mode GPU / No-GPU)
+**Mốc hiện tại**: Hoàn thành Tuần 4 bằng CPU/mock CI; live-GPU là sanity check tùy hạ tầng, còn failure/restart qua hai host thuộc Tuần 5 LAN PoC.
 
 ---
 
@@ -25,7 +25,7 @@
 - **2.3. Các chiến lược điều phối (Routing Policies)**:
   - **Single-Worker (`SingleWorkerRouter`)**: Baseline Tuần 3.
   - **Round-Robin (`RoundRobinRouter` — Tuần 4)**: Phân phối tuần tự xoay vòng trên tập các worker đang ở trạng thái `HEALTHY` trong `WorkerRegistry`; tự động bỏ qua các worker `STARTING` hoặc `UNHEALTHY`, và trả về mã lỗi `503 Service Unavailable` an toàn khi tập worker khỏe mạnh rỗng.
-  - **Least-Loaded (`LeastLoadedRouter` — Tuần 7)** và **Cache-Aware (Tuần 11)**.
+  - **Least-Loaded (`LeastLoadedRouter` — Tuần 6)**; **Cache-Only** chỉ mở ở Tuần 9 nếu P0 và benchmark đã GREEN.
 
 ### Chương 3. Thiết kế Kiến trúc Hệ thống Tuần 4 (SOLID & Clean Architecture)
 - **3.1. Tuân thủ nguyên lý SOLID**:
@@ -56,7 +56,7 @@
      - Chạy toàn bộ (mặc định có GPU hoặc `--no-gpu`): `python infra/scripts/verify.py [--no-gpu]`
      - Chạy từng phần: `python infra/scripts/verify.py --target {lint,unit,integration,w1,w2,w3,w4,gates,web} [--no-gpu]`
   2. **Kiểm thử tự động trên GitHub Actions (`.github/workflows/ci.yml`)**:
-     - Tự động chạy `python infra/scripts/verify.py --no-gpu` trên mỗi `push` / `pull_request`, và hỗ trợ `workflow_dispatch` để chọn `target` bất kỳ (`all`, `w4`, `unit`, ...) cũng như bật/tắt `use_gpu` (`true`/`false`).
+     - GitHub-hosted CI chỉ chạy CPU/mock và tách thành 5 stage dễ đọc: lint/static, backend unit, backend integration, cumulative W1→W4 gates, frontend/browser; kết quả được ghi vào GitHub job summary. Live GPU/LAN evidence chạy riêng trên hạ tầng thật.
   3. **Kiểm thử với vai trò người dùng trên trình duyệt (`infra/scripts/dev_stack.py`)**:
      - Có GPU: `python infra/scripts/dev_stack.py` (hoặc truyền `--worker-endpoints` cho nhiều GPU).
      - Không có GPU: `python infra/scripts/dev_stack.py --no-gpu` (tự động mở Gateway `:8080` với 2 worker `worker-mock-0`, `worker-mock-1` và Web UI `:3000` để test chat xoay vòng Round-Robin tại `http://127.0.0.1:3000` và xem trạng thái worker tại `http://127.0.0.1:3000/workers`).

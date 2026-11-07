@@ -44,6 +44,20 @@ load_dotenv_file()
 DEFAULT_PROMPT = "Giải thích ngắn gọn cơ chế Continuous Batching trong 2 câu."
 
 
+def _matches_round_robin_cycle(sequence: list[str], candidates: list[str]) -> bool:
+    """Accept a strict cyclic order regardless of the router's starting cursor offset."""
+    if not sequence or not candidates or any(worker not in candidates for worker in sequence):
+        return False
+    for offset in range(len(candidates)):
+        expected = [
+            candidates[(offset + index) % len(candidates)]
+            for index in range(len(sequence))
+        ]
+        if sequence == expected:
+            return True
+    return False
+
+
 async def _send_streaming_chat(
     client: httpx.AsyncClient,
     base_url: str,
@@ -121,6 +135,7 @@ async def run_week4_e2e_check(
     prompt: str,
     no_gpu: bool = False,
     output_path: Path | None = None,
+    require_multi_worker: bool = False,
 ) -> dict[str, Any]:
     """Execute Week 4 E2E verification (WorkerRegistry, Round-Robin, Failover & Recovery)."""
     mode_label = "no-gpu-mock" if no_gpu else "live-gpu"
@@ -241,7 +256,8 @@ async def run_week4_e2e_check(
             },
         }
     else:
-        # Live GPU mode against running Gateway
+        # Optional live-hardware sanity. Week 4 does not require two physical GPUs.
+        # Multi-host stop/restart failure evidence belongs to the Week 5 LAN PoC.
         base = gateway_url.rstrip("/")
         async with httpx.AsyncClient(timeout=60.0) as client:
             health_resp = await client.get(
@@ -261,10 +277,18 @@ async def run_week4_e2e_check(
                 raise RuntimeError(
                     f"Live Gateway /control/v1/workers returned HTTP {ctrl_resp.status_code}"
                 )
+            if ctrl_resp.headers.get("access-control-allow-origin") != "http://127.0.0.1:3000":
+                raise RuntimeError("Control API did not return the expected browser CORS origin.")
+
             live_workers = ctrl_resp.json()
             healthy_ids = [w["worker_id"] for w in live_workers if w.get("status") == "HEALTHY"]
             if not healthy_ids:
                 raise RuntimeError(f"No HEALTHY workers in live registry: {live_workers}")
+            if require_multi_worker and len(healthy_ids) < 2:
+                raise RuntimeError(
+                    "--require-multi-worker requested, but fewer than two HEALTHY live workers "
+                    f"were registered: {healthy_ids}"
+                )
 
             first_id = healthy_ids[0]
             detail_ok = (
@@ -274,16 +298,47 @@ async def run_week4_e2e_check(
                 await client.get(f"{base}/control/v1/workers/worker-does-not-exist")
             ).status_code == 404
 
-            rr_sequence = []
+            rr_sequence: list[str] = []
+            trace_checks_ok = True
             num_probes = max(2, len(healthy_ids) * 2)
             for i in range(num_probes):
                 req_id = f"{prefix}-gpu-{i + 1}"
                 res = await _send_streaming_chat(client, base, model, prompt, req_id)
-                if res["status_code"] != 200 or res["chunks"] == 0:
-                    raise RuntimeError(f"Live GPU request {req_id} failed: {res}")
+                if (
+                    res["status_code"] != 200
+                    or res["chunks"] == 0
+                    or res["request_id"] != req_id
+                    or res["worker_id"] not in healthy_ids
+                    or res["cors_origin"] != "http://127.0.0.1:3000"
+                ):
+                    raise RuntimeError(f"Live GPU request {req_id} failed contract checks: {res}")
+
+                trace_resp = await client.get(f"{base}/v1/traces/{req_id}")
+                if trace_resp.status_code != 200:
+                    raise RuntimeError(f"Missing live trace for {req_id}")
+                trace = trace_resp.json()
+                milestones = trace.get("milestones", {})
+                trace_ok = (
+                    trace.get("request_id") == req_id
+                    and trace.get("worker_id") == res["worker_id"]
+                    and trace.get("status") == "completed"
+                    and all(
+                        milestones.get(key) is not None
+                        for key in (
+                            "arrival",
+                            "routing_start",
+                            "routing_end",
+                            "worker_start",
+                            "first_token",
+                            "last_token",
+                        )
+                    )
+                )
+                trace_checks_ok = trace_checks_ok and trace_ok
                 rr_sequence.append(str(res["worker_id"]))
 
-        passed = bool(detail_ok and missing_404 and len(rr_sequence) == num_probes)
+        rr_cycle_ok = _matches_round_robin_cycle(rr_sequence, healthy_ids)
+        passed = bool(detail_ok and missing_404 and trace_checks_ok and rr_cycle_ok)
         evidence = {
             "timestamp_utc": datetime.now(timezone.utc).isoformat(),
             "mode": mode_label,
@@ -291,9 +346,23 @@ async def run_week4_e2e_check(
             "model": model,
             "initial_workers": live_workers,
             "round_robin_sequence": rr_sequence,
-            "failover_sequence": healthy_ids,
-            "all_unhealthy_check": {"verified_via_unit_contract": True},
-            "recovery_check": {"chat_status_code": 200, "chat_worker_id": rr_sequence[-1]},
+            "live_scope": {
+                "healthy_worker_count": len(healthy_ids),
+                "strict_round_robin_cycle_verified": rr_cycle_ok,
+                "multi_worker_round_robin_verified": len(healthy_ids) >= 2 and rr_cycle_ok,
+                "single_worker_live_sanity_verified": len(healthy_ids) == 1 and rr_cycle_ok,
+                "trace_correlation_verified": trace_checks_ok,
+                "require_multi_worker": require_multi_worker,
+            },
+            "failover_sequence": [],
+            "all_unhealthy_check": {
+                "verified": False,
+                "reason": "Active live worker stop/restart is deferred to the Week 5 two-machine LAN PoC.",
+            },
+            "recovery_check": {
+                "verified": False,
+                "reason": "Active live recovery is deferred to the Week 5 two-machine LAN PoC.",
+            },
         }
 
     if output_path is not None:
@@ -308,7 +377,10 @@ async def run_week4_e2e_check(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Verify Week 4 WorkerRegistry, HealthMonitor, Round-Robin & Failover."
+        description=(
+            "Verify the Week 4 mock exit gate and optional live-hardware Round-Robin sanity. "
+            "Live stop/restart failover belongs to the Week 5 LAN PoC."
+        )
     )
     parser.add_argument(
         "--prompt",
@@ -331,6 +403,14 @@ def main() -> None:
         "--model",
         default=os.getenv("MODEL_NAME", "Qwen/Qwen2.5-0.5B-Instruct"),
         help="Model ID to request.",
+    )
+    parser.add_argument(
+        "--require-multi-worker",
+        action="store_true",
+        help=(
+            "In live mode, fail unless at least two HEALTHY workers are registered. "
+            "Useful for later real multi-worker hardware checks; not required by Week 4."
+        ),
     )
     parser.add_argument(
         "--output",
@@ -362,6 +442,7 @@ def main() -> None:
                 prompt=args.prompt,
                 no_gpu=args.no_gpu,
                 output_path=out_path,
+                require_multi_worker=args.require_multi_worker,
             )
         )
     except Exception as exc:
@@ -373,9 +454,13 @@ def main() -> None:
     print("=" * 80)
     print(f"  Registered Workers   : {[w['worker_id'] for w in evidence['initial_workers']]}")
     print(f"  Round-Robin Sequence : {evidence['round_robin_sequence']}")
-    print(f"  Failover Sequence    : {evidence['failover_sequence']}")
-    print(f"  All-Down Check       : {evidence['all_unhealthy_check']}")
-    print(f"  Recovery Check       : {evidence['recovery_check']}")
+    if evidence["mode"] == "live-gpu":
+        print(f"  Live Scope           : {evidence['live_scope']}")
+        print("  Live Failover        : deferred to Week 5 two-machine LAN PoC")
+    else:
+        print(f"  Failover Sequence    : {evidence['failover_sequence']}")
+        print(f"  All-Down Check       : {evidence['all_unhealthy_check']}")
+        print(f"  Recovery Check       : {evidence['recovery_check']}")
     if out_path is not None:
         print(f"  Evidence Saved To    : {out_path}")
     print("=" * 80)

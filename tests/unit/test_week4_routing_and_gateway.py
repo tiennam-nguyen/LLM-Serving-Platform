@@ -5,6 +5,8 @@ from datetime import datetime, timezone
 
 import httpx
 import pytest
+
+import llm_serving_platform.gateway.main as gateway_main
 from httpx import ASGITransport, AsyncClient
 
 from llm_serving_platform.common.config import GatewayConfig
@@ -260,6 +262,43 @@ async def test_live_gpu_mode_vllm_worker_pool_round_robin_and_failover():
                 assert resp.headers["X-Worker-ID"] == "worker-vllm-1"
     finally:
         await mock_vllm_client.aclose()
+
+
+@pytest.mark.asyncio
+async def test_live_http_client_is_created_once_by_lifespan_and_closed(monkeypatch):
+    """App construction is resource-free; lifespan owns exactly one live worker HTTP client."""
+    created_clients: list[httpx.AsyncClient] = []
+
+    def build_client(_config: GatewayConfig) -> httpx.AsyncClient:
+        def handler(request: httpx.Request) -> httpx.Response:
+            if request.url.path == "/health":
+                return httpx.Response(200, text="OK")
+            return httpx.Response(404)
+
+        client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
+        created_clients.append(client)
+        return client
+
+    monkeypatch.setattr(gateway_main, "_build_http_client", build_client)
+    cfg = GatewayConfig(
+        no_gpu=False,
+        worker_endpoints=["worker-vllm-0=http://vllm-test:8000"],
+        health_check_interval_s=0,
+    )
+
+    app = create_app(cfg)
+    assert created_clients == []
+    assert app.state.client is None
+
+    async with lifespan(app):
+        assert len(created_clients) == 1
+        client = created_clients[0]
+        assert app.state.client is client
+        assert not client.is_closed
+        assert app.state.registry.list_workers()[0].status == WorkerStatus.HEALTHY
+
+    assert created_clients[0].is_closed
+    assert app.state.client is None
 
 
 @pytest.mark.asyncio
