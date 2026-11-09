@@ -1,4 +1,4 @@
-"""CPU-only contracts for the independent Member B control plane."""
+"""CPU-only contracts for the independent Member B control plane and Week 6 WorkerRecord schema."""
 
 import asyncio
 from dataclasses import FrozenInstanceError, asdict
@@ -29,6 +29,8 @@ def test_registry_snapshots_identity_and_errors():
     original = registry.register(a, "mock://a", "model")
     assert original.status == WorkerStatus.STARTING
     assert original.last_checked_at is None
+    assert original.active_requests == 0
+    assert original.last_load_change_at is None
     assert registry.healthy_workers() == []
     assert [r.worker_id for r in registry.list_workers()] == ["a", "b"]
     with pytest.raises(DuplicateWorkerError):
@@ -155,6 +157,8 @@ async def test_read_only_api_contract_without_gateway():
             "model": "model",
             "status": "HEALTHY",
             "last_checked_at": "2026-11-02T00:00:00Z",
+            "active_requests": 0,
+            "last_load_change_at": None,
         }
         assert (await client.get("/control/v1/workers/one")).json() == row
         assert (await client.get("/control/v1/workers/missing")).status_code == 404

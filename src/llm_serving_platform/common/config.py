@@ -8,6 +8,25 @@ from typing import List
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 DEFAULT_ENV_FILE = REPO_ROOT / ".env"
 
+CANONICAL_ROUTING_POLICIES = frozenset({"single", "round_robin", "least_loaded"})
+VALID_ROUTING_POLICIES = frozenset({"single", "single_worker", "round_robin", "least_loaded"})
+
+
+def normalize_routing_policy(policy: str) -> str:
+    """Normalize and validate a routing policy identifier, failing fast on unsupported values."""
+    if not isinstance(policy, str):
+        raise ValueError("routing_policy must be a string")
+    normalized = policy.strip().lower()
+    if normalized == "single_worker":
+        return "single"
+    if normalized in CANONICAL_ROUTING_POLICIES:
+        return normalized
+    raise ValueError(
+        f"Unsupported routing_policy {policy!r}. "
+        "Supported values are: 'single' (or legacy 'single_worker'), "
+        "'round_robin', 'least_loaded'."
+    )
+
 
 def load_dotenv_file(dotenv_path: Path = DEFAULT_ENV_FILE, override: bool = False) -> None:
     """Load key=value pairs from a .env file into os.environ without external dependencies."""
@@ -74,6 +93,16 @@ def _parse_bool_env(env_key: str, default: bool = False) -> bool:
     return default
 
 
+def _parse_routing_policy_env(
+    env_key: str = "ROUTING_POLICY",
+    default: str = "round_robin",
+) -> str:
+    raw = os.getenv(env_key)
+    if raw is None or not raw.strip():
+        return default
+    return raw.strip().lower()
+
+
 @dataclass(frozen=True)
 class GatewayConfig:
     """Immutable configuration for the Data-Plane API Gateway loaded from .env / environment."""
@@ -105,11 +134,7 @@ class GatewayConfig:
     mock_worker_count: int = field(
         default_factory=lambda: max(1, _parse_int_env("MOCK_WORKER_COUNT", 2))
     )
-    routing_policy: str = field(
-        default_factory=lambda: (
-            os.getenv("ROUTING_POLICY", "round_robin").strip().lower() or "round_robin"
-        )
-    )
+    routing_policy: str = field(default_factory=_parse_routing_policy_env)
     health_check_interval_s: float = field(
         default_factory=lambda: _parse_float_env("HEALTH_CHECK_INTERVAL_S", 10.0)
     )
@@ -127,3 +152,10 @@ class GatewayConfig:
             ],
         )
     )
+
+    def __post_init__(self) -> None:
+        object.__setattr__(
+            self,
+            "routing_policy",
+            normalize_routing_policy(self.routing_policy),
+        )
