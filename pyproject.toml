@@ -28,10 +28,8 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-gpu = [
-    "vllm",
-    "transformers<4.49.0",
-]
+# The serving wheel declares the Transformers range it supports.
+gpu = ["vllm"]
 dev = [
     "pytest>=8.0.0",
     "pytest-asyncio>=0.23.0",

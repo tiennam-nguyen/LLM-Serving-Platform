@@ -1,5 +1,9 @@
 # Nhật Ký Debug & Hướng Dẫn Setup vLLM Chuẩn Mượt Mà
 
+> Historical WSL debug notes. For Week 5 Linux hosts use [the LAN runbook](week5_lan_poc.md).
+> The Transformers cap described below was specific to the old environment and has
+> been removed from the GPU extra; let the selected vLLM version declare its range.
+
 ---
 
 ## 1. Tổng Quan Phần Cứng & Môi Trường

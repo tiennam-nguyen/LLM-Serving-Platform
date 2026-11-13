@@ -19,6 +19,11 @@ The system follows a **modular monolith** architecture with strict separation of
 > - **Week 4 (Worker Registry, Health Monitor, Round-Robin & Workers Topology UI)**: Completed (`WorkerRegistry`, `HealthMonitor` with startup + periodic background checks, `GET /control/v1/workers` & `GET /control/v1/workers/{id}`, `RoundRobinRouter` with automatic unhealthy-worker exclusion & HTTP 503 empty-pool handling, `/workers` Web UI, and cumulative gate `w4`).
 > - **Next Milestone**: Week 5 — Two-machine LAN PoC: remote endpoints, health over LAN, Round-Robin across hosts, failure/restart recovery.
 
+Week 5 lab preparation: follow the [two-host Linux/RTX 2080 runbook](docs/runbooks/week5_lan_poc.md)
+using `.env.week5.example`, `start_worker_lab.sh`, `start_gateway_lab.sh` and
+`verify_week5_lan.py`. Physical LAN acceptance requires the three lab phases;
+CPU/mock verification alone does not complete Week 5.
+
 ---
 
 ## 3. Semester Engineering Progression
