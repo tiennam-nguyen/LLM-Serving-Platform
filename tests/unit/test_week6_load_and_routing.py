@@ -195,6 +195,18 @@ def test_worker_record_invariants_and_serialization_safety():
 # ==============================================================================
 # Section 36: Local unit-test contract — RoundRobinRouter Week 6
 # ==============================================================================
+def test_worker_record_normalizes_both_timestamp_fields_to_utc():
+    local = datetime(2026, 11, 10, 7, tzinfo=timezone(timedelta(hours=7)))
+    expected = datetime(2026, 11, 10, tzinfo=timezone.utc)
+    record = WorkerRecord(
+        "a", "http://a", "m", last_checked_at=local, last_load_change_at=local,
+    )
+    for timestamp in (record.last_checked_at, record.last_load_change_at):
+        assert timestamp == expected
+        assert timestamp.tzinfo is timezone.utc
+        assert timestamp.isoformat() == "2026-11-10T00:00:00+00:00"
+
+
 def test_round_robin_router_week6_reservations_and_trace_telemetry():
     """Verify RoundRobinRouter cycles A/B/A/B, commits reservations, and records load telemetry."""
     registry = WorkerRegistry()

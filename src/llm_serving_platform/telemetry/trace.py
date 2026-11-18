@@ -39,6 +39,12 @@ class RequestTrace:
     _first_token_mono: Optional[float] = field(default=None, repr=False)
     _last_token_mono: Optional[float] = field(default=None, repr=False)
 
+    routing_policy: str | None = None
+    routing_candidate_loads: dict[str, int] = field(default_factory=dict)
+    routing_selected_load_before: int | None = None
+    routing_selected_load_after: int | None = None
+    routing_reason: str | None = None
+
     def mark_arrival(self) -> None:
         self.arrival = _utc_now_iso()
         self._arrival_mono = time.perf_counter()
@@ -127,6 +133,16 @@ class RequestTrace:
             "token_chunks": self.token_chunks,
             "completion_tokens": self.completion_tokens,
             "error": self.error,
+            "routing": {
+                "policy": self.routing_policy,
+                "candidate_loads": dict(self.routing_candidate_loads),
+                "selected_worker_id": (
+                    self.worker_id if self.worker_id and self.worker_id != "none" else None
+                ),
+                "selected_load_before": self.routing_selected_load_before,
+                "selected_load_after": self.routing_selected_load_after,
+                "reason": self.routing_reason,
+            },
             "milestones": {
                 "arrival": self.arrival,
                 "routing_start": self.routing_start,

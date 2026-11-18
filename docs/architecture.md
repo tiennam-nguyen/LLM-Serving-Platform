@@ -7,7 +7,7 @@ This document records the architecture principles, active **Week 4 implementatio
 ## 1. Architectural Principles (SOLID & Clean Boundaries)
 
 1. **Modular Monolith First**:
-   The backend is structured as an installable `src`-layout Python package (`llm_serving_platform`) with explicit module boundaries (`gateway`, `routing`, `workers`, `telemetry`, `control`, `benchmark`, `common`). All internal, script, and test imports use the canonical `llm_serving_platform.*` namespace—runtime and operational scripts never import from `tests/`.
+   The backend is structured as an installable `src`-layout Python package (`llm_serving_platform`) with explicit module boundaries (`gateway`, `routing`, `workers`, `telemetry`, `control`, `benchmark`, `common`). All internal, script, and test imports use the canonical `llm_serving_platform.*` namespace—production runtime never imports from `tests/`. The no-GPU Week 6 verifier uses test-local workers.
 
 2. **Decoupled Data Plane and Control Plane**:
    - The **data plane** (`gateway`, `routing`, `workers`, `telemetry`) processes live HTTP/SSE inference streams strictly in memory without synchronous database or network health-probe calls on the critical path.
@@ -17,7 +17,8 @@ This document records the architecture principles, active **Week 4 implementatio
    HTTP route handlers in `gateway/main.py` depend on the abstract `RoutingPolicy` interface (`Depends(get_router)`), never instantiating concrete routers inside request handlers.
    - In **Week 3**, `SingleWorkerRouter` served as the single-worker walking skeleton.
    - In **Week 4**, `RoundRobinRouter(registry)` implements `RoutingPolicy`, consuming cached `HEALTHY` worker instances from `WorkerRegistry.healthy_workers()`, cycling sequentially across healthy candidates, excluding `UNHEALTHY`/`STARTING` workers automatically, and raising `WorkerUnavailableError` (HTTP 503) when zero healthy workers remain.
-   - In **Week 6**, `LeastLoadedRouter` swaps into `create_router()` without modifying the HTTP controller.
+   - In **Week 6**, `create_routing_policy()` configures single-worker, Round Robin, or Least-Loaded routing. Registry-backed policies reserve during selection using a snapshot of healthy workers. The Gateway response releases its reservation at stream termination, including on disconnect or error.
+   - `RequestTrace.routing` in the trace API exposes the candidate snapshot, selection reason, and selected load before and after reservation. An active duplicate receives HTTP 409 while the original trace and reservation remain intact.
 
 4. **Runtime-Agnostic Worker Pool Factory (`InferenceWorker` ABC + `create_worker` / `populate_registry`)**:
    Serving engines sit behind `InferenceWorker` (`stream_chat`, `check_health`). `workers/factory.py` decouples the Gateway and Registry from concrete worker implementations:
@@ -26,7 +27,7 @@ This document records the architecture principles, active **Week 4 implementatio
    - **Clean Dependency Packaging (`pyproject.toml`)**: Core Data-Plane & Control-Plane Gateway dependencies (`fastapi`, `httpx`, `uvicorn`, `pydantic`) are separated from heavy CUDA/worker dependencies (`[project.optional-dependencies].gpu` containing `vllm` and `transformers<4.49.0`).
 
 5. **Open-Closed Cumulative Verification Pipeline (`infra/scripts/verify.py`)**:
-   All quality stages (`lint`, `unit`, `integration`, `gates`, `web`) and cumulative weekly exit gates (`w1`, `w2`, `w3`, `w4`, and future `w5+`) are orchestrated through a single declarative registry (`MILESTONE_GATES`) in `infra/scripts/verify.py`. Future weeks add new gate entries without deleting or breaking prior weekly gates, and `.github/workflows/ci.yml` invokes the same entrypoint in explicit CPU/mock stages. Hosted CI intentionally does not claim live-GPU evidence; live hardware checks are executed separately on the available GPU topology.
+   All quality stages (`lint`, `unit`, `integration`, `gates`, `web`) and cumulative weekly exit gates (`w1`, `w2`, `w3`, `w4`, and `w6`) are orchestrated through a single declarative registry (`MILESTONE_GATES`) in `infra/scripts/verify.py`. Future weeks add new gate entries without deleting or breaking prior weekly gates, and `.github/workflows/ci.yml` invokes the same entrypoint in explicit CPU/mock stages. Hosted CI intentionally does not claim live-GPU evidence; live hardware checks are executed separately on the available GPU topology.
 
 6. **Honest Telemetry & Metric Semantics**:
    Client-observed timings (`FIRST CONTENT`, `E2E DURATION` in `apps/web`) are kept distinct from server-observed monotonic trace milestones (`RequestTrace` in `telemetry/trace.py`). Because a single SSE `data:` frame is not guaranteed to equal one model token, chunk spacing is published honestly as `inter_content_chunk_ms`, while `tpot_ms` remains `None` unless true `completion_tokens > 1` is reported by the runtime.

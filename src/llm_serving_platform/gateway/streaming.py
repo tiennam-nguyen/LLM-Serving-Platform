@@ -2,8 +2,10 @@
 
 import asyncio
 import json
-from collections.abc import AsyncIterator
+from collections.abc import AsyncGenerator
 from typing import Any
+
+from anyio import CancelScope
 
 from llm_serving_platform.common.logging import log_structured_event
 from llm_serving_platform.telemetry.trace import InMemoryTraceStore, RequestTrace
@@ -61,7 +63,7 @@ async def safe_event_generator(
     client_ip: str,
     trace: RequestTrace | None = None,
     trace_store: InMemoryTraceStore | None = None,
-) -> AsyncIterator[str]:
+) -> AsyncGenerator[str, None]:
     """Stream SSE events from worker, recording Week 3 trace milestones and handling errors."""
     model_name = payload.get("model", "unknown")
     worker_id = getattr(worker, "worker_id", "worker-vllm-0")
@@ -76,8 +78,10 @@ async def safe_event_generator(
     if trace_store is not None:
         trace_store.save(trace)
 
+    stream = None
     try:
-        async for chunk in worker.stream_chat(payload, request_id):
+        stream = worker.stream_chat(payload, request_id)
+        async for chunk in stream:
             has_content, completion_tokens = _inspect_sse_chunk(chunk)
             if has_content:
                 trace.mark_first_token()
@@ -99,7 +103,7 @@ async def safe_event_generator(
             status="completed",
             extra=trace.to_dict(),
         )
-    except asyncio.CancelledError:
+    except (asyncio.CancelledError, GeneratorExit):
         trace.mark_last_token(status="cancelled", error="Client disconnected")
         if trace_store is not None:
             trace_store.save(trace)
@@ -148,3 +152,8 @@ async def safe_event_generator(
         err_json = json.dumps({"error": {"message": str(e), "code": 500}})
         yield f"data: {err_json}\n\n"
         yield "data: [DONE]\n\n"
+    finally:
+        close_stream = getattr(stream, "aclose", None)
+        if close_stream is not None:
+            with CancelScope(shield=True):
+                await close_stream()

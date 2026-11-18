@@ -182,6 +182,59 @@ def capture_processes(phase, workers):
     return mapping
 
 
+def start_replica(index, env, model, *, memory=MEMORY, context=CONTEXT):
+    """Start one vLLM replica using exactly one visible T4 and TP=1."""
+    worker_env = {**env, "CUDA_VISIBLE_DEVICES": str(index), "CUDA_DEVICE_ORDER": "PCI_BUS_ID"}
+    visible = torch_info(worker_env)
+    require(
+        len(visible["devices"]) == 1 and "T4" in visible["devices"][0],
+        "Expected one visible T4 per replica",
+    )
+    args = [
+        sys.executable,
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        model,
+        "--host",
+        "127.0.0.1",
+        "--port",
+        str(8000 + index),
+        "--tensor-parallel-size",
+        "1",
+        "--dtype",
+        "float16",
+        "--gpu-memory-utilization",
+        memory,
+        "--max-model-len",
+        context,
+    ]
+    launch = {
+        "CUDA_VISIBLE_DEVICES": str(index),
+        "args": args[1:],
+        "visible_devices": visible["devices"],
+    }
+    return Service(args, f"worker{index}.log", worker_env), launch
+
+
+def replica_ready(client, index, model):
+    """Verify health and the configured model on the worker's own endpoint."""
+    import httpx
+
+    url = ENDPOINTS[index]
+    try:
+        if client.get(url + "/health").status_code != 200:
+            return None
+        response = client.get(url + "/v1/models")
+        if response.status_code == 200:
+            models = response.json()
+            if any(row["id"] == model for row in models["data"]):
+                return models
+    except (httpx.RequestError, ValueError):
+        return None
+    return None
+
+
 def experiment(result, services):
     import httpx
 
@@ -192,37 +245,8 @@ def experiment(result, services):
     env = {**os.environ, "PYTHONPATH": str(REPO / "src"), "PYTHONUNBUFFERED": "1"}
 
     def start_worker(index):
-        worker_env = {**env, "CUDA_VISIBLE_DEVICES": str(index), "CUDA_DEVICE_ORDER": "PCI_BUS_ID"}
-        visible = torch_info(worker_env)
-        require(
-            len(visible["devices"]) == 1 and "T4" in visible["devices"][0],
-            "Expected one visible T4 per replica",
-        )
-        args = [
-            sys.executable,
-            "-m",
-            "vllm.entrypoints.openai.api_server",
-            "--model",
-            MODEL,
-            "--host",
-            "127.0.0.1",
-            "--port",
-            str(8000 + index),
-            "--tensor-parallel-size",
-            "1",
-            "--dtype",
-            "float16",
-            "--gpu-memory-utilization",
-            MEMORY,
-            "--max-model-len",
-            CONTEXT,
-        ]
-        result["worker_launch"][IDS[index]] = {
-            "CUDA_VISIBLE_DEVICES": str(index),
-            "args": args[1:],
-            "visible_devices": visible["devices"],
-        }
-        service = Service(args, f"worker{index}.log", worker_env)
+        service, launch = start_replica(index, env, MODEL)
+        result["worker_launch"][IDS[index]] = launch
         services.append(service)
         return service
 
@@ -236,15 +260,7 @@ def experiment(result, services):
                 return None
 
         def worker_ready(index):
-            try:
-                if client.get(ENDPOINTS[index] + "/health").status_code != 200:
-                    return None
-                models = json_ok(ENDPOINTS[index] + "/v1/models")
-                return (
-                    models if models and any(row["id"] == MODEL for row in models["data"]) else None
-                )
-            except httpx.RequestError:
-                return None
+            return replica_ready(client, index, MODEL)
 
         worker0 = start_worker(0)
         wait_for(IDS[0], lambda: worker_ready(0), 480, (worker0,))

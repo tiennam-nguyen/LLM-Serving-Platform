@@ -70,10 +70,8 @@ class WorkerRecord:
             ("last_checked_at", self.last_checked_at),
             ("last_load_change_at", self.last_load_change_at),
         ):
-            if ts_val is not None and (
-                not isinstance(ts_val, datetime) or ts_val.utcoffset() is None
-            ):
-                raise ValueError(f"{ts_field} must be timezone-aware when present")
+            if ts_val is not None:
+                object.__setattr__(self, ts_field, _normalize_utc_timestamp(ts_val, ts_field))
 
 
 @dataclass(frozen=True)

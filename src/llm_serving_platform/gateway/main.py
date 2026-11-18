@@ -3,30 +3,67 @@
 import asyncio
 import contextlib
 import uuid
+from collections.abc import AsyncGenerator, Callable
 from contextlib import asynccontextmanager
 
 import httpx
+from anyio import CancelScope
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
+from starlette.types import Receive, Scope, Send
 
 from llm_serving_platform.common.config import GatewayConfig
 from llm_serving_platform.common.logging import log_structured_event
 from llm_serving_platform.control.api import create_control_router
 from llm_serving_platform.control.health import HealthMonitor
-from llm_serving_platform.control.registry import WorkerRegistry
+from llm_serving_platform.control.registry import (
+    DuplicateRequestReservationError,
+    WorkerRegistry,
+)
 from llm_serving_platform.gateway.schemas import ChatCompletionRequest
 from llm_serving_platform.gateway.streaming import safe_event_generator
-from llm_serving_platform.routing.router import (
+from llm_serving_platform.routing import (
+    LeastLoadedRouter,
     RoundRobinRouter,
     RoutingPolicy,
     SingleWorkerRouter,
+    create_routing_policy,
 )
 from llm_serving_platform.telemetry.trace import InMemoryTraceStore, RequestTrace
 from llm_serving_platform.workers.base import InferenceWorker, WorkerUnavailableError
 from llm_serving_platform.workers.factory import create_worker, populate_registry
 from llm_serving_platform.workers.vllm_adapter import VLLMWorkerAdapter
+
+
+class _ReservationStreamResponse(StreamingResponse):
+    """Own the reservation for the entire ASGI response, including failed sends."""
+
+    def __init__(
+        self,
+        stream: AsyncGenerator[str, None],
+        trace: RequestTrace,
+        release: Callable[[], None],
+        headers: dict[str, str],
+    ) -> None:
+        super().__init__(stream, media_type="text/event-stream", headers=headers)
+        self._stream = stream
+        self._trace = trace
+        self._release = release
+
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        try:
+            await super().__call__(scope, receive, send)
+        finally:
+            try:
+                # A disconnect can interrupt ASGI send while the stream is suspended at yield.
+                with CancelScope(shield=True):
+                    await self._stream.aclose()
+            finally:
+                if self._trace.status == "in_flight":
+                    self._trace.mark_last_token(status="cancelled", error="Client disconnected")
+                self._release()
 
 
 def _build_http_client(config: GatewayConfig) -> httpx.AsyncClient:
@@ -138,11 +175,9 @@ def create_app(
         active_registry,
         timeout_s=cfg.health_check_timeout_s,
     )
-    app.state.router = (
-        SingleWorkerRouter(app.state.worker)
-        if cfg.routing_policy in {"single", "single_worker"}
-        else RoundRobinRouter(active_registry)
-    )
+    app.state.router = create_routing_policy(cfg, active_registry, single_worker=app.state.worker)
+    # Keep ownership even if the trace is evicted or the active worker becomes unhealthy.
+    active_streams: set[str] = set()
     app.include_router(create_control_router(active_registry))
 
     @app.exception_handler(RequestValidationError)
@@ -269,7 +304,24 @@ def create_app(
 
         # 2. Route request via injected RoutingPolicy and mark routing_start / routing_end
         try:
+            if request_id in active_streams:
+                raise DuplicateRequestReservationError(request_id)
             target_worker = router.select_worker(trace)
+        except DuplicateRequestReservationError:
+            log_structured_event(
+                event="routing_duplicate_request",
+                request_id=request_id,
+                client_ip=client_ip,
+                model=model_name,
+                worker_id="none",
+                status="error",
+                extra={"code": 409},
+            )
+            return JSONResponse(
+                status_code=409,
+                content={"error": {"message": "Duplicate active request ID", "code": 409}},
+                headers={"X-Request-ID": request_id, "X-Worker-ID": "none"},
+            )
         except WorkerUnavailableError as exc:
             trace.mark_last_token(status="error", error=str(exc))
             trace_store.save(trace)
@@ -288,36 +340,41 @@ def create_app(
                 headers={"X-Request-ID": request_id, "X-Worker-ID": "none"},
             )
 
-        worker_id = trace.worker_id
-        trace_store.save(trace)
-
-        payload = request_payload.model_dump(exclude_none=True)
-
-        log_structured_event(
-            event="chat_stream_started",
-            request_id=request_id,
-            client_ip=client_ip,
-            model=model_name,
-            worker_id=worker_id,
-            status="started",
-            extra={"arrival": trace.arrival, "routing_ms": trace.routing_ms},
+        reservation_registry = (
+            router.registry if isinstance(router, (RoundRobinRouter, LeastLoadedRouter)) else None
         )
+        if reservation_registry is not None:
+            active_streams.add(request_id)
 
-        return StreamingResponse(
-            safe_event_generator(
-                target_worker,
-                payload,
-                request_id,
-                client_ip,
-                trace=trace,
-                trace_store=trace_store,
-            ),
-            media_type="text/event-stream",
-            headers={
-                "X-Request-ID": request_id,
-                "X-Worker-ID": worker_id,
-            },
-        )
+        def release_reservation() -> None:
+            if reservation_registry is not None:
+                reservation_registry.release_request(request_id)
+                active_streams.remove(request_id)
+
+        try:
+            worker_id = trace.worker_id
+            trace_store.save(trace)
+            payload = request_payload.model_dump(exclude_none=True)
+            log_structured_event(
+                event="chat_stream_started",
+                request_id=request_id,
+                client_ip=client_ip,
+                model=model_name,
+                worker_id=worker_id,
+                status="started",
+                extra={"arrival": trace.arrival, "routing_ms": trace.routing_ms},
+            )
+            stream = safe_event_generator(
+                target_worker, payload, request_id, client_ip, trace=trace, trace_store=trace_store
+            )
+            headers = {"X-Request-ID": request_id, "X-Worker-ID": worker_id}
+            if reservation_registry is None:
+                return StreamingResponse(stream, media_type="text/event-stream", headers=headers)
+            return _ReservationStreamResponse(stream, trace, release_reservation, headers)
+        except BaseException as exc:
+            release_reservation()
+            trace.mark_last_token(status="error", error=str(exc))
+            raise
 
     return app
 

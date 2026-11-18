@@ -96,39 +96,15 @@ Person A core load-accounting and routing slice (`control/registry.py`, `routing
        single_worker=app.state.worker,
    )
    ```
-2. **Handle `DuplicateRequestReservationError` -> HTTP `409 Conflict` in `POST /v1/chat/completions`** (Contract Section 9):
-   Catch `DuplicateRequestReservationError` around `router.select_worker(trace)` and return a `409 Conflict` `JSONResponse`:
-   ```python
-   except DuplicateRequestReservationError as exc:
-       trace.mark_last_token(status="error", error=f"Duplicate active request_id: {exc}")
-       trace_store.save(trace)
-       return JSONResponse(
-           status_code=409,
-           content={
-               "error": {
-                   "message": f"Duplicate active request_id: {request_id}",
-                   "code": 409,
-               }
-           },
-           headers={"X-Request-ID": request_id, "X-Worker-ID": "none"},
-       )
-   ```
-3. **Wrap `safe_event_generator` with Reservation Release (`finally`) and Guard Pre-Stream Errors** (Contract Sections 17, 18, 19):
-   - Define a Gateway-level async generator wrapper:
-     ```python
-     async def _stream_with_reservation_release(
-         registry: WorkerRegistry,
-         *args,
-         request_id: str,
-         **kwargs,
-     ):
-         try:
-             async for chunk in safe_event_generator(*args, request_id=request_id, **kwargs):
-                 yield chunk
-         finally:
-             registry.release_request(request_id)
-     ```
-   - Wrap the post-routing setup in `try ... except`: if any exception occurs after `router.select_worker(trace)` succeeds and before `StreamingResponse` takes ownership of the generator, call `request.app.state.registry.release_request(request_id)` before re-raising.
+2. **Return HTTP 409 for an active duplicate request ID.** Include `X-Request-ID` and
+   `X-Worker-ID: none`. Log `routing_duplicate_request`. Preserve the original trace
+   and reservation, including while the original worker is unhealthy or before its
+   trace is saved.
+3. **Release registry-backed reservations when the ASGI response ends.** The response
+   owns cleanup even if disconnect interrupts an ASGI send. Explicitly close the
+   stream and release on response exit. If setup fails after selection, release
+   before propagating the error. The legacy single-worker dependency override
+   continues to stream without a registry reservation.
 
 ### 2.3 Verification & Integration Tests Owned by Person B
 - Add lifecycle release integration tests (normal completion, pre-stream worker error, mid-stream error, timeout, client cancellation, unexpected exception -> all `active_requests == 0` afterward).

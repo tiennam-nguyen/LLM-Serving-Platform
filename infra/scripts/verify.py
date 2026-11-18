@@ -16,6 +16,7 @@ Supports:
      python infra/scripts/verify.py --target w2 [--no-gpu]
      python infra/scripts/verify.py --target w3 [--no-gpu]
      python infra/scripts/verify.py --target w4 [--no-gpu]
+     python infra/scripts/verify.py --target w6 --no-gpu
      python infra/scripts/verify.py --target gates [--no-gpu]
      python infra/scripts/verify.py --target backend [--no-gpu]
      python infra/scripts/verify.py --target web [--no-gpu]
@@ -63,6 +64,7 @@ from infra.scripts.verify_week2_exit_gate import (  # noqa: E402, I001
 )
 from infra.scripts.verify_week3_e2e import run_week3_e2e_check  # noqa: E402, I001
 from infra.scripts.verify_week4_e2e import run_week4_e2e_check  # noqa: E402, I001
+from infra.scripts.verify_week6_e2e import run_week6_e2e
 from llm_serving_platform.common.config import load_dotenv_file  # noqa: E402, I001
 
 load_dotenv_file()
@@ -439,6 +441,22 @@ def gate_week4_registry_and_round_robin(ctx: VerifyContext) -> bool:
     return True
 
 
+def gate_week6_routing_evidence(ctx: VerifyContext) -> bool:
+    """Week 6 Exit Gate: routing decisions, concurrent load, and reservation cleanup."""
+    _banner("GATE [w6]: Gateway Routing and Reservation Lifecycle")
+    if not ctx.no_gpu:
+        raise RuntimeError(
+            "The Week 6 live gate needs two controlled replicas and fresh policy phases. "
+            "Run infra/kaggle/week6_routing_evidence/run.py."
+        )
+    validation, _ = asyncio.run(
+        run_week6_e2e(no_gpu=True, model=ctx.model, gateway_url=ctx.gateway_url)
+    )
+    if not validation["passed"]:
+        raise RuntimeError(f"Week 6 no-GPU gate failed: {validation}")
+    return True
+
+
 # ------------------------------------------------------------------------------
 # OPEN-CLOSED MILESTONE REGISTRY:
 # In Week 5+, append `"w5": GateSpec(...)` here without deleting w1-w4!
@@ -463,6 +481,11 @@ MILESTONE_GATES: dict[str, GateSpec] = {
         gate_id="w4",
         title="Week 4: WorkerRegistry, HealthMonitor & Round-Robin Failover",
         runner=gate_week4_registry_and_round_robin,
+    ),
+    "w6": GateSpec(
+        gate_id="w6",
+        title="Week 6: Routing Decisions, Concurrent Load & Reservation Lifecycle",
+        runner=gate_week6_routing_evidence,
     ),
 }
 
