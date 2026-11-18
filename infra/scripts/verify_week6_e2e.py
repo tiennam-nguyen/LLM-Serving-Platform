@@ -611,6 +611,51 @@ async def cancel(s):
     s.check(s.phase.controls.closed[request_id] == 1, "Worker stream was closed")
 
 
+async def cancel_live(s):
+    """Close a real HTTP stream after useful content while its reservation is active."""
+    phase = s.phase
+    row = s.new_request("client_disconnect", "long", 1024)
+    request_id = row["request_id"]
+    healthy = list(phase.healthy)
+    row["request_start_timestamp"] = now()
+    active = None
+    try:
+        async with phase.client.stream(
+            "POST",
+            CHAT,
+            headers={"X-Request-ID": request_id},
+            json=chat_payload(phase.model, "long", row["max_tokens"]),
+        ) as response:
+            row["http_status"] = response.status_code
+            row["worker_id"] = response.headers.get("X-Worker-ID")
+            s.check(response.status_code == 200, "Live cancellation opened an SSE response")
+            s.check(response.headers.get("X-Request-ID") == request_id, "Request ID echoed")
+            async for line in response.aiter_lines():
+                if line.startswith("data:"):
+                    s.read_event(row, line.removeprefix("data:").strip())
+                if row["content_chunks"]:
+                    active = await s.snapshot("before_http_close")
+                    break
+    finally:
+        row["request_terminal_timestamp"] = now()
+
+    if row["error"]:
+        await s.attach_trace(row, healthy)
+        raise CheckFailed("Worker error interrupted the live cancellation probe")
+    if active is None or loads(active).get(row["worker_id"]) != 1:
+        await s.attach_trace(row, healthy)
+        raise Inconclusive("The live request drained before an active disconnect could be staged")
+
+    drained = await s.snapshot(
+        "after_http_close", lambda state: not any(loads(state).values()), seconds=12
+    )
+    s.check(drained is not None, "Live cancellation drained Gateway load within 12 seconds")
+    await s.attach_trace(row, healthy)
+    if row["stream_terminal_status"] == "completed":
+        raise Inconclusive("The Gateway completed the stream before observing the HTTP close")
+    s.check(row["cancelled"], "HTTP disconnect ended the live Gateway trace as cancelled")
+
+
 async def duplicate(s):
     request_id = "duplicate-active-1"
     original, task = s.start("original", hold=True, request_id=request_id)
@@ -760,6 +805,7 @@ async def run_phase(phase, results, before_workloads, attempt, levels, *, fresh_
         await run(
             "invalid_model", "Verify release on request-scoped vLLM model rejection", invalid_model
         )
+        await run("cancellation", "Close a live HTTP stream while reserved", cancel_live)
     if phase.controls or phase.set_worker_health:
         await run(
             "health_recovery",
@@ -829,7 +875,16 @@ def summarize(results, no_gpu, policies, topology_verified, timestamp_status):
     unequal = both and comparisons[0]["candidate_loads"] == comparisons[1]["candidate_loads"]
     diverged = unequal and comparisons[0]["worker_id"] != comparisons[1]["worker_id"]
     pair_status = status_from(result["status"] if result else None for result in pair)
-    stable = [result for result in results if result not in controlled]
+    stable = [
+        result
+        for result in results
+        if result not in controlled
+        and not (
+            not no_gpu
+            and result["scenario_id"] == "cancellation"
+            and result["status"] == "INCONCLUSIVE"
+        )
+    ]
     phase_status = status_from(
         [result["status"] for result in stable]
         + [
@@ -893,9 +948,7 @@ def summarize(results, no_gpu, policies, topology_verified, timestamp_status):
             if no_gpu
             else (status_for("invalid_model")),
             "timeout_release_verified": status_for("timeout"),
-            "cancellation_release_verified": status_for("cancellation")
-            if no_gpu
-            else "inconclusive",
+            "cancellation_release_verified": status_for("cancellation"),
             "health_exclusion_verified": status_for("health_recovery"),
             "all_down_verified": status_for("all_down"),
             "final_active_counts_zero": verified if clean_drains else "failed",

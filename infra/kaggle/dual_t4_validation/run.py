@@ -86,11 +86,11 @@ def serving_python():
     return f"{path}/bin/python"
 
 
-def install(python):
+def install(python, *, vllm_requirement=VLLM_REQUIREMENT):
     pip = (python, "-m", "pip", "--isolated")
     command(*pip, "install", "-e", ".[dev]", cwd=REPO, timeout=300)
     command(*pip, "index", "versions", "vllm", "--only-binary=:all:")
-    command(*pip, "install", "--only-binary=:all:", VLLM_REQUIREMENT, timeout=1200)
+    command(*pip, "install", "--only-binary=:all:", vllm_requirement, timeout=1200)
 
 
 class Service:

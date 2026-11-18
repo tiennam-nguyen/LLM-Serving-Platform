@@ -20,7 +20,25 @@ The test includes a real ASGI disconnect event and checks the terminal trace and
 worker stream closure. The default homogeneous suite repeats concurrency 2, 4,
 and 8 three times each.
 
-## Run the dual-T4 gate
+## Submit a private dual-T4 run with Kaggle CLI
+
+From a clean Week 6 branch, package a thin Git bundle against the public Person A
+base. Kaggle receives the committed experiment revision in the private script
+kernel. The bootstrap verifies the bundle digest, restores the exact commit, and
+starts the managed launcher.
+
+```bash
+python infra/kaggle/week6_routing_evidence/package_kernel.py   --owner tiennamnguyen11 --base 7d44bde87315d0a3e104db881d730ca4bc2045a6   --model Qwen/Qwen2.5-3B-Instruct --vllm-version 0.33.0   --output-dir .cache/kaggle-week6/kernel
+kaggle kernels push -p .cache/kaggle-week6/kernel --accelerator NvidiaTeslaT4 --timeout 3600
+kaggle kernels status tiennamnguyen11/llm-serving-week6-routing-evidence
+kaggle kernels logs tiennamnguyen11/llm-serving-week6-routing-evidence
+kaggle kernels output tiennamnguyen11/llm-serving-week6-routing-evidence   -p .cache/kaggle-week6/output
+```
+
+The example uses the model and vLLM wheel from the accepted Week 4 run. Inspect
+the output from the new version after it reaches a terminal state.
+
+## Run from an existing Kaggle notebook checkout
 
 1. Provide Kaggle with a clean checkout of the exact Week 6 implementation
    revision, for example as a notebook input prepared from the local branch or
@@ -66,8 +84,10 @@ attempt checks that the two prior requests created the intended load and that th
 probe trace actually captured the same unequal snapshot. It tries up to three
 output budgets. A missed timing window is `INCONCLUSIVE`. A placement or cleanup
 invariant violation is `FAIL`. The live phase also checks release on a request
-with an invalid model ID. Live disconnect propagation remains inconclusive in
-this launcher. The deterministic cancellation gate runs in no-GPU mode.
+with an invalid model ID. For live cancellation the client closes the HTTP
+stream after useful content while the reservation is active. The verifier checks
+the terminal trace and waits for zero load within a bounded interval. A stream
+that finishes before the disconnect can be observed is inconclusive.
 
 The default load matrix is bounded. Add `--extended` to include concurrency 16
 once the baseline workload runs reliably. Review `validation.json` for gate

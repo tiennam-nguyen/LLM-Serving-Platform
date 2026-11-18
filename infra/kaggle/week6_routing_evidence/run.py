@@ -195,6 +195,7 @@ def main():
     )
     parser.add_argument("--model", required=True, help="Model ID served by both replicas")
     parser.add_argument("--bootstrap", action="store_true", help="Install the serving environment")
+    parser.add_argument("--vllm-version", help="Pin the vLLM wheel when bootstrapping")
     parser.add_argument("--extended", action="store_true", help="Add a concurrency-16 burst")
     parser.add_argument("--output-dir", type=Path, default=Path("/kaggle/working/week6/live"))
     args = parser.parse_args()
@@ -208,7 +209,8 @@ def main():
     inventory = checked_inventory()
     if args.bootstrap:
         python = dual_t4.serving_python()
-        dual_t4.install(python)
+        requirement = f"vllm=={args.vllm_version}" if args.vllm_version else "vllm"
+        dual_t4.install(python, vllm_requirement=requirement)
         subprocess_args = [
             python,
             str(Path(__file__).resolve()),
