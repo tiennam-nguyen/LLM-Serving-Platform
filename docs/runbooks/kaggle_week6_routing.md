@@ -30,9 +30,9 @@ starts the managed launcher.
 ```bash
 python infra/kaggle/week6_routing_evidence/package_kernel.py   --owner tiennamnguyen11 --base 7d44bde87315d0a3e104db881d730ca4bc2045a6   --model Qwen/Qwen2.5-3B-Instruct --vllm-version 0.33.0   --output-dir .cache/kaggle-week6/kernel
 kaggle kernels push -p .cache/kaggle-week6/kernel --accelerator NvidiaTeslaT4 --timeout 3600
-kaggle kernels status tiennamnguyen11/llm-serving-week6-routing-evidence
-kaggle kernels logs tiennamnguyen11/llm-serving-week6-routing-evidence
-kaggle kernels output tiennamnguyen11/llm-serving-week6-routing-evidence   -p .cache/kaggle-week6/output
+kaggle kernels status tiennamnguyen11/llm-serving-week-6-routing-evidence
+kaggle kernels logs tiennamnguyen11/llm-serving-week-6-routing-evidence
+kaggle kernels output tiennamnguyen11/llm-serving-week-6-routing-evidence   -p .cache/kaggle-week6/output
 ```
 
 The example uses the model and vLLM wheel from the accepted Week 4 run. Inspect
@@ -108,3 +108,31 @@ before running the attached probe. The attached mode checks one policy and one
 controlled attempt. Fresh-policy tie evidence, restart retries, health recovery,
 hardware proof, and the paired policy comparison are provided by the managed
 launcher.
+
+
+## Accepted dual-T4 run, 2026-11-18
+
+[Kaggle run](https://www.kaggle.com/code/tiennamnguyen11/llm-serving-week-6-routing-evidence), version 1,
+tested source revision `88d03fc7bcb2965e9387122134b5d92fa2648551`. The submitted
+script SHA-256 was `84a2084593616271f35e548bcf402750e5e07110d073bb6b85bc98e4ea7bdd69`.
+
+Two Tesla T4s reported 15,360 MiB apiece and driver 580.178.04. One vLLM
+0.33.0 process group on each GPU served `Qwen/Qwen2.5-3B-Instruct` at TP=1.
+The GPU process snapshots showed GPU 0's engine disappear and reappear with a
+new PID, while GPU 1's engine stayed resident.
+
+- The paired probes both recorded active loads `{worker-vllm-0: 1, worker-vllm-1: 0}`.
+  Round Robin chose worker 0 and Least-Loaded chose worker 1.
+- All 12 live scenarios passed. The artifact audit checked the per-decision load
+  oracle for 71 Least-Loaded routes, the cycle for 11 Round Robin routes, and
+  zero active requests after every scenario. Gateway access logs counted the
+  same 82 streamed HTTP responses.
+- The invalid model returned SSE error 404 and released its reservation. The
+  HTTP disconnect produced a cancelled trace and released its reservation.
+  Worker 0 left and re-entered the candidate pool during recovery.
+
+The five downloaded JSON files are preserved byte-for-byte under
+[`experiments/raw/week6/live/`](../../experiments/raw/week6/live/). Its
+[`validation.json`](../../experiments/raw/week6/live/validation.json) is scoped
+to the live run. The adjacent no-GPU artifacts cover controlled timeout,
+duplicate, all-down, and error-path checks.

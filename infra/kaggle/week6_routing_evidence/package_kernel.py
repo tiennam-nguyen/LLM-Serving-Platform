@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 ORIGIN = "https://github.com/tiennam-nguyen/LLM-Serving-Platform.git"
-KERNEL_NAME = "llm-serving-week6-routing-evidence"
+KERNEL_NAME = "llm-serving-week-6-routing-evidence"
 
 
 def git(*args):
