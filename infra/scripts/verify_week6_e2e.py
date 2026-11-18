@@ -1000,7 +1000,7 @@ def save_evidence(path, metadata, results, validation):
     for name, value in files.items():
         dest = path / f"{name}.json"
         pending = dest.with_suffix(".json.tmp")
-        pending.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
+        pending.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8", newline="\n")
         pending.replace(dest)
 
 
