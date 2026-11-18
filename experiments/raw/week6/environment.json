@@ -1,0 +1,27 @@
+{
+  "timestamp_utc": "2026-11-18T11:35:50.685289+00:00",
+  "git_revision": "2ad1d74f30922542274cc78a2b0669989e1127be",
+  "branch": "feat/w6-routing-evidence",
+  "tracked_source_patch_sha256": null,
+  "python": "3.12.13",
+  "pytorch": null,
+  "vllm": null,
+  "cuda": null,
+  "fastapi": "0.163.2",
+  "httpx": "0.28.1",
+  "starlette": "1.10.0",
+  "gpu_inventory": [
+    "NVIDIA GeForce RTX 2050, 4096 MiB"
+  ],
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "worker_endpoints": {
+    "worker-mock-0": "mock://worker-mock-0",
+    "worker-mock-1": "mock://worker-mock-1"
+  },
+  "gateway_endpoint": "http://mock-gateway",
+  "routing_policy": [
+    "round_robin",
+    "least_loaded"
+  ],
+  "test_mode": "no_gpu"
+}

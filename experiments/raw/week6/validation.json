@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "test_mode": "no_gpu",
+  "policies": [
+    "round_robin",
+    "least_loaded"
+  ],
+  "controlled_probes": [
+    {
+      "request_id": "w6-round_robin-controlled_divergence_1-3",
+      "policy": "round_robin",
+      "candidate_loads": {
+        "worker-mock-0": 1,
+        "worker-mock-1": 0
+      },
+      "worker_id": "worker-mock-0"
+    },
+    {
+      "request_id": "w6-least_loaded-controlled_divergence_1-3",
+      "policy": "least_loaded",
+      "candidate_loads": {
+        "worker-mock-0": 1,
+        "worker-mock-1": 0
+      },
+      "worker_id": "worker-mock-1"
+    }
+  ],
+  "gates": {
+    "person_a_timestamp_fix_verified": "verified_no_gpu",
+    "duplicate_trace_preservation_verified": "verified_no_gpu",
+    "trace_schema_verified": "verified_no_gpu",
+    "reservation_cleanup_verified": "verified_no_gpu",
+    "duplicate_409_verified": "verified_no_gpu",
+    "rr_cycle_verified": "verified_no_gpu",
+    "least_loaded_per_decision_oracle_verified": "verified_no_gpu",
+    "equal_load_tie_fairness_verified": "verified_no_gpu",
+    "concurrency_verified": "verified_no_gpu",
+    "mixed_duration_verified": "verified_no_gpu",
+    "completion_driven_rebalance_verified": "verified_no_gpu",
+    "controlled_unequal_snapshot_observed": "verified_no_gpu",
+    "rr_vs_ll_policy_divergence_observed": "verified_no_gpu",
+    "error_release_verified": "verified_no_gpu",
+    "timeout_release_verified": "verified_no_gpu",
+    "cancellation_release_verified": "verified_no_gpu",
+    "health_exclusion_verified": "verified_no_gpu",
+    "all_down_verified": "verified_no_gpu",
+    "final_active_counts_zero": "verified_no_gpu",
+    "live_dual_t4_verified": "not_run"
+  }
+}

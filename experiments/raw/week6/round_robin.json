@@ -1,0 +1,47 @@
+{
+  "scenario_ids": [
+    "controlled_divergence_1",
+    "rr_cycle",
+    "all_down"
+  ],
+  "controlled_probes": [
+    {
+      "scenario_id": "controlled_divergence_1",
+      "phase": "round_robin",
+      "policy": "round_robin",
+      "request_id": "w6-round_robin-controlled_divergence_1-3",
+      "request_kind": "probe",
+      "prompt_class": "short",
+      "max_tokens": 8,
+      "request_start_timestamp": "2026-11-18T11:35:43.589027+00:00",
+      "request_terminal_timestamp": "2026-11-18T11:35:43.642977+00:00",
+      "http_status": 200,
+      "stream_terminal_status": "completed",
+      "worker_id": "worker-mock-0",
+      "routing_policy": "round_robin",
+      "candidate_loads": {
+        "worker-mock-0": 1,
+        "worker-mock-1": 0
+      },
+      "selected_load_before": 1,
+      "selected_load_after": 2,
+      "routing_reason": "round_robin",
+      "routing_ms": 0.064,
+      "ttft_ms": 50.42,
+      "e2e_ms": 50.64,
+      "error": null,
+      "cancelled": false,
+      "content_chunks": 1,
+      "done": true,
+      "milestones": {
+        "arrival": "2026-11-18T11:35:43.591078+00:00",
+        "routing_start": "2026-11-18T11:35:43.591078+00:00",
+        "routing_end": "2026-11-18T11:35:43.592026+00:00",
+        "worker_start": "2026-11-18T11:35:43.592026+00:00",
+        "first_token": "2026-11-18T11:35:43.641992+00:00",
+        "last_token": "2026-11-18T11:35:43.641992+00:00"
+      },
+      "trace_token_chunks": 1
+    }
+  ]
+}
