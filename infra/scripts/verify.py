@@ -17,6 +17,7 @@ Supports:
      python infra/scripts/verify.py --target w3 [--no-gpu]
      python infra/scripts/verify.py --target w4 [--no-gpu]
      python infra/scripts/verify.py --target w6 --no-gpu
+     python infra/scripts/verify.py --target w7-observability --no-gpu
      python infra/scripts/verify.py --target gates [--no-gpu]
      python infra/scripts/verify.py --target backend [--no-gpu]
      python infra/scripts/verify.py --target web [--no-gpu]
@@ -457,6 +458,22 @@ def gate_week6_routing_evidence(ctx: VerifyContext) -> bool:
     return True
 
 
+def gate_week7_observability(ctx: VerifyContext) -> bool:
+    """Member A's CPU contract checks; full W7 acceptance also needs Member B's runner."""
+    _banner("GATE [w7-observability]: Member A Trace, Metrics & Request Lifecycle")
+    if not ctx.no_gpu:
+        raise RuntimeError("The observability contract gate uses CPU workers; pass --no-gpu.")
+    if not _HAS_REAL_PYTEST:
+        raise RuntimeError("Install .[ci] to run the observability contract tests with pytest.")
+    _run_subprocess([
+        sys.executable, "-m", "pytest", "--no-gpu", "-p", "no:cacheprovider",
+        "tests/integration/test_week7_observability.py",
+        "tests/integration/test_week6_gateway_lifecycle.py",
+        "tests/unit/test_week6_load_and_routing.py",
+    ])
+    return True
+
+
 # ------------------------------------------------------------------------------
 # OPEN-CLOSED MILESTONE REGISTRY:
 # In Week 5+, append `"w5": GateSpec(...)` here without deleting w1-w4!
@@ -486,6 +503,11 @@ MILESTONE_GATES: dict[str, GateSpec] = {
         gate_id="w6",
         title="Week 6: Routing Decisions, Concurrent Load & Reservation Lifecycle",
         runner=gate_week6_routing_evidence,
+    ),
+    "w7-observability": GateSpec(
+        gate_id="w7-observability",
+        title="Week 7 Member A: Trace, Metrics & Request Lifecycle (CPU)",
+        runner=gate_week7_observability,
     ),
 }
 

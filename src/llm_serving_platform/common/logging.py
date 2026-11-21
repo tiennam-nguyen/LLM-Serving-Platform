@@ -8,6 +8,20 @@ from typing import Any, Dict
 logger = logging.getLogger("llm_serving_platform.gateway")
 
 
+def redact_prompt_text(message: str, payload: dict[str, Any]) -> str:
+    """Remove message contents echoed by upstream errors before storing telemetry."""
+    contents: set[str] = set()
+    for item in payload.get("messages", []):
+        content = item.get("content") if isinstance(item, dict) else None
+        if isinstance(content, str) and content:
+            contents.update(
+                (content, json.dumps(content)[1:-1], json.dumps(content, ensure_ascii=False)[1:-1])
+            )
+    for content in sorted(contents, key=len, reverse=True):
+        message = message.replace(content, "[redacted]")
+    return message
+
+
 def log_structured_event(
     event: str,
     request_id: str,

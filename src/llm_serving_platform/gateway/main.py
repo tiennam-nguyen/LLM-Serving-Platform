@@ -11,11 +11,12 @@ from anyio import CancelScope
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.responses import JSONResponse, Response, StreamingResponse
+from prometheus_client import CONTENT_TYPE_LATEST
 from starlette.types import Receive, Scope, Send
 
 from llm_serving_platform.common.config import GatewayConfig
-from llm_serving_platform.common.logging import log_structured_event
+from llm_serving_platform.common.logging import log_structured_event, redact_prompt_text
 from llm_serving_platform.control.api import create_control_router
 from llm_serving_platform.control.health import HealthMonitor
 from llm_serving_platform.control.registry import (
@@ -31,6 +32,7 @@ from llm_serving_platform.routing import (
     SingleWorkerRouter,
     create_routing_policy,
 )
+from llm_serving_platform.telemetry.metrics import GatewayMetrics
 from llm_serving_platform.telemetry.trace import InMemoryTraceStore, RequestTrace
 from llm_serving_platform.workers.base import InferenceWorker, WorkerUnavailableError
 from llm_serving_platform.workers.factory import create_worker, populate_registry
@@ -38,19 +40,19 @@ from llm_serving_platform.workers.vllm_adapter import VLLMWorkerAdapter
 
 
 class _ReservationStreamResponse(StreamingResponse):
-    """Own the reservation for the entire ASGI response, including failed sends."""
+    """Own cleanup and telemetry for the entire ASGI response, including failed sends."""
 
     def __init__(
         self,
         stream: AsyncGenerator[str, None],
         trace: RequestTrace,
-        release: Callable[[], None],
+        finalize: Callable[[], None],
         headers: dict[str, str],
     ) -> None:
         super().__init__(stream, media_type="text/event-stream", headers=headers)
         self._stream = stream
         self._trace = trace
-        self._release = release
+        self._finalize = finalize
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
         try:
@@ -63,7 +65,7 @@ class _ReservationStreamResponse(StreamingResponse):
             finally:
                 if self._trace.status == "in_flight":
                     self._trace.mark_last_token(status="cancelled", error="Client disconnected")
-                self._release()
+                self._finalize()
 
 
 def _build_http_client(config: GatewayConfig) -> httpx.AsyncClient:
@@ -171,6 +173,8 @@ def create_app(
         app.state.initial_health_checked = True
 
     app.state.registry = active_registry
+    metrics = GatewayMetrics(active_registry)
+    app.state.metrics = metrics
     app.state.health_monitor = HealthMonitor(
         active_registry,
         timeout_s=cfg.health_check_timeout_s,
@@ -230,6 +234,11 @@ def create_app(
         allow_headers=["Content-Type", "Accept", "X-Request-ID"],
         expose_headers=["X-Request-ID", "X-Worker-ID"],
     )
+
+    @app.get("/metrics", include_in_schema=False)
+    async def prometheus_metrics():
+        """Expose this app's metrics without probing workers or counting the scrape."""
+        return Response(metrics.render(), headers={"Content-Type": CONTENT_TYPE_LATEST})
 
     @app.get("/health")
     async def health(
@@ -325,6 +334,8 @@ def create_app(
         except WorkerUnavailableError as exc:
             trace.mark_last_token(status="error", error=str(exc))
             trace_store.save(trace)
+            metrics.observe_routing(trace)
+            metrics.observe_request(trace)
             log_structured_event(
                 event="routing_no_healthy_worker",
                 request_id=request_id,
@@ -340,16 +351,40 @@ def create_app(
                 headers={"X-Request-ID": request_id, "X-Worker-ID": "none"},
             )
 
+        metrics.observe_routing(trace)
         reservation_registry = (
             router.registry if isinstance(router, (RoundRobinRouter, LeastLoadedRouter)) else None
         )
         if reservation_registry is not None:
             active_streams.add(request_id)
+        else:
+            metrics.track_unreserved(trace.worker_id, 1)
 
-        def release_reservation() -> None:
-            if reservation_registry is not None:
-                reservation_registry.release_request(request_id)
-                active_streams.remove(request_id)
+        finalized = False
+
+        def finalize_request() -> None:
+            nonlocal finalized
+            if finalized:
+                return
+            finalized = True
+            try:
+                if reservation_registry is not None:
+                    reservation_registry.release_request(request_id)
+                    active_streams.discard(request_id)
+                else:
+                    metrics.track_unreserved(trace.worker_id, -1)
+            finally:
+                trace_store.save(trace)
+                metrics.observe_request(trace)
+                log_structured_event(
+                    event="chat_request_finished",
+                    request_id=request_id,
+                    client_ip=client_ip,
+                    model=model_name,
+                    worker_id=trace.worker_id,
+                    status=trace.status,
+                    extra=trace.to_dict(),
+                )
 
         try:
             worker_id = trace.worker_id
@@ -365,15 +400,25 @@ def create_app(
                 extra={"arrival": trace.arrival, "routing_ms": trace.routing_ms},
             )
             stream = safe_event_generator(
-                target_worker, payload, request_id, client_ip, trace=trace, trace_store=trace_store
+                target_worker,
+                payload,
+                request_id,
+                client_ip,
+                trace=trace,
+                trace_store=trace_store,
+                log_terminal=False,
             )
             headers = {"X-Request-ID": request_id, "X-Worker-ID": worker_id}
-            if reservation_registry is None:
-                return StreamingResponse(stream, media_type="text/event-stream", headers=headers)
-            return _ReservationStreamResponse(stream, trace, release_reservation, headers)
+            return _ReservationStreamResponse(stream, trace, finalize_request, headers)
         except BaseException as exc:
-            release_reservation()
-            trace.mark_last_token(status="error", error=str(exc))
+            if isinstance(exc, asyncio.CancelledError):
+                trace.mark_last_token(status="cancelled", error="Client disconnected")
+            else:
+                trace.mark_last_token(
+                    status="error",
+                    error=redact_prompt_text(str(exc), request_payload.model_dump()),
+                )
+            finalize_request()
             raise
 
     return app

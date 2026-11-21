@@ -15,8 +15,7 @@ COPY pyproject.toml README.md ./
 COPY src/ ./src/
 
 # Install gateway runtime dependencies without heavy local GPU wheels
-RUN pip install --no-deps . && \
-    pip install "fastapi>=0.110.0" "httpx>=0.27.0" "uvicorn>=0.29.0" "pydantic>=2.6.0"
+RUN pip install .
 
 USER 10001:10001
 EXPOSE 8080
