@@ -22,6 +22,8 @@ class RequestTrace:
     token_chunks: int = 0
     completion_tokens: int | None = None
     error: str | None = None
+    error_type: str | None = None
+    error_code: int | None = None
 
     # ISO-8601 UTC wall-clock timestamps for each milestone
     arrival: Optional[str] = None
@@ -67,12 +69,23 @@ class RequestTrace:
             self.first_token = _utc_now_iso()
             self._first_token_mono = time.perf_counter()
 
-    def mark_last_token(self, status: str = "completed", error: Optional[str] = None) -> None:
+    def mark_last_token(
+        self,
+        status: str = "completed",
+        error: Optional[str] = None,
+        *,
+        error_type: Optional[str] = None,
+        error_code: Optional[int] = None,
+    ) -> None:
         self.last_token = _utc_now_iso()
         self._last_token_mono = time.perf_counter()
         self.status = status
         if error is not None:
             self.error = error
+        if error_type is not None:
+            self.error_type = error_type
+        if error_code is not None:
+            self.error_code = error_code
 
     @property
     def routing_ms(self) -> Optional[float]:
@@ -133,6 +146,8 @@ class RequestTrace:
             "token_chunks": self.token_chunks,
             "completion_tokens": self.completion_tokens,
             "error": self.error,
+            "error_type": self.error_type,
+            "error_code": self.error_code,
             "routing": {
                 "policy": self.routing_policy,
                 "candidate_loads": dict(self.routing_candidate_loads),

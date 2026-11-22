@@ -1,11 +1,66 @@
-"""Structured JSON logging utility for the LLM Serving Platform."""
+"""Structured JSON logging utility and controlled telemetry error classification."""
 
+import asyncio
 import json
 import logging
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from typing import Any, Dict
 
+from llm_serving_platform.workers.base import (
+    WorkerException,
+    WorkerTimeoutError,
+    WorkerUnavailableError,
+)
+
 logger = logging.getLogger("llm_serving_platform.gateway")
+
+
+@dataclass(frozen=True)
+class SafeTelemetryError:
+    """Privacy-safe error classification persisted in traces and structured logs."""
+
+    error: str
+    error_type: str
+    error_code: int | None = None
+
+
+def classify_telemetry_error(
+    exc: BaseException,
+    *,
+    default_error: str = "internal_error",
+    default_code: int | None = 500,
+) -> SafeTelemetryError:
+    """Map an exception into a controlled vocabulary without persisting raw upstream text."""
+    if isinstance(exc, (asyncio.CancelledError, GeneratorExit)):
+        return SafeTelemetryError(
+            error="client_disconnected",
+            error_type="ClientDisconnected",
+            error_code=None,
+        )
+    if isinstance(exc, WorkerTimeoutError):
+        return SafeTelemetryError(
+            error="worker_timeout",
+            error_type=type(exc).__name__,
+            error_code=exc.status_code,
+        )
+    if isinstance(exc, WorkerUnavailableError):
+        return SafeTelemetryError(
+            error="worker_unavailable",
+            error_type=type(exc).__name__,
+            error_code=exc.status_code,
+        )
+    if isinstance(exc, WorkerException):
+        return SafeTelemetryError(
+            error="worker_error",
+            error_type=type(exc).__name__,
+            error_code=exc.status_code,
+        )
+    return SafeTelemetryError(
+        error=default_error,
+        error_type=type(exc).__name__,
+        error_code=default_code,
+    )
 
 
 def redact_prompt_text(message: str, payload: dict[str, Any]) -> str:

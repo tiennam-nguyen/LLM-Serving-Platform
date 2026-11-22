@@ -167,12 +167,16 @@ async def test_trace_records_error_status_and_404_on_unknown_trace():
             },
         )
         assert resp.status_code == 200
+        assert "Backend GPU offline" in resp.text
 
         trace_resp = await client.get("/v1/traces/trace-err-01")
         assert trace_resp.status_code == 200
         data = trace_resp.json()
         assert data["status"] == "error"
-        assert "Backend GPU offline" in (data["error"] or "")
+        assert data["error"] == "worker_unavailable"
+        assert data["error_type"] == "WorkerUnavailableError"
+        assert data["error_code"] == 503
+        assert "Backend GPU offline" not in (data["error"] or "")
         assert data["milestones"]["arrival"] is not None
         assert data["milestones"]["last_token"] is not None
 

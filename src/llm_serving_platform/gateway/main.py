@@ -16,7 +16,7 @@ from prometheus_client import CONTENT_TYPE_LATEST
 from starlette.types import Receive, Scope, Send
 
 from llm_serving_platform.common.config import GatewayConfig
-from llm_serving_platform.common.logging import log_structured_event, redact_prompt_text
+from llm_serving_platform.common.logging import classify_telemetry_error, log_structured_event
 from llm_serving_platform.control.api import create_control_router
 from llm_serving_platform.control.health import HealthMonitor
 from llm_serving_platform.control.registry import (
@@ -64,7 +64,11 @@ class _ReservationStreamResponse(StreamingResponse):
                     await self._stream.aclose()
             finally:
                 if self._trace.status == "in_flight":
-                    self._trace.mark_last_token(status="cancelled", error="Client disconnected")
+                    self._trace.mark_last_token(
+                        status="cancelled",
+                        error="client_disconnected",
+                        error_type="ClientDisconnected",
+                    )
                 self._finalize()
 
 
@@ -311,6 +315,10 @@ def create_app(
         trace = RequestTrace(request_id=request_id, model=model_name)
         trace.mark_arrival()
 
+        reservation_registry = (
+            router.registry if isinstance(router, (RoundRobinRouter, LeastLoadedRouter)) else None
+        )
+
         # 2. Route request via injected RoutingPolicy and mark routing_start / routing_end
         try:
             if request_id in active_streams:
@@ -332,7 +340,14 @@ def create_app(
                 headers={"X-Request-ID": request_id, "X-Worker-ID": "none"},
             )
         except WorkerUnavailableError as exc:
-            trace.mark_last_token(status="error", error=str(exc))
+            if reservation_registry is not None:
+                reservation_registry.release_request(request_id)
+            trace.mark_last_token(
+                status="error",
+                error="no_healthy_worker",
+                error_type=type(exc).__name__,
+                error_code=exc.status_code,
+            )
             trace_store.save(trace)
             metrics.observe_routing(trace)
             metrics.observe_request(trace)
@@ -343,21 +358,55 @@ def create_app(
                 model=model_name,
                 worker_id="none",
                 status="error",
-                extra={"error": str(exc), "code": exc.status_code, **trace.to_dict()},
+                extra={"code": exc.status_code, **trace.to_dict()},
             )
             return JSONResponse(
                 status_code=exc.status_code,
                 content={"error": {"message": str(exc), "code": exc.status_code}},
                 headers={"X-Request-ID": request_id, "X-Worker-ID": "none"},
             )
+        except Exception as exc:
+            if reservation_registry is not None:
+                reservation_registry.release_request(request_id)
+            if trace.routing_policy is None:
+                if isinstance(router, SingleWorkerRouter):
+                    trace.routing_policy = "single"
+                elif isinstance(router, RoundRobinRouter):
+                    trace.routing_policy = "round_robin"
+                elif isinstance(router, LeastLoadedRouter):
+                    trace.routing_policy = "least_loaded"
+            if trace.routing_start is not None and trace.routing_end is None:
+                trace.mark_routing_end(worker_id="none")
+            else:
+                trace.worker_id = "none"
+            safe = classify_telemetry_error(exc, default_error="routing_error", default_code=500)
+            trace.mark_last_token(
+                status="error",
+                error=safe.error,
+                error_type=safe.error_type,
+                error_code=safe.error_code,
+            )
+            trace_store.save(trace)
+            metrics.observe_routing(trace)
+            metrics.observe_request(trace)
+            log_structured_event(
+                event="routing_unexpected_error",
+                request_id=request_id,
+                client_ip=client_ip,
+                model=model_name,
+                worker_id="none",
+                status="error",
+                extra={"code": 500, **trace.to_dict()},
+            )
+            return JSONResponse(
+                status_code=500,
+                content={"error": {"message": "Internal routing error", "code": 500}},
+                headers={"X-Request-ID": request_id, "X-Worker-ID": "none"},
+            )
 
         metrics.observe_routing(trace)
-        reservation_registry = (
-            router.registry if isinstance(router, (RoundRobinRouter, LeastLoadedRouter)) else None
-        )
-        if reservation_registry is not None:
-            active_streams.add(request_id)
-        else:
+        active_streams.add(request_id)
+        if reservation_registry is None:
             metrics.track_unreserved(trace.worker_id, 1)
 
         finalized = False
@@ -368,9 +417,9 @@ def create_app(
                 return
             finalized = True
             try:
+                active_streams.discard(request_id)
                 if reservation_registry is not None:
                     reservation_registry.release_request(request_id)
-                    active_streams.discard(request_id)
                 else:
                     metrics.track_unreserved(trace.worker_id, -1)
             finally:
@@ -412,11 +461,20 @@ def create_app(
             return _ReservationStreamResponse(stream, trace, finalize_request, headers)
         except BaseException as exc:
             if isinstance(exc, asyncio.CancelledError):
-                trace.mark_last_token(status="cancelled", error="Client disconnected")
+                trace.mark_last_token(
+                    status="cancelled",
+                    error="client_disconnected",
+                    error_type="ClientDisconnected",
+                )
             else:
+                safe = classify_telemetry_error(
+                    exc, default_error="response_setup_error", default_code=500
+                )
                 trace.mark_last_token(
                     status="error",
-                    error=redact_prompt_text(str(exc), request_payload.model_dump()),
+                    error=safe.error,
+                    error_type=safe.error_type,
+                    error_code=safe.error_code,
                 )
             finalize_request()
             raise

@@ -7,16 +7,17 @@ from typing import Any
 
 from anyio import CancelScope
 
-from llm_serving_platform.common.logging import log_structured_event, redact_prompt_text
+from llm_serving_platform.common.logging import classify_telemetry_error, log_structured_event
 from llm_serving_platform.telemetry.trace import InMemoryTraceStore, RequestTrace
 from llm_serving_platform.workers.base import InferenceWorker, WorkerException
 
 
-def _inspect_sse_chunk(sse_chunk: str) -> tuple[bool, int | None, bool]:
-    """Inspect an SSE chunk for non-empty assistant content and explicit completion_tokens usage."""
+def _inspect_sse_chunk(sse_chunk: str) -> tuple[bool, int | None, bool, int | None]:
+    """Inspect an SSE chunk for content, completion_tokens usage, and safe SSE error code."""
     has_content = False
     completion_tokens: int | None = None
     has_error = False
+    error_code: int | None = None
 
     for raw_line in sse_chunk.splitlines():
         line = raw_line.strip()
@@ -31,6 +32,11 @@ def _inspect_sse_chunk(sse_chunk: str) -> tuple[bool, int | None, bool]:
                 continue
             if "error" in parsed:
                 has_error = True
+                err_obj = parsed.get("error")
+                if isinstance(err_obj, dict):
+                    code = err_obj.get("code")
+                    if isinstance(code, int) and not isinstance(code, bool):
+                        error_code = code
                 continue
 
             choices = parsed.get("choices")
@@ -51,12 +57,12 @@ def _inspect_sse_chunk(sse_chunk: str) -> tuple[bool, int | None, bool]:
         except json.JSONDecodeError:
             continue
 
-    return has_content, completion_tokens, has_error
+    return has_content, completion_tokens, has_error, error_code
 
 
 def _is_content_chunk(sse_chunk: str) -> bool:
     """Return True if an SSE chunk carries non-empty assistant delta content or mock token."""
-    has_content, _, _ = _inspect_sse_chunk(sse_chunk)
+    has_content, _, _, _ = _inspect_sse_chunk(sse_chunk)
     return has_content
 
 
@@ -98,11 +104,14 @@ async def safe_event_generator(
 
     stream = None
     worker_sent_error = False
+    sse_error_code: int | None = None
     try:
         stream = worker.stream_chat(payload, request_id)
         async for chunk in stream:
-            has_content, completion_tokens, has_error = _inspect_sse_chunk(chunk)
+            has_content, completion_tokens, has_error, chunk_error_code = _inspect_sse_chunk(chunk)
             worker_sent_error = worker_sent_error or has_error
+            if chunk_error_code is not None:
+                sse_error_code = chunk_error_code
             if has_content:
                 trace.mark_first_token()
                 trace.token_chunks += 1
@@ -110,23 +119,43 @@ async def safe_event_generator(
                 trace.completion_tokens = completion_tokens
             yield chunk
 
-        trace.mark_last_token(
-            status="error" if worker_sent_error else "completed",
-            error="Worker returned an SSE error" if worker_sent_error else None,
-        )
+        if worker_sent_error:
+            trace.mark_last_token(
+                status="error",
+                error="worker_sse_error",
+                error_type="WorkerSSEError",
+                error_code=sse_error_code,
+            )
+        else:
+            trace.mark_last_token(status="completed")
         if trace_store is not None:
             trace_store.save(trace)
 
-        emit_terminal("chat_stream_worker_error" if worker_sent_error else "chat_stream_completed")
-    except (asyncio.CancelledError, GeneratorExit):
-        trace.mark_last_token(status="cancelled", error="Client disconnected")
+        emit_terminal(
+            "chat_stream_worker_error" if worker_sent_error else "chat_stream_completed",
+            code=sse_error_code if worker_sent_error else None,
+        )
+    except (asyncio.CancelledError, GeneratorExit) as exc:
+        safe = classify_telemetry_error(exc)
+        trace.mark_last_token(
+            status="cancelled",
+            error=safe.error,
+            error_type=safe.error_type,
+            error_code=safe.error_code,
+        )
         if trace_store is not None:
             trace_store.save(trace)
 
         emit_terminal("chat_stream_cancelled")
         raise
     except WorkerException as e:
-        trace.mark_last_token(status="error", error=redact_prompt_text(str(e), payload))
+        safe = classify_telemetry_error(e)
+        trace.mark_last_token(
+            status="error",
+            error=safe.error,
+            error_type=safe.error_type,
+            error_code=safe.error_code,
+        )
         if trace_store is not None:
             trace_store.save(trace)
 
@@ -135,7 +164,13 @@ async def safe_event_generator(
         yield f"data: {err_json}\n\n"
         yield "data: [DONE]\n\n"
     except Exception as e:
-        trace.mark_last_token(status="error", error=redact_prompt_text(str(e), payload))
+        safe = classify_telemetry_error(e)
+        trace.mark_last_token(
+            status="error",
+            error=safe.error,
+            error_type=safe.error_type,
+            error_code=safe.error_code,
+        )
         if trace_store is not None:
             trace_store.save(trace)
 

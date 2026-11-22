@@ -87,6 +87,7 @@ class RoundRobinRouter(RoutingPolicy):
         """Atomically snapshot HEALTHY workers, select in cyclic order, and reserve load."""
         with self._lock:
             trace.mark_routing_start()
+            trace.routing_policy = "round_robin"
             for attempt in range(_MAX_HEALTH_RACE_ATTEMPTS):
                 candidates = self._registry.routing_candidates()
                 if not candidates:
@@ -165,6 +166,7 @@ class LeastLoadedRouter(RoutingPolicy):
         """Atomically snapshot HEALTHY workers, select minimum active load, and reserve load."""
         with self._lock:
             trace.mark_routing_start()
+            trace.routing_policy = "least_loaded"
             for attempt in range(_MAX_HEALTH_RACE_ATTEMPTS):
                 candidates = self._registry.routing_candidates()
                 if not candidates:

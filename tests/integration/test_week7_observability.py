@@ -250,9 +250,10 @@ async def test_lost_asgi_send_finalizes_even_when_generator_never_started(policy
 
 
 @pytest.mark.asyncio
-async def test_duplicate_active_id_preserves_trace_and_does_not_add_an_inference():
-    async with mock_gateway("least_loaded", "test-model") as (_, client, controls):
-        request_id = "duplicate"
+@pytest.mark.parametrize("policy", POLICIES)
+async def test_duplicate_active_id_preserves_trace_and_does_not_add_an_inference(policy):
+    async with mock_gateway(policy, "test-model") as (_, client, controls):
+        request_id = f"duplicate-{policy}"
         controls.hold(request_id)
         arguments = {
             "headers": {"X-Request-ID": request_id},
@@ -264,7 +265,10 @@ async def test_duplicate_active_id_preserves_trace_and_does_not_add_an_inference
             before = (await client.get(f"/v1/traces/{request_id}")).json()
             response = await client.post(CHAT, **arguments)
             assert response.status_code == 409
+            assert response.headers["X-Request-ID"] == request_id
+            assert response.headers["X-Worker-ID"] == "none"
             assert (await client.get(f"/v1/traces/{request_id}")).json() == before
+            assert controls.calls_for(request_id) == 1
             samples = await scrape(client)
             assert total(samples, "llm_worker_active_requests") == 1
             assert total(samples, "llm_gateway_requests_total") == 0
@@ -274,6 +278,124 @@ async def test_duplicate_active_id_preserves_trace_and_does_not_add_an_inference
             controls.release_all()
             await asyncio.wait_for(task, 3)
         await assert_terminal(client, request_id, "completed")
+        assert controls.calls_for(request_id) == 1
+        # After completion, the request_id is released and can be admitted again.
+        controls.gates.pop(request_id, None)
+        reuse = await client.post(CHAT, **arguments)
+        assert reuse.status_code == 200
+        assert controls.calls_for(request_id) == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("policy", POLICIES)
+async def test_unexpected_routing_exception_after_start_persists_terminal_evidence(
+    policy, caplog
+):
+    caplog.set_level(logging.INFO, logger="llm_serving_platform.gateway")
+    async with mock_gateway(policy, "test-model") as (app, client, _):
+        secret_fragment = "SENSITIVE_PROMPT_FRAGMENT_9182"
+        payload = chat_payload("test-model", "short", 8)
+        payload["messages"][0]["content"] = f"Prefix {secret_fragment} suffix"
+
+        original_select = app.state.router.select_worker
+
+        def failing_select(trace):
+            if policy == "single":
+                trace.mark_routing_start()
+                trace.routing_policy = "single"
+                raise RuntimeError(f"unexpected router crash echoing {secret_fragment.lower()}")
+            return original_select(trace)
+
+        if policy == "single":
+            patcher = patch.object(app.state.router, "select_worker", side_effect=failing_select)
+        else:
+            patcher = patch.object(
+                app.state.registry,
+                "routing_candidates",
+                side_effect=RuntimeError(
+                    f"unexpected registry failure echoing {secret_fragment.lower()}"
+                ),
+            )
+
+        with patcher:
+            response = await client.post(CHAT, json=payload)
+
+        assert response.status_code == 500
+        request_id = response.headers.get("X-Request-ID")
+        assert request_id
+        assert response.headers.get("X-Worker-ID") == "none"
+
+        trace, samples = await assert_terminal(client, request_id, "error")
+        assert trace["worker_id"] == "none"
+        assert trace["error"] == "routing_error"
+        assert trace["error_type"] == "RuntimeError"
+        assert trace["error_code"] == 500
+        assert trace["milestones"]["routing_start"] is not None
+        assert trace["milestones"]["routing_end"] is not None
+        assert trace["metrics_ms"]["routing_ms"] is not None
+        assert total(samples, "llm_router_requests_total") == 0
+        assert value(samples, "llm_router_decision_seconds_count", policy=policy) == 1
+
+        events = [json.loads(r.message) for r in caplog.records if r.name.endswith(".gateway")]
+        err_events = [
+            e for e in events if e["request_id"] == request_id and e["status"] == "error"
+        ]
+        assert len(err_events) == 1
+        assert err_events[0]["error"] == "routing_error"
+        assert err_events[0]["error_type"] == "RuntimeError"
+        assert err_events[0]["error_code"] == 500
+        assert secret_fragment.lower() not in json.dumps(trace).lower()
+        assert secret_fragment.lower() not in caplog.text.lower()
+        assert secret_fragment.lower() not in (await client.get("/metrics")).text.lower()
+
+
+@pytest.mark.asyncio
+async def test_unexpected_routing_exception_before_start_does_not_fabricate_timestamps():
+    async with mock_gateway("least_loaded", "test-model") as (app, client, _):
+        with patch.object(
+            app.state.router,
+            "select_worker",
+            side_effect=RuntimeError("immediate router crash"),
+        ):
+            response = await client.post(
+                CHAT,
+                headers={"X-Request-ID": "route-crash-early"},
+                json=chat_payload("test-model", "short", 8),
+            )
+
+        assert response.status_code == 500
+        assert response.headers["X-Request-ID"] == "route-crash-early"
+        trace, samples = await assert_terminal(client, "route-crash-early", "error")
+        assert trace["error"] == "routing_error"
+        assert trace["error_type"] == "RuntimeError"
+        assert trace["error_code"] == 500
+        assert trace["milestones"]["routing_start"] is None
+        assert trace["milestones"]["routing_end"] is None
+        assert trace["metrics_ms"]["routing_ms"] is None
+        assert total(samples, "llm_router_requests_total") == 0
+
+
+@pytest.mark.asyncio
+async def test_unexpected_routing_exception_after_reservation_leaks_no_load():
+    async with mock_gateway("least_loaded", "test-model") as (app, client, _):
+        registry = app.state.registry
+        original_select = app.state.router.select_worker
+
+        def reserve_then_crash(trace):
+            original_select(trace)
+            raise RuntimeError("crash after reservation")
+
+        with patch.object(app.state.router, "select_worker", side_effect=reserve_then_crash):
+            response = await client.post(
+                CHAT,
+                headers={"X-Request-ID": "route-crash-reserved"},
+                json=chat_payload("test-model", "short", 8),
+            )
+
+        assert response.status_code == 500
+        trace, _ = await assert_terminal(client, "route-crash-reserved", "error")
+        assert trace["error"] == "routing_error"
+        assert all(w.active_requests == 0 for w in registry.list_workers())
 
 
 @pytest.mark.asyncio
@@ -343,18 +465,23 @@ async def test_repeated_cleanup_does_not_double_count_or_release_another_request
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("error_kind", ["exception", "internal_exception", "sse"])
+@pytest.mark.parametrize("error_kind", ["exception", "timeout", "internal_exception", "sse"])
 async def test_prompt_echoed_by_worker_error_is_not_persisted(error_kind, caplog):
     caplog.set_level(logging.INFO, logger="llm_serving_platform.gateway")
     async with mock_gateway("single", "test-model") as (_, client, controls):
-        prompt = 'Nội dung riêng: "không lưu"\nprivate data'
+        prompt = 'Nội dung riêng: "không lưu"\nPRIVATE_TOKEN_XYZ_789'
+        transformed_echo = "private_token_xyz_789"
         payload = chat_payload("test-model", "short", 8)
         payload["messages"][0]["content"] = prompt
 
         async def stream_chat(_payload, _request_id):
-            message = f"Upstream rejected {json.dumps(prompt)}"
+            message = f"Upstream rejected {json.dumps(prompt)} slice={transformed_echo}"
             if error_kind == "exception":
-                raise WorkerUnavailableError(message)
+                raise WorkerUnavailableError(message, status_code=503)
+            if error_kind == "timeout":
+                from llm_serving_platform.workers.base import WorkerTimeoutError
+
+                raise WorkerTimeoutError(message, status_code=504)
             if error_kind == "internal_exception":
                 raise RuntimeError(message)
             yield f"data: {json.dumps({'error': {'message': message, 'code': 500}})}\n\n"
@@ -367,11 +494,23 @@ async def test_prompt_echoed_by_worker_error_is_not_persisted(error_kind, caplog
         assert response.status_code == 200
         assert '"error"' in response.text
         trace, _ = await assert_terminal(client, "private-error", "error")
-        for text in (
+        expected = {
+            "exception": ("worker_unavailable", "WorkerUnavailableError", 503),
+            "timeout": ("worker_timeout", "WorkerTimeoutError", 504),
+            "internal_exception": ("internal_error", "RuntimeError", 500),
+            "sse": ("worker_sse_error", "WorkerSSEError", 500),
+        }[error_kind]
+        assert trace["error"] == expected[0]
+        assert trace["error_type"] == expected[1]
+        assert trace["error_code"] == expected[2]
+        for leaked in (
             prompt,
             json.dumps(prompt)[1:-1],
             json.dumps(prompt, ensure_ascii=False)[1:-1],
+            transformed_echo,
+            "PRIVATE_TOKEN_XYZ_789",
+            "Upstream rejected",
         ):
-            assert text not in trace["error"]
-        assert "private data" not in json.dumps(trace)
-        assert "private data" not in caplog.text
+            assert leaked not in json.dumps(trace)
+            assert leaked not in caplog.text
+            assert leaked not in (await client.get("/metrics")).text
