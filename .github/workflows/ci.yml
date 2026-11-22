@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   verify:
-    name: Week 1-4 CPU/Mock Verification
+    name: CPU/Mock Verification (W1, W2, W3, W4, W6, W7)
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -49,23 +49,30 @@ jobs:
           npm ci
           npx playwright install --with-deps chromium
 
-      - name: "1/5 — Python lint & static checks"
+      - name: "1/6 — Python lint & static checks"
         id: lint
         run: python infra/scripts/verify.py --target lint --no-gpu
 
-      - name: "2/5 — Backend unit tests"
+      - name: "2/6 — Backend unit tests"
         id: unit
         run: python infra/scripts/verify.py --target unit --no-gpu
 
-      - name: "3/5 — Backend integration tests"
+      - name: "3/6 — Backend integration tests"
         id: integration
         run: python infra/scripts/verify.py --target integration --no-gpu
 
-      - name: "4/5 — Cumulative milestone gates (W1 → W4)"
+      - name: "4/6 — Implemented milestone gates (W1, W2, W3, W4, W6)"
         id: gates
-        run: python infra/scripts/verify.py --target gates --no-gpu
+        run: |
+          for target in w1 w2 w3 w4 w6; do
+            python infra/scripts/verify.py --target "$target" --no-gpu
+          done
 
-      - name: "5/5 — Frontend lint, typecheck, unit, build & Playwright"
+      - name: "5/6 — Week 7 full experiment pipeline gate (W7)"
+        id: w7
+        run: python infra/scripts/verify.py --target w7 --no-gpu
+
+      - name: "6/6 — Frontend lint, typecheck, unit, build & Playwright"
         id: web
         run: python infra/scripts/verify.py --target web --no-gpu
 
@@ -73,15 +80,18 @@ jobs:
         if: always()
         run: |
           {
-            echo "## Week 1-4 verification summary"
+            echo "## CPU/Mock Verification Summary"
+            echo
+            echo "Implemented milestone gates: W1, W2, W3, W4, W6, W7 (Week 5 two-machine LAN validation is intentionally separate)."
             echo
             echo "| Stage | Result |"
             echo "| --- | --- |"
             echo "| Python lint/static | ${{ steps.lint.outcome }} |"
             echo "| Backend unit | ${{ steps.unit.outcome }} |"
             echo "| Backend integration | ${{ steps.integration.outcome }} |"
-            echo "| Cumulative W1-W4 gates | ${{ steps.gates.outcome }} |"
-            echo "| Frontend + browser | ${{ steps.web.outcome }} |"
+            echo "| Implemented milestone gates (W1, W2, W3, W4, W6) | ${{ steps.gates.outcome }} |"
+            echo "| Week 7 full experiment pipeline gate (W7) | ${{ steps.w7.outcome }} |"
+            echo "| Frontend lint, typecheck, unit, build & Playwright | ${{ steps.web.outcome }} |"
             echo
-            echo "> Hosted CI is intentionally CPU/mock-only. Real GPU and LAN failure/recovery evidence is collected on actual hardware."
+            echo "> Hosted CI is intentionally CPU/mock-only and does not verify GPUs. Live dual-T4 GPU and LAN failure/recovery evidence is collected on real hardware."
           } >> "$GITHUB_STEP_SUMMARY"
