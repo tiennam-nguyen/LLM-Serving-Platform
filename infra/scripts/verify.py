@@ -18,13 +18,14 @@ Supports:
      python infra/scripts/verify.py --target w4 [--no-gpu]
      python infra/scripts/verify.py --target w6 --no-gpu
      python infra/scripts/verify.py --target w7-observability --no-gpu
+     python infra/scripts/verify.py --target w7 --no-gpu
      python infra/scripts/verify.py --target gates [--no-gpu]
      python infra/scripts/verify.py --target backend [--no-gpu]
      python infra/scripts/verify.py --target web [--no-gpu]
 
-Open-Closed Principle (OCP) for Future Weeks (Week 4 -> Week 15):
-  To add Week 4+ verification without deleting or breaking Week 1-3 gates,
-  register a new GateSpec entry in MILESTONE_GATES below.
+Open-Closed Principle (OCP) for Implemented Milestone Gates (W1, W2, W3, W4, W6, W7):
+  Week 5 LAN/two-machine validation is intentionally separate from hosted CPU/mock CI.
+  Register new weekly milestone gates in MILESTONE_GATES below without removing prior gates.
 """
 
 from __future__ import annotations
@@ -66,6 +67,7 @@ from infra.scripts.verify_week2_exit_gate import (  # noqa: E402, I001
 from infra.scripts.verify_week3_e2e import run_week3_e2e_check  # noqa: E402, I001
 from infra.scripts.verify_week4_e2e import run_week4_e2e_check  # noqa: E402, I001
 from infra.scripts.verify_week6_e2e import run_week6_e2e
+from infra.scripts.verify_week7_e2e import run_week7_e2e_gate
 from llm_serving_platform.common.config import load_dotenv_file  # noqa: E402, I001
 
 load_dotenv_file()
@@ -459,7 +461,7 @@ def gate_week6_routing_evidence(ctx: VerifyContext) -> bool:
 
 
 def gate_week7_observability(ctx: VerifyContext) -> bool:
-    """Member A's CPU contract checks; full W7 acceptance also needs Member B's runner."""
+    """Member A's CPU contract checks for traces, metrics, and request lifecycle."""
     _banner("GATE [w7-observability]: Member A Trace, Metrics & Request Lifecycle")
     if not ctx.no_gpu:
         raise RuntimeError("The observability contract gate uses CPU workers; pass --no-gpu.")
@@ -474,9 +476,29 @@ def gate_week7_observability(ctx: VerifyContext) -> bool:
     return True
 
 
+def gate_week7_experiment_pipeline(ctx: VerifyContext) -> bool:
+    """Full Week 7 CPU/mock E2E experiment pipeline gate and Week 6 regression guard."""
+    _banner("GATE [w7]: Week 7 Full Observability & Experiment Pipeline (CPU/Mock)")
+    if not ctx.no_gpu:
+        raise RuntimeError(
+            "The Week 7 full live dual-T4 gate requires two controlled GPU replicas. "
+            "Run infra/kaggle/week7_experiment_evidence/run.py, or pass --no-gpu for CPU/mock."
+        )
+    validation = run_week7_e2e_gate()
+    if not validation.get("valid"):
+        raise RuntimeError(f"Week 7 E2E experiment gate failed: {validation}")
+    if _HAS_REAL_PYTEST:
+        _run_subprocess([
+            sys.executable, "-m", "pytest", "--no-gpu", "-p", "no:cacheprovider",
+            "tests/unit/test_week6_load_and_routing.py",
+            "tests/integration/test_week6_gateway_lifecycle.py",
+        ])
+    return True
+
+
 # ------------------------------------------------------------------------------
 # OPEN-CLOSED MILESTONE REGISTRY:
-# In Week 5+, append `"w5": GateSpec(...)` here without deleting w1-w4!
+# Implemented milestone gates: W1, W2, W3, W4, W6, W7 (Week 5 LAN is separate).
 # ------------------------------------------------------------------------------
 MILESTONE_GATES: dict[str, GateSpec] = {
     "w1": GateSpec(
@@ -508,6 +530,11 @@ MILESTONE_GATES: dict[str, GateSpec] = {
         gate_id="w7-observability",
         title="Week 7 Member A: Trace, Metrics & Request Lifecycle (CPU)",
         runner=gate_week7_observability,
+    ),
+    "w7": GateSpec(
+        gate_id="w7",
+        title="Week 7 Full: Observability + Reproducible Experiment Pipeline (CPU)",
+        runner=gate_week7_experiment_pipeline,
     ),
 }
 
