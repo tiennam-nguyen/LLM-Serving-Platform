@@ -394,7 +394,19 @@ def test_benchmark_cli_returns_nonzero_for_invalid_manifest(tmp_path: Path):
     assert proc.returncode != 0
 
 
-def test_repo_smoke_manifest_is_valid():
-    cfg, workload_path = load_manifest("experiments/manifests/w7_smoke_least_loaded.json")
+@pytest.mark.parametrize(
+    "manifest_rel",
+    [
+        "experiments/manifests/w7_smoke_least_loaded.json",
+        "experiments/manifests/w7_t4_round_robin.json",
+        "experiments/manifests/w7_t4_least_loaded.json",
+    ],
+)
+def test_repo_manifests_and_workloads_are_valid(manifest_rel: str):
+    from llm_serving_platform.benchmark.workload import load_workload
+
+    cfg, workload_path = load_manifest(manifest_rel)
     assert cfg.schema_version == 1
     assert workload_path.is_file()
+    entries = load_workload(workload_path, min_entries=cfg.workload.request_count)
+    assert len(entries) >= cfg.workload.request_count
