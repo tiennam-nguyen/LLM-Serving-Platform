@@ -1,0 +1,24 @@
+{"messages":[{"role":"user","content":"Explain what TTFT means in LLM serving in two sentences."}]}
+{"messages":[{"role":"user","content":"Give one concise sentence about request routing across GPU replicas."}]}
+{"messages":[{"role":"user","content":"What does E2E latency measure for a streaming chat completion?"}]}
+{"messages":[{"role":"user","content":"Summarize continuous batching in two short sentences."}]}
+{"messages":[{"role":"user","content":"Why should health checks be decoupled from metrics scrapes?"}]}
+{"messages":[{"role":"user","content":"Explain how least-loaded routing differs from round-robin routing."}]}
+{"messages":[{"role":"user","content":"What is the role of X-Request-ID in an inference gateway?"}]}
+{"messages":[{"role":"user","content":"Describe why streaming responses use Server-Sent Events."}]}
+{"messages":[{"role":"user","content":"Explain why tensor parallel size 1 is used for independent replicas."}]}
+{"messages":[{"role":"user","content":"What does a Prometheus histogram capture for request latency?"}]}
+{"messages":[{"role":"user","content":"Why should raw user prompts stay out of metric labels and traces?"}]}
+{"messages":[{"role":"user","content":"What happens when a client disconnects mid-stream in an LLM gateway?"}]}
+{"messages":[{"role":"user","content":"Define TPOT in LLM inference telemetry in one sentence."}]}
+{"messages":[{"role":"user","content":"Why are warm-up requests excluded from measured experiment traces?"}]}
+{"messages":[{"role":"user","content":"Give a brief reason to persist raw per-request traces before summarizing."}]}
+{"messages":[{"role":"user","content":"What does HTTP 503 indicate when no healthy workers exist?"}]}
+{"messages":[{"role":"user","content":"Explain why active request counts should return to zero after a run."}]}
+{"messages":[{"role":"user","content":"Why does an experiment manifest record the random seed and model ID?"}]}
+{"messages":[{"role":"user","content":"Describe one benefit of atomic writes for experiment JSON artifacts."}]}
+{"messages":[{"role":"user","content":"Explain in two sentences how KV cache memory affects GPU concurrency."}]}
+{"messages":[{"role":"user","content":"What information belongs in an experiment environment metadata file?"}]}
+{"messages":[{"role":"user","content":"Why should an experiment runner talk to the gateway only over HTTP?"}]}
+{"messages":[{"role":"user","content":"State the difference between prefill and decode phases in LLM serving."}]}
+{"messages":[{"role":"user","content":"Why is p95 latency reported alongside p50 latency in serving experiments?"}]}

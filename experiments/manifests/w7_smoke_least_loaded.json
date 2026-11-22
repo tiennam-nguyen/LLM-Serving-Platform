@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "name": "w7-smoke-least-loaded",
+  "model": {
+    "id": "Qwen/Qwen2.5-0.5B-Instruct"
+  },
+  "topology": {
+    "worker_count": 2
+  },
+  "policy": {
+    "name": "least_loaded"
+  },
+  "workload": {
+    "path": "benchmarks/workloads/w7_smoke.jsonl",
+    "request_count": 20
+  },
+  "seed": 42,
+  "warmup": {
+    "request_count": 2
+  },
+  "generation": {
+    "temperature": 0,
+    "max_tokens": 64
+  },
+  "runner": {
+    "concurrency": 2,
+    "gateway_url": "http://127.0.0.1:8080",
+    "request_timeout_s": 120
+  }
+}
