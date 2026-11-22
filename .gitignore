@@ -63,6 +63,7 @@ hf_cache/
 *.gguf
 
 # Experiment raw data and logs (exclude large raw runs while keeping structure and manifests)
+experiments/runs/
 experiments/raw/*.jsonl
 experiments/raw/*.parquet
 experiments/raw/*.csv
