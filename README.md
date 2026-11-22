@@ -8,16 +8,17 @@ The system follows a **modular monolith** architecture with strict separation of
 
 ---
 
-## 2. Current Status: Week 4 Completed (Multi-Worker Registry, Health Monitor & Round-Robin)
+## 2. Current Status: Week 7 Completed (Observability + Reproducible Experiment Artifacts)
 
 > [!NOTE]
-> **Status**: Week 4 Complete — Multi-Worker Control Plane, Concurrent Health Monitor, Round-Robin Routing & `/workers` Topology UI (`Browser → Gateway → RoundRobinRouter → Worker Pool [GPU / No-GPU]`).
+> **Status**: Implemented milestone gates cover **W1, W2, W3, W4, W6, and W7** (Week 5 two-machine LAN validation is intentionally kept separate from hosted CPU/mock CI).
 >
 > - **Week 1 (Single-GPU vLLM Baseline)**: Completed (`Qwen/Qwen2.5-0.5B-Instruct` on CUDA `float16`, launch scripts, latency measurement).
 > - **Week 2 (Data-Plane Inference Gateway)**: Completed (OpenAI-compatible `POST /v1/chat/completions` SSE proxy, `InferenceWorker` / `VLLMWorkerAdapter`, `X-Request-ID`, structured JSON logging, timeout/error propagation).
 > - **Week 3 (Minimal End-to-End Web Flow, Request Trace & Unified Verification)**: Completed (Next.js Instrumentation Deck UI, multi-turn streaming, abort/retry, `X-Worker-ID`, 6-milestone `RequestTrace` via `GET /v1/traces/{request_id}`, `create_worker` factory, unified `verify.py` runner, and `dev_stack.py` interactive browser launcher).
 > - **Week 4 (Worker Registry, Health Monitor, Round-Robin & Workers Topology UI)**: Completed (`WorkerRegistry`, `HealthMonitor` with startup + periodic background checks, `GET /control/v1/workers` & `GET /control/v1/workers/{id}`, `RoundRobinRouter` with automatic unhealthy-worker exclusion & HTTP 503 empty-pool handling, `/workers` Web UI, and cumulative gate `w4`).
-> - **Next Milestone**: Week 5 — Two-machine LAN PoC: remote endpoints, health over LAN, Round-Robin across hosts, failure/restart recovery.
+> - **Week 6 (Primary Multi-Worker Testbed & Least-Loaded Routing)**: Completed (Gateway-owned atomic load reservations, `LeastLoadedRouter`, per-request routing telemetry, and verified dual-T4 routing evidence).
+> - **Week 7 (Observability + Experiment Artifacts)**: Completed (per-app Prometheus `GET /metrics`, privacy-hardened trace/log error classification, versioned JSON experiment manifests, HTTP-only CLI experiment runner `python -m llm_serving_platform.benchmark run`, canonical run artifacts, and `w7` verification gate). See [`docs/week7-experiment-contract.md`](docs/week7-experiment-contract.md) and [`docs/runbooks/week7_experiments.md`](docs/runbooks/week7_experiments.md).
 
 ---
 
@@ -32,11 +33,11 @@ The system follows a **modular monolith** architecture with strict separation of
     ↓
 [x] Week 4: Worker registry + health monitor + Round-Robin routing + /workers UI
     ↓
-[ ] Week 5: Two-machine LAN PoC (remote endpoints + failure/restart recovery)
+[ ] Week 5: Two-machine LAN PoC (remote endpoints + failure/restart recovery, tracked separately)
     ↓
-[ ] Week 6: Primary multi-worker testbed + Least-Loaded routing
+[x] Week 6: Primary multi-worker testbed + Least-Loaded routing
     ↓
-[ ] Week 7: Observability + experiment artifacts
+[x] Week 7: Observability (GET /metrics) + reproducible experiment runner & artifacts
     ↓
 [ ] Week 8: Controlled benchmark suite
     ↓
@@ -132,13 +133,20 @@ python infra/scripts/verify.py --target w1 --no-gpu      # Week 1 Gate only (omi
 python infra/scripts/verify.py --target w2 --no-gpu      # Week 2 Gate only
 python infra/scripts/verify.py --target w3 --no-gpu      # Week 3 Gate only
 python infra/scripts/verify.py --target w4 --no-gpu      # Week 4 Gate only (Registry + Round-Robin + Failover)
-python infra/scripts/verify.py --target gates --no-gpu   # All cumulative weekly gates (W1 -> W4)
+python infra/scripts/verify.py --target w6 --no-gpu      # Week 6 Gate (Routing + Load Reservations)
+python infra/scripts/verify.py --target w7-observability --no-gpu  # Week 7 Member A Observability Gate
+python infra/scripts/verify.py --target w7 --no-gpu      # Week 7 Full Experiment Pipeline Gate
+python infra/scripts/verify.py --target gates --no-gpu   # All implemented milestone gates (W1, W2, W3, W4, W6, W7)
 python infra/scripts/verify.py --target web --no-gpu     # Frontend lint, typecheck, vitest, build, Playwright
+
+# C. Week 7 Reproducible Experiment Runner & Prometheus Metrics
+curl -s http://127.0.0.1:8080/metrics
+python -m llm_serving_platform.benchmark run --manifest experiments/manifests/w7_smoke_least_loaded.json
 ```
 
 ### 5.3 Mode 2: GitHub Actions CI (`.github/workflows/ci.yml`)
 
-GitHub-hosted CI is intentionally **CPU/mock-only**. It exposes five named checks in the Actions UI—Python lint/static, backend unit, backend integration, cumulative W1→W4 gates, and frontend/browser—and publishes the same results in the GitHub job summary. This keeps CI deterministic and does not pretend a hosted runner has access to the lab/Kaggle GPU topology.
+GitHub-hosted CI is intentionally **CPU/mock-only**. It runs six named stages—Python lint/static, backend unit, backend integration, implemented milestone gates (`W1, W2, W3, W4, W6`), the full Week 7 experiment pipeline gate (`W7`), and frontend/browser—and publishes the results in the GitHub job summary. Hosted runners never claim GPU verification.
 
 Real GPU validation is run manually on actual hardware. Week 4 does **not** require two physical GPUs; its full failure/recovery gate is verified deterministically with mock workers. When 2+ live workers are available, use:
 
