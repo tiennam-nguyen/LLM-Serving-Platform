@@ -1,0 +1,78 @@
+{
+  "passed": true,
+  "git_revision": "df03a276cddf94703a3482ed9a85422ba6f10ec4",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "dual_t4_topology_verified": true,
+  "phases": {
+    "round_robin": {
+      "valid": true,
+      "run_id": "20261122T045731Z-w7-t4-round-robin-df03a27-14295e",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "requests": {
+        "planned": 20,
+        "observed": 20,
+        "completed": 20,
+        "error": 0,
+        "cancelled": 0
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 10,
+        "worker-vllm-1": 10
+      },
+      "metrics_families": [
+        "llm_gateway_request_e2e_seconds",
+        "llm_gateway_request_e2e_seconds_created",
+        "llm_gateway_requests",
+        "llm_gateway_requests_created",
+        "llm_gateway_ttft_seconds",
+        "llm_gateway_ttft_seconds_created",
+        "llm_router_decision_seconds",
+        "llm_router_decision_seconds_created",
+        "llm_router_requests",
+        "llm_router_requests_created",
+        "llm_worker_active_requests",
+        "llm_worker_health"
+      ],
+      "final_active_requests": {
+        "worker-vllm-0": 0,
+        "worker-vllm-1": 0
+      }
+    },
+    "least_loaded": {
+      "valid": true,
+      "run_id": "20261122T045755Z-w7-t4-least-loaded-df03a27-4ed5ce",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "requests": {
+        "planned": 20,
+        "observed": 20,
+        "completed": 20,
+        "error": 0,
+        "cancelled": 0
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 9,
+        "worker-vllm-1": 11
+      },
+      "metrics_families": [
+        "llm_gateway_request_e2e_seconds",
+        "llm_gateway_request_e2e_seconds_created",
+        "llm_gateway_requests",
+        "llm_gateway_requests_created",
+        "llm_gateway_ttft_seconds",
+        "llm_gateway_ttft_seconds_created",
+        "llm_router_decision_seconds",
+        "llm_router_decision_seconds_created",
+        "llm_router_requests",
+        "llm_router_requests_created",
+        "llm_worker_active_requests",
+        "llm_worker_health"
+      ],
+      "final_active_requests": {
+        "worker-vllm-0": 0,
+        "worker-vllm-1": 0
+      }
+    }
+  }
+}

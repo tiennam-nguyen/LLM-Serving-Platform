@@ -1,0 +1,64 @@
+{
+  "timestamp_utc": "2026-11-22T04:53:08.153303+00:00",
+  "git_revision": "df03a276cddf94703a3482ed9a85422ba6f10ec4",
+  "git_dirty": false,
+  "branch": "feat/w7-experiment-pipeline",
+  "python": "3.12.16",
+  "pytorch": "2.14.0+cu130",
+  "cuda": "13.0",
+  "packages": {
+    "llm-serving-platform": "0.1.0.dev0",
+    "vllm": "0.33.0",
+    "torch": "2.14.0",
+    "transformers": "5.20.2",
+    "fastapi": "0.136.3",
+    "httpx": "0.28.1",
+    "pydantic": "2.14.4",
+    "prometheus-client": "0.26.0",
+    "uvicorn": "0.54.0"
+  },
+  "gpu_inventory": [
+    "Tesla T4, 15360, 580.178.04",
+    "Tesla T4, 15360, 580.178.04"
+  ],
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "worker_endpoints": {
+    "worker-vllm-0": "http://127.0.0.1:8000",
+    "worker-vllm-1": "http://127.0.0.1:8001"
+  },
+  "gateway_endpoint": "http://127.0.0.1:8080",
+  "policies": [
+    "round_robin",
+    "least_loaded"
+  ],
+  "test_mode": "live_gpu",
+  "dual_t4_topology_verified": true,
+  "tensor_parallel_size": 1,
+  "worker_gpu_bindings": {
+    "initial": {
+      "worker-vllm-0": {
+        "gpu_index": 0,
+        "gpu_uuid": "GPU-2e551fb9-9fd2-4a9c-9ce2-3474cd652468",
+        "owned_compute_processes": 1
+      },
+      "worker-vllm-1": {
+        "gpu_index": 1,
+        "gpu_uuid": "GPU-526f9bad-7541-6122-fdba-3485f7c9ce87",
+        "owned_compute_processes": 1
+      }
+    },
+    "final": {
+      "worker-vllm-0": {
+        "gpu_index": 0,
+        "gpu_uuid": "GPU-2e551fb9-9fd2-4a9c-9ce2-3474cd652468",
+        "owned_compute_processes": 1
+      },
+      "worker-vllm-1": {
+        "gpu_index": 1,
+        "gpu_uuid": "GPU-526f9bad-7541-6122-fdba-3485f7c9ce87",
+        "owned_compute_processes": 1
+      }
+    }
+  },
+  "scope": "Week 7 live dual-T4 observability and experiment artifact pipeline verification; not a policy performance comparison."
+}

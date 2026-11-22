@@ -91,3 +91,20 @@ kaggle kernels output tiennamnguyen11/llm-serving-week-7-experiment-evidence \
 
 > [!NOTE]
 > Live Week 7 dual-T4 runs validate the end-to-end observability and experiment artifact pipeline on real GPUs. They are **not** a policy performance comparison or benchmark winner claim.
+
+---
+
+## 4. Accepted Dual-T4 Run, 2026-11-22
+
+- **Kaggle kernel**: [`tiennamnguyen11/llm-serving-week-7-experiment-evidence`](https://www.kaggle.com/code/tiennamnguyen11/llm-serving-week-7-experiment-evidence), version 1
+- **Tested clean Git SHA**: `df03a276cddf94703a3482ed9a85422ba6f10ec4` (`git_dirty: false`)
+- **Bundle SHA-256**: `990d5af74eef0df74b1e18204ed00854c83bd5f519f80042ea77af16b7b4fc91`
+- **Submitted script SHA-256**: `0c12d741b606d1d544a588b566d86b9ad65bb573643f7d04fce47e7d8a35ed10`
+- **Hardware**: 2 × NVIDIA Tesla T4 (`15,360 MiB` each, driver `580.178.04`), PyTorch `2.14.0+cu130`, CUDA `13.0`, vLLM `0.33.0`, Python `3.12.16`
+- **Model & Topology**: `Qwen/Qwen2.5-3B-Instruct`, tensor parallel size 1 per replica:
+  - GPU 0 (`GPU-2e551fb9-9fd2-4a9c-9ce2-3474cd652468`) -> `worker-vllm-0` (`http://127.0.0.1:8000`)
+  - GPU 1 (`GPU-526f9bad-7541-6122-fdba-3485f7c9ce87`) -> `worker-vllm-1` (`http://127.0.0.1:8001`)
+- **Round-Robin run (`20261122T045731Z-w7-t4-round-robin-df03a27-14295e`)**: 20/20 completed (2 warm-up excluded; 22 total in `metrics.prom`), worker distribution `worker-vllm-0: 10`, `worker-vllm-1: 10`, final active requests `0`/`0`.
+- **Least-Loaded run (`20261122T045755Z-w7-t4-least-loaded-df03a27-4ed5ce`)**: 20/20 completed (2 warm-up excluded; 22 total in `metrics.prom`), worker distribution `worker-vllm-0: 9`, `worker-vllm-1: 11`, final active requests `0`/`0`.
+
+All 12 downloaded live artifact files are preserved byte-for-byte under [`experiments/raw/week7/live/`](../../experiments/raw/week7/live/) and passed independent local artifact validation (`summary.json` recomputed from `traces.jsonl`, Prometheus parsing, zero active requests, zero prompt/secret leakage).
