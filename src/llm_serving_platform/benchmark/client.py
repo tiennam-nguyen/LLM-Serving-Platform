@@ -82,38 +82,114 @@ class GatewayHTTPClient:
         *,
         timeout_s: float = 120.0,
         client: httpx.AsyncClient | None = None,
+        control_client: httpx.AsyncClient | None = None,
+        inference_max_connections: int | None = None,
+        control_max_connections: int = 32,
+        control_timeout_s: float = 10.0,
     ) -> None:
         self._gateway_url = gateway_url.rstrip("/")
         self._timeout_s = timeout_s
-        self._external_client = client
-        self._owned_client: httpx.AsyncClient | None = None
+        self._control_timeout_s = control_timeout_s
+        self._external_inference_client = client
+        self._external_control_client = control_client
+        self._inference_max_connections = max(inference_max_connections or 100, 1)
+        self._inference_max_keepalive = min(self._inference_max_connections, 100)
+        self._control_max_connections = max(control_max_connections, 1)
+        self._control_max_keepalive = min(self._control_max_connections, 32)
+        self._owned_inference_client: httpx.AsyncClient | None = None
+        self._owned_control_client: httpx.AsyncClient | None = None
 
     async def __aenter__(self) -> GatewayHTTPClient:
-        if self._external_client is None:
-            timeout = httpx.Timeout(self._timeout_s, connect=10.0)
-            self._owned_client = httpx.AsyncClient(
+        if self._external_inference_client is None:
+            inf_timeout = httpx.Timeout(self._timeout_s, connect=10.0)
+            inf_limits = httpx.Limits(
+                max_connections=self._inference_max_connections,
+                max_keepalive_connections=self._inference_max_keepalive,
+            )
+            self._owned_inference_client = httpx.AsyncClient(
                 base_url=self._gateway_url,
-                timeout=timeout,
+                timeout=inf_timeout,
+                limits=inf_limits,
+                trust_env=False,
+            )
+        if self._external_control_client is None and self._external_inference_client is None:
+            ctrl_timeout = httpx.Timeout(self._control_timeout_s, connect=10.0)
+            ctrl_limits = httpx.Limits(
+                max_connections=self._control_max_connections,
+                max_keepalive_connections=self._control_max_keepalive,
+            )
+            self._owned_control_client = httpx.AsyncClient(
+                base_url=self._gateway_url,
+                timeout=ctrl_timeout,
+                limits=ctrl_limits,
                 trust_env=False,
             )
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
-        if self._owned_client is not None:
-            await self._owned_client.aclose()
-            self._owned_client = None
+        if self._owned_inference_client is not None:
+            await self._owned_inference_client.aclose()
+            self._owned_inference_client = None
+        if self._owned_control_client is not None:
+            await self._owned_control_client.aclose()
+            self._owned_control_client = None
 
     @property
-    def _client(self) -> httpx.AsyncClient:
-        client = self._external_client or self._owned_client
+    def _inference_client(self) -> httpx.AsyncClient:
+        client = self._external_inference_client or self._owned_inference_client
         if client is None:
             raise RuntimeError("GatewayHTTPClient must be used inside an async context manager")
         return client
 
+    @property
+    def _control_client(self) -> httpx.AsyncClient:
+        client = (
+            self._external_control_client
+            or self._owned_control_client
+            or self._external_inference_client
+        )
+        if client is None:
+            raise RuntimeError("GatewayHTTPClient must be used inside an async context manager")
+        return client
+
+    def pool_limits_metadata(self) -> dict[str, Any]:
+        """Return safe, explicit connection pool metadata for environment provenance."""
+        inf = self._external_inference_client or self._owned_inference_client
+        ctrl = (
+            self._external_control_client
+            or self._owned_control_client
+            or self._external_inference_client
+        )
+        return {
+            "isolated_pools": (inf is not None and ctrl is not None and inf is not ctrl),
+            "inference_max_connections": (
+                self._inference_max_connections
+                if self._owned_inference_client is not None
+                else None
+            ),
+            "inference_max_keepalive_connections": (
+                self._inference_max_keepalive
+                if self._owned_inference_client is not None
+                else None
+            ),
+            "control_max_connections": (
+                self._control_max_connections
+                if self._owned_control_client is not None
+                else None
+            ),
+            "control_max_keepalive_connections": (
+                self._control_max_keepalive
+                if self._owned_control_client is not None
+                else None
+            ),
+            "inference_timeout_s": self._timeout_s,
+            "control_timeout_s": self._control_timeout_s,
+        }
+
     async def check_health(self) -> dict[str, Any]:
         """Verify Gateway reachability and healthy status via GET /health."""
         try:
-            response = await self._client.get("/health")
+            response = await self._control_client.get("/health")
         except (httpx.RequestError, httpx.TimeoutException) as exc:
             raise RunnerFatalError("gateway_unreachable", "Gateway /health unreachable") from exc
 
@@ -134,7 +210,7 @@ class GatewayHTTPClient:
     async def list_workers(self) -> list[dict[str, Any]]:
         """Inspect worker topology via GET /control/v1/workers."""
         try:
-            response = await self._client.get("/control/v1/workers")
+            response = await self._control_client.get("/control/v1/workers")
         except (httpx.RequestError, httpx.TimeoutException) as exc:
             raise RunnerFatalError(
                 "gateway_unreachable", "Gateway /control/v1/workers unreachable"
@@ -170,7 +246,7 @@ class GatewayHTTPClient:
             "Accept": "text/event-stream",
         }
         try:
-            async with self._client.stream(
+            async with self._inference_client.stream(
                 "POST",
                 "/v1/chat/completions",
                 json=payload,
@@ -200,7 +276,7 @@ class GatewayHTTPClient:
                                 sse_error_code = err_code
                 else:
                     await response.aread()
-        except (httpx.ConnectError, httpx.ConnectTimeout, httpx.NetworkError) as exc:
+        except (httpx.ConnectError, httpx.ConnectTimeout) as exc:
             raise RunnerFatalError(
                 "gateway_unreachable", "Gateway unreachable during chat"
             ) from exc
@@ -242,8 +318,8 @@ class GatewayHTTPClient:
 
         while True:
             try:
-                response = await self._client.get(path)
-            except (httpx.ConnectError, httpx.ConnectTimeout, httpx.NetworkError) as exc:
+                response = await self._control_client.get(path)
+            except (httpx.ConnectError, httpx.ConnectTimeout) as exc:
                 raise RunnerFatalError(
                     "gateway_unreachable", "Gateway unreachable while fetching trace"
                 ) from exc
@@ -281,7 +357,7 @@ class GatewayHTTPClient:
     async def scrape_metrics(self) -> str:
         """Scrape raw Prometheus exposition text from GET /metrics."""
         try:
-            response = await self._client.get("/metrics")
+            response = await self._control_client.get("/metrics")
         except (httpx.RequestError, httpx.TimeoutException) as exc:
             raise RunnerFatalError("gateway_unreachable", "Gateway /metrics unreachable") from exc
 
