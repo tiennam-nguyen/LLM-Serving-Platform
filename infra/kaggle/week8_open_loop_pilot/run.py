@@ -376,6 +376,7 @@ def _build_pair_entry(
 
     return {
         "offered_rps": offered_rps,
+        "measurement_window_ms": float(rr_metrics["measurement_window_ms"]),
         "policy_order": policy_order,
         "pair_valid": pair_valid,
         "workload_sha256": rr_metrics["workload_sha256"],
@@ -763,18 +764,15 @@ def run_pilot_campaign(args: argparse.Namespace, inventory: list[str] | None) ->
                 consecutive_unstable = 0
             else:
                 consecutive_unstable += 1
-                rr_drain = float(pair["round_robin"]["completed_drain_rps"] or 0.0)
-                ll_drain = float(pair["least_loaded"]["completed_drain_rps"] or 0.0)
                 rr_nc = float(pair["round_robin"]["noncompletion_rate"] or 0.0)
                 ll_nc = float(pair["least_loaded"]["noncompletion_rate"] or 0.0)
                 clear_saturation = (
                     not pair["pair_valid"]
-                    or rr_drain < 0.85 * pair["offered_rps"]
-                    or ll_drain < 0.85 * pair["offered_rps"]
                     or rr_nc > 0.05
                     or ll_nc > 0.05
+                    or consecutive_unstable >= 2
                 )
-                if saw_stable and (consecutive_unstable >= 2 or clear_saturation):
+                if saw_stable and clear_saturation:
                     print(
                         f"Coarse sweep reached saturation at {pair['offered_rps']} RPS; "
                         "moving to knee refinement.",
@@ -782,11 +780,12 @@ def run_pilot_campaign(args: argparse.Namespace, inventory: list[str] | None) ->
                     )
                     break
 
-        # If all coarse rates remained stable and time budget allows, check higher extension rates.
+        # If all coarse rates remained stable and <= 16 RPS, probe up to 24 RPS (if N <= 480).
         if (
             not args.no_refine
             and saw_stable
             and consecutive_unstable == 0
+            and max(tested_rates) < 20.0
             and not dry_run
             and time.monotonic() + 360.0 < deadline_mono
         ):

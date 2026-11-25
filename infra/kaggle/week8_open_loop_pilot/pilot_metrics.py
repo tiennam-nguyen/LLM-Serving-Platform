@@ -37,18 +37,21 @@ PILOT_REQUIRED_ARTIFACTS = (
 DEFAULT_SELECTION_CRITERIA: dict[str, Any] = {
     "description": (
         "Pre-declared policy-neutral selection rules applied identically to paired RR and LL "
-        "runs sharing the exact same ordered workload and schedule SHA-256."
+        "runs sharing the exact same ordered workload and schedule SHA-256. Normalizes drain "
+        "throughput against expected finite-window tail drain T / (T + baseline_e2e_p95_s) so "
+        "finite measurement windows do not masquerade as server saturation."
     ),
     "max_allowed_noncompletion_rate_stable": 0.02,
-    "min_drain_throughput_tracking_ratio": 0.90,
-    "max_backlog_fraction_stable": 0.25,
+    "min_normalized_drain_tracking_ratio": 0.85,
+    "min_backlog_floor_fraction_stable": 0.35,
+    "backlog_little_law_multiplier": 1.50,
     "max_tail_e2e_p95_ratio_vs_baseline": 2.50,
-    "low_min_tracking_ratio": 0.95,
+    "max_tail_ttft_p95_ratio_vs_baseline": 5.0,
+    "min_ttft_p95_saturation_floor_ms": 400.0,
+    "low_min_normalized_tracking_ratio": 0.92,
     "low_max_backlog_fraction": 0.15,
-    "saturation_trigger_tracking_ratio": 0.90,
+    "saturation_trigger_normalized_tracking_ratio": 0.85,
     "saturation_trigger_noncompletion_rate": 0.05,
-    "saturation_trigger_backlog_fraction": 0.25,
-    "saturation_trigger_e2e_p95_ratio": 2.50,
 }
 
 
@@ -444,11 +447,28 @@ def validate_pilot_run_dir(
     return {"valid": True, "metrics": recomputed}
 
 
+def _expected_no_queue_drain_rps(
+    offered_rps: float,
+    *,
+    window_ms: float | None,
+    baseline_e2e_p95: float | None,
+) -> float:
+    window_s = float(window_ms or 20000.0) / 1000.0
+    baseline_e2e_s = (
+        float(baseline_e2e_p95) / 1000.0
+        if baseline_e2e_p95 is not None and baseline_e2e_p95 > 0.0
+        else 2.0
+    )
+    return offered_rps * (window_s / (window_s + baseline_e2e_s))
+
+
 def _policy_is_stable(
     entry: dict[str, Any],
     *,
     offered_rps: float,
-    baseline_p95: float | None,
+    window_ms: float | None,
+    baseline_e2e_p95: float | None,
+    baseline_ttft_p95: float | None,
     criteria: dict[str, Any],
 ) -> tuple[bool, list[str]]:
     reasons: list[str] = []
@@ -457,24 +477,50 @@ def _policy_is_stable(
         return False, reasons
 
     planned = max(int(entry["planned"]), 1)
+    window_s = float(window_ms or 20000.0) / 1000.0
+    baseline_e2e_s = (
+        float(baseline_e2e_p95) / 1000.0
+        if baseline_e2e_p95 is not None and baseline_e2e_p95 > 0.0
+        else 2.0
+    )
     drain_rps = float(entry["completed_drain_rps"] or 0.0)
+    expected_drain_rps = _expected_no_queue_drain_rps(
+        offered_rps,
+        window_ms=window_ms,
+        baseline_e2e_p95=baseline_e2e_p95,
+    )
     noncomp = float(entry["noncompletion_rate"] or 0.0)
     backlog_frac = float(entry["backlog_at_window_end"] or 0) / planned
+    backlog_limit = max(
+        float(criteria["min_backlog_floor_fraction_stable"]),
+        float(criteria["backlog_little_law_multiplier"]) * (baseline_e2e_s / window_s),
+    )
     p95 = entry.get("e2e_p95")
+    ttft_p95 = entry.get("ttft_p95")
 
-    if drain_rps < float(criteria["min_drain_throughput_tracking_ratio"]) * offered_rps:
-        reasons.append(f"drain_rps={drain_rps:.3f} < 0.90*offered({offered_rps:.3f})")
+    min_norm_ratio = float(criteria["min_normalized_drain_tracking_ratio"])
+    if drain_rps < min_norm_ratio * expected_drain_rps:
+        reasons.append(
+            f"drain_rps={drain_rps:.3f} < {min_norm_ratio:.2f}*expected({expected_drain_rps:.3f})"
+        )
     if noncomp > float(criteria["max_allowed_noncompletion_rate_stable"]):
         reasons.append(f"noncompletion={noncomp:.3f} > 0.02")
-    if backlog_frac > float(criteria["max_backlog_fraction_stable"]):
-        reasons.append(f"backlog_frac={backlog_frac:.3f} > 0.25")
+    if backlog_frac > backlog_limit:
+        reasons.append(f"backlog_frac={backlog_frac:.3f} > {backlog_limit:.2f}")
     if (
-        baseline_p95 is not None
-        and baseline_p95 > 0
+        baseline_e2e_p95 is not None
+        and baseline_e2e_p95 > 0
         and p95 is not None
-        and float(p95) > float(criteria["max_tail_e2e_p95_ratio_vs_baseline"]) * baseline_p95
+        and float(p95) > float(criteria["max_tail_e2e_p95_ratio_vs_baseline"]) * baseline_e2e_p95
     ):
-        reasons.append(f"e2e_p95={p95:.1f} > 2.5*baseline({baseline_p95:.1f})")
+        reasons.append(f"e2e_p95={p95:.1f} > 2.5*baseline({baseline_e2e_p95:.1f})")
+    ttft_floor = max(
+        float(criteria["max_tail_ttft_p95_ratio_vs_baseline"])
+        * float(baseline_ttft_p95 or 0.0),
+        float(criteria["min_ttft_p95_saturation_floor_ms"]),
+    )
+    if ttft_p95 is not None and float(ttft_p95) > ttft_floor:
+        reasons.append(f"ttft_p95={ttft_p95:.1f} > {ttft_floor:.1f}")
 
     return len(reasons) == 0, reasons
 
@@ -495,9 +541,9 @@ def select_common_load_points(
             "evaluations": [],
         }
 
-    # Baseline p95 from lowest valid tested rate (conservative upper bound across the two policies).
+    # Baseline E2E/TTFT p95 from lowest valid tested rate.
     first_pair = valid_pairs[0]
-    p95_vals = [
+    e2e_p95_vals = [
         v
         for v in (
             first_pair["round_robin"].get("e2e_p95"),
@@ -505,7 +551,16 @@ def select_common_load_points(
         )
         if v is not None
     ]
-    baseline_p95 = max(p95_vals) if p95_vals else None
+    baseline_e2e_p95 = max(e2e_p95_vals) if e2e_p95_vals else None
+    ttft_p95_vals = [
+        v
+        for v in (
+            first_pair["round_robin"].get("ttft_p95"),
+            first_pair["least_loaded"].get("ttft_p95"),
+        )
+        if v is not None
+    ]
+    baseline_ttft_p95 = max(ttft_p95_vals) if ttft_p95_vals else None
 
     evaluations: list[dict[str, Any]] = []
     stable_pairs: list[dict[str, Any]] = []
@@ -513,6 +568,7 @@ def select_common_load_points(
 
     for pair in ordered:
         rate = float(pair["offered_rps"])
+        win_ms = pair.get("measurement_window_ms")
         if not pair.get("pair_valid"):
             evaluations.append(
                 {
@@ -525,10 +581,20 @@ def select_common_load_points(
             )
             continue
         rr_ok, rr_reasons = _policy_is_stable(
-            pair["round_robin"], offered_rps=rate, baseline_p95=baseline_p95, criteria=criteria
+            pair["round_robin"],
+            offered_rps=rate,
+            window_ms=win_ms,
+            baseline_e2e_p95=baseline_e2e_p95,
+            baseline_ttft_p95=baseline_ttft_p95,
+            criteria=criteria,
         )
         ll_ok, ll_reasons = _policy_is_stable(
-            pair["least_loaded"], offered_rps=rate, baseline_p95=baseline_p95, criteria=criteria
+            pair["least_loaded"],
+            offered_rps=rate,
+            window_ms=win_ms,
+            baseline_e2e_p95=baseline_e2e_p95,
+            baseline_ttft_p95=baseline_ttft_p95,
+            criteria=criteria,
         )
         both_stable = rr_ok and ll_ok
         evaluations.append(
@@ -553,8 +619,7 @@ def select_common_load_points(
             "evaluations": evaluations,
         }
 
-    # Knee requires at least one tested rate (valid or cleanly saturated) above a stable rate
-    # that exhibits leaving the stable operating envelope.
+    # Knee requires at least one tested rate above a stable rate that leaves the stable envelope.
     highest_stable_rate = float(stable_pairs[-1]["offered_rps"])
     degraded_after_stable = [
         e
@@ -576,15 +641,25 @@ def select_common_load_points(
     near_sat_pair = stable_pairs[-1]
     near_sat_rps = float(near_sat_pair["offered_rps"])
 
-    # Pick low = lowest stable common rate meeting tighter tracking/backlog thresholds.
+    # Pick low = lowest stable common rate meeting tighter normalized tracking/backlog thresholds.
     low_candidates = [
         p
         for p in stable_pairs
         if float(p["offered_rps"]) < near_sat_rps
         and float(p["round_robin"]["completed_drain_rps"])
-        >= float(criteria["low_min_tracking_ratio"]) * float(p["offered_rps"])
+        >= float(criteria["low_min_normalized_tracking_ratio"])
+        * _expected_no_queue_drain_rps(
+            float(p["offered_rps"]),
+            window_ms=p.get("measurement_window_ms"),
+            baseline_e2e_p95=baseline_e2e_p95,
+        )
         and float(p["least_loaded"]["completed_drain_rps"])
-        >= float(criteria["low_min_tracking_ratio"]) * float(p["offered_rps"])
+        >= float(criteria["low_min_normalized_tracking_ratio"])
+        * _expected_no_queue_drain_rps(
+            float(p["offered_rps"]),
+            window_ms=p.get("measurement_window_ms"),
+            baseline_e2e_p95=baseline_e2e_p95,
+        )
         and float(p["round_robin"]["backlog_at_window_end"]) / int(p["round_robin"]["planned"])
         <= float(criteria["low_max_backlog_fraction"])
         and float(p["least_loaded"]["backlog_at_window_end"]) / int(p["least_loaded"]["planned"])

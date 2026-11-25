@@ -319,47 +319,74 @@ def test_compute_pilot_metrics_exact_denominators_r7_and_ooo_join(tmp_path: Path
 
 
 def test_select_common_load_points_picks_knee_and_flags_no_knee():
-    def _pair(rate: float, drain_rr: float, drain_ll: float, p95_rr: float, p95_ll: float, bl: int):
+    def _pair(
+        rate: float,
+        drain_rr: float,
+        drain_ll: float,
+        p95_rr: float,
+        p95_ll: float,
+        bl: int,
+        *,
+        ttft_p95: float = 120.0,
+        window_ms: float = 20000.0,
+        noncomp: float = 0.0,
+    ):
+        planned = int(rate * (window_ms / 1000.0))
         return {
             "offered_rps": rate,
+            "measurement_window_ms": window_ms,
             "pair_valid": True,
             "schedule_sha256": f"sha-{rate}",
             "round_robin": {
                 "run_id": f"rr-{rate}",
                 "valid": True,
-                "planned": int(rate * 20),
+                "planned": planned,
                 "completed_drain_rps": drain_rr,
-                "noncompletion_rate": 0.0,
+                "noncompletion_rate": noncomp,
                 "e2e_p95": p95_rr,
+                "ttft_p95": ttft_p95,
                 "backlog_at_window_end": bl,
                 "dispatch_lag_max_ms": 5.0,
             },
             "least_loaded": {
                 "run_id": f"ll-{rate}",
                 "valid": True,
-                "planned": int(rate * 20),
+                "planned": planned,
                 "completed_drain_rps": drain_ll,
-                "noncompletion_rate": 0.0,
+                "noncompletion_rate": noncomp,
                 "e2e_p95": p95_ll,
+                "ttft_p95": ttft_p95,
                 "backlog_at_window_end": bl,
                 "dispatch_lag_max_ms": 5.0,
             },
         }
 
-    # Clear knee between 8.0 (stable) and 12.0 (saturated throughput/backlog/latency)
+    # Finite-window drain tail (~2.35s on 20s window => 0.895*offered) WITHOUT tail/TTFT spike
+    # must NOT falsely trigger saturation (mirrors Pilot Run #1 1..20 RPS behavior).
+    finite_window_no_sat = [
+        _pair(1.0, 0.96, 0.96, 1750.0, 2000.0, 2, ttft_p95=48.0),
+        _pair(4.0, 3.69, 3.66, 2005.0, 2011.0, 8, ttft_p95=104.0),
+        _pair(16.0, 14.43, 14.42, 2899.0, 2853.0, 44, ttft_p95=140.0),
+        _pair(20.0, 17.89, 17.91, 3122.0, 3092.0, 60, ttft_p95=148.0),
+    ]
+    res_no_sat = select_common_load_points(finite_window_no_sat)
+    assert res_no_sat["knee_reached"] is False
+    assert res_no_sat["selected"] is None
+
+    # Clear true server knee between 24.0 (stable) and 36.0 (saturated latency/TTFT/throughput)
     pairs = [
-        _pair(1.0, 1.0, 1.0, 1200.0, 1200.0, 0),
-        _pair(2.0, 2.0, 2.0, 1300.0, 1300.0, 0),
-        _pair(4.0, 4.0, 4.0, 1500.0, 1450.0, 2),
-        _pair(8.0, 7.8, 7.9, 2200.0, 2100.0, 8),
-        _pair(12.0, 8.2, 8.5, 6500.0, 6200.0, 85),
+        _pair(1.0, 0.96, 0.96, 1750.0, 2000.0, 2, ttft_p95=48.0),
+        _pair(4.0, 3.69, 3.66, 2005.0, 2011.0, 8, ttft_p95=104.0),
+        _pair(12.0, 10.92, 10.92, 2374.0, 2365.0, 26, ttft_p95=116.0),
+        _pair(24.0, 21.10, 21.20, 3300.0, 3250.0, 75, ttft_p95=165.0),
+        _pair(36.0, 21.50, 22.00, 6500.0, 6200.0, 280, ttft_p95=850.0),
     ]
     sel = select_common_load_points(pairs)
     assert sel["knee_reached"] is True
     assert sel["selected"]["low"]["offered_rps"] == 1.0
-    assert sel["selected"]["near_saturation"]["offered_rps"] == 8.0
-    # Geometric midpoint between 1.0 and 8.0 is sqrt(8) ~= 2.83 -> closest tested is 2.0 or 4.0
-    assert sel["selected"]["medium"]["offered_rps"] in {2.0, 4.0}
+    assert sel["selected"]["near_saturation"]["offered_rps"] == 24.0
+    # Geometric midpoint between 1.0 and 24.0 is sqrt(24) ~= 4.90 -> closest tested is 4.0
+    assert sel["selected"]["medium"]["offered_rps"] == 4.0
 
     # All stable -> knee_reached must be False (never fabricate load levels)
     no_knee = select_common_load_points(pairs[:3])
