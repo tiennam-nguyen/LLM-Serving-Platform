@@ -7,7 +7,17 @@ from llm_serving_platform.benchmark.config import (
     ExperimentConfigError,
     load_manifest,
 )
-from llm_serving_platform.benchmark.runner import ExperimentRunner, RunResult
+from llm_serving_platform.benchmark.runner import (
+    ExperimentRunner,
+    OpenLoopArtifactWriterProtocol,
+    OpenLoopConfigProtocol,
+    RunResult,
+)
+from llm_serving_platform.benchmark.scheduler import (
+    OpenLoopScheduler,
+    ScheduledEntryProtocol,
+    SchedulerResult,
+)
 from llm_serving_platform.benchmark.summary import (
     PERCENTILE_METHOD,
     compute_percentile,
@@ -21,9 +31,14 @@ __all__ = [
     "ExperimentConfigError",
     "ExperimentRunner",
     "GatewayHTTPClient",
+    "OpenLoopArtifactWriterProtocol",
+    "OpenLoopConfigProtocol",
+    "OpenLoopScheduler",
     "PERCENTILE_METHOD",
     "RunResult",
     "RunnerFatalError",
+    "ScheduledEntryProtocol",
+    "SchedulerResult",
     "WorkloadEntry",
     "WorkloadError",
     "compute_percentile",
