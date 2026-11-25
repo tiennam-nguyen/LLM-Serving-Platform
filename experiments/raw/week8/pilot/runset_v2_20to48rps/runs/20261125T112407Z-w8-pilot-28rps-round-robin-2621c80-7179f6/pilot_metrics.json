@@ -1,0 +1,79 @@
+{
+  "schema_version": 2,
+  "artifact_role": "pilot_selection_evidence_not_member_b_summary",
+  "run_id": "20261125T112407Z-w8-pilot-28rps-round-robin-2621c80-7179f6",
+  "policy": "round_robin",
+  "observed_policies": [
+    "round_robin"
+  ],
+  "comparison": {
+    "id": "pilot-28rps",
+    "load_level": "pilot",
+    "repetition": 1
+  },
+  "percentile_method": "linear_interpolation_r7",
+  "measurement_window_ms": 10000.0,
+  "drain_span_s": 12.698867,
+  "workload_sha256": "26578b86b7e1c52127db6d988edc83c9d01bdf3a3b823432981d19e214b986c9",
+  "schedule_sha256": "bd186d5578c3887cb9d03085dbd15c5ef82a522333cdc3f10f15687f1223e69d",
+  "schedule_count": 280,
+  "requests": {
+    "planned": 280,
+    "sent": 280,
+    "not_dispatched": 0,
+    "observed": 280,
+    "completed": 280,
+    "error": 0,
+    "cancelled": 0,
+    "missing_trace": 0,
+    "both_completed": 280
+  },
+  "rates": {
+    "offered_rps": 28.0,
+    "dispatched_rps": 28.0,
+    "completed_window_rps": 18.6,
+    "completed_drain_rps": 22.049211,
+    "noncompletion_rate": 0.0,
+    "gateway_error_rate": 0.0,
+    "gateway_cancelled_rate": 0.0
+  },
+  "latency_ms": {
+    "routing_p50": 0.058,
+    "routing_p95": 0.096,
+    "routing_p99": 0.936,
+    "ttft_p50": 151.2,
+    "ttft_p95": 196.244,
+    "ttft_p99": 223.707,
+    "e2e_p50": 3270.77,
+    "e2e_p95": 3727.783,
+    "e2e_p99": 3753.829
+  },
+  "latency_sample_counts": {
+    "routing": {
+      "present": 280,
+      "missing": 0
+    },
+    "ttft": {
+      "present": 280,
+      "missing": 0
+    },
+    "e2e": {
+      "present": 280,
+      "missing": 0
+    }
+  },
+  "dispatch_lag_ms": {
+    "sample_count": 280,
+    "p50": 1.196,
+    "p95": 11.735,
+    "p99": 15.544,
+    "max": 32.66
+  },
+  "backlog_at_window_end": 94,
+  "worker_distribution": {
+    "worker-vllm-0": 140,
+    "worker-vllm-1": 140
+  },
+  "no_worker_count": 0,
+  "p99_statistical_note": "E2E/TTFT P99 computed from n=280 completed samples (pilot low-N P99 has limited statistical precision; report sample counts explicitly)."
+}

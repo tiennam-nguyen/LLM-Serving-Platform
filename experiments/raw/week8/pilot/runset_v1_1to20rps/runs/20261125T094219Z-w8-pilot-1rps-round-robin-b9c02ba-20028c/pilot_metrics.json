@@ -1,0 +1,79 @@
+{
+  "schema_version": 2,
+  "artifact_role": "pilot_selection_evidence_not_member_b_summary",
+  "run_id": "20261125T094219Z-w8-pilot-1rps-round-robin-b9c02ba-20028c",
+  "policy": "round_robin",
+  "observed_policies": [
+    "round_robin"
+  ],
+  "comparison": {
+    "id": "pilot-1rps",
+    "load_level": "pilot",
+    "repetition": 1
+  },
+  "percentile_method": "linear_interpolation_r7",
+  "measurement_window_ms": 20000.0,
+  "drain_span_s": 20.729128,
+  "workload_sha256": "57386809d0d40a4469c3562b96e3ef2036324e9c88a640a5a935294e7ad795ac",
+  "schedule_sha256": "f12417a9076d3569b3d2ba9c85fa62172e3a1ed732b97b41ce020f67b7bd44ba",
+  "schedule_count": 20,
+  "requests": {
+    "planned": 20,
+    "sent": 20,
+    "not_dispatched": 0,
+    "observed": 20,
+    "completed": 20,
+    "error": 0,
+    "cancelled": 0,
+    "missing_trace": 0,
+    "both_completed": 20
+  },
+  "rates": {
+    "offered_rps": 1.0,
+    "dispatched_rps": 1.0,
+    "completed_window_rps": 0.95,
+    "completed_drain_rps": 0.964826,
+    "noncompletion_rate": 0.0,
+    "gateway_error_rate": 0.0,
+    "gateway_cancelled_rate": 0.0
+  },
+  "latency_ms": {
+    "routing_p50": 0.044,
+    "routing_p95": 0.059,
+    "routing_p99": 0.061,
+    "ttft_p50": 45.995,
+    "ttft_p95": 47.148,
+    "ttft_p99": 47.261,
+    "e2e_p50": 1727.115,
+    "e2e_p95": 1745.698,
+    "e2e_p99": 1748.26
+  },
+  "latency_sample_counts": {
+    "routing": {
+      "present": 20,
+      "missing": 0
+    },
+    "ttft": {
+      "present": 20,
+      "missing": 0
+    },
+    "e2e": {
+      "present": 20,
+      "missing": 0
+    }
+  },
+  "dispatch_lag_ms": {
+    "sample_count": 20,
+    "p50": 0.663,
+    "p95": 1.599,
+    "p99": 1.785,
+    "max": 1.831
+  },
+  "backlog_at_window_end": 1,
+  "worker_distribution": {
+    "worker-vllm-0": 10,
+    "worker-vllm-1": 10
+  },
+  "no_worker_count": 0,
+  "p99_statistical_note": "E2E/TTFT P99 computed from n=20 completed samples (pilot low-N P99 has limited statistical precision; report sample counts explicitly)."
+}

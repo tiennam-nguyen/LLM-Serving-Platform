@@ -1,0 +1,79 @@
+{
+  "schema_version": 2,
+  "artifact_role": "pilot_selection_evidence_not_member_b_summary",
+  "run_id": "20261125T095329Z-w8-pilot-8rps-least-loaded-b9c02ba-9bde4c",
+  "policy": "least_loaded",
+  "observed_policies": [
+    "least_loaded"
+  ],
+  "comparison": {
+    "id": "pilot-8rps",
+    "load_level": "pilot",
+    "repetition": 1
+  },
+  "percentile_method": "linear_interpolation_r7",
+  "measurement_window_ms": 20000.0,
+  "drain_span_s": 21.911672,
+  "workload_sha256": "dbc7a8282985806072ccc34d8fb5cdbdedb0a69da7302adc7a48e2bc625f8c71",
+  "schedule_sha256": "26274aaa8a372a775d22d7b4ddc56304f7cd84707e5bdf5e50d388823c8f434b",
+  "schedule_count": 160,
+  "requests": {
+    "planned": 160,
+    "sent": 160,
+    "not_dispatched": 0,
+    "observed": 160,
+    "completed": 160,
+    "error": 0,
+    "cancelled": 0,
+    "missing_trace": 0,
+    "both_completed": 160
+  },
+  "rates": {
+    "offered_rps": 8.0,
+    "dispatched_rps": 8.0,
+    "completed_window_rps": 7.2,
+    "completed_drain_rps": 7.302044,
+    "noncompletion_rate": 0.0,
+    "gateway_error_rate": 0.0,
+    "gateway_cancelled_rate": 0.0
+  },
+  "latency_ms": {
+    "routing_p50": 0.044,
+    "routing_p95": 0.087,
+    "routing_p99": 0.111,
+    "ttft_p50": 95.15,
+    "ttft_p95": 110.459,
+    "ttft_p99": 112.954,
+    "e2e_p50": 2129.11,
+    "e2e_p95": 2218.602,
+    "e2e_p99": 2246.819
+  },
+  "latency_sample_counts": {
+    "routing": {
+      "present": 160,
+      "missing": 0
+    },
+    "ttft": {
+      "present": 160,
+      "missing": 0
+    },
+    "e2e": {
+      "present": 160,
+      "missing": 0
+    }
+  },
+  "dispatch_lag_ms": {
+    "sample_count": 160,
+    "p50": 0.786,
+    "p95": 1.894,
+    "p99": 3.268,
+    "max": 3.54
+  },
+  "backlog_at_window_end": 16,
+  "worker_distribution": {
+    "worker-vllm-0": 80,
+    "worker-vllm-1": 80
+  },
+  "no_worker_count": 0,
+  "p99_statistical_note": "E2E/TTFT P99 computed from n=160 completed samples (pilot low-N P99 has limited statistical precision; report sample counts explicitly)."
+}

@@ -1,0 +1,84 @@
+# HELP llm_gateway_requests_total Terminal inference requests.
+# TYPE llm_gateway_requests_total counter
+llm_gateway_requests_total{status="completed"} 202.0
+llm_gateway_requests_total{status="error"} 0.0
+llm_gateway_requests_total{status="cancelled"} 0.0
+# HELP llm_gateway_requests_created Terminal inference requests.
+# TYPE llm_gateway_requests_created gauge
+llm_gateway_requests_created{status="completed"} 1.795605533379855e+09
+llm_gateway_requests_created{status="error"} 1.7956055333798683e+09
+llm_gateway_requests_created{status="cancelled"} 1.7956055333798766e+09
+# HELP llm_gateway_request_e2e_seconds Arrival to terminal request milestone.
+# TYPE llm_gateway_request_e2e_seconds histogram
+llm_gateway_request_e2e_seconds_bucket{le="0.05"} 0.0
+llm_gateway_request_e2e_seconds_bucket{le="0.1"} 0.0
+llm_gateway_request_e2e_seconds_bucket{le="0.25"} 0.0
+llm_gateway_request_e2e_seconds_bucket{le="0.5"} 0.0
+llm_gateway_request_e2e_seconds_bucket{le="1.0"} 0.0
+llm_gateway_request_e2e_seconds_bucket{le="2.5"} 45.0
+llm_gateway_request_e2e_seconds_bucket{le="5.0"} 202.0
+llm_gateway_request_e2e_seconds_bucket{le="10.0"} 202.0
+llm_gateway_request_e2e_seconds_bucket{le="30.0"} 202.0
+llm_gateway_request_e2e_seconds_bucket{le="60.0"} 202.0
+llm_gateway_request_e2e_seconds_bucket{le="120.0"} 202.0
+llm_gateway_request_e2e_seconds_bucket{le="300.0"} 202.0
+llm_gateway_request_e2e_seconds_bucket{le="+Inf"} 202.0
+llm_gateway_request_e2e_seconds_count 202.0
+llm_gateway_request_e2e_seconds_sum 531.5509499999996
+# HELP llm_gateway_request_e2e_seconds_created Arrival to terminal request milestone.
+# TYPE llm_gateway_request_e2e_seconds_created gauge
+llm_gateway_request_e2e_seconds_created 1.7956055333798897e+09
+# HELP llm_gateway_ttft_seconds Arrival to first non-empty content chunk.
+# TYPE llm_gateway_ttft_seconds histogram
+llm_gateway_ttft_seconds_bucket{le="0.005"} 0.0
+llm_gateway_ttft_seconds_bucket{le="0.01"} 0.0
+llm_gateway_ttft_seconds_bucket{le="0.025"} 0.0
+llm_gateway_ttft_seconds_bucket{le="0.05"} 1.0
+llm_gateway_ttft_seconds_bucket{le="0.1"} 25.0
+llm_gateway_ttft_seconds_bucket{le="0.25"} 200.0
+llm_gateway_ttft_seconds_bucket{le="0.5"} 200.0
+llm_gateway_ttft_seconds_bucket{le="1.0"} 200.0
+llm_gateway_ttft_seconds_bucket{le="2.5"} 202.0
+llm_gateway_ttft_seconds_bucket{le="5.0"} 202.0
+llm_gateway_ttft_seconds_bucket{le="10.0"} 202.0
+llm_gateway_ttft_seconds_bucket{le="30.0"} 202.0
+llm_gateway_ttft_seconds_bucket{le="60.0"} 202.0
+llm_gateway_ttft_seconds_bucket{le="+Inf"} 202.0
+llm_gateway_ttft_seconds_count 202.0
+llm_gateway_ttft_seconds_sum 25.098469999999995
+# HELP llm_gateway_ttft_seconds_created Arrival to first non-empty content chunk.
+# TYPE llm_gateway_ttft_seconds_created gauge
+llm_gateway_ttft_seconds_created 1.7956055333799412e+09
+# HELP llm_router_decision_seconds Worker selection and reservation duration.
+# TYPE llm_router_decision_seconds histogram
+llm_router_decision_seconds_bucket{le="1e-05",policy="round_robin"} 0.0
+llm_router_decision_seconds_bucket{le="5e-05",policy="round_robin"} 85.0
+llm_router_decision_seconds_bucket{le="0.0001",policy="round_robin"} 195.0
+llm_router_decision_seconds_bucket{le="0.0005",policy="round_robin"} 201.0
+llm_router_decision_seconds_bucket{le="0.001",policy="round_robin"} 202.0
+llm_router_decision_seconds_bucket{le="0.005",policy="round_robin"} 202.0
+llm_router_decision_seconds_bucket{le="0.01",policy="round_robin"} 202.0
+llm_router_decision_seconds_bucket{le="0.1",policy="round_robin"} 202.0
+llm_router_decision_seconds_bucket{le="1.0",policy="round_robin"} 202.0
+llm_router_decision_seconds_bucket{le="+Inf",policy="round_robin"} 202.0
+llm_router_decision_seconds_count{policy="round_robin"} 202.0
+llm_router_decision_seconds_sum{policy="round_robin"} 0.012100000000000005
+# HELP llm_router_decision_seconds_created Worker selection and reservation duration.
+# TYPE llm_router_decision_seconds_created gauge
+llm_router_decision_seconds_created{policy="round_robin"} 1.7956055339511936e+09
+# HELP llm_router_requests_total Successful worker selections.
+# TYPE llm_router_requests_total counter
+llm_router_requests_total{policy="round_robin",worker_id="worker-vllm-0"} 101.0
+llm_router_requests_total{policy="round_robin",worker_id="worker-vllm-1"} 101.0
+# HELP llm_router_requests_created Successful worker selections.
+# TYPE llm_router_requests_created gauge
+llm_router_requests_created{policy="round_robin",worker_id="worker-vllm-0"} 1.7956055339512475e+09
+llm_router_requests_created{policy="round_robin",worker_id="worker-vllm-1"} 1.7956055367312734e+09
+# HELP llm_worker_active_requests Current Gateway-owned requests.
+# TYPE llm_worker_active_requests gauge
+llm_worker_active_requests{worker_id="worker-vllm-0"} 0.0
+llm_worker_active_requests{worker_id="worker-vllm-1"} 0.0
+# HELP llm_worker_health Cached worker health: HEALTHY=1, otherwise=0.
+# TYPE llm_worker_health gauge
+llm_worker_health{worker_id="worker-vllm-0"} 1.0
+llm_worker_health{worker_id="worker-vllm-1"} 1.0

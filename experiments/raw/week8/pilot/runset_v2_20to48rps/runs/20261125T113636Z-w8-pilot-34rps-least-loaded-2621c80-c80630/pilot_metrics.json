@@ -1,0 +1,79 @@
+{
+  "schema_version": 2,
+  "artifact_role": "pilot_selection_evidence_not_member_b_summary",
+  "run_id": "20261125T113636Z-w8-pilot-34rps-least-loaded-2621c80-c80630",
+  "policy": "least_loaded",
+  "observed_policies": [
+    "least_loaded"
+  ],
+  "comparison": {
+    "id": "pilot-34rps",
+    "load_level": "pilot",
+    "repetition": 1
+  },
+  "percentile_method": "linear_interpolation_r7",
+  "measurement_window_ms": 10000.0,
+  "drain_span_s": 13.270217,
+  "workload_sha256": "0b31000f0f568db9bd8c618ac6372976b868c84245e21ad00c144b30a4bade28",
+  "schedule_sha256": "66bc7d222bfd4a7ef43c73a36d9f4979fc0857927c5ed55c665cd66c3f6b851a",
+  "schedule_count": 340,
+  "requests": {
+    "planned": 340,
+    "sent": 340,
+    "not_dispatched": 0,
+    "observed": 340,
+    "completed": 340,
+    "error": 0,
+    "cancelled": 0,
+    "missing_trace": 0,
+    "both_completed": 340
+  },
+  "rates": {
+    "offered_rps": 34.0,
+    "dispatched_rps": 34.0,
+    "completed_window_rps": 18.4,
+    "completed_drain_rps": 25.621284,
+    "noncompletion_rate": 0.0,
+    "gateway_error_rate": 0.0,
+    "gateway_cancelled_rate": 0.0
+  },
+  "latency_ms": {
+    "routing_p50": 0.057,
+    "routing_p95": 0.088,
+    "routing_p99": 0.113,
+    "ttft_p50": 193.025,
+    "ttft_p95": 267.952,
+    "ttft_p99": 298.501,
+    "e2e_p50": 4113.775,
+    "e2e_p95": 4902.147,
+    "e2e_p99": 4963.283
+  },
+  "latency_sample_counts": {
+    "routing": {
+      "present": 340,
+      "missing": 0
+    },
+    "ttft": {
+      "present": 340,
+      "missing": 0
+    },
+    "e2e": {
+      "present": 340,
+      "missing": 0
+    }
+  },
+  "dispatch_lag_ms": {
+    "sample_count": 340,
+    "p50": 1.192,
+    "p95": 12.133,
+    "p99": 33.053,
+    "max": 88.834
+  },
+  "backlog_at_window_end": 156,
+  "worker_distribution": {
+    "worker-vllm-0": 178,
+    "worker-vllm-1": 162
+  },
+  "no_worker_count": 0,
+  "p99_statistical_note": "E2E/TTFT P99 computed from n=340 completed samples (pilot low-N P99 has limited statistical precision; report sample counts explicitly)."
+}
