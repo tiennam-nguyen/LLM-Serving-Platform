@@ -19,6 +19,7 @@ Supports:
      python infra/scripts/verify.py --target w6 --no-gpu
      python infra/scripts/verify.py --target w7-observability --no-gpu
      python infra/scripts/verify.py --target w7 --no-gpu
+     python infra/scripts/verify.py --target w8 --no-gpu
      python infra/scripts/verify.py --target gates [--no-gpu]
      python infra/scripts/verify.py --target backend [--no-gpu]
      python infra/scripts/verify.py --target web [--no-gpu]
@@ -68,6 +69,7 @@ from infra.scripts.verify_week3_e2e import run_week3_e2e_check  # noqa: E402, I0
 from infra.scripts.verify_week4_e2e import run_week4_e2e_check  # noqa: E402, I001
 from infra.scripts.verify_week6_e2e import run_week6_e2e
 from infra.scripts.verify_week7_e2e import run_week7_e2e_gate
+from infra.scripts.verify_week8_e2e import run_week8_e2e_gate
 from llm_serving_platform.common.config import load_dotenv_file  # noqa: E402, I001
 
 load_dotenv_file()
@@ -496,6 +498,27 @@ def gate_week7_experiment_pipeline(ctx: VerifyContext) -> bool:
     return True
 
 
+def gate_week8_controlled_benchmark(ctx: VerifyContext) -> bool:
+    """CPU functional coverage, not GPU performance acceptance."""
+    _banner("GATE [w8]: Controlled open-loop campaign, raw analysis and figures (CPU/Mock)")
+    if not ctx.no_gpu:
+        raise RuntimeError(
+            "W8 local gate requires --no-gpu; use the controlled launcher on dual-T4"
+        )
+    validation = run_week8_e2e_gate()
+    if not validation.get("valid"):
+        raise RuntimeError(f"Week 8 gate failed: {validation}")
+    if _HAS_REAL_PYTEST:
+        _run_subprocess([
+            sys.executable, "-m", "pytest", "--no-gpu", "-p", "no:cacheprovider",
+            "tests/unit/test_week8_b_contracts.py",
+            "tests/unit/test_week8_scheduler.py",
+            "tests/integration/test_week8_b_pipeline.py",
+            "tests/integration/test_week8_open_loop_runner.py",
+        ])
+    return True
+
+
 # ------------------------------------------------------------------------------
 # OPEN-CLOSED MILESTONE REGISTRY:
 # Implemented milestone gates: W1, W2, W3, W4, W6, W7 (Week 5 LAN is separate).
@@ -535,6 +558,11 @@ MILESTONE_GATES: dict[str, GateSpec] = {
         gate_id="w7",
         title="Week 7 Full: Observability + Reproducible Experiment Pipeline (CPU)",
         runner=gate_week7_experiment_pipeline,
+    ),
+    "w8": GateSpec(
+        gate_id="w8",
+        title="Week 8: Controlled Workloads, Open-Loop Runner, Raw Analysis and Figures (CPU)",
+        runner=gate_week8_controlled_benchmark,
     ),
 }
 

@@ -66,8 +66,10 @@ def _is_non_bool_int(value: Any) -> bool:
 
 
 def _is_finite_number(value: Any) -> bool:
-    return not isinstance(value, bool) and isinstance(value, (int, float)) and math.isfinite(
-        float(value)
+    return (
+        not isinstance(value, bool)
+        and isinstance(value, (int, float))
+        and math.isfinite(float(value))
     )
 
 
@@ -211,8 +213,9 @@ class OpenLoopScheduler:
         self._cancel_cleanup_timeout_s = cancel_cleanup_timeout_s
 
     async def _default_sleep_until(self, deadline: float) -> None:
-        remaining = deadline - self._clock()
-        if remaining > 0.0:
+        # Event-loop timers may wake within their clock resolution before a deadline
+        # (notably on Windows). Recheck the same clock instead of dispatching early.
+        while (remaining := deadline - self._clock()) > 0.0:
             await asyncio.sleep(remaining)
 
     async def _wait_until_deadline_or_stop(

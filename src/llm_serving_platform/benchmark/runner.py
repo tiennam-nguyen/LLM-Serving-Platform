@@ -18,10 +18,7 @@ from llm_serving_platform.benchmark.artifacts import (
     DEFAULT_RUNS_ROOT,
     ArtifactWriter,
     build_environment_metadata,
-    capture_git_info,
-    generate_run_id,
     utc_now_iso,
-    write_json_atomic,
     write_text_atomic,
 )
 from llm_serving_platform.benchmark.client import (
@@ -29,7 +26,11 @@ from llm_serving_platform.benchmark.client import (
     GatewayHTTPClient,
     RunnerFatalError,
 )
-from llm_serving_platform.benchmark.config import ExperimentConfig, load_manifest
+from llm_serving_platform.benchmark.config import (
+    ExperimentConfig,
+    ExperimentConfigV2,
+    load_manifest,
+)
 from llm_serving_platform.benchmark.scheduler import (
     OpenLoopScheduler,
     ScheduledEntryProtocol,
@@ -38,12 +39,14 @@ from llm_serving_platform.benchmark.scheduler import (
 )
 from llm_serving_platform.benchmark.summary import (
     compute_summary_from_traces_file,
+    compute_summary_v2,
     read_traces_jsonl,
 )
 from llm_serving_platform.benchmark.workload import (
     WorkloadEntry,
     load_workload,
     select_measured_entries,
+    select_scheduled_entries,
     select_warmup_entries,
 )
 from llm_serving_platform.common.config import REPO_ROOT
@@ -110,77 +113,6 @@ class OpenLoopArtifactWriterProtocol(Protocol):
     def write_metrics(self, metrics_text: str) -> None: ...
 
     def write_summary(self, summary: dict[str, Any]) -> None: ...
-
-
-class _DefaultOpenLoopArtifactWriter:
-    """Internal open-loop artifact writer matching the Week 8 raw file layout."""
-
-    def __init__(self, run_dir: Path, run_id: str) -> None:
-        self.run_dir = run_dir
-        self.run_id = run_id
-        self.manifest_path = run_dir / "manifest.json"
-        self.environment_path = run_dir / "environment.json"
-        self.schedule_path = run_dir / "schedule.jsonl"
-        self.requests_path = run_dir / "requests.jsonl"
-        self.traces_path = run_dir / "traces.jsonl"
-        self.before_metrics_path = run_dir / "metrics.before.prom"
-        self.metrics_path = run_dir / "metrics.prom"
-        self.summary_path = run_dir / "summary.json"
-
-    @classmethod
-    def create(
-        cls,
-        *,
-        runs_root: Path | None,
-        config: OpenLoopConfigProtocol,
-        run_id: str | None = None,
-        repo_root: Path = REPO_ROOT,
-    ) -> _DefaultOpenLoopArtifactWriter:
-        root = (runs_root or DEFAULT_RUNS_ROOT).resolve()
-        root.mkdir(parents=True, exist_ok=True)
-        resolved_run_id = run_id
-        if resolved_run_id is None:
-            git_rev = capture_git_info(cwd=repo_root).get("git_revision")
-            resolved_run_id = generate_run_id(config.name, git_rev)
-        run_dir = root / resolved_run_id
-        run_dir.mkdir(parents=True, exist_ok=False)
-        writer = cls(run_dir=run_dir, run_id=resolved_run_id)
-        writer.traces_path.write_text("", encoding="utf-8", newline="\n")
-        writer.requests_path.write_text("", encoding="utf-8", newline="\n")
-        return writer
-
-    def write_manifest(self, config: Any) -> None:
-        write_json_atomic(self.manifest_path, config.to_normalized_dict())
-
-    def write_environment(self, metadata: dict[str, Any]) -> None:
-        write_json_atomic(self.environment_path, metadata)
-
-    def write_schedule(self, records: Sequence[dict[str, Any]]) -> None:
-        text = "".join(
-            json.dumps(rec, ensure_ascii=False, separators=(",", ":")) + "\n" for rec in records
-        )
-        write_text_atomic(self.schedule_path, text)
-
-    def append_request(self, record: dict[str, Any]) -> None:
-        line = json.dumps(record, ensure_ascii=False, separators=(",", ":")) + "\n"
-        with self.requests_path.open("a", encoding="utf-8", newline="\n") as handle:
-            handle.write(line)
-            handle.flush()
-
-    def append_trace(self, trace: dict[str, Any]) -> None:
-        line = json.dumps(trace, ensure_ascii=False, separators=(",", ":")) + "\n"
-        with self.traces_path.open("a", encoding="utf-8", newline="\n") as handle:
-            handle.write(line)
-            handle.flush()
-
-    def write_before_metrics(self, metrics_text: str) -> None:
-        write_text_atomic(self.before_metrics_path, metrics_text)
-
-    def write_metrics(self, metrics_text: str) -> None:
-        write_text_atomic(self.metrics_path, metrics_text)
-
-    def write_summary(self, summary: dict[str, Any]) -> None:
-        write_json_atomic(self.summary_path, summary)
 
 
 @dataclass(frozen=True)
@@ -328,6 +260,7 @@ class ExperimentRunner:
         sleep_until: Callable[[float], Awaitable[None]] | None = None,
         generator_limited_drain_timeout_s: float = 30.0,
         cancel_cleanup_timeout_s: float = 10.0,
+        run_context: dict[str, Any] | None = None,
     ) -> None:
         self._runs_root = runs_root or DEFAULT_RUNS_ROOT
         self._client = client
@@ -339,6 +272,15 @@ class ExperimentRunner:
         self._sleep_until = sleep_until
         self._generator_limited_drain_timeout_s = generator_limited_drain_timeout_s
         self._cancel_cleanup_timeout_s = cancel_cleanup_timeout_s
+        allowed_context = {
+            "protocol_sha256",
+            "test_mode",
+            "cache_control",
+            "worker_runtime_args",
+            "worker_gpu_bindings",
+            "campaign_run_index",
+        }
+        self._run_context = {k: v for k, v in (run_context or {}).items() if k in allowed_context}
 
     async def run_from_manifest(
         self,
@@ -354,6 +296,22 @@ class ExperimentRunner:
             base_dir=base_dir,
             gateway_url_override=gateway_url_override,
         )
+        if isinstance(config, ExperimentConfigV2):
+            entries = load_workload(
+                workload_path,
+                schema_version=2,
+                expected_count=config.workload.request_count,
+                measurement_window_ms=config.load.measurement_window_ms,
+            )
+            schedule = select_scheduled_entries(entries, config.workload.request_count)
+            return await self.run_open_loop(
+                config,
+                schedule,
+                run_id=run_id,
+                workload_sha256=hashlib.sha256(
+                    workload_path.read_bytes().replace(b"\r\n", b"\n")
+                ).hexdigest(),
+            )
         entries = load_workload(workload_path, min_entries=config.workload.request_count)
         return await self.run(config, entries, run_id=run_id)
 
@@ -530,8 +488,7 @@ class ExperimentRunner:
             if warmup_trace.get("status") != "completed":
                 raise RunnerFatalError(
                     "warmup_failed",
-                    f"Warm-up request {warmup_id} ended with "
-                    f"status={warmup_trace.get('status')!r}",
+                    f"Warm-up request {warmup_id} ended with status={warmup_trace.get('status')!r}",
                 )
 
     async def _wait_for_workers_idle(
@@ -585,7 +542,7 @@ class ExperimentRunner:
         active_writer: OpenLoopArtifactWriterProtocol = (
             writer
             if writer is not None
-            else _DefaultOpenLoopArtifactWriter.create(
+            else ArtifactWriter.create(
                 runs_root=self._runs_root,
                 config=config,
                 run_id=run_id,
@@ -608,6 +565,11 @@ class ExperimentRunner:
         drain_end_offset_ms: float | None = None
         pool_limits: dict[str, Any] = {}
         sched_result: SchedulerResult | None = None
+        measurement_started = False
+        failure_type: str | None = None
+        run_status = "completed"
+        if summary_builder is None and isinstance(config, ExperimentConfigV2):
+            summary_builder = compute_summary_v2
 
         def _build_v2_env(ended_at: str | None) -> dict[str, Any]:
             env_meta = build_environment_metadata(
@@ -628,14 +590,15 @@ class ExperimentRunner:
                     "drain_end_offset_ms": drain_end_offset_ms,
                     "final_workers": _sanitize_workers(final_workers),
                     "http_pool_limits": pool_limits,
+                    "run_status": run_status if ended_at is not None else "running",
+                    "failure": {"type": failure_type} if failure_type else None,
                 }
             )
+            env_meta.update(self._run_context)
             return env_meta
 
         active_writer.write_environment(_build_v2_env(None))
 
-        failure_type: str | None = None
-        run_status = "completed"
         inf_pool_cap = max(int(config.runner.max_in_flight) + 16, 64)
         ctrl_pool_cap = max(32, min(int(config.runner.max_in_flight), 64))
 
@@ -700,6 +663,7 @@ class ExperimentRunner:
                     generator_limited_drain_timeout_s=self._generator_limited_drain_timeout_s,
                     cancel_cleanup_timeout_s=self._cancel_cleanup_timeout_s,
                 )
+                measurement_started = True
                 sched_result = await scheduler.execute(
                     run_id=active_writer.run_id,
                     scheduled_entries=scheduled_entries,
@@ -741,6 +705,16 @@ class ExperimentRunner:
                 run_status = "failed"
                 failure_type = "runner_internal_error"
             finally:
+                if not measurement_started:
+                    # No measured inference was sent: record only genuine aborted slots.
+                    from llm_serving_platform.benchmark.scheduler import make_not_dispatched_record
+
+                    for item in scheduled_entries:
+                        active_writer.append_request(
+                            make_not_dispatched_record(
+                                item.sequence, f"{active_writer.run_id}-req-{item.sequence:05d}"
+                            )
+                        )
                 # 7. Check final worker active_requests == 0 (best-effort on unreachable gateway)
                 try:
                     final_workers = await self._wait_for_workers_idle(gw, timeout_s=2.0)
@@ -774,6 +748,9 @@ class ExperimentRunner:
                         failure=failure_obj,
                     )
                     active_writer.write_summary(summary)
+                    run_status = summary["run_status"]
+                    failure_type = (summary.get("failure") or {}).get("type")
+                    active_writer.write_environment(_build_v2_env(ended_at))
                 else:
                     summary = {
                         "schema_version": 2,
@@ -837,8 +814,7 @@ class ExperimentRunner:
                     writer.append_trace(trace)
 
         tasks = [
-            asyncio.create_task(_run_one(idx, entry))
-            for idx, entry in enumerate(measured_entries)
+            asyncio.create_task(_run_one(idx, entry)) for idx, entry in enumerate(measured_entries)
         ]
         await asyncio.gather(*tasks)
         if first_fatal is not None:

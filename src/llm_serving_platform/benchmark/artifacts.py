@@ -9,12 +9,13 @@ import platform
 import re
 import subprocess
 import uuid
+from collections.abc import Sequence
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit
 
-from llm_serving_platform.benchmark.config import ExperimentConfig
+from llm_serving_platform.benchmark.config import ExperimentConfig, ExperimentConfigV2
 from llm_serving_platform.common.config import REPO_ROOT
 
 DEFAULT_RUNS_ROOT = REPO_ROOT / "experiments" / "runs"
@@ -222,6 +223,9 @@ class ArtifactWriter:
         self.run_id = run_id
         self.manifest_path = run_dir / "manifest.json"
         self.environment_path = run_dir / "environment.json"
+        self.schedule_path = run_dir / "schedule.jsonl"
+        self.requests_path = run_dir / "requests.jsonl"
+        self.before_metrics_path = run_dir / "metrics.before.prom"
         self.traces_path = run_dir / "traces.jsonl"
         self.metrics_path = run_dir / "metrics.prom"
         self.summary_path = run_dir / "summary.json"
@@ -231,7 +235,7 @@ class ArtifactWriter:
         cls,
         *,
         runs_root: Path | None = None,
-        config: ExperimentConfig,
+        config: ExperimentConfig | ExperimentConfigV2,
         run_id: str | None = None,
         repo_root: Path = REPO_ROOT,
     ) -> ArtifactWriter:
@@ -241,14 +245,23 @@ class ArtifactWriter:
         if resolved_run_id is None:
             git_rev = capture_git_info(cwd=repo_root).get("git_revision")
             resolved_run_id = generate_run_id(config.name, git_rev)
+        if (
+            not isinstance(resolved_run_id, str)
+            or not resolved_run_id
+            or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,255}", resolved_run_id)
+            or ".." in resolved_run_id
+        ):
+            raise ValueError("Invalid run_id: use a plain directory name, not a path")
         run_dir = root / resolved_run_id
         run_dir.mkdir(parents=True, exist_ok=False)
         writer = cls(run_dir=run_dir, run_id=resolved_run_id)
         # Initialize empty traces.jsonl so readers always see a valid JSONL file even on early fail.
         writer.traces_path.write_text("", encoding="utf-8", newline="\n")
+        if config.schema_version == 2:
+            writer.requests_path.write_text("", encoding="utf-8", newline="\n")
         return writer
 
-    def write_manifest(self, config: ExperimentConfig) -> None:
+    def write_manifest(self, config: ExperimentConfig | ExperimentConfigV2) -> None:
         write_json_atomic(self.manifest_path, config.to_normalized_dict())
 
     def write_environment(self, metadata: dict[str, Any]) -> None:
@@ -262,6 +275,22 @@ class ArtifactWriter:
 
     def write_metrics(self, metrics_text: str) -> None:
         write_text_atomic(self.metrics_path, metrics_text)
+
+    def write_before_metrics(self, metrics_text: str) -> None:
+        write_text_atomic(self.before_metrics_path, metrics_text)
+
+    def write_schedule(self, records: Sequence[dict[str, Any]]) -> None:
+        write_text_atomic(
+            self.schedule_path,
+            "".join(
+                json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n" for row in records
+            ),
+        )
+
+    def append_request(self, record: dict[str, Any]) -> None:
+        with self.requests_path.open("a", encoding="utf-8", newline="\n") as handle:
+            handle.write(json.dumps(record, ensure_ascii=False, separators=(",", ":")) + "\n")
+            handle.flush()
 
     def write_summary(self, summary: dict[str, Any]) -> None:
         write_json_atomic(self.summary_path, summary)

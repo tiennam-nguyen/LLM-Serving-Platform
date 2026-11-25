@@ -6,7 +6,7 @@ import json
 import math
 import re
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 from urllib.parse import urlsplit
 
 from pydantic import BaseModel, ConfigDict, ValidationError, field_validator
@@ -263,6 +263,130 @@ class ExperimentConfig(BaseModel):
         }
 
 
+class ScheduledWorkloadSpec(WorkloadSpec):
+    profile: Literal["steady", "burst", "heterogeneous"]
+
+
+class OpenLoopRunnerSpec(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    gateway_url: str
+    request_timeout_s: float
+    max_in_flight: int
+    max_dispatch_lag_ms: float
+
+    @field_validator("gateway_url", mode="before")
+    @classmethod
+    def _url(cls, value: Any) -> str:
+        return RunnerSpec._validate_gateway_url(value)
+
+    @field_validator("request_timeout_s", "max_dispatch_lag_ms", mode="before")
+    @classmethod
+    def _positive_number(cls, value: Any) -> float:
+        return _require_finite_number(value, "runner timing", strictly_positive=True)
+
+    @field_validator("max_in_flight", mode="before")
+    @classmethod
+    def _capacity(cls, value: Any) -> int:
+        return _require_non_bool_int(value, "runner.max_in_flight", minimum=1)
+
+
+class OpenLoopLoadSpec(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    mode: Literal["open_loop"]
+    measurement_window_ms: float
+
+    @field_validator("measurement_window_ms", mode="before")
+    @classmethod
+    def _window(cls, value: Any) -> float:
+        return _require_finite_number(value, "load.measurement_window_ms", strictly_positive=True)
+
+
+class ComparisonSpec(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    id: str
+    load_level: Literal["pilot", "low", "medium", "near_saturation"]
+    repetition: int
+
+    @field_validator("id", mode="before")
+    @classmethod
+    def _id(cls, value: Any) -> str:
+        return ExperimentConfig._validate_name(value)
+
+    @field_validator("repetition", mode="before")
+    @classmethod
+    def _repetition(cls, value: Any) -> int:
+        return _require_non_bool_int(value, "comparison.repetition", minimum=1)
+
+
+class OpenLoopPolicySpec(PolicySpec):
+    @field_validator("name", mode="before")
+    @classmethod
+    def _rr_or_ll(cls, value: Any) -> str:
+        policy = PolicySpec._validate_policy_name(value)
+        if policy not in {"round_robin", "least_loaded"}:
+            raise ValueError("Schema v2 supports round_robin and least_loaded only")
+        return policy
+
+
+class ExperimentConfigV2(BaseModel):
+    """Production W8 contract. V1 remains an independent, backward-compatible schema."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    schema_version: Literal[2]
+    name: str
+    model: ModelSpec
+    topology: TopologySpec
+    policy: OpenLoopPolicySpec
+    workload: ScheduledWorkloadSpec
+    seed: int
+    warmup: WarmupSpec
+    generation: GenerationSpec
+    runner: OpenLoopRunnerSpec
+    load: OpenLoopLoadSpec
+    comparison: ComparisonSpec
+
+    @field_validator("schema_version", mode="before")
+    @classmethod
+    def _version(cls, value: Any) -> int:
+        version = _require_non_bool_int(value, "schema_version")
+        if version != 2:
+            raise ValueError("ExperimentConfigV2 requires schema_version=2")
+        return version
+
+    @field_validator("name", mode="before")
+    @classmethod
+    def _name(cls, value: Any) -> str:
+        return ExperimentConfig._validate_name(value)
+
+    @field_validator("seed", mode="before")
+    @classmethod
+    def _seed(cls, value: Any) -> int:
+        return _require_non_bool_int(value, "seed")
+
+    def to_normalized_dict(self) -> dict[str, Any]:
+        return self.model_dump(mode="json", exclude_none=True)
+
+
+def validate_manifest_data(raw: Any) -> ExperimentConfig | ExperimentConfigV2:
+    """Choose a schema explicitly; never coerce a v1 manifest to open-loop execution."""
+    if not isinstance(raw, dict):
+        raise ExperimentConfigError("Manifest must be a JSON object")
+    version = raw.get("schema_version")
+    if isinstance(version, bool) or not isinstance(version, int) or version not in {1, 2}:
+        raise ExperimentConfigError("schema_version must be integer 1 or 2")
+    try:
+        schema = ExperimentConfig if version == 1 else ExperimentConfigV2
+        return schema.model_validate(raw)
+    except ValidationError as exc:
+        # ValidationError can include user inputs: persist/report only field locations.
+        locations = [".".join(map(str, error["loc"])) for error in exc.errors()]
+        raise ExperimentConfigError(f"Invalid manifest fields: {', '.join(locations)}") from exc
+
+
 def resolve_workload_path(
     workload_path: str,
     *,
@@ -307,7 +431,7 @@ def load_manifest(
     *,
     base_dir: Path | None = None,
     gateway_url_override: str | None = None,
-) -> tuple[ExperimentConfig, Path]:
+) -> tuple[ExperimentConfig | ExperimentConfigV2, Path]:
     """Load, validate, and resolve a JSON experiment manifest file."""
     path = Path(manifest_path)
     if not path.is_file():
@@ -336,10 +460,7 @@ def load_manifest(
                 "runner": {**runner_section, "gateway_url": gateway_url_override},
             }
 
-    try:
-        config = ExperimentConfig.model_validate(raw_data)
-    except ValidationError as exc:
-        raise ExperimentConfigError(f"Invalid manifest {path}: {exc}") from exc
+    config = validate_manifest_data(raw_data)
 
     resolved_workload = resolve_workload_path(
         config.workload.path,

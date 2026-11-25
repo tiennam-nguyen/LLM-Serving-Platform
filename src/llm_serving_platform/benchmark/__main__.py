@@ -1,4 +1,4 @@
-"""CLI entrypoint for reproducible Week 7 experiment execution."""
+"""CLI for versioned experiment execution, controlled campaigns and raw analysis."""
 
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ from llm_serving_platform.benchmark.workload import WorkloadError
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="python -m llm_serving_platform.benchmark",
-        description="Run reproducible Week 7 LLM serving experiments over the Gateway HTTP API.",
+        description="Run and analyze versioned LLM serving experiments over the Gateway HTTP API.",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -28,7 +28,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--manifest",
         required=True,
         type=Path,
-        help="Path to the JSON experiment manifest (schema_version=1).",
+        help="Path to a JSON experiment manifest (schema_version=1 or 2).",
     )
     run_parser.add_argument(
         "--output-dir",
@@ -46,12 +46,88 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="Optional explicit run identifier (must not already exist).",
     )
+    prepare = subparsers.add_parser(
+        "prepare", help="Materialize the controlled W8 campaign without running it."
+    )
+    prepare.add_argument("--manifests-dir", type=Path, required=True)
+    prepare.add_argument("--workloads-dir", type=Path, required=True)
+    prepare.add_argument("--window-seconds", type=float, default=20)
+    prepare.add_argument("--repetitions", type=int, default=3)
+    prepare.add_argument("--seed", type=int, default=42)
+    prepare.add_argument("--model", default="Qwen/Qwen2.5-3B-Instruct")
+    prepare.add_argument(
+        "--tolerances", type=Path, help="Predeclared repeated-pilot tolerance JSON."
+    )
+    analysis = subparsers.add_parser(
+        "analyze", help="Read raw W8 runs into a new derived directory."
+    )
+    inputs = analysis.add_mutually_exclusive_group(required=True)
+    inputs.add_argument("--run-dir", type=Path, action="append")
+    inputs.add_argument("--runs-root", type=Path)
+    analysis.add_argument("--output-dir", type=Path, required=True)
+    analysis.add_argument("--protocol", type=Path)
+    analysis.add_argument(
+        "--figures", action="store_true", help="Export CPU plots; requires .[analysis]."
+    )
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+
+    if args.command in {"prepare", "analyze"}:
+        try:
+            if args.command == "prepare":
+                from llm_serving_platform.benchmark.campaign import prepare_campaign
+
+                path = prepare_campaign(
+                    manifests_dir=args.manifests_dir,
+                    workloads_dir=args.workloads_dir,
+                    measurement_window_ms=args.window_seconds * 1000,
+                    repetitions=args.repetitions,
+                    seed=args.seed,
+                    model=args.model,
+                    tolerances=json.loads(args.tolerances.read_text(encoding="utf-8"))
+                    if args.tolerances
+                    else None,
+                )
+                print(json.dumps({"campaign": str(path)}))
+            else:
+                from llm_serving_platform.benchmark.analysis import analyze_runs
+
+                sources = args.run_dir or sorted(
+                    p.parent for p in args.runs_root.rglob("manifest.json")
+                )
+                report = analyze_runs(
+                    sources, output_dir=args.output_dir, protocol_path=args.protocol
+                )
+                figures = []
+                if args.figures:
+                    from llm_serving_platform.benchmark.plots import plot_analysis
+
+                    figures = plot_analysis(
+                        args.output_dir / "analysis.json", output_dir=args.output_dir / "figures"
+                    )
+                print(
+                    json.dumps(
+                        {
+                            "runs": len(report["runs"]),
+                            "analysis": str(args.output_dir),
+                            "figures": [str(p) for p in figures],
+                            "eligible_for_policy_comparison": report[
+                                "eligible_for_policy_comparison"
+                            ],
+                        }
+                    )
+                )
+            return 0
+        except ModuleNotFoundError:
+            print("[error] Plotting requires: pip install -e '.[analysis]'", file=sys.stderr)
+            return 2
+        except (ValueError, OSError, KeyError) as exc:
+            print(f"[error] {type(exc).__name__}: {exc}", file=sys.stderr)
+            return 2
 
     if args.command == "run":
         runner = ExperimentRunner(runs_root=args.output_dir)
@@ -63,7 +139,7 @@ def main(argv: list[str] | None = None) -> int:
                     run_id=args.run_id,
                 )
             )
-        except (ExperimentConfigError, WorkloadError) as exc:
+        except (ExperimentConfigError, WorkloadError, ValueError) as exc:
             print(f"[error] Manifest/workload validation failed: {exc}", file=sys.stderr)
             return 2
         except FileExistsError as exc:

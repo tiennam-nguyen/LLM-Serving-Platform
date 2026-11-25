@@ -5,6 +5,7 @@ from llm_serving_platform.benchmark.client import GatewayHTTPClient, RunnerFatal
 from llm_serving_platform.benchmark.config import (
     ExperimentConfig,
     ExperimentConfigError,
+    ExperimentConfigV2,
     load_manifest,
 )
 from llm_serving_platform.benchmark.runner import (
@@ -22,13 +23,21 @@ from llm_serving_platform.benchmark.summary import (
     PERCENTILE_METHOD,
     compute_percentile,
     compute_summary_from_traces_file,
+    compute_summary_v2,
 )
-from llm_serving_platform.benchmark.workload import WorkloadEntry, WorkloadError, load_workload
+from llm_serving_platform.benchmark.workload import (
+    ScheduledWorkloadEntry,
+    WorkloadEntry,
+    WorkloadError,
+    load_workload,
+    select_scheduled_entries,
+)
 
 __all__ = [
     "ArtifactWriter",
     "ExperimentConfig",
     "ExperimentConfigError",
+    "ExperimentConfigV2",
     "ExperimentRunner",
     "GatewayHTTPClient",
     "OpenLoopArtifactWriterProtocol",
@@ -38,12 +47,15 @@ __all__ = [
     "RunResult",
     "RunnerFatalError",
     "ScheduledEntryProtocol",
+    "ScheduledWorkloadEntry",
     "SchedulerResult",
     "WorkloadEntry",
     "WorkloadError",
     "compute_percentile",
     "compute_summary_from_traces_file",
+    "compute_summary_v2",
     "generate_run_id",
     "load_manifest",
     "load_workload",
+    "select_scheduled_entries",
 ]
