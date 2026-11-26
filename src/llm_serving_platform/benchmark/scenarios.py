@@ -31,6 +31,7 @@ def load_chat_token_counter(snapshot: str) -> TokenCounter:
                 messages,
                 tokenize=True,
                 add_generation_prompt=True,
+                return_dict=False,
             )
         )
 

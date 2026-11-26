@@ -95,8 +95,13 @@ def test_cached_tokenizer_never_uses_account_or_downloads(monkeypatch):
 
     class Tokenizer:
         def apply_chat_template(self, messages, **options):
-            assert options == {"tokenize": True, "add_generation_prompt": True}
-            return [1, 2, 3]
+            # Transformers 5 returns a mapping by default; len(mapping) is not a token count.
+            assert options["tokenize"] is True
+            assert options["add_generation_prompt"] is True
+            tokens = [1, 2, 3]
+            if options.get("return_dict", True):
+                return {"input_ids": tokens, "attention_mask": [1] * len(tokens)}
+            return tokens
 
     def cached(path, **options):
         calls.append((path, options))

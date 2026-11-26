@@ -1,0 +1,46 @@
+{
+  "checked_at": "2026-11-26T12:09:02.120123+00:00",
+  "model_id": "Qwen/Qwen2.5-3B-Instruct",
+  "snapshot_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "transformers_version": "5.20.2",
+  "execution": "CPU tokenizer only; no torch/vllm/model weights",
+  "default_return_type": "BatchEncoding",
+  "default_mapping_keys": [
+    "input_ids",
+    "attention_mask"
+  ],
+  "fixture_true_token_count": 34,
+  "fixture_mapping_length": 2,
+  "input_bands": {
+    "short": {
+      "tokens": 116,
+      "accepted_band": [
+        96,
+        192
+      ]
+    },
+    "medium": {
+      "tokens": 389,
+      "accepted_band": [
+        384,
+        640
+      ]
+    },
+    "long": {
+      "tokens": 1040,
+      "accepted_band": [
+        1024,
+        1664
+      ]
+    }
+  },
+  "source_sha256": "b409491c6adbc633f343b49ce8d02f4d075a752306c6dfc59885bcbf3f1aaf01",
+  "elapsed_seconds": 0.8600000000005821,
+  "tokenizer_files": {
+    "config.json": "eed00b17e22553979d090fa492e587e92885e328914c8e0b0b78f0a0d3576b3b",
+    "merges.txt": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3",
+    "tokenizer.json": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+    "tokenizer_config.json": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+  }
+}

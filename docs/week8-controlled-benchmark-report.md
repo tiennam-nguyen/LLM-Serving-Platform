@@ -189,6 +189,25 @@ tokenizer to fit input bands96–192/384–640/1024–1664 tokens including temp
 Generation remains temperature0/max_tokens64/top_p1; actual output may stop earlier.
 Local CPU fixtures explicitly do not claim real-model token measurements.
 
+### Tokenizer compatibility check before the replacement GPU run
+
+The first new submission (v3, source `cb863de`) exposed a preparation bug:
+Transformers 5.20.2 returns `BatchEncoding` by default from `apply_chat_template`.
+Taking its length counts mapping keys, not input tokens. The helper now explicitly
+requests `return_dict=False`; the regression mock reproduces the new mapping default.
+A separate CPU environment loaded the actual pinned Qwen tokenizer without torch,
+vLLM or model weights. Its fixture had 34 tokens versus two mapping keys; fitted
+short/medium/long samples had 116/389/1040 tokens, within their respective bands.
+The v3 study ended at 12:09:56 UTC on 26 November with `blocked` and
+`ValueError: Tokenizer did not reach the requested input length`, before conditioning
+or any measured request. Kaggle's outer status is `COMPLETE` because the script saved
+its structured blocked report successfully. This is distinct from passing the study.
+The [v3 report](../experiments/raw/week8/controlled/20261126-cb863de-v3/study_report.json),
+[import verification](../experiments/processed/week8/controlled/20261126-cb863de-v3/import_verification.json)
+and [real tokenizer CPU proof](../experiments/processed/week8/controlled/20261126-tokenizer-compatibility/real-tokenizer-verification.json)
+retain that outcome. This CPU check does not establish GPU benchmark results.
+See the [Transformers 5.20.2 tokenizer API](https://huggingface.co/docs/transformers/v5.20.2/en/main_classes/tokenizer).
+
 These changes have 313 CPU/mock tests passing, plus Ruff and offline lock validation.
 The CPU W8 gate passed 16 real HTTP runs, 168 measured requests and 48 figures; W7 also passed.
 [CPU verification and code hashes](../experiments/processed/week8/controlled/20261126-observation-cpu/verification.json)

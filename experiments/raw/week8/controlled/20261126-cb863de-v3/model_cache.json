@@ -1,0 +1,6 @@
+{
+  "model_id": "Qwen/Qwen2.5-3B-Instruct",
+  "snapshot_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "snapshot_path": "/root/.cache/huggingface/hub/models--Qwen--Qwen2.5-3B-Instruct/snapshots/aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "prefetched_at_utc": "2026-11-26T12:09:48.710417+00:00"
+}

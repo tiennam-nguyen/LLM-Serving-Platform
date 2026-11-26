@@ -1,0 +1,55 @@
+{
+  "artifact_role": "immutable_study_import_verification",
+  "imported_at_utc": "2026-11-26T12:10:43.534341+00:00",
+  "archive_sha256": "f9857203153638a18a854007e8a4a4f223f81657bc617d372eee73a9080dfc9b",
+  "measurement_source": {
+    "git_revision": "cb863ded6473306ea032d4990f78db945b1d4c54",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": false
+  },
+  "analysis_source": {
+    "git_revision": "cb863ded6473306ea032d4990f78db945b1d4c54",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": true
+  },
+  "study_status": "blocked",
+  "methodology_gate_passed": false,
+  "phases": {
+    "conditioning": {
+      "status": "not_run"
+    },
+    "calibration": {
+      "status": "not_run"
+    },
+    "main": {
+      "status": "not_run"
+    }
+  },
+  "extracted_sources_unchanged": true,
+  "extracted_file_sha256": {
+    "model_cache.json": "ea092678ad013e712e220c47fbcb2e43badc7d09c7465afeac2a9079b93d5b43",
+    "preregistration.json": "87688597087c5751b456d84e6d3f77e5c82f4841db5ae4dd27ef528b85e0dbcf",
+    "study_report.json": "aaabbdeddff7324d8cf765e1992ddc402ffd7eb91cb43f4a1de0334a03e637d4"
+  },
+  "imported_copies_byte_identical": true,
+  "imported_file_sha256": {
+    "experiments/raw/week8/controlled/20261126-cb863de-v3/model_cache.json": "ea092678ad013e712e220c47fbcb2e43badc7d09c7465afeac2a9079b93d5b43",
+    "experiments/raw/week8/controlled/20261126-cb863de-v3/preregistration.json": "87688597087c5751b456d84e6d3f77e5c82f4841db5ae4dd27ef528b85e0dbcf",
+    "experiments/raw/week8/controlled/20261126-cb863de-v3/study_report.json": "aaabbdeddff7324d8cf765e1992ddc402ffd7eb91cb43f4a1de0334a03e637d4"
+  },
+  "analysis_code_file_sha256": {
+    "src/llm_serving_platform/benchmark/__init__.py": "5fd67a723ba84953b7c367be868150714a9ab71eb1d09aab643bb0b0caef2d73",
+    "src/llm_serving_platform/benchmark/__main__.py": "027db39a3f73e7f6513d8342a0f057287d7dbdae94a6596729b30d98b0ae7ff8",
+    "src/llm_serving_platform/benchmark/analysis.py": "cb556baed339e293fc89b81ab9d02f8d90261a91e99a90d29b5810dea71905b4",
+    "src/llm_serving_platform/benchmark/artifacts.py": "26659358bf7f974518f4490921959462e65a609786a469cb80be87a451e50144",
+    "src/llm_serving_platform/benchmark/campaign.py": "409d90df08a92be904fa07df8f834c13fc23162d7fdd83c25318471efd1aabe5",
+    "src/llm_serving_platform/benchmark/client.py": "27cf979fa9050f0aba46ff5c1c86403e28d106532c285f0b226b0cb87e070894",
+    "src/llm_serving_platform/benchmark/config.py": "552a103bd69dfe16370f6b8a9bd7aa0a8d43e967bcdd178819aefb96a826b271",
+    "src/llm_serving_platform/benchmark/plots.py": "08fd56bb6093484eddb007996a6e608ba373704172f0a5e80845ed7d32536654",
+    "src/llm_serving_platform/benchmark/runner.py": "e3eaedf65f48573625cde48c07947d31cf42989b089d97622fb8f437faad2122",
+    "src/llm_serving_platform/benchmark/scenarios.py": "b409491c6adbc633f343b49ce8d02f4d075a752306c6dfc59885bcbf3f1aaf01",
+    "src/llm_serving_platform/benchmark/scheduler.py": "fe891f8066513b5f4dfbee7ea32926ee88eadd0514128cb5a01fadba41e7acc7",
+    "src/llm_serving_platform/benchmark/summary.py": "8e706ed8ee6e0fe0ef3ae65643992573d0c438f1d2cc79ab16891abb2ef130b6",
+    "src/llm_serving_platform/benchmark/workload.py": "684de45e135182e30af286ec1694d873d50b1eafb43456de6d9ef67865bfbd21"
+  }
+}

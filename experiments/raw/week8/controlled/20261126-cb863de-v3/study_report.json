@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "source": {
+    "git_revision": "cb863ded6473306ea032d4990f78db945b1d4c54",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": false
+  },
+  "test_mode": "live_dual_t4",
+  "started_at_utc": "2026-11-26T12:09:13.484113+00:00",
+  "status": "blocked",
+  "methodology_gate_passed": false,
+  "warnings": [],
+  "model_cache": {
+    "model_id": "Qwen/Qwen2.5-3B-Instruct",
+    "snapshot_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "snapshot_path": "/root/.cache/huggingface/hub/models--Qwen--Qwen2.5-3B-Instruct/snapshots/aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "prefetched_at_utc": "2026-11-26T12:09:48.710417+00:00"
+  },
+  "failure_type": "ValueError",
+  "failure": "Tokenizer did not reach the requested input length",
+  "ended_at_utc": "2026-11-26T12:09:56.584028+00:00"
+}
