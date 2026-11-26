@@ -35,7 +35,7 @@ async def test_production_v2_pipeline_all_profiles_and_policies(tmp_path, policy
 
 
 @pytest.mark.asyncio
-async def test_capacity_failure_preserves_all_planned_ledger_slots(tmp_path):
+async def test_capacity_limit_warns_and_preserves_all_planned_ledger_slots(tmp_path):
     manifest, raw, _ = write_manifest(tmp_path, profile="burst")
     raw["runner"]["max_in_flight"] = 1
     manifest.write_text(json.dumps(raw), encoding="utf-8")
@@ -43,8 +43,11 @@ async def test_capacity_failure_preserves_all_planned_ledger_slots(tmp_path):
         result = await ExperimentRunner(
             runs_root=tmp_path / "runs", client=client
         ).run_from_manifest(manifest)
-    assert result.run_status == "failed"
-    assert result.failure_type == "generator_limited"
+    assert result.run_status == "completed"
+    assert result.failure_type is None
+    assert result.summary["warning_counts"]["in_flight_limit"] == 3
+    assert result.summary["validation"]["valid"]
+    assert not result.summary["validation"]["comparison_eligible"]
     assert result.summary["requests"]["planned"] == 4
     assert result.summary["requests"]["sent"] == 1
     assert result.summary["requests"]["not_dispatched"] == 3
@@ -63,6 +66,7 @@ async def test_preflight_failure_has_no_fabricated_traces(tmp_path):
         ).run_from_manifest(manifest)
         assert not controls.calls
     assert result.failure_type == "model_mismatch"
+    assert result.run_status == "blocked"
     assert result.summary["requests"]["sent"] == 0
     assert result.summary["requests"]["not_dispatched"] == 4
     assert (result.run_dir / "traces.jsonl").read_bytes() == b""

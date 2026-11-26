@@ -11,6 +11,12 @@ from typing import Any
 
 from llm_serving_platform.benchmark.artifacts import write_json_atomic, write_text_atomic
 from llm_serving_platform.benchmark.config import ExperimentConfigV2
+from llm_serving_platform.benchmark.scenarios import (
+    ARRIVAL_PATTERNS,
+    INPUT_TOKEN_BANDS,
+    TokenCounter,
+    apply_scenario,
+)
 from llm_serving_platform.common.config import REPO_ROOT
 
 PROFILES = ("steady", "burst", "heterogeneous")
@@ -25,8 +31,17 @@ def generate_workload(
     request_count: int,
     measurement_window_ms: float,
     seed: int,
+    token_counter: TokenCounter | None = None,
 ) -> list[dict[str, Any]]:
     """Generate public synthetic input; token length is not inferred from character count."""
+    if profile in ARRIVAL_PATTERNS:
+        rows = generate_workload(
+            "heterogeneous",
+            request_count=request_count,
+            measurement_window_ms=measurement_window_ms,
+            seed=seed,
+        )
+        return apply_scenario(rows, profile, measurement_window_ms, seed, token_counter)
     if profile not in PROFILES:
         raise ValueError("Unknown workload profile")
     if type(request_count) is not int or request_count < 1:
@@ -101,6 +116,9 @@ def prepare_campaign(
     max_in_flight: int = 350,
     max_dispatch_lag_ms: float = 250,
     tolerances: dict[str, float] | None = None,
+    profiles: tuple[str, ...] = PROFILES,
+    token_counter: TokenCounter | None = None,
+    tokenizer_metadata: dict[str, Any] | None = None,
 ) -> Path:
     """Create a 54-cell default campaign without executing or overwriting any experiment.
 
@@ -109,6 +127,12 @@ def prepare_campaign(
     """
     if type(repetitions) is not int or repetitions < 3:
         raise ValueError("A controlled campaign requires at least three repetitions")
+    if (
+        not profiles
+        or len(set(profiles)) != len(profiles)
+        or any(profile not in {*PROFILES, *ARRIVAL_PATTERNS} for profile in profiles)
+    ):
+        raise ValueError("Provide unique, supported workload profiles")
     if (
         isinstance(measurement_window_ms, bool)
         or not math.isfinite(measurement_window_ms)
@@ -138,7 +162,7 @@ def prepare_campaign(
             )
     # Precompute/validate everything before creating output directories.
     workloads, manifests, order = {}, {}, []
-    for profile in PROFILES:
+    for profile in profiles:
         for level in LEVELS:
             exact_count = rates[level] * measurement_window_ms / 1000
             count = round(exact_count)
@@ -148,7 +172,11 @@ def prepare_campaign(
                 )
             workload_name = f"{profile}_{level}.jsonl"
             rows = generate_workload(
-                profile, request_count=count, measurement_window_ms=measurement_window_ms, seed=seed
+                profile,
+                request_count=count,
+                measurement_window_ms=measurement_window_ms,
+                seed=seed,
+                token_counter=token_counter,
             )
             text = "".join(
                 json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n" for row in rows
@@ -239,6 +267,28 @@ def prepare_campaign(
         },
         "runs": order,
     }
+    if any(profile in ARRIVAL_PATTERNS for profile in profiles):
+        protocol["workload_design"] = {
+            "profiles": list(profiles),
+            "arrival_patterns": {
+                profile: ARRIVAL_PATTERNS.get(profile, "legacy") for profile in profiles
+            },
+            "length_mix": "short_medium_long",
+            "input_token_bands": INPUT_TOKEN_BANDS if token_counter else None,
+            "tokenizer": tokenizer_metadata if token_counter else None,
+            "token_counts_verified": token_counter is not None,
+            "workloads": {
+                name: {
+                    "input_tokens": [
+                        token_counter(row["messages"])
+                        for row in (json.loads(line) for line in text.splitlines())
+                    ]
+                }
+                for name, text in workloads.items()
+            }
+            if token_counter
+            else {},
+        }
     path = manifests_dir / "campaign.json"
     write_json_atomic(path, protocol)
     return path

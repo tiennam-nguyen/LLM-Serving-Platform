@@ -55,6 +55,12 @@ def build_parser() -> argparse.ArgumentParser:
     prepare.add_argument("--repetitions", type=int, default=3)
     prepare.add_argument("--seed", type=int, default=42)
     prepare.add_argument("--model", default="Qwen/Qwen2.5-3B-Instruct")
+    prepare.add_argument("--suite", choices=("legacy", "realistic", "stress"), default="legacy")
+    prepare.add_argument(
+        "--tokenizer-path",
+        type=Path,
+        help="Optional cached model snapshot; requires Transformers, not CUDA.",
+    )
     prepare.add_argument(
         "--tolerances", type=Path, help="Predeclared repeated-pilot tolerance JSON."
     )
@@ -80,6 +86,22 @@ def main(argv: list[str] | None = None) -> int:
         try:
             if args.command == "prepare":
                 from llm_serving_platform.benchmark.campaign import prepare_campaign
+                from llm_serving_platform.benchmark.scenarios import (
+                    REALISTIC_PROFILES,
+                    load_chat_token_counter,
+                )
+
+                options = {}
+                if args.suite != "legacy":
+                    options["profiles"] = REALISTIC_PROFILES + (
+                        ("microburst_mixed",) if args.suite == "stress" else ()
+                    )
+                if args.tokenizer_path:
+                    options["token_counter"] = load_chat_token_counter(str(args.tokenizer_path))
+                    options["tokenizer_metadata"] = {
+                        "model_id": args.model,
+                        "snapshot_revision": args.tokenizer_path.name,
+                    }
 
                 path = prepare_campaign(
                     manifests_dir=args.manifests_dir,
@@ -91,6 +113,7 @@ def main(argv: list[str] | None = None) -> int:
                     tolerances=json.loads(args.tolerances.read_text(encoding="utf-8"))
                     if args.tolerances
                     else None,
+                    **options,
                 )
                 print(json.dumps({"campaign": str(path)}))
             else:
@@ -123,7 +146,12 @@ def main(argv: list[str] | None = None) -> int:
                 )
             return 0
         except ModuleNotFoundError:
-            print("[error] Plotting requires: pip install -e '.[analysis]'", file=sys.stderr)
+            message = (
+                "Tokenizer preparation requires Transformers and a cached model snapshot."
+                if args.command == "prepare" and args.tokenizer_path
+                else "Plotting requires: pip install -e '.[analysis]'"
+            )
+            print(f"[error] {message}", file=sys.stderr)
             return 2
         except (ValueError, OSError, KeyError) as exc:
             print(f"[error] {type(exc).__name__}: {exc}", file=sys.stderr)
@@ -152,8 +180,11 @@ def main(argv: list[str] | None = None) -> int:
             "run_status": result.run_status,
             "failure_type": result.failure_type,
             "requests": result.summary.get("requests"),
+            "warning_counts": result.summary.get("warning_counts", {}),
         }
         print(json.dumps(output, indent=2))
+        if result.summary.get("execution_semantics") == "observe_v1":
+            return 1 if result.run_status == "failed" else 0
         return 0 if result.succeeded else 1
 
     return 2

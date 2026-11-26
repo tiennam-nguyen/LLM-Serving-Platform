@@ -207,6 +207,8 @@ def compute_summary_v2(
     directory = Path(run_dir)
     manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
     env = json.loads((directory / "environment.json").read_text(encoding="utf-8"))
+    observation_mode = env.get("execution_semantics") == "observe_v1"
+    measurement_issues: set[str] = set()
     # The historical pilot added this marker to its normalized manifest. Do not rewrite it.
     from llm_serving_platform.benchmark.config import validate_manifest_data
 
@@ -347,7 +349,12 @@ def compute_summary_v2(
         ledger_by_id[rid] = row
         if row["dispatch_status"] == "not_dispatched":
             if (
-                row["not_dispatched_reason"] != "aborted"
+                row["not_dispatched_reason"]
+                not in (
+                    {"aborted", "in_flight_limit", "cancelled_before_dispatch"}
+                    if observation_mode
+                    else {"aborted"}
+                )
                 or row["trace_observed"]
                 or any(
                     row[key] is not None
@@ -388,8 +395,18 @@ def compute_summary_v2(
             code != 200 or row["client_error_type"] is not None
         ):
             raise ValueError("Inconsistent client completion")
-        if dispatch >= window_ms or lag > cfg.runner.max_dispatch_lag_ms + 0.001:
-            issues.add("generator_limited")
+        if dispatch >= window_ms or lag > (
+            cfg.runner.max_dispatch_lag_ms
+            if observation_mode
+            else cfg.runner.max_dispatch_lag_ms + 0.001
+        ):
+            if observation_mode:
+                if dispatch >= window_ms:
+                    measurement_issues.add("dispatch_after_window")
+                if lag > cfg.runner.max_dispatch_lag_ms:
+                    measurement_issues.add("dispatch_late")
+            else:
+                issues.add("generator_limited")
         sent.append(row)
         lags.append(lag)
         ends.append(end)
@@ -435,7 +452,7 @@ def compute_summary_v2(
                 samples[metric].append(value)
     missing = sum(row["request_id"] not in trace_by_id for row in sent)
     if missing:
-        issues.add("missing_trace")
+        (measurement_issues if observation_mode else issues).add("missing_trace")
     if any(row["trace_observed"] != (row["request_id"] in trace_by_id) for row in sent):
         issues.add("trace_observation_mismatch")
     workers = env.get("final_workers", [])
@@ -446,7 +463,7 @@ def compute_summary_v2(
             type(w.get("active_requests")) is not int or w["active_requests"] != 0 for w in workers
         )
     ):
-        issues.add("workers_not_idle_or_unobserved")
+        (measurement_issues if observation_mode else issues).add("workers_not_idle_or_unobserved")
     successful = [
         row
         for row in sent
@@ -459,11 +476,32 @@ def compute_summary_v2(
     if requested_status is None:
         requested_status = "completed" if len(sent) == planned and not issues else "failed"
     final_status = "failed" if issues or requested_status != "completed" else "completed"
+    if observation_mode:
+        final_status = (
+            "failed"
+            if "policy_mismatch" in issues
+            else "cancelled"
+            if requested_status == "cancelled"
+            else "blocked"
+            if issues or requested_status != "completed"
+            else "completed"
+        )
     failure_obj = failure or env.get("failure")
-    if final_status == "failed" and failure_obj is None:
-        failure_obj = {"type": "generator_limited" if aborted else "artifact_incomplete"}
+    if final_status != "completed" and failure_obj is None:
+        failure_obj = {
+            "type": "policy_mismatch"
+            if "policy_mismatch" in issues
+            else "generator_limited"
+            if aborted
+            else "artifact_incomplete"
+        }
     quality = sorted(issues)
     eligible_reasons = list(quality)
+    if observation_mode:
+        measurement_issues.update(row["not_dispatched_reason"] for row in aborted)
+        if not observed_policies:
+            measurement_issues.add("no_policy_observed")
+        eligible_reasons.extend(measurement_issues)
     if final_status != "completed":
         eligible_reasons.append("run_failed")
     if env.get("git_dirty") is not False or not env.get("git_revision"):
@@ -479,6 +517,36 @@ def compute_summary_v2(
     cache = env.get("cache_control") or {}
     if not cache.get("workers_restarted_between_runs"):
         eligible_reasons.append("cache_procedure_not_verified")
+    observation = {}
+    if observation_mode:
+        warning_counts = {
+            "dispatch_late": sum(lag > cfg.runner.max_dispatch_lag_ms for lag in lags),
+            "dispatch_after_window": sum(row["dispatch_offset_ms"] >= window_ms for row in sent),
+            "in_flight_limit": sum(
+                row["not_dispatched_reason"] == "in_flight_limit" for row in aborted
+            ),
+            "cancelled_before_dispatch": sum(
+                row["not_dispatched_reason"] == "cancelled_before_dispatch" for row in aborted
+            ),
+            "missing_trace": missing,
+            "request_error": sum(row["client_status"] == "error" for row in sent),
+            "request_cancelled": sum(row["client_status"] == "cancelled" for row in sent),
+            "workers_not_idle_or_unobserved": int(
+                "workers_not_idle_or_unobserved" in measurement_issues
+            ),
+        }
+        observation = {
+            "execution_semantics": "observe_v1",
+            "policy_check": "failed"
+            if "policy_mismatch" in issues
+            else "passed"
+            if observed_policies
+            else "unverified",
+            "warning_counts": {key: value for key, value in warning_counts.items() if value},
+            "dispatch_span_s": max(
+                window_s, max((row["dispatch_offset_ms"] / 1000 for row in sent), default=0)
+            ),
+        }
     return {
         "schema_version": 2,
         "artifact_role": "benchmark_summary",
@@ -554,4 +622,5 @@ def compute_summary_v2(
             f"TTFT/E2E use n={counts['completed']} completed traces; low-N P99 is descriptive."
         ),
         **({"failure": failure_obj} if failure_obj else {}),
+        **observation,
     }

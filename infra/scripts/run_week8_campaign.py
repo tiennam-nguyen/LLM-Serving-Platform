@@ -9,6 +9,7 @@ import json
 import os
 import subprocess
 import sys
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -132,8 +133,27 @@ def execute_campaign(
             or source["git_dirty"] is not False
         ):
             raise ValueError("Live dual-T4 campaign requires a clean Linux checkout at --revision")
-        if not calibration and protocol.get("repeatability", {}).get("status") != "predeclared":
+        observing_unreliable_calibration = (
+            protocol.get("execution_semantics") == "observe_v1"
+            and protocol.get("repeatability", {}).get("status") == "calibration_unreliable"
+        )
+        if (
+            not calibration
+            and protocol.get("repeatability", {}).get("status") != "predeclared"
+            and not observing_unreliable_calibration
+        ):
             raise ValueError("Freeze repeated-pilot tolerances before the live campaign")
+        design = protocol.get("workload_design", {})
+        if design and (
+            design.get("token_counts_verified") is not True
+            or not model_revision
+            or (design.get("tokenizer") or {}).get("snapshot_revision") != model_revision
+            or any(
+                (design.get("tokenizer") or {}).get("model_id") != cfg.model.id
+                for _, cfg in manifests
+            )
+        ):
+            raise ValueError("Live mixed-input suite requires the pinned model's actual tokenizer")
         if calibration and protocol.get("repeatability", {}).get("status") != "calibration_only":
             raise ValueError("Calibration protocol must remain separate from main acceptance")
         pilot.checked_inventory()
@@ -284,6 +304,8 @@ def execute_campaign(
                         "run_dir": str(result.run_dir),
                         "run_status": result.run_status,
                         "failure_type": result.failure_type,
+                        "warning_counts": result.summary.get("warning_counts", {}),
+                        "policy_check": result.summary.get("policy_check", "unverified"),
                     }
                 )
                 write_json_atomic(report_path, report)
@@ -297,13 +319,22 @@ def execute_campaign(
                             "run_id": result.run_id,
                             "status": result.run_status,
                             "failure_type": result.failure_type,
+                            "warning_counts": result.summary.get("warning_counts", {}),
+                            "latency_ms": result.summary.get("latency_ms", {}),
+                            "rates": result.summary.get("rates", {}),
+                            "dispatch_lag_ms": result.summary.get("dispatch_lag_ms", {}),
                         }
                     ),
                     flush=True,
                 )
-                if not result.succeeded:
+                if result.run_status == "failed":
                     report["run_status"] = "failed"
                     break
+                if result.run_status == "cancelled":
+                    report["run_status"] = "cancelled"
+                    break
+                if result.run_status == "blocked":
+                    report["run_status"] = "blocked"
             finally:
                 try:
                     if gateway is not None:
@@ -322,11 +353,15 @@ def execute_campaign(
         if report["run_status"] == "running":
             report["run_status"] = "completed"
     except BaseException as exc:
-        report["run_status"] = "failed"
+        report["run_status"] = "blocked"
         report["failure_type"] = type(exc).__name__
         raise
     finally:
         pilot.dual_t4.REPO, pilot.dual_t4.OUTPUT = old_repo, old_output
+        counts = Counter()
+        for row in report["runs"]:
+            counts.update(row.get("warning_counts", {}))
+        report["warning_counts"] = dict(counts)
         write_json_atomic(report_path, report)
     return report
 
@@ -356,7 +391,7 @@ def main(argv: list[str] | None = None) -> int:
         gpu_telemetry=args.gpu_telemetry,
     )
     print(json.dumps(report, indent=2))
-    return 0 if report["run_status"] == "completed" else 1
+    return 1 if report["run_status"] == "failed" else 0
 
 
 if __name__ == "__main__":

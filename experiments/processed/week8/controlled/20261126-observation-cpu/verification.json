@@ -1,0 +1,72 @@
+{
+  "artifact_role": "cpu_mock_verification_not_gpu_evidence",
+  "recorded_at_utc": "2026-11-26T11:32:23.016636+00:00",
+  "source_git": {
+    "revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+    "dirty": true
+  },
+  "source_note": "Verified working tree before commit; SHA-256 identifies code actually checked.",
+  "source_file_sha256": {
+    "infra/kaggle/week8_controlled_benchmark/package_kernel.py": "4dd6d1e2cc16dc8e9d618ee8cbdac73afba6d6b59883edae61477af363dace80",
+    "infra/kaggle/week8_controlled_benchmark/run.py": "b84ef4bfb392a537c0884f4a5cb2bf701adeb4a90abab0bb0e920a25a25436a7",
+    "infra/kaggle/week8_open_loop_pilot/run.py": "4b7435c618972493760955bbcb7948a6f3dd85b8a5ce4a345d4031a9d674937d",
+    "infra/scripts/run_week8_campaign.py": "277f7b18119ed8b9e46c16f6db856a184fedf584565df6a00e8aeeb9deab7251",
+    "infra/scripts/verify.py": "34ec29c9358a239acdfefb34aed70052bbe923628c585803f7db5bf8e9a4b451",
+    "infra/scripts/verify_week8_e2e.py": "863ee503f42fca93180479ce6c27ea94f262d5f7fc70a339330c243228468fd8",
+    "pyproject.toml": "525fe26d88909af64cd89f21d685d5c3edd7ea1cb0fd83debee6f28fe7fa30f1",
+    "src/llm_serving_platform/benchmark/__main__.py": "027db39a3f73e7f6513d8342a0f057287d7dbdae94a6596729b30d98b0ae7ff8",
+    "src/llm_serving_platform/benchmark/analysis.py": "cb556baed339e293fc89b81ab9d02f8d90261a91e99a90d29b5810dea71905b4",
+    "src/llm_serving_platform/benchmark/campaign.py": "409d90df08a92be904fa07df8f834c13fc23162d7fdd83c25318471efd1aabe5",
+    "src/llm_serving_platform/benchmark/config.py": "552a103bd69dfe16370f6b8a9bd7aa0a8d43e967bcdd178819aefb96a826b271",
+    "src/llm_serving_platform/benchmark/runner.py": "e3eaedf65f48573625cde48c07947d31cf42989b089d97622fb8f437faad2122",
+    "src/llm_serving_platform/benchmark/scenarios.py": "7b3954f13bbbffcfb7c149f760e3e0a8299d433c851ec04b536fa3f9275fc6ec",
+    "src/llm_serving_platform/benchmark/scheduler.py": "fe891f8066513b5f4dfbee7ea32926ee88eadd0514128cb5a01fadba41e7acc7",
+    "src/llm_serving_platform/benchmark/summary.py": "8e706ed8ee6e0fe0ef3ae65643992573d0c438f1d2cc79ab16891abb2ef130b6",
+    "tests/integration/test_week8_b_pipeline.py": "f7ea2988b7d1c26d8cec97649de57e324da098f0ba7d05707945f569199a6dea",
+    "tests/integration/test_week8_campaign_and_figures.py": "f33bab83285e9e629ffb98a1ecf6fa728c4bdfeb13754198deec1dc051c150db",
+    "tests/integration/test_week8_observation_pipeline.py": "022aaaa9319ca085f087eaa8beee031cd046f2f6de0700c2aa6947c9f4e45704",
+    "tests/integration/test_week8_open_loop_runner.py": "c617c58ff0e9202154c3cc7ec55d44feb040640e01630821001399ceb34e57e2",
+    "tests/unit/test_week8_observation_orchestration.py": "95428d0969f1d51ed6bc144700baa3f9e4e79b4e4218c7c509315426b6d2951a",
+    "tests/unit/test_week8_observation_scheduler.py": "cebd09a65d592d7a8b64a151404643c76f1948c858aebbd48f0cea1799553d4f",
+    "tests/unit/test_week8_realistic_scenarios.py": "87ddee14d87df7fd4cfba9329b844f541c851c9b17def10df765045013738ca2",
+    "tests/unit/test_week8_study_orchestration.py": "632e55432b203f3151fbf268a9f7da2efbf7e02f26451bba41b1154bb95f36af"
+  },
+  "python": "3.12.14 (main, Sep  1 2026, 14:17:39) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "pytest": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "313",
+    "time": "72.409",
+    "timestamp": "2026-11-26T18:27:04.187649+07:00",
+    "hostname": "DESKTOP-E2TEQ7M"
+  },
+  "pytest_mode": "CPU default; no --gpu or --no-gpu flag",
+  "w7_gate": {
+    "passed": true,
+    "measured_requests": 8,
+    "regression_tests": 22
+  },
+  "w8_gate": {
+    "passed": true,
+    "http_runs": 16,
+    "measured_requests": 168,
+    "warmup_requests": 16,
+    "figures": 48,
+    "regression_tests_at_gate_run": 131,
+    "subsequent_full_pytest_includes_four_additional_tokenizer_validation_cases": true
+  },
+  "real_gpu_verified": false,
+  "real_model_tokenizer_locally_verified": false,
+  "torch_installed": false,
+  "vllm_installed": false,
+  "docker_run": false,
+  "ruff": "passed",
+  "uv_lock_check_offline": "passed",
+  "gate_log_sha256": {
+    "gate-observe-w7.log": "9894148e13948aa79974985f7f11214183c40c7f6ab359231e484ea7959fa8bd",
+    "gate-observe-w8.log": "d49c0a5c908b0a620c3bd2e6b51b2c95ef76facc5f769e674dd72157396fc95e"
+  }
+}

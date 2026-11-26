@@ -19,7 +19,7 @@ from llm_serving_platform.benchmark.summary import compute_summary_v2
 from tests.week8_b_fixtures import raw_run
 
 
-def calibration_analysis():
+def calibration_analysis(profiles=("steady", "burst", "heterogeneous")):
     return {
         "runs": [
             {
@@ -28,9 +28,9 @@ def calibration_analysis():
                 "rates": {"noncompletion_rate": 0},
                 "run_id": f"fixture-{i}",
             }
-            for i in range(18)
+            for i in range(len(profiles) * 6)
         ],
-        "pair_checks": [{"matched": True} for _ in range(9)],
+        "pair_checks": [{"matched": True} for _ in range(len(profiles) * 3)],
         "repeatability": [
             {
                 "comparison_id": f"w8-{profile}-medium",
@@ -42,7 +42,7 @@ def calibration_analysis():
                     for metric in study.PRIMARY_METRICS
                 },
             }
-            for profile in ("steady", "burst", "heterogeneous")
+            for profile in profiles
             for policy in ("round_robin", "least_loaded")
         ],
     }
@@ -100,7 +100,7 @@ def test_calibration_raw_cannot_be_used_as_main_evidence(tmp_path, phase):
 
 
 @pytest.mark.parametrize("unstable", [False, True])
-def test_study_freezes_before_main_and_archives_failures(tmp_path, monkeypatch, unstable):
+def test_study_freezes_or_warns_then_runs_main_and_preserves_raw(tmp_path, monkeypatch, unstable):
     output = tmp_path / "study"
     monkeypatch.setattr(
         study,
@@ -130,10 +130,15 @@ def test_study_freezes_before_main_and_archives_failures(tmp_path, monkeypatch, 
         assert kwargs["model_revision"] == "f" * 40
         assert kwargs["gpu_telemetry"] is True
         if phase == "main":
-            assert (output / "frozen_tolerances.json").is_file()
-            assert protocol["repeatability"]["status"] == "predeclared"
             assert len(protocol["runs"]) == 54
-            assert protocol["repeatability"]["tolerances"][study.PRIMARY_METRICS[0]] == 0.02
+            if unstable:
+                assert not (output / "frozen_tolerances.json").exists()
+                assert protocol["repeatability"]["status"] == "calibration_unreliable"
+                assert protocol["repeatability"]["tolerances"] is None
+            else:
+                assert (output / "frozen_tolerances.json").is_file()
+                assert protocol["repeatability"]["status"] == "predeclared"
+                assert protocol["repeatability"]["tolerances"][study.PRIMARY_METRICS[0]] == 0.02
         else:
             assert kwargs["calibration"] is True
             assert protocol["repeatability"]["tolerances"] is None
@@ -158,17 +163,13 @@ def test_study_freezes_before_main_and_archives_failures(tmp_path, monkeypatch, 
 
     monkeypatch.setattr(study, "execute_campaign", execute)
     monkeypatch.setattr(study, "_analysis", analyze)
-    if unstable:
-        with pytest.raises(ValueError, match="noise"):
-            study.run_study(output, "synthetic-revision")
-        assert stages == ["conditioning", "calibration"]
-    else:
-        result = study.run_study(output, "synthetic-revision")
-        assert stages == ["conditioning", "calibration", "main"]
-        assert result["status"] == "completed"
-        assert result["methodology_gate_passed"] is False
+    result = study.run_study(output, "synthetic-revision")
+    assert stages == ["conditioning", "calibration", "main"]
+    assert result["status"] == "completed"
+    assert result["methodology_gate_passed"] is False
+    assert any(w["type"] == "calibration_unreliable" for w in result["warnings"]) is unstable
     report = json.loads((output / "study_report.json").read_text())
-    assert report["status"] == ("failed" if unstable else "completed")
+    assert report["status"] == "completed"
     with zipfile.ZipFile(tmp_path / "week8-controlled-artifacts.zip") as archive:
         assert "study_report.json" in archive.namelist()
         assert "preregistration.json" in archive.namelist()
@@ -318,6 +319,7 @@ def test_parallel_startup_requires_prefetched_snapshot(tmp_path, monkeypatch, pr
                 run_status="completed",
                 failure_type=None,
                 succeeded=True,
+                summary={},
             )
 
     monkeypatch.setattr(campaign, "ExperimentRunner", Runner)

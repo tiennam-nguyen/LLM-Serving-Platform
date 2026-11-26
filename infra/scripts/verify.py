@@ -515,8 +515,14 @@ def gate_week8_controlled_benchmark(ctx: VerifyContext) -> bool:
             sys.executable, "-m", "pytest", "--no-gpu", "-p", "no:cacheprovider",
             "tests/unit/test_week8_b_contracts.py",
             "tests/unit/test_week8_scheduler.py",
+            "tests/unit/test_week8_observation_scheduler.py",
+            "tests/unit/test_week8_realistic_scenarios.py",
+            "tests/unit/test_week8_study_orchestration.py",
+            "tests/unit/test_week8_observation_orchestration.py",
             "tests/integration/test_week8_b_pipeline.py",
             "tests/integration/test_week8_open_loop_runner.py",
+            "tests/integration/test_week8_observation_pipeline.py",
+            "tests/integration/test_week8_campaign_and_figures.py",
         ])
     return True
 

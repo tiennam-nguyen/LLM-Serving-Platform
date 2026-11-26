@@ -12,6 +12,7 @@ from llm_serving_platform.benchmark.__main__ import main
 from llm_serving_platform.benchmark.analysis import PRIMARY_METRICS, analyze_runs
 from llm_serving_platform.benchmark.campaign import prepare_campaign
 from llm_serving_platform.benchmark.plots import plot_analysis
+from tests.unit.test_week8_scheduler import FakeClock
 from tests.week8_b_fixtures import raw_run
 
 
@@ -46,6 +47,31 @@ def test_real_cpu_campaign_never_probes_or_launches_vllm(tmp_path):
         assert environment["test_mode"] == "cpu_mock"
         assert environment["cache_control"]["workers_restarted_between_runs"] is False
         assert environment["protocol_sha256"] == report["protocol_sha256"]
+
+
+def test_multiple_delayed_manifests_continue_and_report_warnings(tmp_path):
+    from llm_serving_platform.benchmark.runner import ExperimentRunner
+
+    protocol = prepare_campaign(
+        manifests_dir=tmp_path / "manifests",
+        workloads_dir=tmp_path / "workloads",
+        model="test-model",
+        measurement_window_ms=1000,
+    )
+
+    def delayed_runner(**options):
+        clock = FakeClock()
+        clock.lag_schedule_ms[0] = 1500
+        return ExperimentRunner(**options, clock=clock.clock, sleep_until=clock.sleep_until)
+
+    with patch("infra.scripts.run_week8_campaign.ExperimentRunner", delayed_runner):
+        report = execute_campaign(protocol, output_dir=tmp_path / "executed", no_gpu=True, limit=3)
+    assert report["run_status"] == "completed"
+    assert len(report["runs"]) == 3
+    assert report["warning_counts"]["dispatch_late"] == 3
+    assert report["warning_counts"]["dispatch_after_window"] == 3
+    assert all(row["run_status"] == "completed" for row in report["runs"])
+    assert all(row["policy_check"] == "passed" for row in report["runs"])
 
 
 def test_analysis_and_figures_are_recreated_from_raw_not_old_summaries(tmp_path):

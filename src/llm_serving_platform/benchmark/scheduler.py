@@ -6,7 +6,7 @@ import asyncio
 import math
 import time
 from collections.abc import Awaitable, Callable, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Any, Protocol, runtime_checkable
 
@@ -55,6 +55,7 @@ class SchedulerResult:
     ledger: list[dict[str, Any]]
     traces: list[dict[str, Any]]
     max_observed_in_flight: int
+    warnings: list[dict[str, Any]] = field(default_factory=list)
 
 
 def _utc_now_iso() -> str:
@@ -130,13 +131,15 @@ def classify_chat_outcome(call: ChatCallResult) -> tuple[str, str | None]:
     return "completed", None
 
 
-def make_not_dispatched_record(sequence: int, request_id: str) -> dict[str, Any]:
+def make_not_dispatched_record(
+    sequence: int, request_id: str, *, reason: str = "aborted"
+) -> dict[str, Any]:
     """Build a canonical requests.jsonl ledger entry for an aborted/unscheduled turn."""
     return {
         "sequence": sequence,
         "request_id": request_id,
         "dispatch_status": "not_dispatched",
-        "not_dispatched_reason": "aborted",
+        "not_dispatched_reason": reason,
         "dispatch_offset_ms": None,
         "dispatch_lag_ms": None,
         "client_end_offset_ms": None,
@@ -227,6 +230,11 @@ class OpenLoopScheduler:
         if stop_event.is_set():
             return True
 
+        # An already-due replay entry needs no timer tasks. The injected clock driver
+        # retains its explicit yield points for deterministic scheduler tests.
+        if self._custom_sleep_until is None and deadline <= self._clock():
+            return False
+
         sleep_fn = self._custom_sleep_until or self._default_sleep_until
         sleep_task = asyncio.create_task(sleep_fn(deadline))
         stop_task = asyncio.create_task(stop_event.wait())
@@ -258,6 +266,7 @@ class OpenLoopScheduler:
         max_in_flight: int,
         max_dispatch_lag_ms: float,
         cancel_event: asyncio.Event | None = None,
+        observe_limits: bool = False,
     ) -> SchedulerResult:
         """Execute an open-loop schedule and return full request/trace evidence."""
         validate_open_loop_schedule(
@@ -284,6 +293,11 @@ class OpenLoopScheduler:
         ledger_by_seq: dict[int, dict[str, Any]] = {}
         traces_by_seq: dict[int, dict[str, Any]] = {}
         sent_sequences: set[int] = set()
+        warnings: list[dict[str, Any]] = []
+        actual_dispatch: dict[int, tuple[float, float]] = {}
+
+        def _warn(kind: str, **details: Any) -> None:
+            warnings.append({"type": kind, **details})
 
         def _set_fatal(failure_type: str) -> None:
             nonlocal first_fatal_type
@@ -306,8 +320,28 @@ class OpenLoopScheduler:
                 if self._on_request is not None:
                     await _maybe_await(self._on_request(record))
 
-        async def _run_http_call(entry: WorkloadEntry, request_id: str) -> ChatCallResult:
-            coro = self._send_chat(entry, request_id)
+        async def _run_http_call(item: ScheduledEntryProtocol, request_id: str) -> ChatCallResult:
+            if observe_limits:
+                offset = (self._clock() - t0) * 1000.0
+                lag = offset - float(item.scheduled_offset_ms)
+                actual_dispatch[item.sequence] = (offset, lag)
+                sent_sequences.add(item.sequence)
+                if round(lag, 3) > max_dispatch_lag_ms:
+                    _warn(
+                        "dispatch_late",
+                        sequence=item.sequence,
+                        scheduled_offset_ms=float(item.scheduled_offset_ms),
+                        actual_dispatch_offset_ms=offset,
+                        dispatch_lag_ms=lag,
+                        limit_ms=max_dispatch_lag_ms,
+                    )
+                if round(offset, 3) >= measurement_window_ms:
+                    _warn(
+                        "dispatch_after_window",
+                        sequence=item.sequence,
+                        actual_dispatch_offset_ms=offset,
+                    )
+            coro = self._send_chat(item.entry, request_id)
             if self._request_timeout_s is not None:
                 return await asyncio.wait_for(coro, timeout=self._request_timeout_s)
             return await coro
@@ -370,6 +404,16 @@ class OpenLoopScheduler:
             client_end_offset_ms = (client_end_mono - t0) * 1000.0
             trace_observed = False
 
+            if observe_limits:
+                if item.sequence not in actual_dispatch:
+                    await _emit_request(
+                        make_not_dispatched_record(
+                            item.sequence, request_id, reason="cancelled_before_dispatch"
+                        )
+                    )
+                    return
+                dispatch_offset_ms, dispatch_lag_ms = actual_dispatch[item.sequence]
+
             if not skip_trace_poll:
                 try:
                     trace = await self._fetch_trace(request_id)
@@ -380,7 +424,10 @@ class OpenLoopScheduler:
                 except RunnerFatalError as exc:
                     if exc.failure_type == "trace_timeout":
                         if client_status != "cancelled":
-                            _set_fatal("missing_trace")
+                            if observe_limits:
+                                _warn("missing_trace", sequence=item.sequence)
+                            else:
+                                _set_fatal("missing_trace")
                     elif exc.failure_type in {"gateway_unreachable", "contract_error"}:
                         _set_fatal(exc.failure_type)
                     else:
@@ -425,24 +472,43 @@ class OpenLoopScheduler:
                 dispatch_lag_ms = dispatch_offset_ms - float(item.scheduled_offset_ms)
 
                 if dispatch_lag_ms > float(max_dispatch_lag_ms):
-                    _set_fatal("generator_limited")
-                    break
+                    if not observe_limits:
+                        _set_fatal("generator_limited")
+                        break
 
                 if dispatch_mono >= window_end_mono:
-                    _set_fatal("generator_limited")
-                    break
+                    if not observe_limits:
+                        _set_fatal("generator_limited")
+                        break
 
                 if active_http_in_flight >= max_in_flight:
-                    _set_fatal("generator_limited")
-                    break
+                    if not observe_limits:
+                        _set_fatal("generator_limited")
+                        break
+                    request_id = f"{run_id}-req-{item.sequence:05d}"
+                    _warn(
+                        "in_flight_limit",
+                        sequence=item.sequence,
+                        scheduled_offset_ms=float(item.scheduled_offset_ms),
+                        attempt_offset_ms=dispatch_offset_ms,
+                        active_http_in_flight=active_http_in_flight,
+                        limit=max_in_flight,
+                    )
+                    await _emit_request(
+                        make_not_dispatched_record(
+                            item.sequence, request_id, reason="in_flight_limit"
+                        )
+                    )
+                    continue
 
                 request_id = f"{run_id}-req-{item.sequence:05d}"
-                sent_sequences.add(item.sequence)
+                if not observe_limits:
+                    sent_sequences.add(item.sequence)
                 active_http_in_flight += 1
                 if active_http_in_flight > max_observed_in_flight:
                     max_observed_in_flight = active_http_in_flight
 
-                http_task = asyncio.create_task(_run_http_call(item.entry, request_id))
+                http_task = asyncio.create_task(_run_http_call(item, request_id))
                 http_tasks[item.sequence] = http_task
                 request_tasks[item.sequence] = asyncio.create_task(
                     _handle_dispatched(
@@ -471,6 +537,8 @@ class OpenLoopScheduler:
                     ledger_by_seq=ledger_by_seq,
                     emit_request=_emit_request,
                     first_fatal_type=first_fatal_type,
+                    actual_dispatch=actual_dispatch if observe_limits else None,
+                    t0_mono=t0,
                 )
             )
 
@@ -484,7 +552,15 @@ class OpenLoopScheduler:
         not_dispatched_count = len(scheduled_entries) - sent_count
 
         return SchedulerResult(
-            run_status="completed" if first_fatal_type is None else "failed",
+            run_status=(
+                "completed"
+                if first_fatal_type is None
+                else "failed"
+                if not observe_limits
+                else "cancelled"
+                if first_fatal_type == "runner_cancelled"
+                else "blocked"
+            ),
             failure_type=first_fatal_type,
             t0_mono=t0,
             measured_started_at=measured_started_at,
@@ -495,6 +571,7 @@ class OpenLoopScheduler:
             ledger=ledger,
             traces=traces,
             max_observed_in_flight=max_observed_in_flight,
+            warnings=warnings,
         )
 
     async def _drain_and_cleanup(
@@ -508,6 +585,8 @@ class OpenLoopScheduler:
         ledger_by_seq: dict[int, dict[str, Any]],
         emit_request: Callable[[dict[str, Any]], Awaitable[None]],
         first_fatal_type: str | None,
+        actual_dispatch: dict[int, tuple[float, float]] | None = None,
+        t0_mono: float = 0.0,
     ) -> None:
         pending_requests = [task for task in request_tasks.values() if not task.done()]
         if pending_requests:
@@ -561,13 +640,23 @@ class OpenLoopScheduler:
                 if item.sequence not in sent_sequences:
                     await emit_request(make_not_dispatched_record(item.sequence, request_id))
                 else:
+                    dispatch, lag = (
+                        actual_dispatch[item.sequence]
+                        if actual_dispatch is not None
+                        else (float(item.scheduled_offset_ms), 0.0)
+                    )
+                    end = (
+                        max(dispatch, (self._clock() - t0_mono) * 1000)
+                        if actual_dispatch is not None
+                        else float(item.scheduled_offset_ms)
+                    )
                     await emit_request(
                         make_sent_record(
                             sequence=item.sequence,
                             request_id=request_id,
-                            dispatch_offset_ms=float(item.scheduled_offset_ms),
-                            dispatch_lag_ms=0.0,
-                            client_end_offset_ms=float(item.scheduled_offset_ms),
+                            dispatch_offset_ms=dispatch,
+                            dispatch_lag_ms=lag,
+                            client_end_offset_ms=end,
                             http_status=None,
                             client_status="cancelled",
                             client_error_type="client_cancelled",

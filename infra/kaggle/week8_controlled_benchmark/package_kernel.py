@@ -20,6 +20,7 @@ def main() -> None:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--kernel-name", default="llm-serving-week8-controlled-benchmark")
     parser.add_argument("--vllm-version", default="0.33.0")
+    parser.add_argument("--suite", choices=("legacy", "realistic", "stress"), default="realistic")
     args = parser.parse_args()
     if not all(re.fullmatch(r"[A-Za-z0-9-]+", x) for x in (args.owner, args.kernel_name)):
         parser.error("Expected Kaggle owner and kernel slugs")
@@ -37,6 +38,8 @@ def main() -> None:
             git("rev-parse", "HEAD"),
             "--vllm-version",
             args.vllm_version,
+            "--suite",
+            args.suite,
         ],
         kernel_name=args.kernel_name,
         title=args.kernel_name.replace("-", " ").title(),

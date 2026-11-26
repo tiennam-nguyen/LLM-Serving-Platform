@@ -521,6 +521,7 @@ class ExperimentRunner:
         writer: OpenLoopArtifactWriterProtocol | None = None,
         cancel_event: asyncio.Event | None = None,
         summary_builder: Callable[..., dict[str, Any]] | None = None,
+        observation_mode: bool = True,
     ) -> RunResult:
         """Execute a Week 8 open-loop controlled benchmark run over the Gateway HTTP API."""
         if config.schema_version != 2:
@@ -568,6 +569,7 @@ class ExperimentRunner:
         drain_end_offset_ms: float | None = None
         pool_limits: dict[str, Any] = {}
         sched_result: SchedulerResult | None = None
+        warnings: list[dict[str, Any]] = []
         measurement_started = False
         failure_type: str | None = None
         run_status = "completed"
@@ -598,6 +600,15 @@ class ExperimentRunner:
                 }
             )
             env_meta.update(self._run_context)
+            if observation_mode:
+                env_meta.update(
+                    execution_semantics="observe_v1",
+                    dispatch_timestamp="before_http_client_call",
+                    warnings=warnings,
+                    max_observed_in_flight=(
+                        sched_result.max_observed_in_flight if sched_result else 0
+                    ),
+                )
             return env_meta
 
         active_writer.write_environment(_build_v2_env(None))
@@ -674,11 +685,13 @@ class ExperimentRunner:
                     max_in_flight=int(config.runner.max_in_flight),
                     max_dispatch_lag_ms=float(config.runner.max_dispatch_lag_ms),
                     cancel_event=cancel_event,
+                    observe_limits=observation_mode,
                 )
                 measured_started_at = sched_result.measured_started_at
                 drain_end_offset_ms = sched_result.drain_end_offset_ms
                 run_status = sched_result.run_status
                 failure_type = sched_result.failure_type
+                warnings.extend(sched_result.warnings)
 
                 # 6. Verify observed routing policy on persisted traces
                 persisted = read_traces_jsonl(active_writer.traces_path)
@@ -694,18 +707,31 @@ class ExperimentRunner:
                         f"observed {sorted(observed_policies)}",
                     )
                 if run_status == "completed" and len(persisted) != sched_result.sent_count:
-                    raise RunnerFatalError(
-                        "missing_trace",
-                        f"Expected {sched_result.sent_count} traces, persisted {len(persisted)}",
-                    )
+                    if observation_mode:
+                        warnings.append(
+                            {
+                                "type": "missing_trace",
+                                "count": sched_result.sent_count - len(persisted),
+                            }
+                        )
+                    else:
+                        raise RunnerFatalError(
+                            "missing_trace",
+                            f"Expected {sched_result.sent_count} traces, "
+                            f"persisted {len(persisted)}",
+                        )
             except RunnerFatalError as exc:
-                run_status = "failed"
                 failure_type = exc.failure_type
+                run_status = (
+                    "blocked"
+                    if observation_mode and failure_type != "policy_mismatch"
+                    else "failed"
+                )
             except asyncio.CancelledError:
-                run_status = "failed"
+                run_status = "cancelled" if observation_mode else "failed"
                 failure_type = "runner_cancelled"
             except Exception:
-                run_status = "failed"
+                run_status = "blocked" if observation_mode else "failed"
                 failure_type = "runner_internal_error"
             finally:
                 if not measurement_started:
@@ -724,11 +750,11 @@ class ExperimentRunner:
                     if run_status == "completed" and any(
                         w.get("active_requests", 0) != 0 for w in final_workers
                     ):
-                        run_status = "failed"
+                        run_status = "blocked" if observation_mode else "failed"
                         failure_type = "workers_not_idle"
                 except RunnerFatalError:
                     if run_status == "completed":
-                        run_status = "failed"
+                        run_status = "blocked" if observation_mode else "failed"
                         failure_type = "gateway_unreachable"
 
                 # 8. Scrape final /metrics snapshot (best-effort)

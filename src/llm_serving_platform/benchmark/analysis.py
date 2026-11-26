@@ -144,6 +144,8 @@ def analyze_runs(
         invariant["worker_runtime_args"] = environment.get("worker_runtime_args")
         invariant["model_revision"] = environment.get("model_revision")
         invariant["gpu_telemetry_interval_s"] = environment.get("gpu_telemetry_interval_s")
+        invariant["execution_semantics"] = environment.get("execution_semantics")
+        invariant["dispatch_timestamp"] = environment.get("dispatch_timestamp")
         pairs[key][summary["policy"]].append(invariant)
         group_conditions[(summary["comparison"]["id"], summary["policy"])].add(
             json.dumps(invariant, sort_keys=True)

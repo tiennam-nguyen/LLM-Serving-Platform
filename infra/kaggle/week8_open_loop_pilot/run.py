@@ -674,6 +674,7 @@ def run_pilot_campaign(args: argparse.Namespace, inventory: list[str] | None) ->
                         cfg,
                         scheduled_entries,
                         workload_sha256=workload_sha,
+                        observation_mode=False,
                     )
                 )
                 metrics = compute_pilot_metrics_from_dir(res.run_dir)

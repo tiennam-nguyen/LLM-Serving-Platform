@@ -397,7 +397,7 @@ async def test_open_loop_runner_policy_mismatch_and_gateway_503_handling(tmp_pat
 async def test_open_loop_runner_client_timeout_and_missing_trace_against_mock_gateway(
     tmp_path: Path,
 ):
-    """Client timeout with real gateway trace succeeds; missing trace fails cleanly."""
+    """Timeouts and missing traces remain observations; neither invents successful traces."""
     cfg, _, wsha = _make_v2_config(
         tmp_path,
         policy="round_robin",
@@ -436,7 +436,7 @@ async def test_open_loop_runner_client_timeout_and_missing_trace_against_mock_ga
         workers = (await client.get("/control/v1/workers")).json()
         assert all(w["active_requests"] == 0 for w in workers)
 
-    # Missing trace after client timeout must fail the run and never synthesize a fake trace.
+    # Missing trace warns while the rest of the schedule runs; no fake trace is synthesized.
     cfg_miss, _, wsha_miss = _make_v2_config(
         tmp_path,
         policy="round_robin",
@@ -468,9 +468,11 @@ async def test_open_loop_runner_client_timeout_and_missing_trace_against_mock_ga
             run_id=run_miss_id,
             workload_sha256=wsha_miss,
         )
-        assert res_miss.succeeded is False
-        assert res_miss.run_status == "failed"
-        assert res_miss.failure_type == "missing_trace"
+        assert res_miss.succeeded is True
+        assert res_miss.run_status == "completed"
+        assert res_miss.failure_type is None
+        metadata = json.loads((res_miss.run_dir / "environment.json").read_text())
+        assert any(w["type"] == "missing_trace" for w in metadata["warnings"])
         assert (res_miss.run_dir / "requests.jsonl").is_file()
         assert (res_miss.run_dir / "traces.jsonl").is_file()
 
@@ -516,7 +518,7 @@ async def test_open_loop_runner_controlled_cancellation_returns_workers_to_idle(
         await canceller
 
         assert res.succeeded is False
-        assert res.run_status == "failed"
+        assert res.run_status == "cancelled"
         assert res.failure_type == "runner_cancelled"
         req_rows = sorted(
             (

@@ -264,7 +264,16 @@ class ExperimentConfig(BaseModel):
 
 
 class ScheduledWorkloadSpec(WorkloadSpec):
-    profile: Literal["steady", "burst", "heterogeneous"]
+    profile: Literal[
+        "steady",
+        "burst",
+        "heterogeneous",
+        "steady_mixed",
+        "irregular_mixed",
+        "burst_mixed",
+        "ramp_mixed",
+        "microburst_mixed",
+    ]
 
 
 class OpenLoopRunnerSpec(BaseModel):
@@ -273,6 +282,7 @@ class OpenLoopRunnerSpec(BaseModel):
     gateway_url: str
     request_timeout_s: float
     max_in_flight: int
+    # Observation replay warns; the historical pilot retains its strict limit semantics.
     max_dispatch_lag_ms: float
 
     @field_validator("gateway_url", mode="before")

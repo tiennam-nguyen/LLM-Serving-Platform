@@ -1,0 +1,26 @@
+[
+  {
+    "study": "20261126-910b5d0-v1",
+    "phase": "calibration",
+    "runs": 18,
+    "numeric_reports_unchanged": true
+  },
+  {
+    "study": "20261126-a448b01-v2",
+    "phase": "conditioning",
+    "runs": 6,
+    "numeric_reports_unchanged": true
+  },
+  {
+    "study": "20261126-a448b01-v2",
+    "phase": "calibration",
+    "runs": 18,
+    "numeric_reports_unchanged": true
+  },
+  {
+    "study": "20261126-a448b01-v2",
+    "phase": "main",
+    "runs": 31,
+    "numeric_reports_unchanged": true
+  }
+]

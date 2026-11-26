@@ -74,7 +74,7 @@ testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = "-ra -q"
 markers = [
-    "gpu: marks tests that require a live GPU / vLLM worker (skipped when --no-gpu is set)",
+    "gpu: live GPU / vLLM checks; skipped unless --gpu is explicitly supplied",
 ]
 
 [tool.pyright]
