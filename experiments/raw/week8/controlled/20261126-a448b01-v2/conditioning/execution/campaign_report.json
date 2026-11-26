@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "test_mode": "live_dual_t4",
+  "experiment_phase": "conditioning",
+  "protocol_sha256": "d1d6cbfaf5f839744936d08b92a25fdbb781d6d144408766c345ee76ebabec6a",
+  "source_git": {
+    "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": false
+  },
+  "full_campaign": true,
+  "planned_runs": 6,
+  "selected_runs": 6,
+  "run_status": "completed",
+  "runs": [
+    {
+      "manifest": "/kaggle/working/week8-controlled/conditioning/manifests/w8-steady-medium-round_robin-r1.json",
+      "run_id": "20261126T052218Z-w8-steady-medium-round-robin-r1-a448b01-55c57b",
+      "run_dir": "/kaggle/working/week8-controlled/conditioning/execution/runs/20261126T052218Z-w8-steady-medium-round-robin-r1-a448b01-55c57b",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/conditioning/manifests/w8-steady-medium-least_loaded-r1.json",
+      "run_id": "20261126T052426Z-w8-steady-medium-least-loaded-r1-a448b01-eea48a",
+      "run_dir": "/kaggle/working/week8-controlled/conditioning/execution/runs/20261126T052426Z-w8-steady-medium-least-loaded-r1-a448b01-eea48a",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/conditioning/manifests/w8-burst-medium-round_robin-r1.json",
+      "run_id": "20261126T052611Z-w8-burst-medium-round-robin-r1-a448b01-8ac200",
+      "run_dir": "/kaggle/working/week8-controlled/conditioning/execution/runs/20261126T052611Z-w8-burst-medium-round-robin-r1-a448b01-8ac200",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/conditioning/manifests/w8-burst-medium-least_loaded-r1.json",
+      "run_id": "20261126T052754Z-w8-burst-medium-least-loaded-r1-a448b01-0f5443",
+      "run_dir": "/kaggle/working/week8-controlled/conditioning/execution/runs/20261126T052754Z-w8-burst-medium-least-loaded-r1-a448b01-0f5443",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/conditioning/manifests/w8-heterogeneous-medium-round_robin-r1.json",
+      "run_id": "20261126T052937Z-w8-heterogeneous-medium-round-ro-a448b01-848d80",
+      "run_dir": "/kaggle/working/week8-controlled/conditioning/execution/runs/20261126T052937Z-w8-heterogeneous-medium-round-ro-a448b01-848d80",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/conditioning/manifests/w8-heterogeneous-medium-least_loaded-r1.json",
+      "run_id": "20261126T053122Z-w8-heterogeneous-medium-least-lo-a448b01-301335",
+      "run_dir": "/kaggle/working/week8-controlled/conditioning/execution/runs/20261126T053122Z-w8-heterogeneous-medium-least-lo-a448b01-301335",
+      "run_status": "completed",
+      "failure_type": null
+    }
+  ]
+}

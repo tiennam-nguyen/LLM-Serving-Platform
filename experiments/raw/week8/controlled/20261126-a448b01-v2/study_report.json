@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "source": {
+    "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": false
+  },
+  "test_mode": "live_dual_t4",
+  "started_at_utc": "2026-11-26T05:19:04.278085+00:00",
+  "status": "failed",
+  "methodology_gate_passed": false,
+  "model_cache": {
+    "model_id": "Qwen/Qwen2.5-3B-Instruct",
+    "snapshot_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "snapshot_path": "/root/.cache/huggingface/hub/models--Qwen--Qwen2.5-3B-Instruct/snapshots/aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "prefetched_at_utc": "2026-11-26T05:19:39.266786+00:00"
+  },
+  "conditioning_runs": 6,
+  "conditioning_run_ids": [
+    "20261126T052218Z-w8-steady-medium-round-robin-r1-a448b01-55c57b",
+    "20261126T052426Z-w8-steady-medium-least-loaded-r1-a448b01-eea48a",
+    "20261126T052611Z-w8-burst-medium-round-robin-r1-a448b01-8ac200",
+    "20261126T052754Z-w8-burst-medium-least-loaded-r1-a448b01-0f5443",
+    "20261126T052937Z-w8-heterogeneous-medium-round-ro-a448b01-848d80",
+    "20261126T053122Z-w8-heterogeneous-medium-least-lo-a448b01-301335"
+  ],
+  "frozen_tolerances": {
+    "frozen_at_utc": "2026-11-26T06:03:28.706088+00:00",
+    "rule": {
+      "profiles": [
+        "steady",
+        "burst",
+        "heterogeneous"
+      ],
+      "load_level": "medium",
+      "repetitions": 3,
+      "method": "twice_max_relative_deviation_across_policy_profile_groups",
+      "multiplier": 2.0,
+      "maximum_allowed_tolerance": 0.2,
+      "primary_metrics": [
+        "latency_ms.ttft_p50",
+        "latency_ms.e2e_p50",
+        "rates.completed_drain_rps"
+      ]
+    },
+    "tolerances": {
+      "latency_ms.ttft_p50": 0.04828689759036141,
+      "latency_ms.e2e_p50": 0.04053552946906414,
+      "rates.completed_drain_rps": 0.03820423609012161
+    },
+    "preregistration_sha256": "6344d639102ec5bf186019d907cd158f4dc40de7a90b582f072633b11a1fbc42",
+    "calibration_protocol_sha256": "a533cda5605792ac06480a9bd30cae9d38cdaeaa5cfc0497bca68274ba97ec19",
+    "calibration_analysis_sha256": "de1a29a9db1424b42db1009f7dc719031a1567df15a6a4ce6fe41bcd75352720",
+    "model_cache_sha256": "2836594dc35d2a7981811e758a8f57f6b1e0d4669ab5d23a0ea8b4c85e4338b9",
+    "conditioning_run_ids": [
+      "20261126T052218Z-w8-steady-medium-round-robin-r1-a448b01-55c57b",
+      "20261126T052426Z-w8-steady-medium-least-loaded-r1-a448b01-eea48a",
+      "20261126T052611Z-w8-burst-medium-round-robin-r1-a448b01-8ac200",
+      "20261126T052754Z-w8-burst-medium-least-loaded-r1-a448b01-0f5443",
+      "20261126T052937Z-w8-heterogeneous-medium-round-ro-a448b01-848d80",
+      "20261126T053122Z-w8-heterogeneous-medium-least-lo-a448b01-301335"
+    ],
+    "calibration_run_ids": [
+      "20261126T053323Z-w8-steady-medium-round-robin-r1-a448b01-9c0acb",
+      "20261126T053507Z-w8-steady-medium-least-loaded-r1-a448b01-a87195",
+      "20261126T053651Z-w8-steady-medium-least-loaded-r2-a448b01-b9e1a5",
+      "20261126T053834Z-w8-steady-medium-round-robin-r2-a448b01-031cb0",
+      "20261126T054018Z-w8-steady-medium-round-robin-r3-a448b01-fe9980",
+      "20261126T054202Z-w8-steady-medium-least-loaded-r3-a448b01-4c19d1",
+      "20261126T054346Z-w8-burst-medium-round-robin-r1-a448b01-2c0ea6",
+      "20261126T054530Z-w8-burst-medium-least-loaded-r1-a448b01-105305",
+      "20261126T054713Z-w8-burst-medium-least-loaded-r2-a448b01-a6ab81",
+      "20261126T054856Z-w8-burst-medium-round-robin-r2-a448b01-9eb508",
+      "20261126T055039Z-w8-burst-medium-round-robin-r3-a448b01-e832c5",
+      "20261126T055224Z-w8-burst-medium-least-loaded-r3-a448b01-7e18a3",
+      "20261126T055408Z-w8-heterogeneous-medium-round-ro-a448b01-cd7122",
+      "20261126T055554Z-w8-heterogeneous-medium-least-lo-a448b01-d9884f",
+      "20261126T055741Z-w8-heterogeneous-medium-least-lo-a448b01-3f37c0",
+      "20261126T055926Z-w8-heterogeneous-medium-round-ro-a448b01-eb02d9",
+      "20261126T060111Z-w8-heterogeneous-medium-round-ro-a448b01-45090b",
+      "20261126T060255Z-w8-heterogeneous-medium-least-lo-a448b01-2352bb"
+    ]
+  },
+  "failure_type": "RuntimeError",
+  "failure": "Main execution failed; partial raw preserved",
+  "ended_at_utc": "2026-11-26T06:57:08.518319+00:00"
+}

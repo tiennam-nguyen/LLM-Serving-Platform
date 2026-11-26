@@ -1,0 +1,92 @@
+{
+  "schema_version": 2,
+  "artifact_role": "benchmark_summary",
+  "run_id": "20261126T064455Z-w8-burst-low-least-loaded-r3-a448b01-7d97d5",
+  "run_status": "completed",
+  "policy": "least_loaded",
+  "comparison": {
+    "id": "w8-burst-low",
+    "load_level": "low",
+    "repetition": 3
+  },
+  "observed_policies": [
+    "least_loaded"
+  ],
+  "percentile_method": "linear_interpolation_r7",
+  "measurement_window_ms": 20000.0,
+  "drain_span_s": 20.0,
+  "workload_sha256": "45eca5a6afc18b1da5d4347ac9beed4d48c78f67fdd23bfa750cc297e840475e",
+  "schedule_sha256": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+  "schedule_file_sha256": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+  "hash_normalization": "crlf_to_lf",
+  "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+  "source_git_dirty": false,
+  "execution_mode": "live_dual_t4",
+  "experiment_phase": "main",
+  "requests": {
+    "planned": 20,
+    "sent": 20,
+    "not_dispatched": 0,
+    "ledger_missing": 0,
+    "observed": 20,
+    "completed": 20,
+    "error": 0,
+    "cancelled": 0,
+    "missing_trace": 0,
+    "both_completed": 20
+  },
+  "rates": {
+    "offered_rps": 1.0,
+    "dispatched_rps": 1.0,
+    "completed_window_rps": 1.0,
+    "completed_drain_rps": 1.0,
+    "gateway_error_rate": 0.0,
+    "gateway_cancelled_rate": 0.0,
+    "noncompletion_rate": 0.0
+  },
+  "latency_ms": {
+    "routing_p50": 0.052,
+    "routing_p95": 0.064,
+    "routing_p99": 0.071,
+    "ttft_p50": 53.865,
+    "ttft_p95": 261.295,
+    "ttft_p99": 263.347,
+    "e2e_p50": 1172.325,
+    "e2e_p95": 2420.151,
+    "e2e_p99": 2492.67
+  },
+  "latency_sample_counts": {
+    "routing": {
+      "present": 20,
+      "missing": 0
+    },
+    "ttft": {
+      "present": 20,
+      "missing": 0
+    },
+    "e2e": {
+      "present": 20,
+      "missing": 0
+    }
+  },
+  "dispatch_lag_ms": {
+    "sample_count": 20,
+    "p50": 1.562,
+    "p95": 3.269,
+    "p99": 3.278,
+    "max": 3.28
+  },
+  "worker_distribution": {
+    "worker-vllm-0": 10,
+    "worker-vllm-1": 10
+  },
+  "no_worker_count": 0,
+  "backlog_at_window_end": 0,
+  "validation": {
+    "valid": true,
+    "issues": [],
+    "comparison_eligible": true,
+    "ineligible_reasons": []
+  },
+  "p99_statistical_note": "TTFT/E2E use n=20 completed traces; low-N P99 is descriptive."
+}

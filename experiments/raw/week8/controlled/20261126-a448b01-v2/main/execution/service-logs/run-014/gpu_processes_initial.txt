@@ -1,0 +1,7 @@
+index,uuid,name,memory.total,memory.used (MiB)
+0, GPU-b084aeb9-1c70-5575-1df7-1514f16147fc, Tesla T4, 15360, 12691
+1, GPU-143b169c-3436-592a-4e5c-2ba4296a69ab, Tesla T4, 15360, 12691
+
+gpu_uuid,pid,process_name,used_gpu_memory (MiB)
+GPU-b084aeb9-1c70-5575-1df7-1514f16147fc, 11536, VLLM::EngineCore, 12688
+GPU-143b169c-3436-592a-4e5c-2ba4296a69ab, 11545, VLLM::EngineCore, 12688

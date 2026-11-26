@@ -1,0 +1,38 @@
+{
+  "created_at_utc": "2026-11-26T05:19:04.278085+00:00",
+  "source": {
+    "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": false
+  },
+  "calibration_rule": {
+    "profiles": [
+      "steady",
+      "burst",
+      "heterogeneous"
+    ],
+    "load_level": "medium",
+    "repetitions": 3,
+    "method": "twice_max_relative_deviation_across_policy_profile_groups",
+    "multiplier": 2.0,
+    "maximum_allowed_tolerance": 0.2,
+    "primary_metrics": [
+      "latency_ms.ttft_p50",
+      "latency_ms.e2e_p50",
+      "rates.completed_drain_rps"
+    ]
+  },
+  "calibration_runs": 18,
+  "main_runs": 54,
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "window_ms": 20000,
+  "main_analysis_may_fail_repeatability": true,
+  "preparation_plan": {
+    "model_cache": "prefetch_snapshot_then_offline_workers",
+    "worker_startup": "parallel_for_every_conditioning_calibration_and_main_run",
+    "conditioning_runs": 6,
+    "conditioning_profile_load": "one_pair_per_profile_at_medium",
+    "conditioning_not_used_to_derive_tolerances": true,
+    "gpu_telemetry_interval_s": 1
+  }
+}

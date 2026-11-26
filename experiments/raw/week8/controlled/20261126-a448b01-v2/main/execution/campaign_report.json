@@ -1,0 +1,234 @@
+{
+  "schema_version": 1,
+  "test_mode": "live_dual_t4",
+  "experiment_phase": "main",
+  "protocol_sha256": "5556b126227ccbab2e5994b88913a8958a7f6b3bda2f3d917b9d5d28040a5177",
+  "source_git": {
+    "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": false
+  },
+  "full_campaign": true,
+  "planned_runs": 54,
+  "selected_runs": 54,
+  "run_status": "failed",
+  "runs": [
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-low-round_robin-r1.json",
+      "run_id": "20261126T060503Z-w8-steady-low-round-robin-r1-a448b01-7f80c0",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T060503Z-w8-steady-low-round-robin-r1-a448b01-7f80c0",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-low-least_loaded-r1.json",
+      "run_id": "20261126T060647Z-w8-steady-low-least-loaded-r1-a448b01-223ec3",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T060647Z-w8-steady-low-least-loaded-r1-a448b01-223ec3",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-low-least_loaded-r2.json",
+      "run_id": "20261126T060831Z-w8-steady-low-least-loaded-r2-a448b01-9e8de3",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T060831Z-w8-steady-low-least-loaded-r2-a448b01-9e8de3",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-low-round_robin-r2.json",
+      "run_id": "20261126T061016Z-w8-steady-low-round-robin-r2-a448b01-f05d34",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T061016Z-w8-steady-low-round-robin-r2-a448b01-f05d34",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-low-round_robin-r3.json",
+      "run_id": "20261126T061200Z-w8-steady-low-round-robin-r3-a448b01-d1793f",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T061200Z-w8-steady-low-round-robin-r3-a448b01-d1793f",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-low-least_loaded-r3.json",
+      "run_id": "20261126T061344Z-w8-steady-low-least-loaded-r3-a448b01-9f1a6f",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T061344Z-w8-steady-low-least-loaded-r3-a448b01-9f1a6f",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-medium-round_robin-r1.json",
+      "run_id": "20261126T061528Z-w8-steady-medium-round-robin-r1-a448b01-a2d594",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T061528Z-w8-steady-medium-round-robin-r1-a448b01-a2d594",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-medium-least_loaded-r1.json",
+      "run_id": "20261126T061713Z-w8-steady-medium-least-loaded-r1-a448b01-580eb9",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T061713Z-w8-steady-medium-least-loaded-r1-a448b01-580eb9",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-medium-least_loaded-r2.json",
+      "run_id": "20261126T061856Z-w8-steady-medium-least-loaded-r2-a448b01-c9a473",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T061856Z-w8-steady-medium-least-loaded-r2-a448b01-c9a473",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-medium-round_robin-r2.json",
+      "run_id": "20261126T062041Z-w8-steady-medium-round-robin-r2-a448b01-52d6dc",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T062041Z-w8-steady-medium-round-robin-r2-a448b01-52d6dc",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-medium-round_robin-r3.json",
+      "run_id": "20261126T062225Z-w8-steady-medium-round-robin-r3-a448b01-f072cb",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T062225Z-w8-steady-medium-round-robin-r3-a448b01-f072cb",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-medium-least_loaded-r3.json",
+      "run_id": "20261126T062409Z-w8-steady-medium-least-loaded-r3-a448b01-4c5eff",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T062409Z-w8-steady-medium-least-loaded-r3-a448b01-4c5eff",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-near_saturation-round_robin-r1.json",
+      "run_id": "20261126T062554Z-w8-steady-near-saturation-round-a448b01-45fab4",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T062554Z-w8-steady-near-saturation-round-a448b01-45fab4",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-near_saturation-least_loaded-r1.json",
+      "run_id": "20261126T062738Z-w8-steady-near-saturation-least-a448b01-3c800d",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T062738Z-w8-steady-near-saturation-least-a448b01-3c800d",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-near_saturation-least_loaded-r2.json",
+      "run_id": "20261126T062922Z-w8-steady-near-saturation-least-a448b01-a9a7bb",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T062922Z-w8-steady-near-saturation-least-a448b01-a9a7bb",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-near_saturation-round_robin-r2.json",
+      "run_id": "20261126T063107Z-w8-steady-near-saturation-round-a448b01-5c04be",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T063107Z-w8-steady-near-saturation-round-a448b01-5c04be",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-near_saturation-round_robin-r3.json",
+      "run_id": "20261126T063251Z-w8-steady-near-saturation-round-a448b01-a1a362",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T063251Z-w8-steady-near-saturation-round-a448b01-a1a362",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady-near_saturation-least_loaded-r3.json",
+      "run_id": "20261126T063435Z-w8-steady-near-saturation-least-a448b01-42991d",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T063435Z-w8-steady-near-saturation-least-a448b01-42991d",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst-low-round_robin-r1.json",
+      "run_id": "20261126T063620Z-w8-burst-low-round-robin-r1-a448b01-548888",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T063620Z-w8-burst-low-round-robin-r1-a448b01-548888",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst-low-least_loaded-r1.json",
+      "run_id": "20261126T063803Z-w8-burst-low-least-loaded-r1-a448b01-62dcf0",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T063803Z-w8-burst-low-least-loaded-r1-a448b01-62dcf0",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst-low-least_loaded-r2.json",
+      "run_id": "20261126T063946Z-w8-burst-low-least-loaded-r2-a448b01-c461b8",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T063946Z-w8-burst-low-least-loaded-r2-a448b01-c461b8",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst-low-round_robin-r2.json",
+      "run_id": "20261126T064129Z-w8-burst-low-round-robin-r2-a448b01-71202d",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T064129Z-w8-burst-low-round-robin-r2-a448b01-71202d",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst-low-round_robin-r3.json",
+      "run_id": "20261126T064312Z-w8-burst-low-round-robin-r3-a448b01-8c2d7b",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T064312Z-w8-burst-low-round-robin-r3-a448b01-8c2d7b",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst-low-least_loaded-r3.json",
+      "run_id": "20261126T064455Z-w8-burst-low-least-loaded-r3-a448b01-7d97d5",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T064455Z-w8-burst-low-least-loaded-r3-a448b01-7d97d5",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst-medium-round_robin-r1.json",
+      "run_id": "20261126T064639Z-w8-burst-medium-round-robin-r1-a448b01-bc6458",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T064639Z-w8-burst-medium-round-robin-r1-a448b01-bc6458",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst-medium-least_loaded-r1.json",
+      "run_id": "20261126T064821Z-w8-burst-medium-least-loaded-r1-a448b01-77c007",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T064821Z-w8-burst-medium-least-loaded-r1-a448b01-77c007",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst-medium-least_loaded-r2.json",
+      "run_id": "20261126T065005Z-w8-burst-medium-least-loaded-r2-a448b01-386b66",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T065005Z-w8-burst-medium-least-loaded-r2-a448b01-386b66",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst-medium-round_robin-r2.json",
+      "run_id": "20261126T065148Z-w8-burst-medium-round-robin-r2-a448b01-aac136",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T065148Z-w8-burst-medium-round-robin-r2-a448b01-aac136",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst-medium-round_robin-r3.json",
+      "run_id": "20261126T065331Z-w8-burst-medium-round-robin-r3-a448b01-bf1b32",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T065331Z-w8-burst-medium-round-robin-r3-a448b01-bf1b32",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst-medium-least_loaded-r3.json",
+      "run_id": "20261126T065514Z-w8-burst-medium-least-loaded-r3-a448b01-e338b4",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T065514Z-w8-burst-medium-least-loaded-r3-a448b01-e338b4",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst-near_saturation-round_robin-r1.json",
+      "run_id": "20261126T065657Z-w8-burst-near-saturation-round-r-a448b01-14e40f",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T065657Z-w8-burst-near-saturation-round-r-a448b01-14e40f",
+      "run_status": "failed",
+      "failure_type": "generator_limited"
+    }
+  ]
+}

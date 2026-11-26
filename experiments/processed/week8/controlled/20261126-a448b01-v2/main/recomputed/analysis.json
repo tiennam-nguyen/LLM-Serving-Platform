@@ -1,0 +1,3959 @@
+{
+  "schema_version": 1,
+  "analysis_git": {
+    "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": true
+  },
+  "runs": [
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T060503Z-w8-steady-low-round-robin-r1-a448b01-7f80c0",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-steady-low",
+        "load_level": "low",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "99879b4f7422b805b737426600c1d5aef7a61375010aa5ef79716249e7a64ee5",
+      "schedule_sha256": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+      "schedule_file_sha256": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 20,
+        "sent": 20,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 20,
+        "completed": 20,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 20
+      },
+      "rates": {
+        "offered_rps": 1.0,
+        "dispatched_rps": 1.0,
+        "completed_window_rps": 1.0,
+        "completed_drain_rps": 1.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.044,
+        "routing_p95": 0.067,
+        "routing_p99": 0.067,
+        "ttft_p50": 49.155,
+        "ttft_p95": 51.672,
+        "ttft_p99": 51.862,
+        "e2e_p50": 923.22,
+        "e2e_p95": 1254.554,
+        "e2e_p99": 1349.319
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 20,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 20,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 20,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 20,
+        "p50": 0.944,
+        "p95": 1.868,
+        "p99": 1.941,
+        "max": 1.959
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 10,
+        "worker-vllm-1": 10
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=20 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T060647Z-w8-steady-low-least-loaded-r1-a448b01-223ec3",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-steady-low",
+        "load_level": "low",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "99879b4f7422b805b737426600c1d5aef7a61375010aa5ef79716249e7a64ee5",
+      "schedule_sha256": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+      "schedule_file_sha256": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 20,
+        "sent": 20,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 20,
+        "completed": 20,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 20
+      },
+      "rates": {
+        "offered_rps": 1.0,
+        "dispatched_rps": 1.0,
+        "completed_window_rps": 1.0,
+        "completed_drain_rps": 1.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.047,
+        "routing_p95": 0.077,
+        "routing_p99": 0.086,
+        "ttft_p50": 48.665,
+        "ttft_p95": 52.325,
+        "ttft_p99": 53.161,
+        "e2e_p50": 938.525,
+        "e2e_p95": 1236.305,
+        "e2e_p99": 1314.357
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 20,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 20,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 20,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 20,
+        "p50": 0.901,
+        "p95": 2.16,
+        "p99": 2.295,
+        "max": 2.329
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 10,
+        "worker-vllm-1": 10
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=20 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T060831Z-w8-steady-low-least-loaded-r2-a448b01-9e8de3",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-steady-low",
+        "load_level": "low",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "99879b4f7422b805b737426600c1d5aef7a61375010aa5ef79716249e7a64ee5",
+      "schedule_sha256": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+      "schedule_file_sha256": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 20,
+        "sent": 20,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 20,
+        "completed": 20,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 20
+      },
+      "rates": {
+        "offered_rps": 1.0,
+        "dispatched_rps": 1.0,
+        "completed_window_rps": 1.0,
+        "completed_drain_rps": 1.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.045,
+        "routing_p95": 0.06,
+        "routing_p99": 0.071,
+        "ttft_p50": 49.915,
+        "ttft_p95": 52.197,
+        "ttft_p99": 52.464,
+        "e2e_p50": 945.43,
+        "e2e_p95": 1214.312,
+        "e2e_p99": 1317.238
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 20,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 20,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 20,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 20,
+        "p50": 0.944,
+        "p95": 2.219,
+        "p99": 2.416,
+        "max": 2.465
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 10,
+        "worker-vllm-1": 10
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=20 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T061016Z-w8-steady-low-round-robin-r2-a448b01-f05d34",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-steady-low",
+        "load_level": "low",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "99879b4f7422b805b737426600c1d5aef7a61375010aa5ef79716249e7a64ee5",
+      "schedule_sha256": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+      "schedule_file_sha256": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 20,
+        "sent": 20,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 20,
+        "completed": 20,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 20
+      },
+      "rates": {
+        "offered_rps": 1.0,
+        "dispatched_rps": 1.0,
+        "completed_window_rps": 1.0,
+        "completed_drain_rps": 1.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.044,
+        "routing_p95": 0.081,
+        "routing_p99": 0.093,
+        "ttft_p50": 49.565,
+        "ttft_p95": 53.109,
+        "ttft_p99": 55.078,
+        "e2e_p50": 934.22,
+        "e2e_p95": 1366.343,
+        "e2e_p99": 1453.341
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 20,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 20,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 20,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 20,
+        "p50": 1.17,
+        "p95": 1.958,
+        "p99": 2.019,
+        "max": 2.034
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 10,
+        "worker-vllm-1": 10
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=20 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T061200Z-w8-steady-low-round-robin-r3-a448b01-d1793f",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-steady-low",
+        "load_level": "low",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "99879b4f7422b805b737426600c1d5aef7a61375010aa5ef79716249e7a64ee5",
+      "schedule_sha256": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+      "schedule_file_sha256": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 20,
+        "sent": 20,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 20,
+        "completed": 20,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 20
+      },
+      "rates": {
+        "offered_rps": 1.0,
+        "dispatched_rps": 1.0,
+        "completed_window_rps": 1.0,
+        "completed_drain_rps": 1.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.044,
+        "routing_p95": 0.075,
+        "routing_p99": 0.082,
+        "ttft_p50": 50.315,
+        "ttft_p95": 56.198,
+        "ttft_p99": 56.328,
+        "e2e_p50": 968.0,
+        "e2e_p95": 1416.115,
+        "e2e_p99": 1468.927
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 20,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 20,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 20,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 20,
+        "p50": 1.087,
+        "p95": 1.818,
+        "p99": 2.108,
+        "max": 2.181
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 10,
+        "worker-vllm-1": 10
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=20 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T061344Z-w8-steady-low-least-loaded-r3-a448b01-9f1a6f",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-steady-low",
+        "load_level": "low",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "99879b4f7422b805b737426600c1d5aef7a61375010aa5ef79716249e7a64ee5",
+      "schedule_sha256": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+      "schedule_file_sha256": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 20,
+        "sent": 20,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 20,
+        "completed": 20,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 20
+      },
+      "rates": {
+        "offered_rps": 1.0,
+        "dispatched_rps": 1.0,
+        "completed_window_rps": 1.0,
+        "completed_drain_rps": 1.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.047,
+        "routing_p95": 0.066,
+        "routing_p99": 0.067,
+        "ttft_p50": 49.845,
+        "ttft_p95": 54.054,
+        "ttft_p99": 55.187,
+        "e2e_p50": 953.005,
+        "e2e_p95": 1374.862,
+        "e2e_p99": 1414.42
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 20,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 20,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 20,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 20,
+        "p50": 0.939,
+        "p95": 1.572,
+        "p99": 1.99,
+        "max": 2.095
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 10,
+        "worker-vllm-1": 10
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=20 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T061528Z-w8-steady-medium-round-robin-r1-a448b01-a2d594",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-steady-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.925496,
+      "workload_sha256": "965df0be78b5778dbe85f3f93ceab56fb32043e075be5032a1992c7b2b7d3949",
+      "schedule_sha256": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+      "schedule_file_sha256": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.85,
+        "completed_drain_rps": 3.823087,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.044,
+        "routing_p95": 0.082,
+        "routing_p99": 0.104,
+        "ttft_p50": 101.945,
+        "ttft_p95": 213.115,
+        "ttft_p99": 245.825,
+        "e2e_p50": 902.73,
+        "e2e_p95": 1167.243,
+        "e2e_p99": 1245.516
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.742,
+        "p95": 1.787,
+        "p99": 2.165,
+        "max": 2.373
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 3,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T061713Z-w8-steady-medium-least-loaded-r1-a448b01-580eb9",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-steady-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.606696,
+      "workload_sha256": "965df0be78b5778dbe85f3f93ceab56fb32043e075be5032a1992c7b2b7d3949",
+      "schedule_sha256": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+      "schedule_file_sha256": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.85,
+        "completed_drain_rps": 3.882233,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.045,
+        "routing_p95": 0.069,
+        "routing_p99": 0.171,
+        "ttft_p50": 101.815,
+        "ttft_p95": 248.909,
+        "ttft_p99": 279.605,
+        "e2e_p50": 887.885,
+        "e2e_p95": 1207.023,
+        "e2e_p99": 1360.806
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.769,
+        "p95": 1.74,
+        "p99": 1.944,
+        "max": 2.137
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 44,
+        "worker-vllm-1": 36
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 3,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T061856Z-w8-steady-medium-least-loaded-r2-a448b01-c9a473",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-steady-medium",
+        "load_level": "medium",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.321267,
+      "workload_sha256": "965df0be78b5778dbe85f3f93ceab56fb32043e075be5032a1992c7b2b7d3949",
+      "schedule_sha256": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+      "schedule_file_sha256": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.85,
+        "completed_drain_rps": 3.752122,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.044,
+        "routing_p95": 0.071,
+        "routing_p99": 0.107,
+        "ttft_p50": 104.065,
+        "ttft_p95": 229.357,
+        "ttft_p99": 266.055,
+        "e2e_p50": 915.895,
+        "e2e_p95": 1218.709,
+        "e2e_p99": 1432.209
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.816,
+        "p95": 1.601,
+        "p99": 1.939,
+        "max": 2.002
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 46,
+        "worker-vllm-1": 34
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 3,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T062041Z-w8-steady-medium-round-robin-r2-a448b01-52d6dc",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-steady-medium",
+        "load_level": "medium",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.30081,
+      "workload_sha256": "965df0be78b5778dbe85f3f93ceab56fb32043e075be5032a1992c7b2b7d3949",
+      "schedule_sha256": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+      "schedule_file_sha256": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.85,
+        "completed_drain_rps": 3.755726,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.041,
+        "routing_p95": 0.066,
+        "routing_p99": 0.595,
+        "ttft_p50": 109.395,
+        "ttft_p95": 245.863,
+        "ttft_p99": 286.83,
+        "e2e_p50": 908.61,
+        "e2e_p95": 1246.347,
+        "e2e_p99": 1392.445
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.726,
+        "p95": 1.574,
+        "p99": 2.043,
+        "max": 2.161
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 3,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T062225Z-w8-steady-medium-round-robin-r3-a448b01-f072cb",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-steady-medium",
+        "load_level": "medium",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.068607,
+      "workload_sha256": "965df0be78b5778dbe85f3f93ceab56fb32043e075be5032a1992c7b2b7d3949",
+      "schedule_sha256": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+      "schedule_file_sha256": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.85,
+        "completed_drain_rps": 3.797119,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.04,
+        "routing_p95": 0.072,
+        "routing_p99": 0.304,
+        "ttft_p50": 107.595,
+        "ttft_p95": 266.582,
+        "ttft_p99": 288.784,
+        "e2e_p50": 898.81,
+        "e2e_p95": 1216.13,
+        "e2e_p99": 1319.71
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.829,
+        "p95": 1.633,
+        "p99": 2.31,
+        "max": 2.397
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 3,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T062409Z-w8-steady-medium-least-loaded-r3-a448b01-4c5eff",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-steady-medium",
+        "load_level": "medium",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.091011,
+      "workload_sha256": "965df0be78b5778dbe85f3f93ceab56fb32043e075be5032a1992c7b2b7d3949",
+      "schedule_sha256": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+      "schedule_file_sha256": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.85,
+        "completed_drain_rps": 3.793085,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.044,
+        "routing_p95": 0.081,
+        "routing_p99": 0.096,
+        "ttft_p50": 103.95,
+        "ttft_p95": 240.31,
+        "ttft_p99": 253.541,
+        "e2e_p50": 882.725,
+        "e2e_p95": 1269.193,
+        "e2e_p99": 1351.764
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.768,
+        "p95": 1.626,
+        "p99": 2.027,
+        "max": 2.174
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 43,
+        "worker-vllm-1": 37
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 3,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T062554Z-w8-steady-near-saturation-round-a448b01-45fab4",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-steady-near_saturation",
+        "load_level": "near_saturation",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.926582,
+      "workload_sha256": "50dc32f07ee95629933e360cf42c571d151ee8e09c8008c636abd35299999fac",
+      "schedule_sha256": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+      "schedule_file_sha256": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 560,
+        "sent": 560,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 560,
+        "completed": 560,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 560
+      },
+      "rates": {
+        "offered_rps": 28.0,
+        "dispatched_rps": 28.0,
+        "completed_window_rps": 26.4,
+        "completed_drain_rps": 26.760223,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.042,
+        "routing_p95": 0.071,
+        "routing_p99": 0.11,
+        "ttft_p50": 123.805,
+        "ttft_p95": 159.173,
+        "ttft_p99": 169.749,
+        "e2e_p50": 1067.65,
+        "e2e_p95": 1595.057,
+        "e2e_p99": 1680.201
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 560,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 560,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 560,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 560,
+        "p50": 0.865,
+        "p95": 3.297,
+        "p99": 6.756,
+        "max": 52.366
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 280,
+        "worker-vllm-1": 280
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 32,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=560 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T062738Z-w8-steady-near-saturation-least-a448b01-3c800d",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-steady-near_saturation",
+        "load_level": "near_saturation",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.970196,
+      "workload_sha256": "50dc32f07ee95629933e360cf42c571d151ee8e09c8008c636abd35299999fac",
+      "schedule_sha256": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+      "schedule_file_sha256": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 560,
+        "sent": 560,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 560,
+        "completed": 560,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 560
+      },
+      "rates": {
+        "offered_rps": 28.0,
+        "dispatched_rps": 28.0,
+        "completed_window_rps": 26.5,
+        "completed_drain_rps": 26.704567,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.042,
+        "routing_p95": 0.083,
+        "routing_p99": 0.27,
+        "ttft_p50": 119.745,
+        "ttft_p95": 146.968,
+        "ttft_p99": 157.682,
+        "e2e_p50": 1015.085,
+        "e2e_p95": 1396.897,
+        "e2e_p99": 1472.742
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 560,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 560,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 560,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 560,
+        "p50": 0.826,
+        "p95": 2.711,
+        "p99": 5.507,
+        "max": 44.464
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 293,
+        "worker-vllm-1": 267
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 30,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=560 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T062922Z-w8-steady-near-saturation-least-a448b01-a9a7bb",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-steady-near_saturation",
+        "load_level": "near_saturation",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.003616,
+      "workload_sha256": "50dc32f07ee95629933e360cf42c571d151ee8e09c8008c636abd35299999fac",
+      "schedule_sha256": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+      "schedule_file_sha256": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 560,
+        "sent": 560,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 560,
+        "completed": 560,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 560
+      },
+      "rates": {
+        "offered_rps": 28.0,
+        "dispatched_rps": 28.0,
+        "completed_window_rps": 26.5,
+        "completed_drain_rps": 26.662076,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.04,
+        "routing_p95": 0.073,
+        "routing_p99": 0.096,
+        "ttft_p50": 117.675,
+        "ttft_p95": 147.874,
+        "ttft_p99": 159.995,
+        "e2e_p50": 1005.53,
+        "e2e_p95": 1387.359,
+        "e2e_p99": 1427.092
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 560,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 560,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 560,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 560,
+        "p50": 0.881,
+        "p95": 3.397,
+        "p99": 4.655,
+        "max": 8.972
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 292,
+        "worker-vllm-1": 268
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 30,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=560 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T063107Z-w8-steady-near-saturation-round-a448b01-5c04be",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-steady-near_saturation",
+        "load_level": "near_saturation",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.915055,
+      "workload_sha256": "50dc32f07ee95629933e360cf42c571d151ee8e09c8008c636abd35299999fac",
+      "schedule_sha256": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+      "schedule_file_sha256": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 560,
+        "sent": 560,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 560,
+        "completed": 560,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 560
+      },
+      "rates": {
+        "offered_rps": 28.0,
+        "dispatched_rps": 28.0,
+        "completed_window_rps": 26.35,
+        "completed_drain_rps": 26.774971,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.041,
+        "routing_p95": 0.078,
+        "routing_p99": 0.305,
+        "ttft_p50": 122.32,
+        "ttft_p95": 157.512,
+        "ttft_p99": 168.962,
+        "e2e_p50": 1063.8,
+        "e2e_p95": 1577.854,
+        "e2e_p99": 1670.515
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 560,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 560,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 560,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 560,
+        "p50": 0.839,
+        "p95": 3.487,
+        "p99": 5.804,
+        "max": 40.622
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 280,
+        "worker-vllm-1": 280
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 33,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=560 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T063251Z-w8-steady-near-saturation-round-a448b01-a1a362",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-steady-near_saturation",
+        "load_level": "near_saturation",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.922161,
+      "workload_sha256": "50dc32f07ee95629933e360cf42c571d151ee8e09c8008c636abd35299999fac",
+      "schedule_sha256": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+      "schedule_file_sha256": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 560,
+        "sent": 560,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 560,
+        "completed": 560,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 560
+      },
+      "rates": {
+        "offered_rps": 28.0,
+        "dispatched_rps": 28.0,
+        "completed_window_rps": 26.35,
+        "completed_drain_rps": 26.765878,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.042,
+        "routing_p95": 0.074,
+        "routing_p99": 0.106,
+        "ttft_p50": 123.9,
+        "ttft_p95": 157.11,
+        "ttft_p99": 167.958,
+        "e2e_p50": 1074.335,
+        "e2e_p95": 1580.671,
+        "e2e_p99": 1683.383
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 560,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 560,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 560,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 560,
+        "p50": 0.831,
+        "p95": 3.293,
+        "p99": 5.641,
+        "max": 39.462
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 280,
+        "worker-vllm-1": 280
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 33,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=560 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T063435Z-w8-steady-near-saturation-least-a448b01-42991d",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-steady-near_saturation",
+        "load_level": "near_saturation",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.923121,
+      "workload_sha256": "50dc32f07ee95629933e360cf42c571d151ee8e09c8008c636abd35299999fac",
+      "schedule_sha256": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+      "schedule_file_sha256": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 560,
+        "sent": 560,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 560,
+        "completed": 560,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 560
+      },
+      "rates": {
+        "offered_rps": 28.0,
+        "dispatched_rps": 28.0,
+        "completed_window_rps": 26.5,
+        "completed_drain_rps": 26.764649,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.04,
+        "routing_p95": 0.071,
+        "routing_p99": 0.099,
+        "ttft_p50": 120.1,
+        "ttft_p95": 148.887,
+        "ttft_p99": 167.023,
+        "e2e_p50": 1004.175,
+        "e2e_p95": 1401.171,
+        "e2e_p99": 1446.696
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 560,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 560,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 560,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 560,
+        "p50": 0.829,
+        "p95": 3.061,
+        "p99": 5.125,
+        "max": 10.694
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 291,
+        "worker-vllm-1": 269
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 30,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=560 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "steady"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T063620Z-w8-burst-low-round-robin-r1-a448b01-548888",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-burst-low",
+        "load_level": "low",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "45eca5a6afc18b1da5d4347ac9beed4d48c78f67fdd23bfa750cc297e840475e",
+      "schedule_sha256": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+      "schedule_file_sha256": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 20,
+        "sent": 20,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 20,
+        "completed": 20,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 20
+      },
+      "rates": {
+        "offered_rps": 1.0,
+        "dispatched_rps": 1.0,
+        "completed_window_rps": 1.0,
+        "completed_drain_rps": 1.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.045,
+        "routing_p95": 0.06,
+        "routing_p99": 0.072,
+        "ttft_p50": 51.2,
+        "ttft_p95": 134.601,
+        "ttft_p99": 228.544,
+        "e2e_p50": 1092.705,
+        "e2e_p95": 2211.551,
+        "e2e_p99": 2397.758
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 20,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 20,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 20,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 20,
+        "p50": 1.785,
+        "p95": 2.934,
+        "p99": 3.029,
+        "max": 3.053
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 10,
+        "worker-vllm-1": 10
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=20 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "burst"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T063803Z-w8-burst-low-least-loaded-r1-a448b01-62dcf0",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-burst-low",
+        "load_level": "low",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "45eca5a6afc18b1da5d4347ac9beed4d48c78f67fdd23bfa750cc297e840475e",
+      "schedule_sha256": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+      "schedule_file_sha256": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 20,
+        "sent": 20,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 20,
+        "completed": 20,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 20
+      },
+      "rates": {
+        "offered_rps": 1.0,
+        "dispatched_rps": 1.0,
+        "completed_window_rps": 1.0,
+        "completed_drain_rps": 1.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.048,
+        "routing_p95": 0.065,
+        "routing_p99": 0.092,
+        "ttft_p50": 52.91,
+        "ttft_p95": 199.29,
+        "ttft_p99": 212.962,
+        "e2e_p50": 1307.94,
+        "e2e_p95": 2254.53,
+        "e2e_p99": 2293.89
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 20,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 20,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 20,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 20,
+        "p50": 1.308,
+        "p95": 2.262,
+        "p99": 3.128,
+        "max": 3.345
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 10,
+        "worker-vllm-1": 10
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=20 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "burst"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T063946Z-w8-burst-low-least-loaded-r2-a448b01-c461b8",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-burst-low",
+        "load_level": "low",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "45eca5a6afc18b1da5d4347ac9beed4d48c78f67fdd23bfa750cc297e840475e",
+      "schedule_sha256": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+      "schedule_file_sha256": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 20,
+        "sent": 20,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 20,
+        "completed": 20,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 20
+      },
+      "rates": {
+        "offered_rps": 1.0,
+        "dispatched_rps": 1.0,
+        "completed_window_rps": 1.0,
+        "completed_drain_rps": 1.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.049,
+        "routing_p95": 0.07,
+        "routing_p99": 0.096,
+        "ttft_p50": 50.975,
+        "ttft_p95": 216.691,
+        "ttft_p99": 249.234,
+        "e2e_p50": 1063.175,
+        "e2e_p95": 2357.081,
+        "e2e_p99": 2432.192
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 20,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 20,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 20,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 20,
+        "p50": 1.212,
+        "p95": 2.169,
+        "p99": 2.279,
+        "max": 2.307
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 10,
+        "worker-vllm-1": 10
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=20 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "burst"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T064129Z-w8-burst-low-round-robin-r2-a448b01-71202d",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-burst-low",
+        "load_level": "low",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "45eca5a6afc18b1da5d4347ac9beed4d48c78f67fdd23bfa750cc297e840475e",
+      "schedule_sha256": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+      "schedule_file_sha256": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 20,
+        "sent": 20,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 20,
+        "completed": 20,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 20
+      },
+      "rates": {
+        "offered_rps": 1.0,
+        "dispatched_rps": 1.0,
+        "completed_window_rps": 1.0,
+        "completed_drain_rps": 1.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.044,
+        "routing_p95": 0.062,
+        "routing_p99": 0.068,
+        "ttft_p50": 53.645,
+        "ttft_p95": 243.728,
+        "ttft_p99": 270.593,
+        "e2e_p50": 1314.955,
+        "e2e_p95": 2407.155,
+        "e2e_p99": 2412.407
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 20,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 20,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 20,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 20,
+        "p50": 1.453,
+        "p95": 2.433,
+        "p99": 2.875,
+        "max": 2.985
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 10,
+        "worker-vllm-1": 10
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=20 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "burst"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T064312Z-w8-burst-low-round-robin-r3-a448b01-8c2d7b",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-burst-low",
+        "load_level": "low",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "45eca5a6afc18b1da5d4347ac9beed4d48c78f67fdd23bfa750cc297e840475e",
+      "schedule_sha256": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+      "schedule_file_sha256": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 20,
+        "sent": 20,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 20,
+        "completed": 20,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 20
+      },
+      "rates": {
+        "offered_rps": 1.0,
+        "dispatched_rps": 1.0,
+        "completed_window_rps": 1.0,
+        "completed_drain_rps": 1.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.044,
+        "routing_p95": 0.064,
+        "routing_p99": 0.065,
+        "ttft_p50": 54.445,
+        "ttft_p95": 253.922,
+        "ttft_p99": 271.728,
+        "e2e_p50": 1291.43,
+        "e2e_p95": 2359.073,
+        "e2e_p99": 2501.686
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 20,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 20,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 20,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 20,
+        "p50": 1.633,
+        "p95": 3.117,
+        "p99": 3.339,
+        "max": 3.394
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 10,
+        "worker-vllm-1": 10
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=20 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "burst"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T064455Z-w8-burst-low-least-loaded-r3-a448b01-7d97d5",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-burst-low",
+        "load_level": "low",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "45eca5a6afc18b1da5d4347ac9beed4d48c78f67fdd23bfa750cc297e840475e",
+      "schedule_sha256": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+      "schedule_file_sha256": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 20,
+        "sent": 20,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 20,
+        "completed": 20,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 20
+      },
+      "rates": {
+        "offered_rps": 1.0,
+        "dispatched_rps": 1.0,
+        "completed_window_rps": 1.0,
+        "completed_drain_rps": 1.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.052,
+        "routing_p95": 0.064,
+        "routing_p99": 0.071,
+        "ttft_p50": 53.865,
+        "ttft_p95": 261.295,
+        "ttft_p99": 263.347,
+        "e2e_p50": 1172.325,
+        "e2e_p95": 2420.151,
+        "e2e_p99": 2492.67
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 20,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 20,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 20,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 20,
+        "p50": 1.562,
+        "p95": 3.269,
+        "p99": 3.278,
+        "max": 3.28
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 10,
+        "worker-vllm-1": 10
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=20 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "burst"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T064639Z-w8-burst-medium-round-robin-r1-a448b01-bc6458",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-burst-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "7389416b4fff4c5349d95819f5c5336b38e4c461a1e7c8be27c401a6158f2663",
+      "schedule_sha256": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+      "schedule_file_sha256": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 4.0,
+        "completed_drain_rps": 4.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.044,
+        "routing_p95": 0.085,
+        "routing_p99": 0.813,
+        "ttft_p50": 117.805,
+        "ttft_p95": 153.302,
+        "ttft_p99": 158.058,
+        "e2e_p50": 832.185,
+        "e2e_p95": 1087.739,
+        "e2e_p99": 1417.532
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 5.796,
+        "p95": 11.157,
+        "p99": 11.928,
+        "max": 12.424
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "burst"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T064821Z-w8-burst-medium-least-loaded-r1-a448b01-77c007",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-burst-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "7389416b4fff4c5349d95819f5c5336b38e4c461a1e7c8be27c401a6158f2663",
+      "schedule_sha256": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+      "schedule_file_sha256": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 4.0,
+        "completed_drain_rps": 4.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.047,
+        "routing_p95": 0.277,
+        "routing_p99": 0.518,
+        "ttft_p50": 118.32,
+        "ttft_p95": 152.379,
+        "ttft_p99": 155.766,
+        "e2e_p50": 836.535,
+        "e2e_p95": 1099.03,
+        "e2e_p99": 1374.579
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 5.539,
+        "p95": 11.304,
+        "p99": 13.114,
+        "max": 13.33
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "burst"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T065005Z-w8-burst-medium-least-loaded-r2-a448b01-386b66",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-burst-medium",
+        "load_level": "medium",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "7389416b4fff4c5349d95819f5c5336b38e4c461a1e7c8be27c401a6158f2663",
+      "schedule_sha256": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+      "schedule_file_sha256": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 4.0,
+        "completed_drain_rps": 4.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.046,
+        "routing_p95": 0.067,
+        "routing_p99": 0.088,
+        "ttft_p50": 118.935,
+        "ttft_p95": 151.244,
+        "ttft_p99": 155.952,
+        "e2e_p50": 837.725,
+        "e2e_p95": 1070.323,
+        "e2e_p99": 1419.891
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 5.828,
+        "p95": 11.841,
+        "p99": 12.398,
+        "max": 12.57
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "burst"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T065148Z-w8-burst-medium-round-robin-r2-a448b01-aac136",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-burst-medium",
+        "load_level": "medium",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "7389416b4fff4c5349d95819f5c5336b38e4c461a1e7c8be27c401a6158f2663",
+      "schedule_sha256": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+      "schedule_file_sha256": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 4.0,
+        "completed_drain_rps": 4.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.044,
+        "routing_p95": 0.088,
+        "routing_p99": 0.344,
+        "ttft_p50": 117.62,
+        "ttft_p95": 154.047,
+        "ttft_p99": 157.69,
+        "e2e_p50": 835.95,
+        "e2e_p95": 1083.176,
+        "e2e_p99": 1356.607
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 6.081,
+        "p95": 11.653,
+        "p99": 13.81,
+        "max": 15.653
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "burst"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T065331Z-w8-burst-medium-round-robin-r3-a448b01-bf1b32",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-burst-medium",
+        "load_level": "medium",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "7389416b4fff4c5349d95819f5c5336b38e4c461a1e7c8be27c401a6158f2663",
+      "schedule_sha256": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+      "schedule_file_sha256": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 4.0,
+        "completed_drain_rps": 4.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.045,
+        "routing_p95": 0.109,
+        "routing_p99": 1.187,
+        "ttft_p50": 116.63,
+        "ttft_p95": 151.007,
+        "ttft_p99": 156.121,
+        "e2e_p50": 836.265,
+        "e2e_p95": 1069.737,
+        "e2e_p99": 1360.996
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 5.88,
+        "p95": 11.12,
+        "p99": 12.707,
+        "max": 13.484
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "burst"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T065514Z-w8-burst-medium-least-loaded-r3-a448b01-e338b4",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-burst-medium",
+        "load_level": "medium",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "7389416b4fff4c5349d95819f5c5336b38e4c461a1e7c8be27c401a6158f2663",
+      "schedule_sha256": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+      "schedule_file_sha256": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 4.0,
+        "completed_drain_rps": 4.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.046,
+        "routing_p95": 0.066,
+        "routing_p99": 0.201,
+        "ttft_p50": 116.64,
+        "ttft_p95": 147.996,
+        "ttft_p99": 154.13,
+        "e2e_p50": 834.285,
+        "e2e_p95": 1081.475,
+        "e2e_p99": 1360.417
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 5.353,
+        "p95": 11.055,
+        "p99": 11.59,
+        "max": 12.331
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": true,
+        "ineligible_reasons": []
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "workload_profile": "burst"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T065657Z-w8-burst-near-saturation-round-r-a448b01-14e40f",
+      "run_status": "failed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-burst-near_saturation",
+        "load_level": "near_saturation",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "28b30060c12da30add23e836990ec96b031e728915286d3edac649968f7667f4",
+      "schedule_sha256": "38eadddde1ce4671bcb47d6315738659da692a5fc2f67a13862ca240123d4284",
+      "schedule_file_sha256": "38eadddde1ce4671bcb47d6315738659da692a5fc2f67a13862ca240123d4284",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "main",
+      "requests": {
+        "planned": 560,
+        "sent": 167,
+        "not_dispatched": 393,
+        "ledger_missing": 0,
+        "observed": 167,
+        "completed": 167,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 167
+      },
+      "rates": {
+        "offered_rps": 28.0,
+        "dispatched_rps": 8.35,
+        "completed_window_rps": 8.35,
+        "completed_drain_rps": 8.35,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.701786
+      },
+      "latency_ms": {
+        "routing_p50": 0.044,
+        "routing_p95": 0.078,
+        "routing_p99": 0.203,
+        "ttft_p50": 320.62,
+        "ttft_p95": 607.498,
+        "ttft_p99": 684.137,
+        "e2e_p50": 1412.59,
+        "e2e_p95": 1779.293,
+        "e2e_p99": 1856.767
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 167,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 167,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 167,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 167,
+        "p50": 74.539,
+        "p95": 131.935,
+        "p99": 244.92,
+        "max": 249.332
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 84,
+        "worker-vllm-1": 83
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "run_failed"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=167 completed traces; low-N P99 is descriptive.",
+      "failure": {
+        "type": "generator_limited"
+      },
+      "workload_profile": "burst"
+    }
+  ],
+  "provenance": [
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T060503Z-w8-steady-low-round-robin-r1-a448b01-7f80c0",
+      "run_id": "20261126T060503Z-w8-steady-low-round-robin-r1-a448b01-7f80c0",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "1f7163f3d87a6d7db65394449d4ce9a2d96244278ac3946db0d8fb051d2e0b65",
+        "manifest.json": "53f99353848a9c0b18e7c61cda5e8b8143f017d4105ea5edf335095b7abce4b8",
+        "metrics.before.prom": "837869b81f27d168c69ab35cd80d4195f80a6c9c40a40aff6bdf1c132317f79d",
+        "metrics.prom": "6e13772262c6fe27cda7badbbdb430656a3f634f7955762be0f504bbbefdc47e",
+        "requests.jsonl": "d6891d8bb4b60bfacefe67a56917d2daca253248765ffd19af883ea303fae463",
+        "schedule.jsonl": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+        "summary.json": "7b32cc8c1c6e008b01916749e71b646d808e20467367636e00d24a84a25f5a5f",
+        "traces.jsonl": "cf9869834bbe0abe49ac628c9608ee6b8330bafe6dd18c05ecd000ed93335a08"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T060647Z-w8-steady-low-least-loaded-r1-a448b01-223ec3",
+      "run_id": "20261126T060647Z-w8-steady-low-least-loaded-r1-a448b01-223ec3",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "b4d2d852afef2fc48697e42f6927b991e3689d928767d3771fb68eecc767b58e",
+        "manifest.json": "780cd090b9cee945b39d6a7b1da2e332cc3dd8add63a7e63cf429176561ead5d",
+        "metrics.before.prom": "6ea3ef6e25e63d800597ecae48fa45b1a8f4ca5867787ef9c29e810e40d43fe6",
+        "metrics.prom": "4e61fb1bbb56de430af2880c411a6aef23ebf3851af95ddaeed03bc3fb13fbf1",
+        "requests.jsonl": "aff07f190a22494c1c3f72e3e3f4c6f438a771319fea9f262464fbbb4c820bdc",
+        "schedule.jsonl": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+        "summary.json": "5819d1e7864f3bf3ab5fb6525eec6b452777fdbcae572316ad4420d0a0b3057a",
+        "traces.jsonl": "d860ec4fc34b429414b90b871ba6ecb5d6b0ce8a73dc5f8139c373d75ec16518"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T060831Z-w8-steady-low-least-loaded-r2-a448b01-9e8de3",
+      "run_id": "20261126T060831Z-w8-steady-low-least-loaded-r2-a448b01-9e8de3",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "4b2918ebf6592c9f1c2140290fe989c9f9fb0b91bcdc5b2094b71d0674ef7b39",
+        "manifest.json": "51304c17b3ae57d7452d02c527d1335d1890be770e0aa8f0e94f7434f623f86c",
+        "metrics.before.prom": "e925a3b752b14b307457cd25c0d34f20eae02db1a161b5f3243eafcc172dd738",
+        "metrics.prom": "08c86cffea1c816b09bfab88eaeb48e881ba64f22fe22ab36180f2b96e2c7a39",
+        "requests.jsonl": "b3f84feed1395ec6e8000f31432281f7e78b7c1086867ec91e1a637bcc78fe92",
+        "schedule.jsonl": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+        "summary.json": "121f9facf528d179c7ee30d5098a751dd9fce1b1ee665476faa38b9f6d9351b5",
+        "traces.jsonl": "f6f7d2cd53edd33384941aa187c46908e0c8977372a85169b9e61afd4dcd6c70"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T061016Z-w8-steady-low-round-robin-r2-a448b01-f05d34",
+      "run_id": "20261126T061016Z-w8-steady-low-round-robin-r2-a448b01-f05d34",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "a257f441c562890db8c062fcf38be0e14be9c3776941d0549db89c48d7d22b69",
+        "manifest.json": "8a7be5408293191c10413feb007587554d7bcfdf41a08a531e64bf3689a9c7d7",
+        "metrics.before.prom": "bddedde96aa1946e7ae351f6008d2674186a7ba07e03ff17e1e44ada9208eaac",
+        "metrics.prom": "1725a2bf0483aaf52b3d2c0113ba0a9596fcf9e826166d47abd32fa788d953e9",
+        "requests.jsonl": "18abddf82d191510d48ac321243dabfa16c85f61db2276e2b4e6b6d567407592",
+        "schedule.jsonl": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+        "summary.json": "fa43e272c390c17287c2c6c5b915f81a276fef8b5b88be720d904e63a355f11d",
+        "traces.jsonl": "22fbfd3844f2bab2dfd19eab59c23084c7a27b7836d5ba293378dcd675eb3ac7"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T061200Z-w8-steady-low-round-robin-r3-a448b01-d1793f",
+      "run_id": "20261126T061200Z-w8-steady-low-round-robin-r3-a448b01-d1793f",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "c197c2dcab34dd97f887f616965d8dd65f810f1a8b333e6cc9e1fce512ed0db2",
+        "manifest.json": "803b2058d06525fa4eb6a46c9d07fd8ee97594b0379910b2e21077ae7a1f443c",
+        "metrics.before.prom": "e868b6bd84c5f0096efc3f80348e41b934a2b47a8f474b2645137104fa7d2478",
+        "metrics.prom": "2c80fe489c1745e826218945eede75f5f36429309c58fc4984837a03f2f8bb66",
+        "requests.jsonl": "20ee586e0fa2b3817581166b89b83c46560abf1058eef0b9add902c1237fcd1b",
+        "schedule.jsonl": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+        "summary.json": "cd19d532f4f4e6610100f85fc80a4a5fbfe5efe1270e500df7cb798de4b28c62",
+        "traces.jsonl": "97813ba3308a87381f56e3c7b51168774ff484af09e759be9c56d37fd0c9ba73"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T061344Z-w8-steady-low-least-loaded-r3-a448b01-9f1a6f",
+      "run_id": "20261126T061344Z-w8-steady-low-least-loaded-r3-a448b01-9f1a6f",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "01dcb9309ed3d1856c3d4663c93b975baf4132854fbca952f656db401d5cd60a",
+        "manifest.json": "90e1f9fa504e8408b1fe157378faf8fbf0756a8a80b57cbe33d066819ddf1696",
+        "metrics.before.prom": "8161a30b26fb66168f20b873c07866984a7fb7984e5b9bc14f0a6cfe1b7e0a92",
+        "metrics.prom": "aa04d0c6da27c91cbb1e370955194df1111e3e7e32124afcad7fe80ac2504998",
+        "requests.jsonl": "c02a7d894230769813074928945327be1627dcb0c01e61c3c4e2709092a4b3f3",
+        "schedule.jsonl": "f503b704e2a9f72172c7ac924cd671ec8bbc0846b2d19c650b0faa387a72fe96",
+        "summary.json": "b96e21d4c04ddbd01e9609445bde9fe98af6c48816a15c2c900d083367a5562f",
+        "traces.jsonl": "3d3326df58f3a578e63487153239db7c717a322c8076a81501c8840988107d8a"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T061528Z-w8-steady-medium-round-robin-r1-a448b01-a2d594",
+      "run_id": "20261126T061528Z-w8-steady-medium-round-robin-r1-a448b01-a2d594",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "0991abf05095d01f65cb8e2cef04634ea8feb8478bce191a2f10f29d94310d96",
+        "manifest.json": "5ebfb284370e241823ac3e84f0f27ad71064367596bc4ce716ef6485dfbfa4f8",
+        "metrics.before.prom": "3e9bf6197fd7e1e5a1d98881c88d7d1989064369f36e1cffc4b45811ab4a366b",
+        "metrics.prom": "d2c9e98f31a077bb9cadbf35b402eb74b749dde671ff8d78cb3ef30744b1e662",
+        "requests.jsonl": "09ef83344c6832dfc382517c9c70c007104a1aeeacf7d263efe3bbfc00cd9f00",
+        "schedule.jsonl": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+        "summary.json": "69bafd8596ac4ccdac27f80855aff10f3fd59f947d699e992f26c01a96c31664",
+        "traces.jsonl": "71abbb32575e34dcc6a3e5a78a01a61aa5413950f8b1c2c97c696606ded70042"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T061713Z-w8-steady-medium-least-loaded-r1-a448b01-580eb9",
+      "run_id": "20261126T061713Z-w8-steady-medium-least-loaded-r1-a448b01-580eb9",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "33dd9da01090399caf3b9aa2719d81b390e265b7c8d0ec0b4f94d8a5b21f70d1",
+        "manifest.json": "74e8526417eb9e43df17ab29b1f3b43c07d43630755195ca2df0f9da8716b4df",
+        "metrics.before.prom": "ffdd23e4e89fc563527cc5ddc07f4d39bba8d2666f0326414168e2912e23446b",
+        "metrics.prom": "cec8e8e6ca6fd0426d9724c9e84888b311a86e446cf0357f4b0d3f0824ee61cc",
+        "requests.jsonl": "9d68d33e10ab437e36a703252e59ee76e7b6931685e2b1fdd957b7e2e23d4c46",
+        "schedule.jsonl": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+        "summary.json": "11219dde78d4634f1b5386e9ea756e4c87c916ca40a8eab5fdddd59475d80032",
+        "traces.jsonl": "9e57c70eae4f18660561ffb50e6218215b3b730d3e6556613f758abe2c1b98ab"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T061856Z-w8-steady-medium-least-loaded-r2-a448b01-c9a473",
+      "run_id": "20261126T061856Z-w8-steady-medium-least-loaded-r2-a448b01-c9a473",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "1a6b85ae89010de50576ba73a1017c4d48c6ebd6adb749d2fef18fa93fa0f010",
+        "manifest.json": "a3c5895ac0c58bf4a545737156afcfd10a406943abd1d7feecc4ce856f67df3d",
+        "metrics.before.prom": "bcf95bb3d56344798c80c26e3ea7b559a0568df6d8206af7e015b8bec7a5ec99",
+        "metrics.prom": "319dfe8645395b265b33fa5a545beffb4faff4c94b26ec08ba682f084055cf01",
+        "requests.jsonl": "0e3e18f2e34366bf17db70002434e38534911a6b6675b8e4335c1b76b6d7f2d1",
+        "schedule.jsonl": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+        "summary.json": "034432c37d721c3b0fe4ed87ca7308d876334bd9c7c0ce6435702f08962cf7fc",
+        "traces.jsonl": "209085b438e8a14bb6a483735490f397600a3baaa31cb1afb06aeb4061f3eb06"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T062041Z-w8-steady-medium-round-robin-r2-a448b01-52d6dc",
+      "run_id": "20261126T062041Z-w8-steady-medium-round-robin-r2-a448b01-52d6dc",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "0c0a61958bd26ce5c029f6dfd1138d0d7790e382fafecfe6c6a6074543be2cab",
+        "manifest.json": "70a90a37d0ce37938c2069f16320e4895e02331fa59dbc1e29d230b4368e4e96",
+        "metrics.before.prom": "176b86c80e4e94177979bd57629279968d5f60705e221e8636858be35575b6c9",
+        "metrics.prom": "98154a0bfcafa0ea2cb2a0e2411b4d8240ea4cb64895ed06264e38bd14c3b285",
+        "requests.jsonl": "5be82a3bf2246a221ffea407786384d0d72c55b3bdccc75f1f97aee760777962",
+        "schedule.jsonl": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+        "summary.json": "6d7b24cbc135951c9b75c5e4667d8cf7588c64a7e2a69f3fb7012ffa95fae62d",
+        "traces.jsonl": "77d575a52743d72e71433d4bd47a55a31f0d0180343b5f33ff51f00c3b8bfb60"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T062225Z-w8-steady-medium-round-robin-r3-a448b01-f072cb",
+      "run_id": "20261126T062225Z-w8-steady-medium-round-robin-r3-a448b01-f072cb",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "ca0930abe48fbe9e8d3f1828af3720882b1342ad16326ff04eb4e380758c5a5b",
+        "manifest.json": "a950b2ef3303c01e1e033edcf076b81fa06e2c5915790158e511b1095e8c8e0b",
+        "metrics.before.prom": "da9dbcee3646db6a05a2e192a25fc66c56b73d33001c8cb1c6b0e9e769fae161",
+        "metrics.prom": "f74d16fdd5a17a4d06e4aa898abc5dea2f5f7f60a7287552c91dac8c944bfe06",
+        "requests.jsonl": "67f4603d38a5c4ea51149e3f35c37913d1552c2b93382d017a4a101a55ba2b1b",
+        "schedule.jsonl": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+        "summary.json": "a54f88247da0b91b46e4f7dee3e4d236ac5a0f4771f03cc7e13b454fbbb01575",
+        "traces.jsonl": "01f61af9d353400de7b1ca93c76aa7eaa45087c61e762ba64efb628f9273702d"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T062409Z-w8-steady-medium-least-loaded-r3-a448b01-4c5eff",
+      "run_id": "20261126T062409Z-w8-steady-medium-least-loaded-r3-a448b01-4c5eff",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "4cc642387cb17fe5a288e053734a1723a24f32a697d3805ad60387759f23ea74",
+        "manifest.json": "e47c2ddac9b217365005d3f7ade7209bc29cb232a292bd4e92521e0b046a452c",
+        "metrics.before.prom": "0ab38995dc9a983446ba80e2102b35099f15561357a39b69fab64c1e5daa18e9",
+        "metrics.prom": "e9a3e8c2bd9871cc6b5621e730f80419e9553e8e6ed345c1c91b9862c7455500",
+        "requests.jsonl": "ff9056d35f3bd3435304496182bb98d7405908bd89782c8ffaf2e9b740f43c13",
+        "schedule.jsonl": "80ff21f45ed5f04d9c9c672f61d37ad6e39961234130b4813f1578c88a1111bd",
+        "summary.json": "72fc96b68634f36c03928db166fb27b6be1e71ea687ce555ad5a47988ff25ed0",
+        "traces.jsonl": "ca2ffa3f9a9913326a7052558e8ea31d1e74eb7a2b10d6bc1831ba76da1630bb"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T062554Z-w8-steady-near-saturation-round-a448b01-45fab4",
+      "run_id": "20261126T062554Z-w8-steady-near-saturation-round-a448b01-45fab4",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "5472e9383eeeb9407a379ee061eabe5613d7a5f27362f1c37d49c5138dfd6a77",
+        "manifest.json": "6f853cf556b720c896e08353fb30ed75bedd0bafe481ab0c0e371a0d4ff21c87",
+        "metrics.before.prom": "58e851d8ec0c1dbc3c347653acdc9fb66f5b49c9fb9ee590d70d515af5506f52",
+        "metrics.prom": "b4663a1d5ef907619eba60ce575c2918d60f7269a5b8656e2e035c1b1784aa4a",
+        "requests.jsonl": "e9c7d34417a24270a169639d1596d46271d6fce899fa458b6a15c3f6b94d3f09",
+        "schedule.jsonl": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+        "summary.json": "e6a2528b9a18d896931fd170fe1d743d630a900d96408963d25087b07c8d6309",
+        "traces.jsonl": "fdc1064f4c32738fca5642f1b4ec8619fbc43224205bf1422858452ce90d2b65"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T062738Z-w8-steady-near-saturation-least-a448b01-3c800d",
+      "run_id": "20261126T062738Z-w8-steady-near-saturation-least-a448b01-3c800d",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "6573dc2470b195a2ce40c1bd39fb39d10a3b11cf8a8f6769f3f372c376d2b736",
+        "manifest.json": "e08db33b17378ccf92c8664583d9a4f9703bc64fb6269a1b2137c09abc201307",
+        "metrics.before.prom": "816a50b7e1239bf34b8694c53f8c5291fa07a6e2384aa6a71d6af02e0b89bf2f",
+        "metrics.prom": "20ad08a19905535dccfbab05c72a6f972198643f9038b0f632f5310adaee15c8",
+        "requests.jsonl": "30c0f7ab15b3db1ffa80e51e9875d943c790d4893bbbf50b01f443c347a394c1",
+        "schedule.jsonl": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+        "summary.json": "2b54603d5df4eeecd397d9642403af4d5aae330edfe8d7c8c014d3dc07fbf2c4",
+        "traces.jsonl": "3144b447e6447b175cc75e3ce2bc1c903bb7fe265070dacddfb852bcb6a0f36f"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T062922Z-w8-steady-near-saturation-least-a448b01-a9a7bb",
+      "run_id": "20261126T062922Z-w8-steady-near-saturation-least-a448b01-a9a7bb",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "2f3321cfa19cc63d2b1e6c4f0ca54e9e359b6068fabb460831d8521502ec3037",
+        "manifest.json": "56036886f8172a61fb691556d427593441c7d7a89f0eb20acf43c9747ed0e74b",
+        "metrics.before.prom": "901ff7ff76c2b0b14e54a05af68d43ac3e27fb0c4bd87fd15add212257db98c2",
+        "metrics.prom": "29dc2a394eaf4f09d57b7e30437c85fb7e4bfd2ded26fe9db78a934fecdb381e",
+        "requests.jsonl": "8d0525f4f12b8a3ee2682104b10854e0b2359889e364e93ed65c35050e9feea6",
+        "schedule.jsonl": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+        "summary.json": "e2fbcc091443ad95c46953df3f9618eb72ab6d94bcaa171eddf84f7b8a02e790",
+        "traces.jsonl": "070b081193ec02f7889356721bc3f499604f91dadbb974cf11bbb0ebd4b78f1f"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T063107Z-w8-steady-near-saturation-round-a448b01-5c04be",
+      "run_id": "20261126T063107Z-w8-steady-near-saturation-round-a448b01-5c04be",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "11580079c73066748b91adfb3859dfad4a211d7554830eae447ebb97705f0020",
+        "manifest.json": "9d0a5ce0f6975d1a64bf3da6f247706fb2530e3506812f26ebdcfe593c7cdeca",
+        "metrics.before.prom": "561c00ed0b0c6557998b5b2aac41a3f9177bf4097e853d57670ec20820f0e5b2",
+        "metrics.prom": "f4b9229889a4a2687522e0e11695d4b01e3094c976547cdbcff74719dd21b520",
+        "requests.jsonl": "3a1c7f521997a9a808b723dbe296983eb6e7f8e949d5a968809142799cd03fb2",
+        "schedule.jsonl": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+        "summary.json": "472717d220d3622c3cdab7b785f000427fc99a394838f27447ae31d162eba9a2",
+        "traces.jsonl": "924a6b1e1cf672543d9aec72608b8c1190973559bff3dd133bcea2f9acada4d9"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T063251Z-w8-steady-near-saturation-round-a448b01-a1a362",
+      "run_id": "20261126T063251Z-w8-steady-near-saturation-round-a448b01-a1a362",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "9e30b76d412885ef8621555c2c2e64d7b03f059af46d782c459d59bd8c116a5a",
+        "manifest.json": "504b81fa293d482cc4c133bfcc71df45bc6ab8c22055a29536d83cea4091dad1",
+        "metrics.before.prom": "f81dfe639bfbe6f6b6ff57b0bbf2be3b34f004ec4291d24174ad65cd804899cc",
+        "metrics.prom": "6f648846e3846cfdbf9e5923c5355a47e73f2a97b2bb6c7b93dc4e9828e71df3",
+        "requests.jsonl": "c8a0eb810f819c18dde5ae33270c23c85e727a970b4d71edb1fcd2992eacbe59",
+        "schedule.jsonl": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+        "summary.json": "922944d47dd50c1a89d5d4c3fdc874ec0b7ebbadd5214dbe22a5db8310cb2b06",
+        "traces.jsonl": "9c52ac771c003f26a39d82e4c799a52dfade30152547fe2d520a248c0d74d045"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T063435Z-w8-steady-near-saturation-least-a448b01-42991d",
+      "run_id": "20261126T063435Z-w8-steady-near-saturation-least-a448b01-42991d",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "9f0bcb5047a4a162a5d3660e0f2a7c5a7ec5de09c120004dd22a7d509f3dc733",
+        "manifest.json": "8514c84901b5e00f0df058a8dbc3abbf08183c44dc004861cf2c50191842dbcb",
+        "metrics.before.prom": "88adb2221a72650ce98ffad7784baac579df425eb04094ac5507ad583aebd63a",
+        "metrics.prom": "a2d3b40e4423663aed72b1eaf502d24d841bf2c8d7210c06096ed4db87f048b3",
+        "requests.jsonl": "834daef02006712031e36542664ace0cc85dad3158acddc0b1d38852adbf0015",
+        "schedule.jsonl": "f6ef68f296d6a00ae2473f6733965a268ee151efe8b6c660254e1baed8c241db",
+        "summary.json": "02d753f9348deff6ffb1b69a7f52f513d67efdf2d666d36de3f82333f3e24036",
+        "traces.jsonl": "df3a562ff9f977ac72b4c5d2e51f382fe87df957ce845e8c20d95b95c4c88a5c"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T063620Z-w8-burst-low-round-robin-r1-a448b01-548888",
+      "run_id": "20261126T063620Z-w8-burst-low-round-robin-r1-a448b01-548888",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "57487610c38e4eb20b4d542fd31ba5317d20fe12661941c7d1268a7b9798afd0",
+        "manifest.json": "be9c3234fb043bddebef15eb6ede0c26327ce6ee1b911cefd897f084046fa34c",
+        "metrics.before.prom": "aece575bbf9956cf118772d15ef6d27bcfa8437fa017cc46aa9891c5a7ef8607",
+        "metrics.prom": "2c0f4433497dd632544390fbc3910d00239f1d05121dd7b0ce43dedd8e743357",
+        "requests.jsonl": "88a8f2d2e2ac4e7f96b307880cea6b5331917dde29f72844d296d9072dc78632",
+        "schedule.jsonl": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+        "summary.json": "00a8e18004cfc8ddd34989d5f9ce8d68ba579c4265193734920b39256fab9d93",
+        "traces.jsonl": "a676cb512920e78775005464c20cf4fa96d7754ed32598aa71ce472d5d4d0446"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T063803Z-w8-burst-low-least-loaded-r1-a448b01-62dcf0",
+      "run_id": "20261126T063803Z-w8-burst-low-least-loaded-r1-a448b01-62dcf0",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "ca264f749020e6b9cd3de900d889b660254fa4eb1e26a810c81bf253e75bda5b",
+        "manifest.json": "fbed5f8bfd110b671a7f3abb7b78a8afb0f9a61d7bfd824e2c3ebe96f5c95254",
+        "metrics.before.prom": "0e350e06d22454830e731b7ec59af61d5baf93f096aa379c5587fd9731d7902a",
+        "metrics.prom": "d220b124590cfda634166eccb3656175d68938ddf57b55cedb3ad8b43907841c",
+        "requests.jsonl": "ebd90136cd060d9f53af79f515cde3a2a445df708e1e06227ed728c852abca8e",
+        "schedule.jsonl": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+        "summary.json": "58e491bc78cf6bafac63daf449bc407bce41d72f591eecfa5accbd14f36104e1",
+        "traces.jsonl": "5d4a58a21e6c84a6613947b72c49eddd91e9ce35c936b39316c0be80dd6ff549"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T063946Z-w8-burst-low-least-loaded-r2-a448b01-c461b8",
+      "run_id": "20261126T063946Z-w8-burst-low-least-loaded-r2-a448b01-c461b8",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "13c42dc07322e2cafa14b4a8cf21570db3f0986ee0e5bf6e8d3de4391997e226",
+        "manifest.json": "d8ac44c61700123d94c199e2ce494bbe2d7bd9591f5d49fa4d4c5eb532099d66",
+        "metrics.before.prom": "f7f1eb1cc082e874cdcbaf757b7d80ad36d549addf652672d402321fe5d25b6d",
+        "metrics.prom": "e8fbc49dcda74e9b15802e235430edd20d5725d5b1300e8388ec773bf6568359",
+        "requests.jsonl": "5c05d508db068381ee0b9f2ef814f7977936248678c3929ca477c724d22cb4c3",
+        "schedule.jsonl": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+        "summary.json": "a7333ce8f04fd3f95c305fa9cf76da4be78cc4c5cda6da9953d3f9570d9455db",
+        "traces.jsonl": "ea02b609614b0b63cf641a06912e2debc2f77aaefd94ce716d2d61e18268c2b8"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T064129Z-w8-burst-low-round-robin-r2-a448b01-71202d",
+      "run_id": "20261126T064129Z-w8-burst-low-round-robin-r2-a448b01-71202d",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "906aa28001876b3140012e90ef85567ce91e211b04a90c8f5764a590bdcbdbd3",
+        "manifest.json": "8e8275b454ae6ca5940850b4882208be85a9abf31396c0732e2b39e5bba87e47",
+        "metrics.before.prom": "9353328407d799b0009d8ef1ae180aba2b917b9cd56854f92647cea3c4b553ad",
+        "metrics.prom": "49ceec19eb4fa74f0743b57286d3cb99c40b5b2bc380e286958efbdf8eded792",
+        "requests.jsonl": "7353022ba3c537546c6e7c929461ba1bf094c03e782b0f161bbf0d47bf483201",
+        "schedule.jsonl": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+        "summary.json": "af01721a24074d3ce98861ea59e540ffe73c670bf5f609f19d5c13efbf45c736",
+        "traces.jsonl": "7cf7517487ab595cfc577b617697d2484f710386e3469b86d0034054d89e1d60"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T064312Z-w8-burst-low-round-robin-r3-a448b01-8c2d7b",
+      "run_id": "20261126T064312Z-w8-burst-low-round-robin-r3-a448b01-8c2d7b",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "34fd913aa1f83fd4221c7b5274f45e729ac5c8a345565115930726f9b29d62ef",
+        "manifest.json": "d60a88389008fc5c20a76f833c4ce454899073c6f006764c084f847d12e115af",
+        "metrics.before.prom": "76749674f0f5bfb50dc5952b81c5cf57d512b3bd4db04d8fb581d306ddc01720",
+        "metrics.prom": "84bd78b9bd237df0f13da357b9ad6149e1c657ea18b10e7d8fc873613bb2db4e",
+        "requests.jsonl": "e9e5f8795a80caf0a94dee152a255bc762fa730712506bcaa5040406f6ca7a88",
+        "schedule.jsonl": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+        "summary.json": "25d2d61a682ca9d86055180de07a8baec1082c113b9461404afb3bcaf6c6f327",
+        "traces.jsonl": "ffb7e286aac371ba438611208c2a3a88547d8caf106c71596684571bbf2782fc"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T064455Z-w8-burst-low-least-loaded-r3-a448b01-7d97d5",
+      "run_id": "20261126T064455Z-w8-burst-low-least-loaded-r3-a448b01-7d97d5",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "ba4640cb76c0faf1c1fb28d0cee44daae84d03e484450ee2089b1db93eef3b54",
+        "manifest.json": "5d8c231bcc7ab6f008d7ada79abfa7c710d6c6a8d164f45a90693563e4dbd1d9",
+        "metrics.before.prom": "05fc2d016b8ae307b8ef1300340dfed8b1ece6fdfeaac443242ebb30cfeec83b",
+        "metrics.prom": "c817a0dc518138d7c756af38289bb76b6b6bf13e008dd1cf9a9720c9a9c4bf9a",
+        "requests.jsonl": "97ac6597b9e82f9f332c1e039ded21f6b798b3319b19bff039552741fb4cbd80",
+        "schedule.jsonl": "30615289679f330dd496cbd26ba94e6fd5150bbc33cc5bac27d8a1339fbe8524",
+        "summary.json": "da2e9fd4b51de97948a08159993b6d8d249ad2b4c5111557983706c193e95582",
+        "traces.jsonl": "371c9078dff33a5cbeb3170b8eb91e07ee09ff6be2bd352a40e78a55e3b98a17"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T064639Z-w8-burst-medium-round-robin-r1-a448b01-bc6458",
+      "run_id": "20261126T064639Z-w8-burst-medium-round-robin-r1-a448b01-bc6458",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "1b4415f3edc4e0aee82b2f225ebcf9a8e4ccc2f30cec0b8dbc844a4216b00bca",
+        "manifest.json": "4d1b3399de5a86ff6d229de3175d64b9aaaa0ce9cc409882b0c686e57c726dc5",
+        "metrics.before.prom": "a0e3da20b08bc08632fa78e7755d1459f2e32122078271e63b403286f2c8770f",
+        "metrics.prom": "bbf84483d395ced34f820d2da2903eb2d0f1f04ecffb2d7f039c1490663bbc50",
+        "requests.jsonl": "6289a8087dc4b103b9a6da2b88e90005fe96ffaa230be9420a7ab425a7c32efe",
+        "schedule.jsonl": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+        "summary.json": "8803e2738568bb1a8b6fb7d829e660e83b421f9627116cca1b72dacee51c8674",
+        "traces.jsonl": "131db040167ebf415d4b805ead73f9a8081d69d584eed8b5d40cc91c055dd24f"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T064821Z-w8-burst-medium-least-loaded-r1-a448b01-77c007",
+      "run_id": "20261126T064821Z-w8-burst-medium-least-loaded-r1-a448b01-77c007",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "8f50a276cf86a544bc46bbd6b2f71dff109a17f074ee2f23fcaf51878107ab56",
+        "manifest.json": "d08054bf4e015894e929f1cb543daa0c35c48dd60afef297d92f494a40cf8403",
+        "metrics.before.prom": "e0e9bfe6344eae7b5336c000ada67119c383baba1c1624e4b354f4ec504b5876",
+        "metrics.prom": "2019734a67fc586763a1b3bbf215f10ffbfb84e0b729a616e7879b97550d5230",
+        "requests.jsonl": "f1b75df16746758944dc80afc3eedee67b120fd1b6d0496ea0937ffab88da737",
+        "schedule.jsonl": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+        "summary.json": "e146bc75e629d1561158b865b4795d7a5e87e33267b2dd1f697739557837a1df",
+        "traces.jsonl": "1c0b8ecebaf2973d4b8d99d34ea35fe8901a45092e0019a80d271b164e413e0a"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T065005Z-w8-burst-medium-least-loaded-r2-a448b01-386b66",
+      "run_id": "20261126T065005Z-w8-burst-medium-least-loaded-r2-a448b01-386b66",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "96b78229c1d349256b3512e41be0567ddfaa41edac3f870dfa4d70f6f9e24f45",
+        "manifest.json": "d2639687e7a4a6d6a33a6a4d47d7f64f84af687b90a0b1223c4c43312876a480",
+        "metrics.before.prom": "873d0c0c7e80c11d3b8f098e7b023127febdc20655bacd386515d7b5ef14309c",
+        "metrics.prom": "16ab432d67f7bd6981dc052bbe1c2827f632a56bbbebeb6a93516e481fb59b52",
+        "requests.jsonl": "5f0ae720611e9c3dd694037460335f9d2fe5f53387c3fb4a5d655002cf7d4e8e",
+        "schedule.jsonl": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+        "summary.json": "51e9b1448cc69ab30ac52b5842cfcc372a7018d6750398acb7c62c791c358a8f",
+        "traces.jsonl": "e9e53f5e9b6813d0618b93a95558074774c53cb73461c95af4d88f818b0e6d56"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T065148Z-w8-burst-medium-round-robin-r2-a448b01-aac136",
+      "run_id": "20261126T065148Z-w8-burst-medium-round-robin-r2-a448b01-aac136",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "b0184d539f64e39435b60d2ddf95d52d99be34145d1ede0e4b48c8efd54b1dec",
+        "manifest.json": "9fdeb934fc7d46fecf8c2fda04c1969127f2fd2e3daf8b23ada05178bccba59a",
+        "metrics.before.prom": "b2c7036e62658ef3347ad12f8c34d2d8e76033e5e94001f8231bfa79e8a3dd29",
+        "metrics.prom": "252bb88cffdb7b95e5a5166690aed87d547639eb14f814f16d30f4994f8a99b2",
+        "requests.jsonl": "81b33357b52937aa6f1042b3c93bdd8584391bb2409b694af52676a38096d84d",
+        "schedule.jsonl": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+        "summary.json": "e50921f76eb77953441c9834e033749fda61897f72c4a70875c446829f40143a",
+        "traces.jsonl": "7fd03646811e174f28b5f56b9a02b4770d4227401a0cda13f1971c37683efe4f"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T065331Z-w8-burst-medium-round-robin-r3-a448b01-bf1b32",
+      "run_id": "20261126T065331Z-w8-burst-medium-round-robin-r3-a448b01-bf1b32",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "5274e1f64f4da5b05bb08f8f5283ca32d8408cf15b6c8ecec6e15de412aa8c90",
+        "manifest.json": "cead1ca9ed782685983cdf07231de63c14f7938862918c29df39945c9d819d3d",
+        "metrics.before.prom": "d6d68ac57fa05c18a629867144d61fb434295b55eaf3aa076bea15a3d75f3ffe",
+        "metrics.prom": "f311c3a3a0fb7f68ad45b501ef8e707f3f05e36daf0e82ce10ea3df76710b63f",
+        "requests.jsonl": "ada37595d04b481b40bfb4bb49f57cb4be9fdea6a6b6bdb8da2caa23742e7eac",
+        "schedule.jsonl": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+        "summary.json": "e65acca492e5d1bd1bc9a81265f786a321632a3dd9c7c9e6b15e9fb282fb12d8",
+        "traces.jsonl": "0d398a6846be7be922f68f720c0cea40aa0ecc1e0a78a1b9bf7e5c0b37eb5a50"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T065514Z-w8-burst-medium-least-loaded-r3-a448b01-e338b4",
+      "run_id": "20261126T065514Z-w8-burst-medium-least-loaded-r3-a448b01-e338b4",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "263b4eba92aacc7a7af821fc5afa06f054632a94c67c849b3acea7f892757f68",
+        "manifest.json": "9d9b9a936b83e5df67b162029f06d6d4555b490f35810d56eb620a89652b8c27",
+        "metrics.before.prom": "d46822f60af613424e77d1ede9f481740b21b850079a0d2c8e7cf2ecfc8c38fe",
+        "metrics.prom": "c9d56b5a3a3265238732f3f7aff27da7db39a567ec1b3645f548f3f2abb72448",
+        "requests.jsonl": "395a99d443fc81f7c85d670dc27c87dbca51fe57634ca0b14168e1b530ed564c",
+        "schedule.jsonl": "2c388ee2ef97f1e8ae974f7c2f063710a755a5e22269e4d86bd6fbfde211e0b3",
+        "summary.json": "aa9fcfd6b5f91d9a10b979707d69e642c2f136452b6b432f635eacee4d2aae6b",
+        "traces.jsonl": "dd8f6a8755b8c9fb06bc58822de82ded9dd632cfb65322833edb5b8c5ee00647"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-a448b01-v2\\main\\execution\\runs\\20261126T065657Z-w8-burst-near-saturation-round-r-a448b01-14e40f",
+      "run_id": "20261126T065657Z-w8-burst-near-saturation-round-r-a448b01-14e40f",
+      "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+      "files": {
+        "environment.json": "a94f6cd253cff86ea9764282f67e9305a00da35d08bab924c294542256fbca90",
+        "manifest.json": "354e9f959e337e596c86eae7e0ed6d88fdaf13b56396039730ecabbd82e6098b",
+        "metrics.before.prom": "cd3319b6ee3f17d645982bf89692edfa6e565ebc3945b7fe7029fe17a775c210",
+        "metrics.prom": "a25666f430d8031eaad42691fb543ca6c7dc32ddfbdcb8d0d8f5ad12b2f0958b",
+        "requests.jsonl": "4a175dc151361990c52d0ed1eb268edd2c7055be34b594607b16451c18cfc6bb",
+        "schedule.jsonl": "38eadddde1ce4671bcb47d6315738659da692a5fc2f67a13862ca240123d4284",
+        "summary.json": "2a624777d23aead008dcf70dd84b640f5aaab277cdfdf76d72ae5c70105cc743",
+        "traces.jsonl": "9539de297416e4c62a2348b1371c04407485b28811be8045e9725ed08914dcea"
+      }
+    }
+  ],
+  "pair_checks": [
+    {
+      "comparison_id": "w8-burst-low",
+      "repetition": 1,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-burst-low",
+      "repetition": 2,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-burst-low",
+      "repetition": 3,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-burst-medium",
+      "repetition": 1,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-burst-medium",
+      "repetition": 2,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-burst-medium",
+      "repetition": 3,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-burst-near_saturation",
+      "repetition": 1,
+      "matched": false,
+      "reason": "missing_policy"
+    },
+    {
+      "comparison_id": "w8-steady-low",
+      "repetition": 1,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-steady-low",
+      "repetition": 2,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-steady-low",
+      "repetition": 3,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-steady-medium",
+      "repetition": 1,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-steady-medium",
+      "repetition": 2,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-steady-medium",
+      "repetition": 3,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-steady-near_saturation",
+      "repetition": 1,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-steady-near_saturation",
+      "repetition": 2,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-steady-near_saturation",
+      "repetition": 3,
+      "matched": true,
+      "reason": null
+    }
+  ],
+  "repeatability": [
+    {
+      "comparison_id": "w8-burst-low",
+      "policy": "least_loaded",
+      "status": "failed",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            52.91,
+            50.975,
+            53.865
+          ],
+          "median": 52.91,
+          "max_relative_deviation": 0.03657153657153648,
+          "tolerance": 0.04828689759036141,
+          "passed": true
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1307.94,
+            1063.175,
+            1172.325
+          ],
+          "median": 1172.325,
+          "max_relative_deviation": 0.11568037873456594,
+          "tolerance": 0.04053552946906414,
+          "passed": false
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "median": 1.0,
+          "max_relative_deviation": 0.0,
+          "tolerance": 0.03820423609012161,
+          "passed": true
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-burst-low",
+      "policy": "round_robin",
+      "status": "failed",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            51.2,
+            53.645,
+            54.445
+          ],
+          "median": 53.645,
+          "max_relative_deviation": 0.04557740702768199,
+          "tolerance": 0.04828689759036141,
+          "passed": true
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1092.705,
+            1314.955,
+            1291.43
+          ],
+          "median": 1291.43,
+          "max_relative_deviation": 0.15387980765508014,
+          "tolerance": 0.04053552946906414,
+          "passed": false
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "median": 1.0,
+          "max_relative_deviation": 0.0,
+          "tolerance": 0.03820423609012161,
+          "passed": true
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-burst-medium",
+      "policy": "least_loaded",
+      "status": "passed",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            118.32,
+            118.935,
+            116.64
+          ],
+          "median": 118.32,
+          "max_relative_deviation": 0.014198782961460385,
+          "tolerance": 0.04828689759036141,
+          "passed": true
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            836.535,
+            837.725,
+            834.285
+          ],
+          "median": 836.535,
+          "max_relative_deviation": 0.002689666302067457,
+          "tolerance": 0.04053552946906414,
+          "passed": true
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            4.0,
+            4.0,
+            4.0
+          ],
+          "median": 4.0,
+          "max_relative_deviation": 0.0,
+          "tolerance": 0.03820423609012161,
+          "passed": true
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-burst-medium",
+      "policy": "round_robin",
+      "status": "passed",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            117.805,
+            117.62,
+            116.63
+          ],
+          "median": 117.62,
+          "max_relative_deviation": 0.008416935895255986,
+          "tolerance": 0.04828689759036141,
+          "passed": true
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            832.185,
+            835.95,
+            836.265
+          ],
+          "median": 835.95,
+          "max_relative_deviation": 0.004503857886237334,
+          "tolerance": 0.04053552946906414,
+          "passed": true
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            4.0,
+            4.0,
+            4.0
+          ],
+          "median": 4.0,
+          "max_relative_deviation": 0.0,
+          "tolerance": 0.03820423609012161,
+          "passed": true
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-burst-near_saturation",
+      "policy": "round_robin",
+      "status": "insufficient_repetitions",
+      "repetitions": [
+        1
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            320.62
+          ],
+          "median": 320.62,
+          "max_relative_deviation": 0.0,
+          "tolerance": 0.04828689759036141,
+          "passed": true
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1412.59
+          ],
+          "median": 1412.59,
+          "max_relative_deviation": 0.0,
+          "tolerance": 0.04053552946906414,
+          "passed": true
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            8.35
+          ],
+          "median": 8.35,
+          "max_relative_deviation": 0.0,
+          "tolerance": 0.03820423609012161,
+          "passed": true
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-steady-low",
+      "policy": "least_loaded",
+      "status": "passed",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            48.665,
+            49.915,
+            49.845
+          ],
+          "median": 49.845,
+          "max_relative_deviation": 0.023673387501253883,
+          "tolerance": 0.04828689759036141,
+          "passed": true
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            938.525,
+            945.43,
+            953.005
+          ],
+          "median": 945.43,
+          "max_relative_deviation": 0.008012227240514947,
+          "tolerance": 0.04053552946906414,
+          "passed": true
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "median": 1.0,
+          "max_relative_deviation": 0.0,
+          "tolerance": 0.03820423609012161,
+          "passed": true
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-steady-low",
+      "policy": "round_robin",
+      "status": "passed",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            49.155,
+            49.565,
+            50.315
+          ],
+          "median": 49.565,
+          "max_relative_deviation": 0.015131645314233834,
+          "tolerance": 0.04828689759036141,
+          "passed": true
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            923.22,
+            934.22,
+            968.0
+          ],
+          "median": 934.22,
+          "max_relative_deviation": 0.03615850656162357,
+          "tolerance": 0.04053552946906414,
+          "passed": true
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "median": 1.0,
+          "max_relative_deviation": 0.0,
+          "tolerance": 0.03820423609012161,
+          "passed": true
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-steady-medium",
+      "policy": "least_loaded",
+      "status": "passed",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            101.815,
+            104.065,
+            103.95
+          ],
+          "median": 103.95,
+          "max_relative_deviation": 0.02053872053872059,
+          "tolerance": 0.04828689759036141,
+          "passed": true
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            887.885,
+            915.895,
+            882.725
+          ],
+          "median": 887.885,
+          "max_relative_deviation": 0.03154687825562994,
+          "tolerance": 0.04053552946906414,
+          "passed": true
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.882233,
+            3.752122,
+            3.793085
+          ],
+          "median": 3.793085,
+          "max_relative_deviation": 0.023502768854375734,
+          "tolerance": 0.03820423609012161,
+          "passed": true
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-steady-medium",
+      "policy": "round_robin",
+      "status": "failed",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            101.945,
+            109.395,
+            107.595
+          ],
+          "median": 107.595,
+          "max_relative_deviation": 0.05251173381662722,
+          "tolerance": 0.04828689759036141,
+          "passed": false
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            902.73,
+            908.61,
+            898.81
+          ],
+          "median": 902.73,
+          "max_relative_deviation": 0.006513575487687343,
+          "tolerance": 0.04053552946906414,
+          "passed": true
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.823087,
+            3.755726,
+            3.797119
+          ],
+          "median": 3.797119,
+          "max_relative_deviation": 0.010901159537006818,
+          "tolerance": 0.03820423609012161,
+          "passed": true
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-steady-near_saturation",
+      "policy": "least_loaded",
+      "status": "passed",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            119.745,
+            117.675,
+            120.1
+          ],
+          "median": 119.745,
+          "max_relative_deviation": 0.017286734310409682,
+          "tolerance": 0.04828689759036141,
+          "passed": true
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1015.085,
+            1005.53,
+            1004.175
+          ],
+          "median": 1005.53,
+          "max_relative_deviation": 0.009502451443517412,
+          "tolerance": 0.04053552946906414,
+          "passed": true
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            26.704567,
+            26.662076,
+            26.764649
+          ],
+          "median": 26.704567,
+          "max_relative_deviation": 0.002249877333715905,
+          "tolerance": 0.03820423609012161,
+          "passed": true
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-steady-near_saturation",
+      "policy": "round_robin",
+      "status": "passed",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            123.805,
+            122.32,
+            123.9
+          ],
+          "median": 123.805,
+          "max_relative_deviation": 0.011994669035984116,
+          "tolerance": 0.04828689759036141,
+          "passed": true
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1067.65,
+            1063.8,
+            1074.335
+          ],
+          "median": 1067.65,
+          "max_relative_deviation": 0.006261415257809155,
+          "tolerance": 0.04053552946906414,
+          "passed": true
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            26.760223,
+            26.774971,
+            26.765878
+          ],
+          "median": 26.765878,
+          "max_relative_deviation": 0.00033972358388542373,
+          "tolerance": 0.03820423609012161,
+          "passed": true
+        }
+      }
+    }
+  ],
+  "protocol_validation": {
+    "coverage_complete": false,
+    "hash_matched": true,
+    "predeclared": true
+  },
+  "eligible_for_policy_comparison": false,
+  "protocol_sha256": "5556b126227ccbab2e5994b88913a8958a7f6b3bda2f3d917b9d5d28040a5177"
+}

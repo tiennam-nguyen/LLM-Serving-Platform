@@ -1,0 +1,7 @@
+run_id,policy,profile,load_level,repetition,valid,offered_rps,completed_window_rps,completed_drain_rps,ttft_p50,ttft_p95,ttft_p99,e2e_p50,e2e_p95,e2e_p99
+20261126T052218Z-w8-steady-medium-round-robin-r1-a448b01-55c57b,round_robin,steady,medium,1,True,4.0,3.85,3.855218,91.205,117.822,121.242,695.73,973.352,997.688
+20261126T052426Z-w8-steady-medium-least-loaded-r1-a448b01-eea48a,least_loaded,steady,medium,1,True,4.0,3.9,3.883115,104.41,222.238,247.315,869.385,1244.569,1311.969
+20261126T052611Z-w8-burst-medium-round-robin-r1-a448b01-8ac200,round_robin,burst,medium,1,True,4.0,4.0,4.0,116.34,139.935,151.042,833.11,1038.3,1209.772
+20261126T052754Z-w8-burst-medium-least-loaded-r1-a448b01-0f5443,least_loaded,burst,medium,1,True,4.0,4.0,4.0,116.655,148.688,153.44,836.085,1054.693,1224.057
+20261126T052937Z-w8-heterogeneous-medium-round-ro-a448b01-848d80,round_robin,heterogeneous,medium,1,True,4.0,3.85,3.819039,143.445,338.241,417.558,990.29,1321.693,1427.094
+20261126T053122Z-w8-heterogeneous-medium-least-lo-a448b01-301335,least_loaded,heterogeneous,medium,1,True,4.0,3.8,3.687831,144.785,316.165,432.108,975.25,1364.547,1576.989

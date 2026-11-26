@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "test_mode": "live_dual_t4",
+  "experiment_phase": "calibration",
+  "protocol_sha256": "a533cda5605792ac06480a9bd30cae9d38cdaeaa5cfc0497bca68274ba97ec19",
+  "source_git": {
+    "git_revision": "a448b018e622a75862d75cf400729e6527e2afa7",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": false
+  },
+  "full_campaign": true,
+  "planned_runs": 18,
+  "selected_runs": 18,
+  "run_status": "completed",
+  "runs": [
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-steady-medium-round_robin-r1.json",
+      "run_id": "20261126T053323Z-w8-steady-medium-round-robin-r1-a448b01-9c0acb",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T053323Z-w8-steady-medium-round-robin-r1-a448b01-9c0acb",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-steady-medium-least_loaded-r1.json",
+      "run_id": "20261126T053507Z-w8-steady-medium-least-loaded-r1-a448b01-a87195",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T053507Z-w8-steady-medium-least-loaded-r1-a448b01-a87195",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-steady-medium-least_loaded-r2.json",
+      "run_id": "20261126T053651Z-w8-steady-medium-least-loaded-r2-a448b01-b9e1a5",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T053651Z-w8-steady-medium-least-loaded-r2-a448b01-b9e1a5",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-steady-medium-round_robin-r2.json",
+      "run_id": "20261126T053834Z-w8-steady-medium-round-robin-r2-a448b01-031cb0",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T053834Z-w8-steady-medium-round-robin-r2-a448b01-031cb0",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-steady-medium-round_robin-r3.json",
+      "run_id": "20261126T054018Z-w8-steady-medium-round-robin-r3-a448b01-fe9980",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T054018Z-w8-steady-medium-round-robin-r3-a448b01-fe9980",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-steady-medium-least_loaded-r3.json",
+      "run_id": "20261126T054202Z-w8-steady-medium-least-loaded-r3-a448b01-4c19d1",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T054202Z-w8-steady-medium-least-loaded-r3-a448b01-4c19d1",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-burst-medium-round_robin-r1.json",
+      "run_id": "20261126T054346Z-w8-burst-medium-round-robin-r1-a448b01-2c0ea6",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T054346Z-w8-burst-medium-round-robin-r1-a448b01-2c0ea6",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-burst-medium-least_loaded-r1.json",
+      "run_id": "20261126T054530Z-w8-burst-medium-least-loaded-r1-a448b01-105305",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T054530Z-w8-burst-medium-least-loaded-r1-a448b01-105305",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-burst-medium-least_loaded-r2.json",
+      "run_id": "20261126T054713Z-w8-burst-medium-least-loaded-r2-a448b01-a6ab81",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T054713Z-w8-burst-medium-least-loaded-r2-a448b01-a6ab81",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-burst-medium-round_robin-r2.json",
+      "run_id": "20261126T054856Z-w8-burst-medium-round-robin-r2-a448b01-9eb508",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T054856Z-w8-burst-medium-round-robin-r2-a448b01-9eb508",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-burst-medium-round_robin-r3.json",
+      "run_id": "20261126T055039Z-w8-burst-medium-round-robin-r3-a448b01-e832c5",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T055039Z-w8-burst-medium-round-robin-r3-a448b01-e832c5",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-burst-medium-least_loaded-r3.json",
+      "run_id": "20261126T055224Z-w8-burst-medium-least-loaded-r3-a448b01-7e18a3",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T055224Z-w8-burst-medium-least-loaded-r3-a448b01-7e18a3",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-heterogeneous-medium-round_robin-r1.json",
+      "run_id": "20261126T055408Z-w8-heterogeneous-medium-round-ro-a448b01-cd7122",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T055408Z-w8-heterogeneous-medium-round-ro-a448b01-cd7122",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-heterogeneous-medium-least_loaded-r1.json",
+      "run_id": "20261126T055554Z-w8-heterogeneous-medium-least-lo-a448b01-d9884f",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T055554Z-w8-heterogeneous-medium-least-lo-a448b01-d9884f",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-heterogeneous-medium-least_loaded-r2.json",
+      "run_id": "20261126T055741Z-w8-heterogeneous-medium-least-lo-a448b01-3f37c0",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T055741Z-w8-heterogeneous-medium-least-lo-a448b01-3f37c0",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-heterogeneous-medium-round_robin-r2.json",
+      "run_id": "20261126T055926Z-w8-heterogeneous-medium-round-ro-a448b01-eb02d9",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T055926Z-w8-heterogeneous-medium-round-ro-a448b01-eb02d9",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-heterogeneous-medium-round_robin-r3.json",
+      "run_id": "20261126T060111Z-w8-heterogeneous-medium-round-ro-a448b01-45090b",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T060111Z-w8-heterogeneous-medium-round-ro-a448b01-45090b",
+      "run_status": "completed",
+      "failure_type": null
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/calibration/manifests/w8-heterogeneous-medium-least_loaded-r3.json",
+      "run_id": "20261126T060255Z-w8-heterogeneous-medium-least-lo-a448b01-2352bb",
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T060255Z-w8-heterogeneous-medium-least-lo-a448b01-2352bb",
+      "run_status": "completed",
+      "failure_type": null
+    }
+  ]
+}
