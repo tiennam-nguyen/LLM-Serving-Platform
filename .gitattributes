@@ -1,0 +1,7 @@
+# Keep signed experiment inputs, raw captures, and generated reports byte-exact
+# across Windows/Linux checkouts. Existing historical artifact paths are unchanged.
+benchmarks/workloads/week8/controlled/** -text
+experiments/manifests/week8/controlled/** -text
+experiments/raw/week8/controlled/** -text
+experiments/processed/week8/controlled/** -text
+experiments/figures/week8/controlled/** -text -diff

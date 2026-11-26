@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "source": {
+    "git_revision": "910b5d035aefd14c5cfc2ee4ba6bbc3ee6387fc0",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": false
+  },
+  "test_mode": "live_dual_t4",
+  "started_at_utc": "2026-11-26T04:05:37.198169+00:00",
+  "status": "failed",
+  "methodology_gate_passed": false,
+  "failure_type": "ValueError",
+  "failure": "Calibration noise exceeds preregistered limit; main run stopped",
+  "ended_at_utc": "2026-11-26T04:41:21.997871+00:00"
+}

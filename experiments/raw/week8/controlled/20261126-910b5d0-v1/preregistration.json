@@ -1,0 +1,30 @@
+{
+  "created_at_utc": "2026-11-26T04:05:37.198169+00:00",
+  "source": {
+    "git_revision": "910b5d035aefd14c5cfc2ee4ba6bbc3ee6387fc0",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": false
+  },
+  "calibration_rule": {
+    "profiles": [
+      "steady",
+      "burst",
+      "heterogeneous"
+    ],
+    "load_level": "medium",
+    "repetitions": 3,
+    "method": "twice_max_relative_deviation_across_policy_profile_groups",
+    "multiplier": 2.0,
+    "maximum_allowed_tolerance": 0.2,
+    "primary_metrics": [
+      "latency_ms.ttft_p50",
+      "latency_ms.e2e_p50",
+      "rates.completed_drain_rps"
+    ]
+  },
+  "calibration_runs": 18,
+  "main_runs": 54,
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "window_ms": 20000,
+  "main_analysis_may_fail_repeatability": true
+}

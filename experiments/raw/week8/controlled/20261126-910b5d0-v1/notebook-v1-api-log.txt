@@ -1,0 +1,1109 @@
+[{"stream_name":"stderr","time":2.344165004,"data":"From https://github.com/tiennam-nguyen/LLM-Serving-Platform\n"}
+,{"stream_name":"stderr","time":2.344209817,"data":" * branch            1e7555f00cde98805a04d790e5540a6b1f073bc0 -\u003e FETCH_HEAD\n"}
+,{"stream_name":"stderr","time":2.358951553,"data":"/tmp/week8-kaggle-mip6494j/week8.bundle is okay\n"}
+,{"stream_name":"stderr","time":2.40810655,"data":"From /tmp/week8-kaggle-mip6494j/week8.bundle\n"}
+,{"stream_name":"stderr","time":2.408131356,"data":" * branch            HEAD       -\u003e FETCH_HEAD\n"}
+,{"stream_name":"stderr","time":2.506244603,"data":"Switched to a new branch 'feat/w8-b-workload-analysis'\n"}
+,{"stream_name":"stdout","time":2.599654824,"data":"Restored Week 8 revision 910b5d035aefd14c5cfc2ee4ba6bbc3ee6387fc0\n"}
+,{"stream_name":"stdout","time":4.902667575,"data":"Thu Nov 26 04:00:16 2026       \n"}
+,{"stream_name":"stdout","time":4.902706104,"data":"+-----------------------------------------------------------------------------------------+\n"}
+,{"stream_name":"stdout","time":4.902850453,"data":"| NVIDIA-SMI 580.178.04             Driver Version: 580.178.04     CUDA Version: 13.0     |\n"}
+,{"stream_name":"stdout","time":4.902855883,"data":"+-----------------------------------------+------------------------+----------------------+\n"}
+,{"stream_name":"stdout","time":4.9028614390000005,"data":"| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n"}
+,{"stream_name":"stdout","time":4.902867023,"data":"| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n"}
+,{"stream_name":"stdout","time":4.902872615,"data":"|                                         |                        |               MIG M. |\n"}
+,{"stream_name":"stdout","time":4.902878209,"data":"|=========================================+========================+======================|\n"}
+,{"stream_name":"stdout","time":4.934514685,"data":"|   0  Tesla T4                       Off |   00000000:00:04.0 Off |                    0 |\n"}
+,{"stream_name":"stdout","time":4.934533609,"data":"| N/A   49C    P8             10W /   70W |       0MiB /  15360MiB |      0%      Default |\n"}
+,{"stream_name":"stdout","time":4.934539884,"data":"|                                         |                        |                  N/A |\n"}
+,{"stream_name":"stdout","time":4.934545461,"data":"+-----------------------------------------+------------------------+----------------------+\n"}
+,{"stream_name":"stdout","time":4.934551174,"data":"|   1  Tesla T4                       Off |   00000000:00:05.0 Off |                    0 |\n"}
+,{"stream_name":"stdout","time":4.934556854,"data":"| N/A   47C    P8              9W /   70W |       0MiB /  15360MiB |      0%      Default |\n"}
+,{"stream_name":"stdout","time":4.934562566,"data":"|                                         |                        |                  N/A |\n"}
+,{"stream_name":"stdout","time":4.934568312,"data":"+-----------------------------------------+------------------------+----------------------+\n"}
+,{"stream_name":"stdout","time":4.935303717,"data":"\n"}
+,{"stream_name":"stdout","time":4.93531235,"data":"+-----------------------------------------------------------------------------------------+\n"}
+,{"stream_name":"stdout","time":4.935317249,"data":"| Processes:                                                                              |\n"}
+,{"stream_name":"stdout","time":4.935322724,"data":"|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n"}
+,{"stream_name":"stdout","time":4.935328175,"data":"|        ID   ID                                                               Usage      |\n"}
+,{"stream_name":"stdout","time":4.935345201,"data":"|=========================================================================================|\n"}
+,{"stream_name":"stdout","time":4.936892911,"data":"|  No running processes found                                                             |\n"}
+,{"stream_name":"stdout","time":4.936907985,"data":"+-----------------------------------------------------------------------------------------+\n"}
+,{"stream_name":"stdout","time":7.056384649,"data":"Collecting uv\n"}
+,{"stream_name":"stdout","time":7.223767647,"data":"  Downloading uv-0.13.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)\n"}
+,{"stream_name":"stdout","time":7.280524981,"data":"Downloading uv-0.13.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (17.7 MB)\n"}
+,{"stream_name":"stdout","time":7.794208262,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 17.7/17.7 MB 40.0 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":9.829964923,"data":"Installing collected packages: uv\n"}
+,{"stream_name":"stdout","time":10.164430058,"data":"Successfully installed uv-0.13.10\n"}
+,{"stream_name":"stderr","time":10.357425981,"data":"warning: The `--system` flag has no effect, `uv venv` always ignores virtual environments when finding a Python interpreter; did you mean `--no-managed-python`?\n"}
+,{"stream_name":"stderr","time":10.538570895,"data":"Downloading cpython-3.12.16-linux-x86_64-gnu (download) (33.1MiB)\n"}
+,{"stream_name":"stderr","time":11.792409997,"data":" Downloaded cpython-3.12.16-linux-x86_64-gnu (download)\n"}
+,{"stream_name":"stderr","time":11.9998227,"data":"Using CPython 3.12.16\n"}
+,{"stream_name":"stderr","time":11.999847754,"data":"Creating virtual environment with seed packages at: /tmp/llm-serving-python312\n"}
+,{"stream_name":"stderr","time":12.709448694,"data":" + pip==26.3\n"}
+,{"stream_name":"stderr","time":12.709500401,"data":"Activate with: source /tmp/llm-serving-python312/bin/activate\n"}
+,{"stream_name":"stdout","time":14.174741945,"data":"Obtaining file:///tmp/week8-kaggle-mip6494j/checkout\n"}
+,{"stream_name":"stdout","time":14.177739451,"data":"  Installing build dependencies: started\n"}
+,{"stream_name":"stdout","time":15.591128495,"data":"  Installing build dependencies: finished with status 'done'\n"}
+,{"stream_name":"stdout","time":15.591996468,"data":"  Checking if build backend supports build_editable: started\n"}
+,{"stream_name":"stdout","time":15.958232788,"data":"  Checking if build backend supports build_editable: finished with status 'done'\n"}
+,{"stream_name":"stdout","time":15.95935685,"data":"  Getting requirements to build editable: started\n"}
+,{"stream_name":"stdout","time":16.347224899,"data":"  Getting requirements to build editable: finished with status 'done'\n"}
+,{"stream_name":"stderr","time":16.348398088,"data":"  /tmp/pip-build-env-859oylfz/overlay/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:82: BuildBackendWarning: `project.license` as a TOML table is deprecated\n"}
+,{"stream_name":"stderr","time":16.348418769,"data":"  !!\n"}
+,{"stream_name":"stderr","time":16.348423583,"data":"  \n"}
+,{"stream_name":"stderr","time":16.348427818,"data":"          ********************************************************************************\n"}
+,{"stream_name":"stderr","time":16.348431887,"data":"          Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools\u003e=77.0.0).\n"}
+,{"stream_name":"stderr","time":16.348436655,"data":"  \n"}
+,{"stream_name":"stderr","time":16.348488285,"data":"          By 2027-Feb-18, you need to update your project and remove deprecated calls\n"}
+,{"stream_name":"stderr","time":16.348495631,"data":"          or your builds will no longer be supported.\n"}
+,{"stream_name":"stderr","time":16.348499048,"data":"  \n"}
+,{"stream_name":"stderr","time":16.348502788,"data":"          See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.\n"}
+,{"stream_name":"stderr","time":16.348506815,"data":"          ********************************************************************************\n"}
+,{"stream_name":"stderr","time":16.348510854,"data":"  \n"}
+,{"stream_name":"stderr","time":16.348514174,"data":"  !!\n"}
+,{"stream_name":"stderr","time":16.348517475,"data":"    corresp(dist, value, root_dir)\n"}
+,{"stream_name":"stdout","time":16.349745946,"data":"  Preparing editable metadata (pyproject.toml): started\n"}
+,{"stream_name":"stdout","time":16.577522205,"data":"  Preparing editable metadata (pyproject.toml): finished with status 'done'\n"}
+,{"stream_name":"stderr","time":16.578181538,"data":"  /tmp/pip-build-env-859oylfz/overlay/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:82: BuildBackendWarning: `project.license` as a TOML table is deprecated\n"}
+,{"stream_name":"stderr","time":16.578193376,"data":"  !!\n"}
+,{"stream_name":"stderr","time":16.578198469,"data":"  \n"}
+,{"stream_name":"stderr","time":16.578202829,"data":"          ********************************************************************************\n"}
+,{"stream_name":"stderr","time":16.578207675,"data":"          Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools\u003e=77.0.0).\n"}
+,{"stream_name":"stderr","time":16.578213169,"data":"  \n"}
+,{"stream_name":"stderr","time":16.578216942,"data":"          By 2027-Feb-18, you need to update your project and remove deprecated calls\n"}
+,{"stream_name":"stderr","time":16.578221492,"data":"          or your builds will no longer be supported.\n"}
+,{"stream_name":"stderr","time":16.578225913,"data":"  \n"}
+,{"stream_name":"stderr","time":16.578230404,"data":"          See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.\n"}
+,{"stream_name":"stderr","time":16.578235091,"data":"          ********************************************************************************\n"}
+,{"stream_name":"stderr","time":16.578240216,"data":"  \n"}
+,{"stream_name":"stderr","time":16.578244026,"data":"  !!\n"}
+,{"stream_name":"stderr","time":16.578247806,"data":"    corresp(dist, value, root_dir)\n"}
+,{"stream_name":"stdout","time":16.781575599,"data":"Collecting fastapi\u003e=0.110.0 (from llm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":16.865667167,"data":"  Downloading fastapi-0.165.0-py3-none-any.whl.metadata (27 kB)\n"}
+,{"stream_name":"stdout","time":16.946573413,"data":"Collecting httpx\u003e=0.27.0 (from llm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":16.967211222,"data":"  Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)\n"}
+,{"stream_name":"stdout","time":17.057651395,"data":"Collecting uvicorn\u003e=0.29.0 (from llm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":17.078340819,"data":"  Downloading uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)\n"}
+,{"stream_name":"stdout","time":17.33553718,"data":"Collecting pydantic\u003e=2.6.0 (from llm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":17.356087319,"data":"  Downloading pydantic-2.14.4-py3-none-any.whl.metadata (143 kB)\n"}
+,{"stream_name":"stdout","time":17.451880556,"data":"Collecting prometheus-client\u003c1,\u003e=0.20.0 (from llm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":17.472151678,"data":"  Downloading prometheus_client-0.26.0-py3-none-any.whl.metadata (2.1 kB)\n"}
+,{"stream_name":"stdout","time":17.582160149,"data":"Collecting pytest\u003e=8.0.0 (from llm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":17.60298999,"data":"  Downloading pytest-9.2.0-py3-none-any.whl.metadata (7.9 kB)\n"}
+,{"stream_name":"stdout","time":17.674801085,"data":"Collecting pytest-asyncio\u003e=0.23.0 (from llm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":17.695543647,"data":"  Downloading pytest_asyncio-1.5.0-py3-none-any.whl.metadata (4.4 kB)\n"}
+,{"stream_name":"stdout","time":18.421585066,"data":"Collecting ruff\u003e=0.4.0 (from llm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":18.442431291,"data":"  Downloading ruff-0.17.6-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (20 kB)\n"}
+,{"stream_name":"stdout","time":18.523978583999998,"data":"Collecting starlette\u003e=1.6.0 (from fastapi\u003e=0.110.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":18.544341331,"data":"  Downloading starlette-1.10.0-py3-none-any.whl.metadata (6.6 kB)\n"}
+,{"stream_name":"stdout","time":18.616028878,"data":"Collecting anyio\u003e=4.1.0 (from fastapi\u003e=0.110.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":18.636413186,"data":"  Downloading anyio-4.16.0-py3-none-any.whl.metadata (4.7 kB)\n"}
+,{"stream_name":"stdout","time":18.703446883,"data":"Collecting typing-extensions\u003e=4.8.0 (from fastapi\u003e=0.110.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":18.72368873,"data":"  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)\n"}
+,{"stream_name":"stdout","time":18.778717359,"data":"Collecting typing-inspection\u003e=0.4.2 (from fastapi\u003e=0.110.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":18.799338103,"data":"  Downloading typing_inspection-0.4.5-py3-none-any.whl.metadata (2.6 kB)\n"}
+,{"stream_name":"stdout","time":18.85707492,"data":"Collecting annotated-doc\u003e=0.0.2 (from fastapi\u003e=0.110.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":18.877458556,"data":"  Downloading annotated_doc-0.0.7-py3-none-any.whl.metadata (6.4 kB)\n"}
+,{"stream_name":"stdout","time":18.944279191,"data":"Collecting opentelemetry-api\u003e=1.44.0 (from fastapi\u003e=0.110.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":18.964901506,"data":"  Downloading opentelemetry_api-1.45.2-py3-none-any.whl.metadata (1.4 kB)\n"}
+,{"stream_name":"stdout","time":19.027583992,"data":"Collecting idna\u003e=2.8 (from anyio\u003e=4.1.0-\u003efastapi\u003e=0.110.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":19.048359208,"data":"  Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)\n"}
+,{"stream_name":"stdout","time":19.118985366,"data":"Collecting certifi (from httpx\u003e=0.27.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":19.139570447,"data":"  Downloading certifi-2026.11.20-py3-none-any.whl.metadata (2.5 kB)\n"}
+,{"stream_name":"stdout","time":19.20648651,"data":"Collecting httpcore==1.* (from httpx\u003e=0.27.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":19.226866078,"data":"  Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)\n"}
+,{"stream_name":"stdout","time":19.284149698,"data":"Collecting h11\u003e=0.16 (from httpcore==1.*-\u003ehttpx\u003e=0.27.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":19.304572974,"data":"  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)\n"}
+,{"stream_name":"stdout","time":19.358894045,"data":"Collecting annotated-types\u003e=0.6.0 (from pydantic\u003e=2.6.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":19.379192635,"data":"  Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)\n"}
+,{"stream_name":"stdout","time":20.762760115,"data":"Collecting pydantic-core==2.50.5 (from pydantic\u003e=2.6.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":20.783531492,"data":"  Downloading pydantic_core-2.50.5-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (6.6 kB)\n"}
+,{"stream_name":"stdout","time":20.840325867,"data":"Collecting iniconfig\u003e=2 (from pytest\u003e=8.0.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":20.860567469,"data":"  Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)\n"}
+,{"stream_name":"stdout","time":20.921487985,"data":"Collecting packaging\u003e=24 (from pytest\u003e=8.0.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":20.941527915,"data":"  Downloading packaging-26.4-py3-none-any.whl.metadata (3.5 kB)\n"}
+,{"stream_name":"stdout","time":20.995671252,"data":"Collecting pluggy\u003c2,\u003e=1.6 (from pytest\u003e=8.0.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":21.01650842,"data":"  Downloading pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)\n"}
+,{"stream_name":"stdout","time":21.079529579,"data":"Collecting pygments\u003e=2.15 (from pytest\u003e=8.0.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":21.100098613,"data":"  Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)\n"}
+,{"stream_name":"stdout","time":21.170874588,"data":"Collecting click\u003e=7.0 (from uvicorn\u003e=0.29.0-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":21.191527846,"data":"  Downloading click-8.5.1-py3-none-any.whl.metadata (2.6 kB)\n"}
+,{"stream_name":"stdout","time":21.227218667,"data":"Downloading prometheus_client-0.26.0-py3-none-any.whl (64 kB)\n"}
+,{"stream_name":"stdout","time":21.266784029,"data":"Downloading fastapi-0.165.0-py3-none-any.whl (159 kB)\n"}
+,{"stream_name":"stdout","time":21.313091431,"data":"Downloading annotated_doc-0.0.7-py3-none-any.whl (5.3 kB)\n"}
+,{"stream_name":"stdout","time":21.348348397,"data":"Downloading anyio-4.16.0-py3-none-any.whl (134 kB)\n"}
+,{"stream_name":"stdout","time":21.396249061,"data":"Downloading httpx-0.28.1-py3-none-any.whl (73 kB)\n"}
+,{"stream_name":"stdout","time":21.434882826,"data":"Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)\n"}
+,{"stream_name":"stdout","time":21.476328563,"data":"Downloading h11-0.16.0-py3-none-any.whl (37 kB)\n"}
+,{"stream_name":"stdout","time":21.510501511,"data":"Downloading idna-3.20-py3-none-any.whl (69 kB)\n"}
+,{"stream_name":"stdout","time":21.553605731,"data":"Downloading opentelemetry_api-1.45.2-py3-none-any.whl (60 kB)\n"}
+,{"stream_name":"stdout","time":21.59065555,"data":"Downloading pydantic-2.14.4-py3-none-any.whl (494 kB)\n"}
+,{"stream_name":"stdout","time":21.656856155,"data":"Downloading pydantic_core-2.50.5-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (2.3 MB)\n"}
+,{"stream_name":"stdout","time":21.708993169,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.3/2.3 MB 43.2 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":21.729368988,"data":"Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)\n"}
+,{"stream_name":"stdout","time":21.767459378,"data":"Downloading pytest-9.2.0-py3-none-any.whl (411 kB)\n"}
+,{"stream_name":"stdout","time":21.81586208,"data":"Downloading pluggy-1.7.0-py3-none-any.whl (27 kB)\n"}
+,{"stream_name":"stdout","time":21.852230907,"data":"Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)\n"}
+,{"stream_name":"stdout","time":21.88392559,"data":"Downloading packaging-26.4-py3-none-any.whl (140 kB)\n"}
+,{"stream_name":"stdout","time":21.925010042,"data":"Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)\n"}
+,{"stream_name":"stdout","time":21.950133247,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 44.1 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":21.970451756,"data":"Downloading pytest_asyncio-1.5.0-py3-none-any.whl (17 kB)\n"}
+,{"stream_name":"stdout","time":22.003828496,"data":"Downloading ruff-0.17.6-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (10.6 MB)\n"}
+,{"stream_name":"stdout","time":22.089944694,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.6/10.6 MB 124.9 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":22.110397823,"data":"Downloading starlette-1.10.0-py3-none-any.whl (80 kB)\n"}
+,{"stream_name":"stdout","time":22.153608584,"data":"Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)\n"}
+,{"stream_name":"stdout","time":22.189543518,"data":"Downloading typing_inspection-0.4.5-py3-none-any.whl (14 kB)\n"}
+,{"stream_name":"stdout","time":22.226756785,"data":"Downloading uvicorn-0.54.0-py3-none-any.whl (87 kB)\n"}
+,{"stream_name":"stdout","time":22.264242589,"data":"Downloading click-8.5.1-py3-none-any.whl (126 kB)\n"}
+,{"stream_name":"stdout","time":22.301018154,"data":"Downloading certifi-2026.11.20-py3-none-any.whl (127 kB)\n"}
+,{"stream_name":"stdout","time":22.437988755,"data":"Building wheels for collected packages: llm-serving-platform\n"}
+,{"stream_name":"stdout","time":22.439254803,"data":"  Building editable for llm-serving-platform (pyproject.toml): started\n"}
+,{"stream_name":"stdout","time":22.690790178,"data":"  Building editable for llm-serving-platform (pyproject.toml): finished with status 'done'\n"}
+,{"stream_name":"stderr","time":22.691383464,"data":"  /tmp/pip-build-env-859oylfz/overlay/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:82: BuildBackendWarning: `project.license` as a TOML table is deprecated\n"}
+,{"stream_name":"stderr","time":22.691395146,"data":"  !!\n"}
+,{"stream_name":"stderr","time":22.69139985,"data":"  \n"}
+,{"stream_name":"stderr","time":22.691404056,"data":"          ********************************************************************************\n"}
+,{"stream_name":"stderr","time":22.691408345,"data":"          Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools\u003e=77.0.0).\n"}
+,{"stream_name":"stderr","time":22.691412998,"data":"  \n"}
+,{"stream_name":"stderr","time":22.691416373,"data":"          By 2027-Feb-18, you need to update your project and remove deprecated calls\n"}
+,{"stream_name":"stderr","time":22.691420087,"data":"          or your builds will no longer be supported.\n"}
+,{"stream_name":"stderr","time":22.691423734,"data":"  \n"}
+,{"stream_name":"stderr","time":22.691427116,"data":"          See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.\n"}
+,{"stream_name":"stderr","time":22.691431605,"data":"          ********************************************************************************\n"}
+,{"stream_name":"stderr","time":22.69144706,"data":"  \n"}
+,{"stream_name":"stderr","time":22.691450742,"data":"  !!\n"}
+,{"stream_name":"stderr","time":22.691454204,"data":"    corresp(dist, value, root_dir)\n"}
+,{"stream_name":"stdout","time":22.692057001,"data":"  Created wheel for llm-serving-platform: filename=llm_serving_platform-0.1.0.dev0-0.editable-py3-none-any.whl size=6213 sha256=d7e542980118a6182c49529b4e7ea2acd7ed00660e9b1b82c03d2a7aff643a64\n"}
+,{"stream_name":"stdout","time":22.692345015,"data":"  Stored in directory: /tmp/pip-ephem-wheel-cache-34u9rh8b/wheels/5c/77/69/5991e501da5b1b646b85ce5a8f43b3dea556ad802fa9b5774b\n"}
+,{"stream_name":"stdout","time":22.695066778,"data":"Successfully built llm-serving-platform\n"}
+,{"stream_name":"stdout","time":22.754836005,"data":"Installing collected packages: typing-extensions, ruff, pygments, prometheus-client, pluggy, packaging, iniconfig, idna, h11, click, certifi, annotated-types, annotated-doc, uvicorn, typing-inspection, pytest, pydantic-core, opentelemetry-api, httpcore, anyio, starlette, pytest-asyncio, pydantic, httpx, fastapi, llm-serving-platform\n"}
+,{"stream_name":"stdout","time":25.763074497,"data":"\n"}
+,{"stream_name":"stdout","time":25.765815971,"data":"Successfully installed annotated-doc-0.0.7 annotated-types-0.8.0 anyio-4.16.0 certifi-2026.11.20 click-8.5.1 fastapi-0.165.0 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 idna-3.20 iniconfig-2.3.1 llm-serving-platform-0.1.0.dev0 opentelemetry-api-1.45.2 packaging-26.4 pluggy-1.7.0 prometheus-client-0.26.0 pydantic-2.14.4 pydantic-core-2.50.5 pygments-2.21.0 pytest-9.2.0 pytest-asyncio-1.5.0 ruff-0.17.6 starlette-1.10.0 typing-extensions-4.16.0 typing-inspection-0.4.5 uvicorn-0.54.0\n"}
+,{"stream_name":"stdout","time":26.417776797,"data":"vllm (0.34.0)\n"}
+,{"stream_name":"stdout","time":26.418014442,"data":"Available versions: 0.34.0, 0.33.0, 0.32.0, 0.31.0, 0.30.0, 0.29.0, 0.28.0, 0.27.1, 0.27.0, 0.26.0, 0.25.1, 0.25.0, 0.24.0, 0.23.0, 0.22.1, 0.22.0, 0.21.0, 0.20.2, 0.20.1, 0.20.0, 0.19.1, 0.19.0, 0.18.1, 0.18.0, 0.17.1, 0.17.0, 0.16.0, 0.15.1, 0.15.0, 0.14.1, 0.14.0, 0.13.0, 0.12.0, 0.11.2, 0.11.1, 0.11.0, 0.10.2, 0.10.1.1, 0.10.1, 0.10.0, 0.9.2, 0.9.1, 0.9.0.1, 0.9.0, 0.8.5.post1, 0.8.5, 0.8.4, 0.8.3, 0.8.2, 0.8.1, 0.8.0, 0.7.3, 0.7.2, 0.7.1, 0.7.0, 0.6.6.post1, 0.6.6, 0.6.5, 0.6.4.post1, 0.6.4, 0.6.3.post1, 0.6.3, 0.6.2, 0.6.1.post2, 0.6.1.post1, 0.6.1, 0.6.0, 0.5.5, 0.5.4, 0.5.3.post1, 0.5.3, 0.5.2\n"}
+,{"stream_name":"stdout","time":26.833129193,"data":"Collecting vllm==0.33.0\n"}
+,{"stream_name":"stdout","time":26.915089524,"data":"  Downloading vllm-0.33.0-cp38-abi3-manylinux_2_28_x86_64.whl.metadata (11 kB)\n"}
+,{"stream_name":"stdout","time":28.53351402,"data":"Collecting regex (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":28.554126531,"data":"  Downloading regex-2026.11.25-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (40 kB)\n"}
+,{"stream_name":"stdout","time":28.68666459,"data":"Collecting cachetools (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":28.70644384,"data":"  Downloading cachetools-8.0.3-py3-none-any.whl.metadata (5.6 kB)\n"}
+,{"stream_name":"stdout","time":28.915654092,"data":"Collecting psutil (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":28.935241594,"data":"  Downloading psutil-7.2.2-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl.metadata (22 kB)\n"}
+,{"stream_name":"stdout","time":29.131512509,"data":"Collecting sentencepiece (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":29.152327695,"data":"  Downloading sentencepiece-0.2.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (34 kB)\n"}
+,{"stream_name":"stdout","time":29.634026481,"data":"Collecting numpy (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":29.655531299,"data":"  Downloading numpy-2.5.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)\n"}
+,{"stream_name":"stdout","time":29.781908123,"data":"Collecting requests\u003e=2.33.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":29.802018923,"data":"  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)\n"}
+,{"stream_name":"stdout","time":29.82166845,"data":"Requirement already satisfied: certifi\u003e=2026.10.19 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from vllm==0.33.0) (2026.11.20)\n"}
+,{"stream_name":"stdout","time":29.941869967,"data":"Collecting tqdm (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":29.961545035,"data":"  Downloading tqdm-4.70.1-py3-none-any.whl.metadata (57 kB)\n"}
+,{"stream_name":"stdout","time":30.229352444,"data":"Collecting blake3 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":30.249489230000002,"data":"  Downloading blake3-1.0.11-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)\n"}
+,{"stream_name":"stdout","time":30.359453275,"data":"Collecting py-cpuinfo (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":30.379165246,"data":"  Downloading py_cpuinfo-9.0.0-py3-none-any.whl.metadata (794 bytes)\n"}
+,{"stream_name":"stdout","time":30.528849797,"data":"Collecting transformers\u003c5.21.0,\u003e=5.16.1 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":30.552073281,"data":"  Downloading transformers-5.20.2-py3-none-any.whl.metadata (31 kB)\n"}
+,{"stream_name":"stdout","time":30.741552119,"data":"Collecting huggingface_hub\u003e=1.31.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":30.761642022,"data":"  Downloading huggingface_hub-2.4.0-py3-none-any.whl.metadata (16 kB)\n"}
+,{"stream_name":"stdout","time":31.147535198,"data":"Collecting tokenizers\u003e=0.23.2 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":31.168153042,"data":"  Downloading tokenizers-0.23.3-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (9.8 kB)\n"}
+,{"stream_name":"stdout","time":31.512061878,"data":"Collecting safetensors\u003e=0.6.2 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":31.532151136,"data":"  Downloading safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.2 kB)\n"}
+,{"stream_name":"stdout","time":31.906050303,"data":"Collecting protobuf!=6.30.*,!=6.31.*,!=6.32.*,!=6.33.0.*,!=6.33.1.*,!=6.33.2.*,!=6.33.3.*,!=6.33.4.*,\u003e=5.29.6 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":31.926514128,"data":"  Downloading protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl.metadata (595 bytes)\n"}
+,{"stream_name":"stdout","time":32.005414644,"data":"Collecting fastapi\u003c0.137.0,\u003e=0.133.0 (from fastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":32.041072266,"data":"  Downloading fastapi-0.136.3-py3-none-any.whl.metadata (27 kB)\n"}
+,{"stream_name":"stdout","time":32.062365325,"data":"Requirement already satisfied: starlette\u003e=1.0.1 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from vllm==0.33.0) (1.10.0)\n"}
+,{"stream_name":"stdout","time":33.195833062,"data":"Collecting aiohttp\u003e=3.14.4 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":33.216355389,"data":"  Downloading aiohttp-3.14.5-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (8.3 kB)\n"}
+,{"stream_name":"stdout","time":33.826566217,"data":"Collecting multidict\u003e=6.9.1 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":33.847071931,"data":"  Downloading multidict-7.2.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (6.1 kB)\n"}
+,{"stream_name":"stdout","time":34.056784347,"data":"Collecting openai\u003e=2.25.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":34.077011409,"data":"  Downloading openai-3.59.0-py3-none-any.whl.metadata (45 kB)\n"}
+,{"stream_name":"stdout","time":34.102628338,"data":"Requirement already satisfied: pydantic\u003e=2.12.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from vllm==0.33.0) (2.14.4)\n"}
+,{"stream_name":"stdout","time":34.640458459,"data":"Collecting orjson\u003e=3.11.6 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":34.660544509,"data":"  Downloading orjson-3.13.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (42 kB)\n"}
+,{"stream_name":"stdout","time":34.686007198,"data":"Requirement already satisfied: prometheus_client\u003e=0.18.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from vllm==0.33.0) (0.26.0)\n"}
+,{"stream_name":"stdout","time":35.101175901,"data":"Collecting pillow\u003e=13.0.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":35.121410552,"data":"  Downloading pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.1 kB)\n"}
+,{"stream_name":"stdout","time":35.2443583,"data":"Collecting prometheus-fastapi-instrumentator\u003e=8.0.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":35.264454451,"data":"  Downloading prometheus_fastapi_instrumentator-8.1.0-py3-none-any.whl.metadata (13 kB)\n"}
+,{"stream_name":"stdout","time":35.433940933,"data":"Collecting tiktoken\u003e=0.6.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":35.454076033,"data":"  Downloading tiktoken-0.14.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (6.7 kB)\n"}
+,{"stream_name":"stdout","time":35.575732768,"data":"Collecting lm-format-enforcer==0.11.3 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":35.596704315,"data":"  Downloading lm_format_enforcer-0.11.3-py3-none-any.whl.metadata (17 kB)\n"}
+,{"stream_name":"stdout","time":35.780936289,"data":"Collecting llguidance\u003c1.8.0,\u003e=1.7.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":35.802783975,"data":"  Downloading llguidance-1.7.6-cp39-abi3-manylinux_2_31_x86_64.whl.metadata (10 kB)\n"}
+,{"stream_name":"stdout","time":35.95166506,"data":"Collecting outlines_core==0.2.14 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":35.972183797,"data":"  Downloading outlines_core-0.2.14-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.6 kB)\n"}
+,{"stream_name":"stdout","time":36.081444772,"data":"Collecting lark==1.2.2 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":36.101561731,"data":"  Downloading lark-1.2.2-py3-none-any.whl.metadata (1.8 kB)\n"}
+,{"stream_name":"stdout","time":36.307768387,"data":"Collecting xgrammar==0.2.8 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":36.329233844,"data":"  Downloading xgrammar-0.2.8-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (10 kB)\n"}
+,{"stream_name":"stdout","time":36.350863904,"data":"Requirement already satisfied: typing_extensions\u003e=4.10 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from vllm==0.33.0) (4.16.0)\n"}
+,{"stream_name":"stdout","time":36.464380247,"data":"Collecting filelock\u003e=3.20.3 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":36.48400581,"data":"  Downloading filelock-4.3.1-py3-none-any.whl.metadata (2.3 kB)\n"}
+,{"stream_name":"stdout","time":36.598190911,"data":"Collecting partial-json-parser (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":36.618038853,"data":"  Downloading partial_json_parser-0.2.1.1.post7-py3-none-any.whl.metadata (6.1 kB)\n"}
+,{"stream_name":"stdout","time":36.738440906,"data":"Collecting jsonschema\u003e=4.23.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":36.75837684,"data":"  Downloading jsonschema-4.26.0-py3-none-any.whl.metadata (7.6 kB)\n"}
+,{"stream_name":"stdout","time":37.330435263,"data":"Collecting pyzmq\u003e=25.0.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":37.350203434,"data":"  Downloading pyzmq-27.3.0-cp312-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)\n"}
+,{"stream_name":"stdout","time":37.702226841,"data":"Collecting msgspec (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":37.723386596,"data":"  Downloading msgspec-0.22.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (6.0 kB)\n"}
+,{"stream_name":"stdout","time":37.838028328,"data":"Collecting mistral_common\u003e=1.11.6 (from mistral_common[image]\u003e=1.11.6-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":37.860691292,"data":"  Downloading mistral_common-1.13.1-py3-none-any.whl.metadata (5.9 kB)\n"}
+,{"stream_name":"stdout","time":38.046660695,"data":"Collecting opencv-python-headless\u003e=4.13.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":38.067664024,"data":"  Downloading opencv_python_headless-5.1.0.95-cp37-abi3-manylinux_2_28_x86_64.whl.metadata (20 kB)\n"}
+,{"stream_name":"stdout","time":38.239975835,"data":"Collecting pyyaml (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":38.26035583,"data":"  Downloading pyyaml-6.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.3 kB)\n"}
+,{"stream_name":"stdout","time":38.361252652,"data":"Collecting six\u003e=1.16.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":38.381533368,"data":"  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)\n"}
+,{"stream_name":"stdout","time":38.514854352,"data":"Collecting setuptools\u003c81.0.0,\u003e=78.1.1 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":38.536638304,"data":"  Downloading setuptools-80.10.2-py3-none-any.whl.metadata (6.6 kB)\n"}
+,{"stream_name":"stdout","time":38.643982393,"data":"Collecting einops (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":38.665854039,"data":"  Downloading einops-0.8.2-py3-none-any.whl.metadata (13 kB)\n"}
+,{"stream_name":"stdout","time":38.81959515,"data":"Collecting compressed-tensors==0.17.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":38.840666413,"data":"  Downloading compressed_tensors-0.17.0-py3-none-any.whl.metadata (4.7 kB)\n"}
+,{"stream_name":"stdout","time":38.94831431,"data":"Collecting depyf==0.20.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":38.968512944,"data":"  Downloading depyf-0.20.0-py3-none-any.whl.metadata (7.3 kB)\n"}
+,{"stream_name":"stdout","time":39.071980414,"data":"Collecting cloudpickle (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":39.092228475,"data":"  Downloading cloudpickle-3.1.3-py3-none-any.whl.metadata (7.1 kB)\n"}
+,{"stream_name":"stdout","time":39.331982009,"data":"Collecting watchfiles (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":39.352013834,"data":"  Downloading watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)\n"}
+,{"stream_name":"stdout","time":39.463516777,"data":"Collecting python-json-logger (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":39.483176259,"data":"  Downloading python_json_logger-4.2.0-py3-none-any.whl.metadata (2.9 kB)\n"}
+,{"stream_name":"stdout","time":39.622081689,"data":"Collecting ninja (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":39.642230508,"data":"  Downloading ninja-1.13.2-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (5.4 kB)\n"}
+,{"stream_name":"stdout","time":39.949394351,"data":"Collecting pybase64 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":39.979094478,"data":"  Downloading pybase64-1.5.2-cp312-cp312-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.whl.metadata (11 kB)\n"}
+,{"stream_name":"stdout","time":40.270371187,"data":"Collecting cbor2 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":40.290870497,"data":"  Downloading cbor2-6.3.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (6.5 kB)\n"}
+,{"stream_name":"stdout","time":40.524903782,"data":"Collecting ijson (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":40.544631015,"data":"  Downloading ijson-3.6.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (23 kB)\n"}
+,{"stream_name":"stdout","time":40.733287945,"data":"Collecting setproctitle (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":40.754823982,"data":"  Downloading setproctitle-1.3.8-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (10 kB)\n"}
+,{"stream_name":"stdout","time":40.864772245,"data":"Collecting oss-harmony\u003e=0.0.11 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":40.88595439,"data":"  Downloading oss_harmony-0.0.12-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.4 kB)\n"}
+,{"stream_name":"stdout","time":41.036411238,"data":"Collecting anthropic\u003e=0.71.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":41.058283432,"data":"  Downloading anthropic-2.14.0-py3-none-any.whl.metadata (3.6 kB)\n"}
+,{"stream_name":"stdout","time":41.165342418,"data":"Collecting model-hosting-container-standards\u003c1.0.0,\u003e=0.1.14 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":41.185524471,"data":"  Downloading model_hosting_container_standards-0.1.16-py3-none-any.whl.metadata (24 kB)\n"}
+,{"stream_name":"stdout","time":41.314058722,"data":"Collecting mcp\u003c3.0.0,\u003e=2.2.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":41.33387919,"data":"  Downloading mcp-2.3.0-py3-none-any.whl.metadata (6.6 kB)\n"}
+,{"stream_name":"stdout","time":41.458367594,"data":"Collecting opentelemetry-sdk\u003e=1.27.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":41.478190905,"data":"  Downloading opentelemetry_sdk-1.45.2-py3-none-any.whl.metadata (1.6 kB)\n"}
+,{"stream_name":"stdout","time":41.496753577,"data":"Requirement already satisfied: opentelemetry-api\u003e=1.27.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from vllm==0.33.0) (1.45.2)\n"}
+,{"stream_name":"stdout","time":41.596297848,"data":"Collecting opentelemetry-exporter-otlp\u003e=1.27.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":41.616093737,"data":"  Downloading opentelemetry_exporter_otlp-1.45.2-py3-none-any.whl.metadata (2.4 kB)\n"}
+,{"stream_name":"stdout","time":41.733273576,"data":"Collecting opentelemetry-semantic-conventions-ai\u003e=0.4.1 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":41.752924606,"data":"  Downloading opentelemetry_semantic_conventions_ai-0.5.1-py3-none-any.whl.metadata (997 bytes)\n"}
+,{"stream_name":"stdout","time":42.045500822,"data":"Collecting numba==0.65.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":42.068314487,"data":"  Downloading numba-0.65.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.9 kB)\n"}
+,{"stream_name":"stdout","time":42.253577442,"data":"Collecting torch==2.14.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":42.274909259,"data":"  Downloading torch-2.14.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (37 kB)\n"}
+,{"stream_name":"stdout","time":43.061390803,"data":"Collecting torchaudio==2.11.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":43.083534405,"data":"  Downloading torchaudio-2.11.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (6.9 kB)\n"}
+,{"stream_name":"stdout","time":43.274599855,"data":"Collecting torchvision==0.29.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":43.298493746,"data":"  Downloading torchvision-0.29.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (5.7 kB)\n"}
+,{"stream_name":"stdout","time":43.442530205,"data":"Collecting torchcodec\u003e=0.14 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":43.465620709,"data":"  Downloading torchcodec-0.17.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.9 kB)\n"}
+,{"stream_name":"stdout","time":43.588401517,"data":"Collecting PyNvVideoCodec==2.0.4 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":43.614945604,"data":"  Downloading pynvvideocodec-2.0.4-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (5.3 kB)\n"}
+,{"stream_name":"stdout","time":43.736028204,"data":"Collecting flashinfer-python==0.7.2.post1 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":43.756801451,"data":"  Downloading flashinfer_python-0.7.2.post1-py3-none-any.whl.metadata (13 kB)\n"}
+,{"stream_name":"stdout","time":43.96717024,"data":"Collecting apache-tvm-ffi==0.1.11 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":43.988313279,"data":"  Downloading apache_tvm_ffi-0.1.11-cp312-abi3-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (6.1 kB)\n"}
+,{"stream_name":"stdout","time":44.107135795,"data":"Collecting tilelang==0.1.12 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":44.130387535,"data":"  Downloading tilelang-0.1.12-cp38-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (15 kB)\n"}
+,{"stream_name":"stdout","time":44.299396201,"data":"Collecting nvidia-cudnn-frontend\u003e=1.31.0 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":44.319807405,"data":"  Downloading nvidia_cudnn_frontend-1.33.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (20 kB)\n"}
+,{"stream_name":"stdout","time":44.44934683,"data":"Collecting nvtx==0.2.15 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":44.470212464,"data":"  Downloading nvtx-0.2.15-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.8 kB)\n"}
+,{"stream_name":"stdout","time":44.607641261,"data":"Collecting fastsafetensors\u003e=0.3.3 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":44.630312159,"data":"  Downloading fastsafetensors-0.5.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (4.3 kB)\n"}
+,{"stream_name":"stdout","time":44.738378363,"data":"Collecting instanttensor\u003e=0.2.2 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":44.759622026,"data":"  Downloading instanttensor-0.2.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (27 kB)\n"}
+,{"stream_name":"stdout","time":44.876979442,"data":"Collecting nvidia-cutlass-dsl==4.8.0 (from nvidia-cutlass-dsl[cu13]==4.8.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":44.898620836,"data":"  Downloading nvidia_cutlass_dsl-4.8.0-py3-none-any.whl.metadata (3.0 kB)\n"}
+,{"stream_name":"stdout","time":45.01352958,"data":"Collecting quack-kernels==0.6.5 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":45.033165229,"data":"  Downloading quack_kernels-0.6.5-py3-none-any.whl.metadata (834 bytes)\n"}
+,{"stream_name":"stdout","time":45.151512731,"data":"Collecting tokenspeed-mla==2.0.3 (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":45.172122726,"data":"  Downloading tokenspeed_mla-2.0.3-py3-none-any.whl.metadata (21 kB)\n"}
+,{"stream_name":"stdout","time":45.28521862,"data":"Collecting humming-kernels==0.1.19 (from humming-kernels[cu13]==0.1.19-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":45.306392342,"data":"  Downloading humming_kernels-0.1.19-cp310-abi3-manylinux_2_28_x86_64.whl.metadata (5.1 kB)\n"}
+,{"stream_name":"stdout","time":45.420177279,"data":"Collecting loguru (from compressed-tensors==0.17.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":45.440644844,"data":"  Downloading loguru-0.8.0-py3-none-any.whl.metadata (23 kB)\n"}
+,{"stream_name":"stdout","time":45.552494922,"data":"Collecting astor (from depyf==0.20.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":45.57260594,"data":"  Downloading astor-0.8.1-py2.py3-none-any.whl.metadata (4.2 kB)\n"}
+,{"stream_name":"stdout","time":45.67896372,"data":"Collecting dill (from depyf==0.20.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":45.698680088,"data":"  Downloading dill-0.4.1-py3-none-any.whl.metadata (10 kB)\n"}
+,{"stream_name":"stdout","time":45.717188678,"data":"Requirement already satisfied: click in /tmp/llm-serving-python312/lib/python3.12/site-packages (from flashinfer-python==0.7.2.post1-\u003evllm==0.33.0) (8.5.1)\n"}
+,{"stream_name":"stdout","time":45.841036619,"data":"Collecting cuda-python\u003e=12.0 (from flashinfer-python==0.7.2.post1-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":45.861295064,"data":"  Downloading cuda_python-13.5.0-py3-none-any.whl.metadata (6.8 kB)\n"}
+,{"stream_name":"stdout","time":45.999327288,"data":"Collecting cuda-tile\u003e=1.4.0 (from flashinfer-python==0.7.2.post1-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":46.022167169,"data":"  Downloading cuda_tile-1.8.1-cp312-cp312-manylinux2014_x86_64.whl.metadata (7.3 kB)\n"}
+,{"stream_name":"stdout","time":46.132548903,"data":"Collecting nccl-extensions\u003e=0.1.0 (from flashinfer-python==0.7.2.post1-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":46.155464134,"data":"  Downloading nccl_extensions-0.2.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (8.0 kB)\n"}
+,{"stream_name":"stdout","time":46.270893456,"data":"Collecting nccl4py\u003e=0.4.1 (from flashinfer-python==0.7.2.post1-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":46.293128695,"data":"  Downloading nccl4py-0.6.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (3.2 kB)\n"}
+,{"stream_name":"stdout","time":46.400966528,"data":"Collecting nvidia-ml-py (from flashinfer-python==0.7.2.post1-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":46.421264916,"data":"  Downloading nvidia_ml_py-13.615.71-py3-none-any.whl.metadata (9.7 kB)\n"}
+,{"stream_name":"stdout","time":46.4372512,"data":"Requirement already satisfied: packaging\u003e=24.2 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from flashinfer-python==0.7.2.post1-\u003evllm==0.33.0) (26.4)\n"}
+,{"stream_name":"stdout","time":46.521029726,"data":"Collecting tabulate (from flashinfer-python==0.7.2.post1-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":46.540782944,"data":"  Downloading tabulate-0.10.0-py3-none-any.whl.metadata (40 kB)\n"}
+,{"stream_name":"stdout","time":46.666829864,"data":"Collecting triton (from humming-kernels==0.1.19-\u003ehumming-kernels[cu13]==0.1.19-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":46.68634567,"data":"  Downloading triton-3.9.0-cp312-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (978 bytes)\n"}
+,{"stream_name":"stdout","time":46.80099802,"data":"Collecting jinja2 (from humming-kernels==0.1.19-\u003ehumming-kernels[cu13]==0.1.19-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":46.823750525,"data":"  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)\n"}
+,{"stream_name":"stdout","time":47.050641364,"data":"Collecting cuda-bindings (from humming-kernels==0.1.19-\u003ehumming-kernels[cu13]==0.1.19-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":47.070542249,"data":"  Downloading cuda_bindings-13.5.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (2.5 kB)\n"}
+,{"stream_name":"stdout","time":47.180389274,"data":"Collecting nvidia-cuda-runtime (from humming-kernels[cu13]==0.1.19-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":47.20237943,"data":"  Downloading nvidia_cuda_runtime-13.5.37-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.8 kB)\n"}
+,{"stream_name":"stdout","time":47.30687101,"data":"Collecting nvidia-cuda-cccl (from humming-kernels[cu13]==0.1.19-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":47.327113772,"data":"  Downloading nvidia_cuda_cccl-13.3.5.0.6-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.7 kB)\n"}
+,{"stream_name":"stdout","time":47.429922643,"data":"Collecting nvidia-cuda-nvcc (from humming-kernels[cu13]==0.1.19-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":47.450959513,"data":"  Downloading nvidia_cuda_nvcc-13.5.37-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.9 kB)\n"}
+,{"stream_name":"stdout","time":47.619824858,"data":"Collecting nvidia-cuda-nvrtc (from humming-kernels[cu13]==0.1.19-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":47.640727287,"data":"  Downloading nvidia_cuda_nvrtc-13.5.37-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl.metadata (1.8 kB)\n"}
+,{"stream_name":"stdout","time":47.747098637,"data":"Collecting interegular\u003e=0.3.2 (from lm-format-enforcer==0.11.3-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":47.76695812,"data":"  Downloading interegular-0.3.3-py37-none-any.whl.metadata (3.0 kB)\n"}
+,{"stream_name":"stdout","time":47.954394911,"data":"Collecting llvmlite\u003c0.48,\u003e=0.47.0dev0 (from numba==0.65.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":47.980591623,"data":"  Downloading llvmlite-0.47.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (5.0 kB)\n"}
+,{"stream_name":"stdout","time":48.004433109,"data":"Collecting numpy (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":48.026149206,"data":"  Downloading numpy-2.4.6-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)\n"}
+,{"stream_name":"stdout","time":48.160346867,"data":"Collecting nvidia-cutlass-dsl-libs-base==4.8.0 (from nvidia-cutlass-dsl==4.8.0-\u003envidia-cutlass-dsl[cu13]==4.8.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":48.181812485,"data":"  Downloading nvidia_cutlass_dsl_libs_base-4.8.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (2.9 kB)\n"}
+,{"stream_name":"stdout","time":48.294623237,"data":"Collecting nvidia-cutlass-dsl-libs-cu12==4.8.0 (from nvidia-cutlass-dsl==4.8.0-\u003envidia-cutlass-dsl[cu13]==4.8.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":48.315605466,"data":"  Downloading nvidia_cutlass_dsl_libs_cu12-4.8.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (2.9 kB)\n"}
+,{"stream_name":"stdout","time":48.430916761,"data":"Collecting nvidia-cutlass-dsl-libs-core==4.8.0 (from nvidia-cutlass-dsl-libs-base==4.8.0-\u003envidia-cutlass-dsl==4.8.0-\u003envidia-cutlass-dsl[cu13]==4.8.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":48.455269009,"data":"  Downloading nvidia_cutlass_dsl_libs_core-4.8.0-py3-none-any.whl.metadata (2.8 kB)\n"}
+,{"stream_name":"stdout","time":48.59816674,"data":"Collecting nvidia-cutlass-dsl-libs-cu13==4.8.0 (from nvidia-cutlass-dsl[cu13]==4.8.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":48.619199697,"data":"  Downloading nvidia_cutlass_dsl_libs_cu13-4.8.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (2.9 kB)\n"}
+,{"stream_name":"stdout","time":48.741228867,"data":"Collecting torch-c-dlpack-ext (from quack-kernels==0.6.5-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":48.760818301,"data":"  Downloading torch_c_dlpack_ext-0.1.5-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (14 kB)\n"}
+,{"stream_name":"stdout","time":48.912763476,"data":"Collecting ml-dtypes (from tilelang==0.1.12-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":48.932849173,"data":"  Downloading ml_dtypes-0.7.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (11 kB)\n"}
+,{"stream_name":"stdout","time":49.075995117,"data":"Collecting z3-solver\u003c4.15.5,\u003e=4.13.0 (from tilelang==0.1.12-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":49.102694097,"data":"  Downloading z3_solver-4.15.4.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (602 bytes)\n"}
+,{"stream_name":"stdout","time":49.212592497,"data":"Collecting tokenspeed-triton\u003e=3.9.10.post20261008 (from tokenspeed-mla==2.0.3-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":49.232282248,"data":"  Downloading tokenspeed_triton-3.9.10.post20261028-cp312-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (1.0 kB)\n"}
+,{"stream_name":"stdout","time":49.352891842,"data":"Collecting sympy\u003e=1.13.3 (from torch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":49.37259962,"data":"  Downloading sympy-1.14.0-py3-none-any.whl.metadata (12 kB)\n"}
+,{"stream_name":"stdout","time":49.502098635,"data":"Collecting networkx\u003e=2.5.1 (from torch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":49.52209389,"data":"  Downloading networkx-3.7-py3-none-any.whl.metadata (6.7 kB)\n"}
+,{"stream_name":"stdout","time":49.656233425,"data":"Collecting fsspec\u003e=0.8.5 (from torch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":49.676372277,"data":"  Downloading fsspec-2026.9.0-py3-none-any.whl.metadata (10 kB)\n"}
+,{"stream_name":"stdout","time":49.800343414,"data":"Collecting cuda-toolkit==13.0.3 (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == \"Linux\"-\u003etorch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":49.821161267,"data":"  Downloading cuda_toolkit-13.0.3.0-py2.py3-none-any.whl.metadata (17 kB)\n"}
+,{"stream_name":"stdout","time":49.950147654,"data":"Collecting nvidia-cudnn-cu13==9.24.0.43 (from torch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":49.972405767,"data":"  Downloading nvidia_cudnn_cu13-9.24.0.43-py3-none-manylinux_2_27_x86_64.whl.metadata (1.9 kB)\n"}
+,{"stream_name":"stdout","time":50.082854557,"data":"Collecting nvidia-cusparselt-cu13==0.8.1 (from torch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":50.104147689,"data":"  Downloading nvidia_cusparselt_cu13-0.8.1-py3-none-manylinux2014_x86_64.whl.metadata (12 kB)\n"}
+,{"stream_name":"stdout","time":50.207195133,"data":"Collecting nvidia-nccl-cu13==2.30.7 (from torch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":50.228342836,"data":"  Downloading nvidia_nccl_cu13-2.30.7-py3-none-manylinux_2_18_x86_64.whl.metadata (2.1 kB)\n"}
+,{"stream_name":"stdout","time":50.325980699,"data":"Collecting nvidia-nvshmem-cu13==3.4.5 (from torch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":50.347970706,"data":"  Downloading nvidia_nvshmem_cu13-3.4.5-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.1 kB)\n"}
+,{"stream_name":"stdout","time":50.364118874,"data":"Collecting triton (from humming-kernels==0.1.19-\u003ehumming-kernels[cu13]==0.1.19-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":50.392975999,"data":"  Downloading triton-3.8.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (978 bytes)\n"}
+,{"stream_name":"stdout","time":50.510604925,"data":"Collecting nvidia-cublas==13.1.1.3.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == \"Linux\"-\u003etorch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":50.540220457,"data":"  Downloading nvidia_cublas-13.1.1.3-py3-none-manylinux_2_27_x86_64.whl.metadata (1.8 kB)\n"}
+,{"stream_name":"stdout","time":50.560745156,"data":"Collecting nvidia-cuda-nvrtc (from humming-kernels[cu13]==0.1.19-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":50.588135003,"data":"  Downloading nvidia_cuda_nvrtc-13.0.88-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl.metadata (1.7 kB)\n"}
+,{"stream_name":"stdout","time":50.607772623,"data":"Collecting nvidia-cuda-runtime (from humming-kernels[cu13]==0.1.19-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":50.631278045,"data":"  Downloading nvidia_cuda_runtime-13.0.96-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.7 kB)\n"}
+,{"stream_name":"stdout","time":50.740811176,"data":"Collecting nvidia-cufft==12.0.0.61.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == \"Linux\"-\u003etorch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":50.764599976,"data":"  Downloading nvidia_cufft-12.0.0.61-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.8 kB)\n"}
+,{"stream_name":"stdout","time":50.91658769,"data":"Collecting nvidia-nvjitlink\u003c14,\u003e=13.0.88 (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == \"Linux\"-\u003etorch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":50.967171333,"data":"  Downloading nvidia_nvjitlink-13.5.37-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl.metadata (1.8 kB)\n"}
+,{"stream_name":"stdout","time":51.070143171,"data":"Collecting nvidia-cufile==1.15.1.6.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == \"Linux\"-\u003etorch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":51.095408585,"data":"  Downloading nvidia_cufile-1.15.1.6-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.7 kB)\n"}
+,{"stream_name":"stdout","time":51.217922654,"data":"Collecting nvidia-cuda-cupti==13.0.85.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == \"Linux\"-\u003etorch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":51.246054155,"data":"  Downloading nvidia_cuda_cupti-13.0.85-py3-none-manylinux_2_25_x86_64.whl.metadata (1.7 kB)\n"}
+,{"stream_name":"stdout","time":51.362840008,"data":"Collecting nvidia-curand==10.4.0.35.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == \"Linux\"-\u003etorch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":51.398889385,"data":"  Downloading nvidia_curand-10.4.0.35-py3-none-manylinux_2_27_x86_64.whl.metadata (1.7 kB)\n"}
+,{"stream_name":"stdout","time":51.511008195,"data":"Collecting nvidia-cusolver==12.0.4.66.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == \"Linux\"-\u003etorch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":51.533188647,"data":"  Downloading nvidia_cusolver-12.0.4.66-py3-none-manylinux_2_27_x86_64.whl.metadata (1.8 kB)\n"}
+,{"stream_name":"stdout","time":51.640853687,"data":"Collecting nvidia-cusparse==12.6.3.3.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == \"Linux\"-\u003etorch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":51.665543763,"data":"  Downloading nvidia_cusparse-12.6.3.3-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.8 kB)\n"}
+,{"stream_name":"stdout","time":51.768271214,"data":"Collecting nvidia-nvtx==13.0.85.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == \"Linux\"-\u003etorch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":51.790695741,"data":"  Downloading nvidia_nvtx-13.0.85-py3-none-manylinux1_x86_64.manylinux_2_5_x86_64.whl.metadata (1.8 kB)\n"}
+,{"stream_name":"stdout","time":51.910158706,"data":"Collecting cuda-pathfinder\u003e=1.4.2 (from cuda-bindings-\u003ehumming-kernels==0.1.19-\u003ehumming-kernels[cu13]==0.1.19-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":51.946003961,"data":"  Downloading cuda_pathfinder-1.9.1-py3-none-any.whl.metadata (1.9 kB)\n"}
+,{"stream_name":"stdout","time":51.965708628,"data":"Requirement already satisfied: typing-inspection\u003e=0.4.2 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from fastapi\u003c0.137.0,\u003e=0.133.0-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0) (0.4.5)\n"}
+,{"stream_name":"stdout","time":51.966393351,"data":"Requirement already satisfied: annotated-doc\u003e=0.0.2 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from fastapi\u003c0.137.0,\u003e=0.133.0-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0) (0.0.7)\n"}
+,{"stream_name":"stdout","time":52.05971921,"data":"Collecting fastapi-cli\u003e=0.0.8 (from fastapi-cli[standard]\u003e=0.0.8; extra == \"standard\"-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":52.080789466,"data":"  Downloading fastapi_cli-0.0.34-py3-none-any.whl.metadata (6.6 kB)\n"}
+,{"stream_name":"stdout","time":52.343911856,"data":"Collecting fastar\u003e=0.9.0 (from fastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":52.378168706,"data":"  Downloading fastar-0.12.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.1 kB)\n"}
+,{"stream_name":"stdout","time":52.397276524,"data":"Requirement already satisfied: httpx\u003c1.0.0,\u003e=0.23.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from fastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0) (0.28.1)\n"}
+,{"stream_name":"stdout","time":52.488035712,"data":"Collecting python-multipart\u003e=0.0.18 (from fastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":52.51088215,"data":"  Downloading python_multipart-0.0.34-py3-none-any.whl.metadata (6.3 kB)\n"}
+,{"stream_name":"stdout","time":52.621395181,"data":"Collecting email-validator\u003e=2.0.0 (from fastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":52.643057191,"data":"  Downloading email_validator-2.4.0-py3-none-any.whl.metadata (26 kB)\n"}
+,{"stream_name":"stdout","time":52.664291142,"data":"Requirement already satisfied: uvicorn\u003e=0.12.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from uvicorn[standard]\u003e=0.12.0; extra == \"standard\"-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0) (0.54.0)\n"}
+,{"stream_name":"stdout","time":52.760116141,"data":"Collecting pydantic-settings\u003e=2.0.0 (from fastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":52.781612351,"data":"  Downloading pydantic_settings-2.16.3-py3-none-any.whl.metadata (4.0 kB)\n"}
+,{"stream_name":"stdout","time":52.882005691,"data":"Collecting pydantic-extra-types\u003e=2.0.0 (from fastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":52.919046852,"data":"  Downloading pydantic_extra_types-2.11.1-py3-none-any.whl.metadata (4.2 kB)\n"}
+,{"stream_name":"stdout","time":52.938208859,"data":"Requirement already satisfied: anyio in /tmp/llm-serving-python312/lib/python3.12/site-packages (from httpx\u003c1.0.0,\u003e=0.23.0-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0) (4.16.0)\n"}
+,{"stream_name":"stdout","time":52.939113287,"data":"Requirement already satisfied: httpcore==1.* in /tmp/llm-serving-python312/lib/python3.12/site-packages (from httpx\u003c1.0.0,\u003e=0.23.0-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0) (1.0.9)\n"}
+,{"stream_name":"stdout","time":52.939964711,"data":"Requirement already satisfied: idna in /tmp/llm-serving-python312/lib/python3.12/site-packages (from httpx\u003c1.0.0,\u003e=0.23.0-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0) (3.20)\n"}
+,{"stream_name":"stdout","time":52.94335135,"data":"Requirement already satisfied: h11\u003e=0.16 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from httpcore==1.*-\u003ehttpx\u003c1.0.0,\u003e=0.23.0-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0) (0.16.0)\n"}
+,{"stream_name":"stdout","time":53.03323769,"data":"Collecting httpx2\u003e=2.10.0 (from mcp\u003c3.0.0,\u003e=2.2.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":53.053939569,"data":"  Downloading httpx2-2.16.2-py3-none-any.whl.metadata (10.0 kB)\n"}
+,{"stream_name":"stdout","time":53.164409562,"data":"Collecting mcp-types==2.3.0 (from mcp\u003c3.0.0,\u003e=2.2.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":53.18782522,"data":"  Downloading mcp_types-2.3.0-py3-none-any.whl.metadata (1.9 kB)\n"}
+,{"stream_name":"stdout","time":53.299929906,"data":"Collecting pyjwt\u003e=2.10.1 (from pyjwt[crypto]\u003e=2.10.1-\u003emcp\u003c3.0.0,\u003e=2.2.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":53.326974789,"data":"  Downloading pyjwt-2.15.1-py3-none-any.whl.metadata (3.5 kB)\n"}
+,{"stream_name":"stdout","time":53.44457238,"data":"Collecting sse-starlette\u003e=3.0.0 (from mcp\u003c3.0.0,\u003e=2.2.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":53.490894294,"data":"  Downloading sse_starlette-3.7.1-py3-none-any.whl.metadata (15 kB)\n"}
+,{"stream_name":"stdout","time":53.614563878,"data":"Collecting jmespath (from model-hosting-container-standards\u003c1.0.0,\u003e=0.1.14-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":53.638830589,"data":"  Downloading jmespath-1.1.0-py3-none-any.whl.metadata (7.6 kB)\n"}
+,{"stream_name":"stdout","time":53.752663097,"data":"Collecting supervisor\u003e=4.2.0 (from model-hosting-container-standards\u003c1.0.0,\u003e=0.1.14-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":53.779367003,"data":"  Downloading supervisor-4.3.0-py2.py3-none-any.whl.metadata (87 kB)\n"}
+,{"stream_name":"stdout","time":53.945361468,"data":"Collecting typer (from transformers\u003c5.21.0,\u003e=5.16.1-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":53.96820374,"data":"  Downloading typer-0.29.2-py3-none-any.whl.metadata (16 kB)\n"}
+,{"stream_name":"stdout","time":54.172903707,"data":"Collecting hf-xet\u003c2.0.0,\u003e=1.6.0 (from huggingface_hub\u003e=1.31.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":54.206041589,"data":"  Downloading hf_xet-1.8.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (4.9 kB)\n"}
+,{"stream_name":"stdout","time":54.326364402,"data":"Collecting httpcore2==2.16.2 (from httpx2\u003e=2.10.0-\u003emcp\u003c3.0.0,\u003e=2.2.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":54.354056131,"data":"  Downloading httpcore2-2.16.2-py3-none-any.whl.metadata (28 kB)\n"}
+,{"stream_name":"stdout","time":54.470306671,"data":"Collecting truststore\u003e=0.10 (from httpx2\u003e=2.10.0-\u003emcp\u003c3.0.0,\u003e=2.2.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":54.499128896,"data":"  Downloading truststore-0.10.5-py3-none-any.whl.metadata (4.5 kB)\n"}
+,{"stream_name":"stdout","time":54.618701411,"data":"Collecting aiohappyeyeballs\u003e=2.5.0 (from aiohttp\u003e=3.14.4-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":54.65188138,"data":"  Downloading aiohappyeyeballs-2.7.1-py3-none-any.whl.metadata (5.9 kB)\n"}
+,{"stream_name":"stdout","time":54.755593618,"data":"Collecting aiosignal\u003e=1.4.0 (from aiohttp\u003e=3.14.4-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":54.797550098,"data":"  Downloading aiosignal-1.4.0-py3-none-any.whl.metadata (3.7 kB)\n"}
+,{"stream_name":"stdout","time":54.930259445,"data":"Collecting attrs\u003e=17.3.0 (from aiohttp\u003e=3.14.4-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":54.963318082,"data":"  Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)\n"}
+,{"stream_name":"stdout","time":55.18904204,"data":"Collecting frozenlist\u003e=1.1.1 (from aiohttp\u003e=3.14.4-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":55.220260977,"data":"  Downloading frozenlist-1.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (20 kB)\n"}
+,{"stream_name":"stdout","time":55.528383367,"data":"Collecting propcache\u003e=0.2.0 (from aiohttp\u003e=3.14.4-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":55.54824955,"data":"  Downloading propcache-0.5.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (25 kB)\n"}
+,{"stream_name":"stdout","time":56.179125571,"data":"Collecting yarl\u003c2.0,\u003e=1.25.1 (from aiohttp\u003e=3.14.4-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":56.204380853,"data":"  Downloading yarl-1.25.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (111 kB)\n"}
+,{"stream_name":"stdout","time":56.351443138,"data":"Collecting docstring-parser\u003c1,\u003e=0.15 (from anthropic\u003e=0.71.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":56.37099399,"data":"  Downloading docstring_parser-0.18.0-py3-none-any.whl.metadata (3.5 kB)\n"}
+,{"stream_name":"stdout","time":56.663718822,"data":"Collecting jiter\u003c1,\u003e=0.4.0 (from anthropic\u003e=0.71.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":56.68380755,"data":"  Downloading jiter-0.19.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (5.2 kB)\n"}
+,{"stream_name":"stdout","time":56.783113066,"data":"Collecting sniffio\u003c2,\u003e=1 (from anthropic\u003e=0.71.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":56.80290039,"data":"  Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)\n"}
+,{"stream_name":"stdout","time":56.829636921,"data":"Requirement already satisfied: annotated-types\u003e=0.6.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from pydantic\u003e=2.12.0-\u003evllm==0.33.0) (0.8.0)\n"}
+,{"stream_name":"stdout","time":56.830465314,"data":"Requirement already satisfied: pydantic-core==2.50.5 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from pydantic\u003e=2.12.0-\u003evllm==0.33.0) (2.50.5)\n"}
+,{"stream_name":"stdout","time":56.97126091,"data":"Collecting cuda-core~=1.2.0 (from cuda-python\u003e=12.0-\u003eflashinfer-python==0.7.2.post1-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":56.991358301,"data":"  Downloading cuda_core-1.2.2-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (3.4 kB)\n"}
+,{"stream_name":"stdout","time":57.110496187,"data":"Collecting dnspython\u003e=2.0.0 (from email-validator\u003e=2.0.0-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":57.130023608,"data":"  Downloading dnspython-2.9.2-py3-none-any.whl.metadata (5.8 kB)\n"}
+,{"stream_name":"stdout","time":57.245150029,"data":"Collecting rich-toolkit\u003e=0.14.8 (from fastapi-cli\u003e=0.0.8-\u003efastapi-cli[standard]\u003e=0.0.8; extra == \"standard\"-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":57.264925782,"data":"  Downloading rich_toolkit-0.20.6-py3-none-any.whl.metadata (3.0 kB)\n"}
+,{"stream_name":"stdout","time":57.398552319,"data":"Collecting fastapi-cloud-cli\u003e=0.1.1 (from fastapi-cli[standard]\u003e=0.0.8; extra == \"standard\"-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":57.418872299,"data":"  Downloading fastapi_cloud_cli-0.28.0-py3-none-any.whl.metadata (3.2 kB)\n"}
+,{"stream_name":"stdout","time":57.783888845,"data":"Collecting rignore\u003e=0.5.1 (from fastapi-cloud-cli\u003e=0.1.1-\u003efastapi-cli[standard]\u003e=0.0.8; extra == \"standard\"-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":57.804100014,"data":"  Downloading rignore-0.8.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.2 kB)\n"}
+,{"stream_name":"stdout","time":58.13610283,"data":"Collecting sentry-sdk\u003e=2.20.0 (from fastapi-cloud-cli\u003e=0.1.1-\u003efastapi-cli[standard]\u003e=0.0.8; extra == \"standard\"-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":58.156082486,"data":"  Downloading sentry_sdk-3.0.1-py3-none-any.whl.metadata (8.0 kB)\n"}
+,{"stream_name":"stdout","time":58.271507561,"data":"Collecting detect-installer\u003e=0.1.0 (from fastapi-cloud-cli\u003e=0.1.1-\u003efastapi-cli[standard]\u003e=0.0.8; extra == \"standard\"-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":58.291882249,"data":"  Downloading detect_installer-0.2.1-py3-none-any.whl.metadata (1.2 kB)\n"}
+,{"stream_name":"stdout","time":58.400152916,"data":"Collecting agent-detector\u003e=1.1.0 (from fastapi-cloud-cli\u003e=0.1.1-\u003efastapi-cli[standard]\u003e=0.0.8; extra == \"standard\"-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":58.419779822,"data":"  Downloading agent_detector-2.0.0-py3-none-any.whl.metadata (6.6 kB)\n"}
+,{"stream_name":"stdout","time":58.656412308,"data":"Collecting MarkupSafe\u003e=2.0 (from jinja2-\u003ehumming-kernels==0.1.19-\u003ehumming-kernels[cu13]==0.1.19-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":58.676545848,"data":"  Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)\n"}
+,{"stream_name":"stdout","time":58.788206676,"data":"Collecting jsonschema-specifications\u003e=2023.03.6 (from jsonschema\u003e=4.23.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":58.808222642,"data":"  Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)\n"}
+,{"stream_name":"stdout","time":58.932332112,"data":"Collecting referencing\u003e=0.28.4 (from jsonschema\u003e=4.23.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":58.95213823,"data":"  Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)\n"}
+,{"stream_name":"stdout","time":59.631104745,"data":"Collecting rpds-py\u003e=0.25.0 (from jsonschema\u003e=4.23.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":59.651192855,"data":"  Downloading rpds_py-2026.9.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.1 kB)\n"}
+,{"stream_name":"stdout","time":59.678385819,"data":"Collecting numpy (from vllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":59.699364645,"data":"  Downloading numpy-2.3.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)\n"}
+,{"stream_name":"stdout","time":59.851249293,"data":"Collecting opentelemetry-exporter-otlp-proto-grpc==1.45.2 (from opentelemetry-exporter-otlp\u003e=1.27.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":59.870802779,"data":"  Downloading opentelemetry_exporter_otlp_proto_grpc-1.45.2-py3-none-any.whl.metadata (2.6 kB)\n"}
+,{"stream_name":"stdout","time":59.983001102,"data":"Collecting opentelemetry-exporter-otlp-proto-http==1.45.2 (from opentelemetry-exporter-otlp\u003e=1.27.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":60.002890797,"data":"  Downloading opentelemetry_exporter_otlp_proto_http-1.45.2-py3-none-any.whl.metadata (3.0 kB)\n"}
+,{"stream_name":"stdout","time":60.115298462,"data":"Collecting googleapis-common-protos~=1.57 (from opentelemetry-exporter-otlp-proto-grpc==1.45.2-\u003eopentelemetry-exporter-otlp\u003e=1.27.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":60.136056648,"data":"  Downloading googleapis_common_protos-1.76.0-py3-none-any.whl.metadata (8.5 kB)\n"}
+,{"stream_name":"stdout","time":61.409102599,"data":"Collecting grpcio\u003c2.0.0,\u003e=1.63.2 (from opentelemetry-exporter-otlp-proto-grpc==1.45.2-\u003eopentelemetry-exporter-otlp\u003e=1.27.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":61.42931616,"data":"  Downloading grpcio-1.85.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (3.8 kB)\n"}
+,{"stream_name":"stdout","time":61.526203013,"data":"Collecting opentelemetry-exporter-otlp-common==0.66b2 (from opentelemetry-exporter-otlp-proto-grpc==1.45.2-\u003eopentelemetry-exporter-otlp\u003e=1.27.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":61.546327072,"data":"  Downloading opentelemetry_exporter_otlp_common-0.66b2-py3-none-any.whl.metadata (1.9 kB)\n"}
+,{"stream_name":"stdout","time":61.645425233,"data":"Collecting opentelemetry-exporter-otlp-proto-common==1.45.2 (from opentelemetry-exporter-otlp-proto-grpc==1.45.2-\u003eopentelemetry-exporter-otlp\u003e=1.27.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":61.665458414,"data":"  Downloading opentelemetry_exporter_otlp_proto_common-1.45.2-py3-none-any.whl.metadata (1.8 kB)\n"}
+,{"stream_name":"stdout","time":61.777177035,"data":"Collecting opentelemetry-proto==1.45.2 (from opentelemetry-exporter-otlp-proto-grpc==1.45.2-\u003eopentelemetry-exporter-otlp\u003e=1.27.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":61.797096417,"data":"  Downloading opentelemetry_proto-1.45.2-py3-none-any.whl.metadata (2.3 kB)\n"}
+,{"stream_name":"stdout","time":61.912421763,"data":"Collecting opentelemetry-exporter-http-transport==0.66b2 (from opentelemetry-exporter-http-transport[requests]==0.66b2-\u003eopentelemetry-exporter-otlp-proto-http==1.45.2-\u003eopentelemetry-exporter-otlp\u003e=1.27.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":61.932925196,"data":"  Downloading opentelemetry_exporter_http_transport-0.66b2-py3-none-any.whl.metadata (2.3 kB)\n"}
+,{"stream_name":"stdout","time":62.065640329,"data":"Collecting opentelemetry-semantic-conventions==0.66b2 (from opentelemetry-sdk\u003e=1.27.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":62.085445912,"data":"  Downloading opentelemetry_semantic_conventions-0.66b2-py3-none-any.whl.metadata (2.4 kB)\n"}
+,{"stream_name":"stdout","time":62.439802488,"data":"Collecting charset_normalizer\u003c4,\u003e=2 (from requests\u003e=2.33.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":62.460401008,"data":"  Downloading charset_normalizer-3.5.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (43 kB)\n"}
+,{"stream_name":"stdout","time":62.588402229,"data":"Collecting urllib3\u003c3,\u003e=1.26 (from requests\u003e=2.33.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":62.608529171,"data":"  Downloading urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)\n"}
+,{"stream_name":"stdout","time":62.750809514,"data":"Collecting pycountry\u003e=23 (from pydantic-extra-types[pycountry]\u003e=2.10.5-\u003emistral_common\u003e=1.11.6-\u003emistral_common[image]\u003e=1.11.6-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":62.770620385,"data":"  Downloading pycountry-26.2.16-py3-none-any.whl.metadata (12 kB)\n"}
+,{"stream_name":"stdout","time":62.890960001,"data":"Collecting python-dotenv\u003e=1.2.2 (from pydantic-settings\u003e=2.0.0-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":62.922767553,"data":"  Downloading python_dotenv-1.2.4-py3-none-any.whl.metadata (29 kB)\n"}
+,{"stream_name":"stdout","time":63.391947672,"data":"Collecting cryptography\u003e=3.4.0 (from pyjwt[crypto]\u003e=2.10.1-\u003emcp\u003c3.0.0,\u003e=2.2.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":63.41228417,"data":"  Downloading cryptography-50.0.2-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (4.4 kB)\n"}
+,{"stream_name":"stdout","time":63.737396578,"data":"Collecting cffi\u003e=2.0.0 (from cryptography\u003e=3.4.0-\u003epyjwt[crypto]\u003e=2.10.1-\u003emcp\u003c3.0.0,\u003e=2.2.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":63.757598324,"data":"  Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)\n"}
+,{"stream_name":"stdout","time":63.861300959,"data":"Collecting pycparser (from cffi\u003e=2.0.0-\u003ecryptography\u003e=3.4.0-\u003epyjwt[crypto]\u003e=2.10.1-\u003emcp\u003c3.0.0,\u003e=2.2.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":63.881335886,"data":"  Downloading pycparser-3.12-py3-none-any.whl.metadata (9.7 kB)\n"}
+,{"stream_name":"stdout","time":64.034377515,"data":"Collecting rich\u003e=13.7.1 (from rich-toolkit\u003e=0.14.8-\u003efastapi-cli\u003e=0.0.8-\u003efastapi-cli[standard]\u003e=0.0.8; extra == \"standard\"-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":64.054646342,"data":"  Downloading rich-15.0.0-py3-none-any.whl.metadata (18 kB)\n"}
+,{"stream_name":"stdout","time":64.171966934,"data":"Collecting markdown-it-py\u003e=2.2.0 (from rich\u003e=13.7.1-\u003erich-toolkit\u003e=0.14.8-\u003efastapi-cli\u003e=0.0.8-\u003efastapi-cli[standard]\u003e=0.0.8; extra == \"standard\"-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":64.191979445,"data":"  Downloading markdown_it_py-4.3.0-py3-none-any.whl.metadata (7.9 kB)\n"}
+,{"stream_name":"stdout","time":64.215077157,"data":"Requirement already satisfied: pygments\u003c3.0.0,\u003e=2.13.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from rich\u003e=13.7.1-\u003erich-toolkit\u003e=0.14.8-\u003efastapi-cli\u003e=0.0.8-\u003efastapi-cli[standard]\u003e=0.0.8; extra == \"standard\"-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0) (2.21.0)\n"}
+,{"stream_name":"stdout","time":64.307223539,"data":"Collecting mdurl~=0.1 (from markdown-it-py\u003e=2.2.0-\u003erich\u003e=13.7.1-\u003erich-toolkit\u003e=0.14.8-\u003efastapi-cli\u003e=0.0.8-\u003efastapi-cli[standard]\u003e=0.0.8; extra == \"standard\"-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":64.327230436,"data":"  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)\n"}
+,{"stream_name":"stdout","time":64.459475412,"data":"Collecting mpmath\u003c1.4,\u003e=1.1.0 (from sympy\u003e=1.13.3-\u003etorch==2.14.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":64.479174028,"data":"  Downloading mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)\n"}
+,{"stream_name":"stdout","time":64.602342861,"data":"Collecting shellingham\u003e=1.3.0 (from typer-\u003etransformers\u003c5.21.0,\u003e=5.16.1-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":64.622415372,"data":"  Downloading shellingham-1.5.4-py2.py3-none-any.whl.metadata (3.5 kB)\n"}
+,{"stream_name":"stdout","time":64.791864565,"data":"Collecting httptools\u003e=0.8.0 (from uvicorn[standard]\u003e=0.12.0; extra == \"standard\"-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":64.812336076,"data":"  Downloading httptools-0.9.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)\n"}
+,{"stream_name":"stdout","time":64.980653994,"data":"Collecting uvloop\u003e=0.15.1 (from uvicorn[standard]\u003e=0.12.0; extra == \"standard\"-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":65.000666673,"data":"  Downloading uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.1 kB)\n"}
+,{"stream_name":"stdout","time":65.447801267,"data":"Collecting websockets\u003e=13.0 (from uvicorn[standard]\u003e=0.12.0; extra == \"standard\"-\u003efastapi[standard]\u003c0.137.0,\u003e=0.133.0-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":65.46803634,"data":"  Downloading websockets-17.4-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.3 kB)\n"}
+,{"stream_name":"stdout","time":65.63162732,"data":"Collecting nvidia-nvvm (from nvidia-cuda-nvcc-\u003ehumming-kernels[cu13]==0.1.19-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":65.652761661,"data":"  Downloading nvidia_nvvm-13.5.37-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl.metadata (1.7 kB)\n"}
+,{"stream_name":"stdout","time":65.760266132,"data":"Collecting nvidia-cuda-crt (from nvidia-cuda-nvcc-\u003ehumming-kernels[cu13]==0.1.19-\u003evllm==0.33.0)\n"}
+,{"stream_name":"stdout","time":65.780884089,"data":"  Downloading nvidia_cuda_crt-13.5.37-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.7 kB)\n"}
+,{"stream_name":"stdout","time":65.854642516,"data":"Downloading vllm-0.33.0-cp38-abi3-manylinux_2_28_x86_64.whl (336.4 MB)\n"}
+,{"stream_name":"stdout","time":69.780160095,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 336.4/336.4 MB 75.8 MB/s  0:00:03\n"}
+,{"stream_name":"stdout","time":69.803761144,"data":"Downloading apache_tvm_ffi-0.1.11-cp312-abi3-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (2.7 MB)\n"}
+,{"stream_name":"stdout","time":69.840265541,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.7/2.7 MB 73.0 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":69.860208127,"data":"Downloading compressed_tensors-0.17.0-py3-none-any.whl (211 kB)\n"}
+,{"stream_name":"stdout","time":69.899519165,"data":"Downloading depyf-0.20.0-py3-none-any.whl (39 kB)\n"}
+,{"stream_name":"stdout","time":69.937342135,"data":"Downloading flashinfer_python-0.7.2.post1-py3-none-any.whl (62.1 MB)\n"}
+,{"stream_name":"stdout","time":70.680689969,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.1/62.1 MB 83.5 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":70.707550223,"data":"Downloading humming_kernels-0.1.19-cp310-abi3-manylinux_2_28_x86_64.whl (556 kB)\n"}
+,{"stream_name":"stdout","time":70.73207363,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 556.0/556.0 kB 13.9 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":70.752609782,"data":"Downloading lark-1.2.2-py3-none-any.whl (111 kB)\n"}
+,{"stream_name":"stdout","time":70.791749991,"data":"Downloading lm_format_enforcer-0.11.3-py3-none-any.whl (45 kB)\n"}
+,{"stream_name":"stdout","time":70.830128893,"data":"Downloading numba-0.65.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (3.8 MB)\n"}
+,{"stream_name":"stdout","time":70.866642397,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.8/3.8 MB 105.6 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":70.886587028,"data":"Downloading nvidia_cutlass_dsl-4.8.0-py3-none-any.whl (10 kB)\n"}
+,{"stream_name":"stdout","time":70.923355781,"data":"Downloading nvidia_cutlass_dsl_libs_base-4.8.0-cp312-cp312-manylinux_2_28_x86_64.whl (3.1 MB)\n"}
+,{"stream_name":"stdout","time":70.966970856,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.1/3.1 MB 69.1 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":70.995678727,"data":"Downloading nvidia_cutlass_dsl_libs_core-4.8.0-py3-none-any.whl (1.6 MB)\n"}
+,{"stream_name":"stdout","time":71.023740477,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 54.1 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":71.049179431,"data":"Downloading nvidia_cutlass_dsl_libs_cu12-4.8.0-cp312-cp312-manylinux_2_28_x86_64.whl (91.7 MB)\n"}
+,{"stream_name":"stdout","time":72.035012226,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 91.7/91.7 MB 93.1 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":72.060065742,"data":"Downloading nvidia_cutlass_dsl_libs_cu13-4.8.0-cp312-cp312-manylinux_2_28_x86_64.whl (92.0 MB)\n"}
+,{"stream_name":"stdout","time":72.918312859,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 92.0/92.0 MB 107.3 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":72.939811585,"data":"Downloading nvtx-0.2.15-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (806 kB)\n"}
+,{"stream_name":"stdout","time":72.963409674,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 806.2/806.2 kB 26.4 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":72.987156432,"data":"Downloading outlines_core-0.2.14-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.3 MB)\n"}
+,{"stream_name":"stdout","time":73.022284376,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.3/2.3 MB 64.7 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":73.043747612,"data":"Downloading pynvvideocodec-2.0.4-cp312-cp312-manylinux_2_28_x86_64.whl (43.2 MB)\n"}
+,{"stream_name":"stdout","time":73.463698237,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.2/43.2 MB 102.9 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":73.483869297,"data":"Downloading quack_kernels-0.6.5-py3-none-any.whl (729 kB)\n"}
+,{"stream_name":"stdout","time":73.507439942,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 729.6/729.6 kB 23.2 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":73.532044969,"data":"Downloading tilelang-0.1.12-cp38-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (50.5 MB)\n"}
+,{"stream_name":"stdout","time":74.220589735,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 50.5/50.5 MB 73.4 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":74.240920425,"data":"Downloading tokenspeed_mla-2.0.3-py3-none-any.whl (238 kB)\n"}
+,{"stream_name":"stdout","time":74.282943059,"data":"Downloading torch-2.14.0-cp312-cp312-manylinux_2_28_x86_64.whl (554.6 MB)\n"}
+,{"stream_name":"stdout","time":80.005527279,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 554.6/554.6 MB 62.0 MB/s  0:00:05\n"}
+,{"stream_name":"stdout","time":80.026708587,"data":"Downloading cuda_toolkit-13.0.3.0-py2.py3-none-any.whl (2.5 kB)\n"}
+,{"stream_name":"stdout","time":80.92321283,"data":"Downloading nvidia_cudnn_cu13-9.24.0.43-py3-none-manylinux_2_27_x86_64.whl (553.1 MB)\n"}
+,{"stream_name":"stdout","time":86.486960352,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 553.1/553.1 MB 57.9 MB/s  0:00:05\n"}
+,{"stream_name":"stdout","time":86.507195059,"data":"Downloading nvidia_cusparselt_cu13-0.8.1-py3-none-manylinux2014_x86_64.whl (170.1 MB)\n"}
+,{"stream_name":"stdout","time":90.041938874,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 170.1/170.1 MB 48.1 MB/s  0:00:03\n"}
+,{"stream_name":"stdout","time":90.061736784,"data":"Downloading nvidia_nccl_cu13-2.30.7-py3-none-manylinux_2_18_x86_64.whl (216.0 MB)\n"}
+,{"stream_name":"stdout","time":92.884708702,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 216.0/216.0 MB 76.5 MB/s  0:00:02\n"}
+,{"stream_name":"stdout","time":92.90504888,"data":"Downloading nvidia_nvshmem_cu13-3.4.5-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (60.4 MB)\n"}
+,{"stream_name":"stdout","time":93.501157764,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.4/60.4 MB 101.5 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":93.523923408,"data":"Downloading torchaudio-2.11.0-cp312-cp312-manylinux_2_28_x86_64.whl (1.8 MB)\n"}
+,{"stream_name":"stdout","time":93.556199334,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 51.6 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":93.604095226,"data":"Downloading torchvision-0.29.0-cp312-cp312-manylinux_2_28_x86_64.whl (7.4 MB)\n"}
+,{"stream_name":"stdout","time":93.963429302,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.4/7.4 MB 21.4 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":93.986549717,"data":"Downloading xgrammar-0.2.8-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (1.3 MB)\n"}
+,{"stream_name":"stdout","time":94.016256617,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 39.0 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":94.043331304,"data":"Downloading cuda_bindings-13.5.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (8.4 MB)\n"}
+,{"stream_name":"stdout","time":94.125013931,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.4/8.4 MB 103.4 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":94.146568651,"data":"Downloading fastapi-0.136.3-py3-none-any.whl (117 kB)\n"}
+,{"stream_name":"stdout","time":94.190538233,"data":"Downloading llguidance-1.7.6-cp39-abi3-manylinux_2_31_x86_64.whl (3.1 MB)\n"}
+,{"stream_name":"stdout","time":94.232934832,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.1/3.1 MB 71.7 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":94.256690641,"data":"Downloading llvmlite-0.47.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (56.3 MB)\n"}
+,{"stream_name":"stdout","time":95.513152372,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 56.3/56.3 MB 44.7 MB/s  0:00:01\n"}
+,{"stream_name":"stdout","time":95.558209074,"data":"Downloading mcp-2.3.0-py3-none-any.whl (368 kB)\n"}
+,{"stream_name":"stdout","time":95.619545259,"data":"Downloading mcp_types-2.3.0-py3-none-any.whl (69 kB)\n"}
+,{"stream_name":"stdout","time":95.665215043,"data":"Downloading model_hosting_container_standards-0.1.16-py3-none-any.whl (125 kB)\n"}
+,{"stream_name":"stdout","time":95.718375808,"data":"Downloading nvidia_cublas-13.1.1.3-py3-none-manylinux_2_27_x86_64.whl (423.1 MB)\n"}
+,{"stream_name":"stdout","time":105.625767713,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 423.1/423.1 MB 39.6 MB/s  0:00:09\n"}
+,{"stream_name":"stdout","time":105.64487427,"data":"Downloading nvidia_cuda_cupti-13.0.85-py3-none-manylinux_2_25_x86_64.whl (10.7 MB)\n"}
+,{"stream_name":"stdout","time":107.456124014,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.7/10.7 MB 5.8 MB/s  0:00:01\n"}
+,{"stream_name":"stdout","time":107.476085425,"data":"Downloading nvidia_cuda_nvrtc-13.0.88-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl (90.2 MB)\n"}
+,{"stream_name":"stdout","time":108.156916089,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 90.2/90.2 MB 132.7 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":108.177023569,"data":"Downloading nvidia_cuda_runtime-13.0.96-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (2.2 MB)\n"}
+,{"stream_name":"stdout","time":108.206277693,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 75.8 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":108.226723441,"data":"Downloading nvidia_cufft-12.0.0.61-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (214.1 MB)\n"}
+,{"stream_name":"stdout","time":109.874837403,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 214.1/214.1 MB 130.0 MB/s  0:00:01\n"}
+,{"stream_name":"stdout","time":109.894927651,"data":"Downloading nvidia_cufile-1.15.1.6-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (1.2 MB)\n"}
+,{"stream_name":"stdout","time":109.920739548,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 42.1 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":109.940932964,"data":"Downloading nvidia_curand-10.4.0.35-py3-none-manylinux_2_27_x86_64.whl (59.5 MB)\n"}
+,{"stream_name":"stdout","time":110.37475445,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.5/59.5 MB 137.6 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":110.395279943,"data":"Downloading nvidia_cusolver-12.0.4.66-py3-none-manylinux_2_27_x86_64.whl (200.9 MB)\n"}
+,{"stream_name":"stdout","time":115.055451657,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 200.9/200.9 MB 43.1 MB/s  0:00:04\n"}
+,{"stream_name":"stdout","time":115.075977816,"data":"Downloading nvidia_cusparse-12.6.3.3-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (145.9 MB)\n"}
+,{"stream_name":"stdout","time":116.63362311,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 145.9/145.9 MB 93.8 MB/s  0:00:01\n"}
+,{"stream_name":"stdout","time":116.655783076,"data":"Downloading nvidia_nvjitlink-13.5.37-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl (46.6 MB)\n"}
+,{"stream_name":"stdout","time":118.487554516,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 46.6/46.6 MB 25.4 MB/s  0:00:01\n"}
+,{"stream_name":"stdout","time":118.508372125,"data":"Downloading nvidia_nvtx-13.0.85-py3-none-manylinux1_x86_64.manylinux_2_5_x86_64.whl (148 kB)\n"}
+,{"stream_name":"stdout","time":118.55317454,"data":"Downloading setuptools-80.10.2-py3-none-any.whl (1.1 MB)\n"}
+,{"stream_name":"stdout","time":118.583201628,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 29.6 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":118.613985266,"data":"Downloading transformers-5.20.2-py3-none-any.whl (12.8 MB)\n"}
+,{"stream_name":"stdout","time":118.908277199,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.8/12.8 MB 43.2 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":118.929402638,"data":"Downloading huggingface_hub-2.4.0-py3-none-any.whl (857 kB)\n"}
+,{"stream_name":"stdout","time":118.952315908,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 857.0/857.0 kB 29.5 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":118.97353325,"data":"Downloading hf_xet-1.8.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.3 MB)\n"}
+,{"stream_name":"stdout","time":119.016412598,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.3/4.3 MB 100.8 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":119.037900415,"data":"Downloading httpx2-2.16.2-py3-none-any.whl (97 kB)\n"}
+,{"stream_name":"stdout","time":119.088284599,"data":"Downloading httpcore2-2.16.2-py3-none-any.whl (85 kB)\n"}
+,{"stream_name":"stdout","time":119.132083698,"data":"Downloading tokenizers-0.23.3-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.4 MB)\n"}
+,{"stream_name":"stdout","time":119.180828432,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.4/3.4 MB 69.2 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":119.201187542,"data":"Downloading triton-3.8.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (248.0 MB)\n"}
+,{"stream_name":"stdout","time":123.202807884,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 248.0/248.0 MB 62.0 MB/s  0:00:03\n"}
+,{"stream_name":"stdout","time":123.226247449,"data":"Downloading z3_solver-4.15.4.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (29.3 MB)\n"}
+,{"stream_name":"stdout","time":123.449850911,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 29.3/29.3 MB 131.7 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":123.471352467,"data":"Downloading aiohttp-3.14.5-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.9 MB)\n"}
+,{"stream_name":"stdout","time":123.50325355,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.9/1.9 MB 57.6 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":123.523237255,"data":"Downloading multidict-7.2.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (516 kB)\n"}
+,{"stream_name":"stdout","time":123.564521702,"data":"Downloading yarl-1.25.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (117 kB)\n"}
+,{"stream_name":"stdout","time":123.602420863,"data":"Downloading aiohappyeyeballs-2.7.1-py3-none-any.whl (15 kB)\n"}
+,{"stream_name":"stdout","time":123.639885054,"data":"Downloading aiosignal-1.4.0-py3-none-any.whl (7.5 kB)\n"}
+,{"stream_name":"stdout","time":123.676174166,"data":"Downloading anthropic-2.14.0-py3-none-any.whl (2.7 MB)\n"}
+,{"stream_name":"stdout","time":123.706471882,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.7/2.7 MB 91.9 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":123.726276878,"data":"Downloading docstring_parser-0.18.0-py3-none-any.whl (22 kB)\n"}
+,{"stream_name":"stdout","time":123.761850053,"data":"Downloading jiter-0.19.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (338 kB)\n"}
+,{"stream_name":"stdout","time":123.801812716,"data":"Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)\n"}
+,{"stream_name":"stdout","time":123.839877328,"data":"Downloading attrs-26.1.0-py3-none-any.whl (67 kB)\n"}
+,{"stream_name":"stdout","time":123.876551288,"data":"Downloading cuda_pathfinder-1.9.1-py3-none-any.whl (63 kB)\n"}
+,{"stream_name":"stdout","time":123.919523403,"data":"Downloading cuda_python-13.5.0-py3-none-any.whl (7.6 kB)\n"}
+,{"stream_name":"stdout","time":123.960839157,"data":"Downloading cuda_core-1.2.2-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (6.6 MB)\n"}
+,{"stream_name":"stdout","time":124.024196798,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.6/6.6 MB 105.0 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":124.044781447,"data":"Downloading cuda_tile-1.8.1-cp312-cp312-manylinux2014_x86_64.whl (536 kB)\n"}
+,{"stream_name":"stdout","time":124.067740954,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.3/536.3 kB 13.7 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":124.08774285,"data":"Downloading email_validator-2.4.0-py3-none-any.whl (36 kB)\n"}
+,{"stream_name":"stdout","time":124.123765517,"data":"Downloading dnspython-2.9.2-py3-none-any.whl (360 kB)\n"}
+,{"stream_name":"stdout","time":124.163087028,"data":"Downloading fastapi_cli-0.0.34-py3-none-any.whl (14 kB)\n"}
+,{"stream_name":"stdout","time":124.199366474,"data":"Downloading fastapi_cloud_cli-0.28.0-py3-none-any.whl (109 kB)\n"}
+,{"stream_name":"stdout","time":124.235327883,"data":"Downloading agent_detector-2.0.0-py3-none-any.whl (9.4 kB)\n"}
+,{"stream_name":"stdout","time":124.267925741,"data":"Downloading detect_installer-0.2.1-py3-none-any.whl (5.4 kB)\n"}
+,{"stream_name":"stdout","time":124.299268905,"data":"Downloading fastar-0.12.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (808 kB)\n"}
+,{"stream_name":"stdout","time":124.321009449,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 808.1/808.1 kB 28.7 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":124.343740544,"data":"Downloading fastsafetensors-0.5.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (2.7 MB)\n"}
+,{"stream_name":"stdout","time":124.380485157,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.7/2.7 MB 74.4 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":124.401351119,"data":"Downloading filelock-4.3.1-py3-none-any.whl (244 kB)\n"}
+,{"stream_name":"stdout","time":124.437071508,"data":"Downloading frozenlist-1.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (242 kB)\n"}
+,{"stream_name":"stdout","time":124.472972804,"data":"Downloading fsspec-2026.9.0-py3-none-any.whl (221 kB)\n"}
+,{"stream_name":"stdout","time":124.513769178,"data":"Downloading instanttensor-0.2.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (7.4 MB)\n"}
+,{"stream_name":"stdout","time":124.57871137,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.4/7.4 MB 115.1 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":124.599757489,"data":"Downloading interegular-0.3.3-py37-none-any.whl (23 kB)\n"}
+,{"stream_name":"stdout","time":124.638301502,"data":"Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)\n"}
+,{"stream_name":"stdout","time":124.673993164,"data":"Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)\n"}
+,{"stream_name":"stdout","time":124.71629148,"data":"Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)\n"}
+,{"stream_name":"stdout","time":124.747759267,"data":"Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)\n"}
+,{"stream_name":"stdout","time":124.787695958,"data":"Downloading mistral_common-1.13.1-py3-none-any.whl (6.6 MB)\n"}
+,{"stream_name":"stdout","time":124.835384635,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.6/6.6 MB 142.0 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":124.85647188,"data":"Downloading numpy-2.3.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.6 MB)\n"}
+,{"stream_name":"stdout","time":124.982815402,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.6/16.6 MB 133.0 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":125.006517859,"data":"Downloading nccl_extensions-0.2.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (25.1 MB)\n"}
+,{"stream_name":"stdout","time":125.215588612,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 25.1/25.1 MB 121.0 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":125.240621282,"data":"Downloading nccl4py-0.6.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (3.7 MB)\n"}
+,{"stream_name":"stdout","time":125.285191407,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.7/3.7 MB 85.8 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":125.305065964,"data":"Downloading networkx-3.7-py3-none-any.whl (2.1 MB)\n"}
+,{"stream_name":"stdout","time":125.332894491,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 77.4 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":125.355925057,"data":"Downloading nvidia_cudnn_frontend-1.33.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (28.4 MB)\n"}
+,{"stream_name":"stdout","time":125.640042896,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 28.4/28.4 MB 100.1 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":125.660552857,"data":"Downloading openai-3.59.0-py3-none-any.whl (2.5 MB)\n"}
+,{"stream_name":"stdout","time":125.688511336,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.5/2.5 MB 89.2 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":125.717528913,"data":"Downloading opencv_python_headless-5.1.0.95-cp37-abi3-manylinux_2_28_x86_64.whl (63.7 MB)\n"}
+,{"stream_name":"stdout","time":126.232568533,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.7/63.7 MB 123.9 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":126.25278654,"data":"Downloading opentelemetry_exporter_otlp-1.45.2-py3-none-any.whl (6.7 kB)\n"}
+,{"stream_name":"stdout","time":126.291211266,"data":"Downloading opentelemetry_exporter_otlp_proto_grpc-1.45.2-py3-none-any.whl (19 kB)\n"}
+,{"stream_name":"stdout","time":126.327318336,"data":"Downloading opentelemetry_exporter_otlp_common-0.66b2-py3-none-any.whl (12 kB)\n"}
+,{"stream_name":"stdout","time":126.364137884,"data":"Downloading opentelemetry_exporter_otlp_proto_common-1.45.2-py3-none-any.whl (15 kB)\n"}
+,{"stream_name":"stdout","time":126.400501935,"data":"Downloading opentelemetry_exporter_otlp_proto_http-1.45.2-py3-none-any.whl (22 kB)\n"}
+,{"stream_name":"stdout","time":126.438135253,"data":"Downloading opentelemetry_exporter_http_transport-0.66b2-py3-none-any.whl (12 kB)\n"}
+,{"stream_name":"stdout","time":126.473803958,"data":"Downloading opentelemetry_proto-1.45.2-py3-none-any.whl (72 kB)\n"}
+,{"stream_name":"stdout","time":126.51061167,"data":"Downloading googleapis_common_protos-1.76.0-py3-none-any.whl (307 kB)\n"}
+,{"stream_name":"stdout","time":126.550164921,"data":"Downloading grpcio-1.85.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (7.4 MB)\n"}
+,{"stream_name":"stdout","time":126.604406674,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.4/7.4 MB 141.2 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":126.624585446,"data":"Downloading opentelemetry_sdk-1.45.2-py3-none-any.whl (141 kB)\n"}
+,{"stream_name":"stdout","time":126.66180512,"data":"Downloading opentelemetry_semantic_conventions-0.66b2-py3-none-any.whl (206 kB)\n"}
+,{"stream_name":"stdout","time":126.709063731,"data":"Downloading protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl (343 kB)\n"}
+,{"stream_name":"stdout","time":126.751164695,"data":"Downloading requests-2.34.2-py3-none-any.whl (73 kB)\n"}
+,{"stream_name":"stdout","time":126.789444588,"data":"Downloading charset_normalizer-3.5.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (257 kB)\n"}
+,{"stream_name":"stdout","time":126.829935841,"data":"Downloading urllib3-2.8.0-py3-none-any.whl (135 kB)\n"}
+,{"stream_name":"stdout","time":126.867889479,"data":"Downloading opentelemetry_semantic_conventions_ai-0.5.1-py3-none-any.whl (11 kB)\n"}
+,{"stream_name":"stdout","time":126.90463074,"data":"Downloading orjson-3.13.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (130 kB)\n"}
+,{"stream_name":"stdout","time":126.949214181,"data":"Downloading oss_harmony-0.0.12-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.5 MB)\n"}
+,{"stream_name":"stdout","time":126.988647237,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.5/3.5 MB 91.7 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":127.007910172,"data":"Downloading pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (7.1 MB)\n"}
+,{"stream_name":"stdout","time":127.05730397,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.1/7.1 MB 148.2 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":127.077892361,"data":"Downloading prometheus_fastapi_instrumentator-8.1.0-py3-none-any.whl (19 kB)\n"}
+,{"stream_name":"stdout","time":127.114537748,"data":"Downloading propcache-0.5.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (250 kB)\n"}
+,{"stream_name":"stdout","time":127.151518618,"data":"Downloading pydantic_extra_types-2.11.1-py3-none-any.whl (79 kB)\n"}
+,{"stream_name":"stdout","time":127.187552822,"data":"Downloading pycountry-26.2.16-py3-none-any.whl (8.0 MB)\n"}
+,{"stream_name":"stdout","time":127.25401251,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.0/8.0 MB 123.1 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":127.273891049,"data":"Downloading pydantic_settings-2.16.3-py3-none-any.whl (82 kB)\n"}
+,{"stream_name":"stdout","time":127.312429957,"data":"Downloading pyjwt-2.15.1-py3-none-any.whl (33 kB)\n"}
+,{"stream_name":"stdout","time":127.354596355,"data":"Downloading cryptography-50.0.2-cp311-abi3-manylinux_2_34_x86_64.whl (4.8 MB)\n"}
+,{"stream_name":"stdout","time":127.392769596,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.8/4.8 MB 132.6 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":127.412496559,"data":"Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)\n"}
+,{"stream_name":"stdout","time":127.44880176,"data":"Downloading python_dotenv-1.2.4-py3-none-any.whl (23 kB)\n"}
+,{"stream_name":"stdout","time":127.481391777,"data":"Downloading python_multipart-0.0.34-py3-none-any.whl (32 kB)\n"}
+,{"stream_name":"stdout","time":127.518604065,"data":"Downloading pyyaml-6.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (849 kB)\n"}
+,{"stream_name":"stdout","time":127.541054349,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 849.2/849.2 kB 30.0 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":127.561173399,"data":"Downloading pyzmq-27.3.0-cp312-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl (855 kB)\n"}
+,{"stream_name":"stdout","time":127.584584548,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 855.2/855.2 kB 29.2 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":127.60426805,"data":"Downloading referencing-0.37.0-py3-none-any.whl (26 kB)\n"}
+,{"stream_name":"stdout","time":127.636519488,"data":"Downloading regex-2026.11.25-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (820 kB)\n"}
+,{"stream_name":"stdout","time":127.658434738,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 820.5/820.5 kB 29.0 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":127.678933476,"data":"Downloading rich_toolkit-0.20.6-py3-none-any.whl (39 kB)\n"}
+,{"stream_name":"stdout","time":127.715507266,"data":"Downloading rich-15.0.0-py3-none-any.whl (310 kB)\n"}
+,{"stream_name":"stdout","time":127.756876003,"data":"Downloading markdown_it_py-4.3.0-py3-none-any.whl (96 kB)\n"}
+,{"stream_name":"stdout","time":127.795089289,"data":"Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)\n"}
+,{"stream_name":"stdout","time":127.830595305,"data":"Downloading rignore-0.8.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (927 kB)\n"}
+,{"stream_name":"stdout","time":127.857332138,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 927.8/927.8 kB 28.1 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":127.879011139,"data":"Downloading rpds_py-2026.9.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (371 kB)\n"}
+,{"stream_name":"stdout","time":127.91660492,"data":"Downloading safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (516 kB)\n"}
+,{"stream_name":"stdout","time":127.959609126,"data":"Downloading sentry_sdk-3.0.1-py3-none-any.whl (477 kB)\n"}
+,{"stream_name":"stdout","time":128.001741766,"data":"Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)\n"}
+,{"stream_name":"stdout","time":128.038725132,"data":"Downloading sse_starlette-3.7.1-py3-none-any.whl (18 kB)\n"}
+,{"stream_name":"stdout","time":128.070423795,"data":"Downloading supervisor-4.3.0-py2.py3-none-any.whl (320 kB)\n"}
+,{"stream_name":"stdout","time":128.108430246,"data":"Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)\n"}
+,{"stream_name":"stdout","time":128.161698122,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 123.3 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":128.1822783,"data":"Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)\n"}
+,{"stream_name":"stdout","time":128.208807766,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.2/536.2 kB 11.7 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":128.228729704,"data":"Downloading tiktoken-0.14.0-cp312-cp312-manylinux_2_28_x86_64.whl (1.2 MB)\n"}
+,{"stream_name":"stdout","time":128.255797221,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 38.8 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":128.278189054,"data":"Downloading tokenspeed_triton-3.9.10.post20261028-cp312-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (94.9 MB)\n"}
+,{"stream_name":"stdout","time":129.419597087,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 94.9/94.9 MB 83.1 MB/s  0:00:01\n"}
+,{"stream_name":"stdout","time":129.441793207,"data":"Downloading torchcodec-0.17.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (10.0 MB)\n"}
+,{"stream_name":"stdout","time":129.520514693,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.0/10.0 MB 128.3 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":129.540396453,"data":"Downloading tqdm-4.70.1-py3-none-any.whl (80 kB)\n"}
+,{"stream_name":"stdout","time":129.577156523,"data":"Downloading truststore-0.10.5-py3-none-any.whl (19 kB)\n"}
+,{"stream_name":"stdout","time":129.613297283,"data":"Downloading typer-0.29.2-py3-none-any.whl (121 kB)\n"}
+,{"stream_name":"stdout","time":129.648955913,"data":"Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)\n"}
+,{"stream_name":"stdout","time":129.693973274,"data":"Downloading httptools-0.9.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (552 kB)\n"}
+,{"stream_name":"stdout","time":129.715403363,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 552.8/552.8 kB 15.7 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":129.735289098,"data":"Downloading uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.5 MB)\n"}
+,{"stream_name":"stdout","time":129.771520208,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.5/4.5 MB 127.4 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":129.792199115,"data":"Downloading watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (458 kB)\n"}
+,{"stream_name":"stdout","time":129.829952809,"data":"Downloading websockets-17.4-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (226 kB)\n"}
+,{"stream_name":"stdout","time":129.866862794,"data":"Downloading astor-0.8.1-py2.py3-none-any.whl (27 kB)\n"}
+,{"stream_name":"stdout","time":129.902722955,"data":"Downloading blake3-1.0.11-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (381 kB)\n"}
+,{"stream_name":"stdout","time":129.941549808,"data":"Downloading cachetools-8.0.3-py3-none-any.whl (19 kB)\n"}
+,{"stream_name":"stdout","time":129.978593584,"data":"Downloading cbor2-6.3.0-cp312-cp312-manylinux_2_28_x86_64.whl (473 kB)\n"}
+,{"stream_name":"stdout","time":130.017636979,"data":"Downloading cloudpickle-3.1.3-py3-none-any.whl (22 kB)\n"}
+,{"stream_name":"stdout","time":130.053403852,"data":"Downloading dill-0.4.1-py3-none-any.whl (120 kB)\n"}
+,{"stream_name":"stdout","time":130.089636928,"data":"Downloading einops-0.8.2-py3-none-any.whl (65 kB)\n"}
+,{"stream_name":"stdout","time":130.126190412,"data":"Downloading ijson-3.6.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (150 kB)\n"}
+,{"stream_name":"stdout","time":130.162710458,"data":"Downloading jmespath-1.1.0-py3-none-any.whl (20 kB)\n"}
+,{"stream_name":"stdout","time":130.200174722,"data":"Downloading loguru-0.8.0-py3-none-any.whl (69 kB)\n"}
+,{"stream_name":"stdout","time":130.236291746,"data":"Downloading ml_dtypes-0.7.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (463 kB)\n"}
+,{"stream_name":"stdout","time":130.280221465,"data":"Downloading msgspec-0.22.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (230 kB)\n"}
+,{"stream_name":"stdout","time":130.318950309,"data":"Downloading ninja-1.13.2-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (183 kB)\n"}
+,{"stream_name":"stdout","time":130.355549843,"data":"Downloading nvidia_cuda_cccl-13.3.5.0.6-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.1 MB)\n"}
+,{"stream_name":"stdout","time":130.393680732,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.1/4.1 MB 109.4 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":130.415173955,"data":"Downloading nvidia_cuda_nvcc-13.5.37-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (47.0 MB)\n"}
+,{"stream_name":"stdout","time":130.848506236,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 47.0/47.0 MB 108.6 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":130.997620918,"data":"Downloading nvidia_cuda_crt-13.5.37-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (166 kB)\n"}
+,{"stream_name":"stdout","time":131.036103846,"data":"Downloading nvidia_ml_py-13.615.71-py3-none-any.whl (58 kB)\n"}
+,{"stream_name":"stdout","time":131.075827458,"data":"Downloading nvidia_nvvm-13.5.37-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl (75.1 MB)\n"}
+,{"stream_name":"stdout","time":131.782558606,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 75.1/75.1 MB 106.4 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":131.802462394,"data":"Downloading partial_json_parser-0.2.1.1.post7-py3-none-any.whl (10 kB)\n"}
+,{"stream_name":"stdout","time":131.83493894,"data":"Downloading psutil-7.2.2-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl (155 kB)\n"}
+,{"stream_name":"stdout","time":131.869911684,"data":"Downloading py_cpuinfo-9.0.0-py3-none-any.whl (22 kB)\n"}
+,{"stream_name":"stdout","time":131.90400901,"data":"Downloading pybase64-1.5.2-cp312-cp312-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.whl (95 kB)\n"}
+,{"stream_name":"stdout","time":131.939873546,"data":"Downloading pycparser-3.12-py3-none-any.whl (62 kB)\n"}
+,{"stream_name":"stdout","time":131.97626303,"data":"Downloading python_json_logger-4.2.0-py3-none-any.whl (14 kB)\n"}
+,{"stream_name":"stdout","time":132.008231043,"data":"Downloading sentencepiece-0.2.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (1.7 MB)\n"}
+,{"stream_name":"stdout","time":132.035868771,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 58.9 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":132.056124078,"data":"Downloading setproctitle-1.3.8-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (32 kB)\n"}
+,{"stream_name":"stdout","time":132.092896245,"data":"Downloading tabulate-0.10.0-py3-none-any.whl (39 kB)\n"}
+,{"stream_name":"stdout","time":132.126358283,"data":"Downloading torch_c_dlpack_ext-0.1.5-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (897 kB)\n"}
+,{"stream_name":"stdout","time":132.149752928,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 897.8/897.8 kB 30.6 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":145.902110891,"data":"Installing collected packages: z3-solver, torchaudio, supervisor, py-cpuinfo, nvtx, nvidia-ml-py, nvidia-cusparselt-cu13, mpmath, cuda-toolkit, websockets, uvloop, urllib3, truststore, triton, tqdm, torchcodec, tokenspeed-triton, tabulate, sympy, sniffio, six, shellingham, setuptools, setproctitle, sentencepiece, safetensors, rpds-py, rignore, regex, pyzmq, pyyaml, python-multipart, python-json-logger, python-dotenv, PyNvVideoCodec, pyjwt, pycparser, pycountry, pybase64, psutil, protobuf, propcache, pillow, partial-json-parser, outlines_core, orjson, nvidia-nvvm, nvidia-nvtx, nvidia-nvshmem-cu13, nvidia-nvjitlink, nvidia-nccl-cu13, nvidia-curand, nvidia-cufile, nvidia-cuda-runtime, nvidia-cuda-nvrtc, nvidia-cuda-cupti, nvidia-cuda-crt, nvidia-cuda-cccl, numpy, ninja, networkx, multidict, msgspec, mdurl, MarkupSafe, loguru, llvmlite, llguidance, lark, jmespath, jiter, interegular, ijson, httptools, hf-xet, grpcio, fsspec, frozenlist, filelock, fastar, einops, docstring-parser, dnspython, dill, detect-installer, cuda-tile, cuda-pathfinder, cloudpickle, charset_normalizer, cbor2, cachetools, blake3, attrs, astor, apache-tvm-ffi, aiohappyeyeballs, agent-detector, yarl, watchfiles, sentry-sdk, requests, referencing, opentelemetry-semantic-conventions, opentelemetry-proto, opentelemetry-exporter-http-transport, opencv-python-headless, nvidia-cusparse, nvidia-cufft, nvidia-cuda-nvcc, nvidia-cublas, numba, ml-dtypes, markdown-it-py, jinja2, httpcore2, googleapis-common-protos, email-validator, depyf, cuda-core, cuda-bindings, cffi, aiosignal, tiktoken, sse-starlette, rich, pydantic-settings, pydantic-extra-types, prometheus-fastapi-instrumentator, oss-harmony, opentelemetry-sdk, opentelemetry-exporter-otlp-proto-common, nvidia-cutlass-dsl-libs-core, nvidia-cusolver, nvidia-cudnn-cu13, nccl4py, mcp-types, lm-format-enforcer, jsonschema-specifications, httpx2, fastapi, cuda-python, cryptography, aiohttp, typer, rich-toolkit, opentelemetry-semantic-conventions-ai, opentelemetry-exporter-otlp-common, openai, nvidia-cutlass-dsl-libs-base, nccl-extensions, model-hosting-container-standards, jsonschema, huggingface_hub, anthropic, torch, tokenizers, opentelemetry-exporter-otlp-proto-http, opentelemetry-exporter-otlp-proto-grpc, nvidia-cutlass-dsl-libs-cu13, nvidia-cutlass-dsl-libs-cu12, mistral_common, mcp, fastsafetensors, fastapi-cloud-cli, fastapi-cli, transformers, torchvision, torch-c-dlpack-ext, opentelemetry-exporter-otlp, nvidia-cutlass-dsl, instanttensor, humming-kernels, xgrammar, tokenspeed-mla, tilelang, quack-kernels, compressed-tensors, nvidia-cudnn-frontend, flashinfer-python, vllm\n"}
+,{"stream_name":"stdout","time":219.313120724,"data":"  Attempting uninstall: fastapi\n"}
+,{"stream_name":"stdout","time":219.318583021,"data":"    Found existing installation: fastapi 0.165.0\n"}
+,{"stream_name":"stdout","time":219.325781056,"data":"    Uninstalling fastapi-0.165.0:\n"}
+,{"stream_name":"stdout","time":219.328504107,"data":"      Successfully uninstalled fastapi-0.165.0\n"}
+,{"stream_name":"stdout","time":312.63585968,"data":"\n"}
+,{"stream_name":"stdout","time":312.650603407,"data":"Successfully installed MarkupSafe-3.0.4 PyNvVideoCodec-2.0.4 agent-detector-2.0.0 aiohappyeyeballs-2.7.1 aiohttp-3.14.5 aiosignal-1.4.0 anthropic-2.14.0 apache-tvm-ffi-0.1.11 astor-0.8.1 attrs-26.1.0 blake3-1.0.11 cachetools-8.0.3 cbor2-6.3.0 cffi-2.1.1 charset_normalizer-3.5.3 cloudpickle-3.1.3 compressed-tensors-0.17.0 cryptography-50.0.2 cuda-bindings-13.5.0 cuda-core-1.2.2 cuda-pathfinder-1.9.1 cuda-python-13.5.0 cuda-tile-1.8.1 cuda-toolkit-13.0.3.0 depyf-0.20.0 detect-installer-0.2.1 dill-0.4.1 dnspython-2.9.2 docstring-parser-0.18.0 einops-0.8.2 email-validator-2.4.0 fastapi-0.136.3 fastapi-cli-0.0.34 fastapi-cloud-cli-0.28.0 fastar-0.12.0 fastsafetensors-0.5.0 filelock-4.3.1 flashinfer-python-0.7.2.post1 frozenlist-1.8.0 fsspec-2026.9.0 googleapis-common-protos-1.76.0 grpcio-1.85.4 hf-xet-1.8.0 httpcore2-2.16.2 httptools-0.9.0 httpx2-2.16.2 huggingface_hub-2.4.0 humming-kernels-0.1.19 ijson-3.6.0 instanttensor-0.2.3 interegular-0.3.3 jinja2-3.1.6 jiter-0.19.0 jmespath-1.1.0 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 lark-1.2.2 llguidance-1.7.6 llvmlite-0.47.0 lm-format-enforcer-0.11.3 loguru-0.8.0 markdown-it-py-4.3.0 mcp-2.3.0 mcp-types-2.3.0 mdurl-0.1.2 mistral_common-1.13.1 ml-dtypes-0.7.0 model-hosting-container-standards-0.1.16 mpmath-1.3.0 msgspec-0.22.0 multidict-7.2.1 nccl-extensions-0.2.0 nccl4py-0.6.0 networkx-3.7 ninja-1.13.2 numba-0.65.0 numpy-2.3.5 nvidia-cublas-13.1.1.3 nvidia-cuda-cccl-13.3.5.0.6 nvidia-cuda-crt-13.5.37 nvidia-cuda-cupti-13.0.85 nvidia-cuda-nvcc-13.5.37 nvidia-cuda-nvrtc-13.0.88 nvidia-cuda-runtime-13.0.96 nvidia-cudnn-cu13-9.24.0.43 nvidia-cudnn-frontend-1.33.0 nvidia-cufft-12.0.0.61 nvidia-cufile-1.15.1.6 nvidia-curand-10.4.0.35 nvidia-cusolver-12.0.4.66 nvidia-cusparse-12.6.3.3 nvidia-cusparselt-cu13-0.8.1 nvidia-cutlass-dsl-4.8.0 nvidia-cutlass-dsl-libs-base-4.8.0 nvidia-cutlass-dsl-libs-core-4.8.0 nvidia-cutlass-dsl-libs-cu12-4.8.0 nvidia-cutlass-dsl-libs-cu13-4.8.0 nvidia-ml-py-13.615.71 nvidia-nccl-cu13-2.30.7 nvidia-nvjitlink-13.5.37 nvidia-nvshmem-cu13-3.4.5 nvidia-nvtx-13.0.85 nvidia-nvvm-13.5.37 nvtx-0.2.15 openai-3.59.0 opencv-python-headless-5.1.0.95 opentelemetry-exporter-http-transport-0.66b2 opentelemetry-exporter-otlp-1.45.2 opentelemetry-exporter-otlp-common-0.66b2 opentelemetry-exporter-otlp-proto-common-1.45.2 opentelemetry-exporter-otlp-proto-grpc-1.45.2 opentelemetry-exporter-otlp-proto-http-1.45.2 opentelemetry-proto-1.45.2 opentelemetry-sdk-1.45.2 opentelemetry-semantic-conventions-0.66b2 opentelemetry-semantic-conventions-ai-0.5.1 orjson-3.13.0 oss-harmony-0.0.12 outlines_core-0.2.14 partial-json-parser-0.2.1.1.post7 pillow-13.0.0 prometheus-fastapi-instrumentator-8.1.0 propcache-0.5.4 protobuf-7.36.2 psutil-7.2.2 py-cpuinfo-9.0.0 pybase64-1.5.2 pycountry-26.2.16 pycparser-3.12 pydantic-extra-types-2.11.1 pydantic-settings-2.16.3 pyjwt-2.15.1 python-dotenv-1.2.4 python-json-logger-4.2.0 python-multipart-0.0.34 pyyaml-6.0.4 pyzmq-27.3.0 quack-kernels-0.6.5 referencing-0.37.0 regex-2026.11.25 requests-2.34.2 rich-15.0.0 rich-toolkit-0.20.6 rignore-0.8.1 rpds-py-2026.9.1 safetensors-0.8.0 sentencepiece-0.2.3 sentry-sdk-3.0.1 setproctitle-1.3.8 setuptools-80.10.2 shellingham-1.5.4 six-1.17.0 sniffio-1.3.1 sse-starlette-3.7.1 supervisor-4.3.0 sympy-1.14.0 tabulate-0.10.0 tiktoken-0.14.0 tilelang-0.1.12 tokenizers-0.23.3 tokenspeed-mla-2.0.3 tokenspeed-triton-3.9.10.post20261028 torch-2.14.0 torch-c-dlpack-ext-0.1.5 torchaudio-2.11.0 torchcodec-0.17.0 torchvision-0.29.0 tqdm-4.70.1 transformers-5.20.2 triton-3.8.0 truststore-0.10.5 typer-0.29.2 urllib3-2.8.0 uvloop-0.23.0 vllm-0.33.0 watchfiles-1.3.0 websockets-17.4 xgrammar-0.2.8 yarl-1.25.1 z3-solver-4.15.4.0\n"}
+,{"stream_name":"stdout","time":313.645819366,"data":"Obtaining file:///tmp/week8-kaggle-mip6494j/checkout\n"}
+,{"stream_name":"stdout","time":313.648581427,"data":"  Installing build dependencies: started\n"}
+,{"stream_name":"stdout","time":314.862900971,"data":"  Installing build dependencies: finished with status 'done'\n"}
+,{"stream_name":"stdout","time":314.8639086,"data":"  Checking if build backend supports build_editable: started\n"}
+,{"stream_name":"stdout","time":315.231265084,"data":"  Checking if build backend supports build_editable: finished with status 'done'\n"}
+,{"stream_name":"stdout","time":315.232453365,"data":"  Getting requirements to build editable: started\n"}
+,{"stream_name":"stdout","time":315.610960341,"data":"  Getting requirements to build editable: finished with status 'done'\n"}
+,{"stream_name":"stderr","time":315.612155906,"data":"  /tmp/pip-build-env-14wayobf/overlay/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:82: BuildBackendWarning: `project.license` as a TOML table is deprecated\n"}
+,{"stream_name":"stderr","time":315.612179274,"data":"  !!\n"}
+,{"stream_name":"stderr","time":315.612184407,"data":"  \n"}
+,{"stream_name":"stderr","time":315.612188069,"data":"          ********************************************************************************\n"}
+,{"stream_name":"stderr","time":315.612192234,"data":"          Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools\u003e=77.0.0).\n"}
+,{"stream_name":"stderr","time":315.612197554,"data":"  \n"}
+,{"stream_name":"stderr","time":315.612200667,"data":"          By 2027-Feb-18, you need to update your project and remove deprecated calls\n"}
+,{"stream_name":"stderr","time":315.612204161,"data":"          or your builds will no longer be supported.\n"}
+,{"stream_name":"stderr","time":315.612207884,"data":"  \n"}
+,{"stream_name":"stderr","time":315.61221203,"data":"          See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.\n"}
+,{"stream_name":"stderr","time":315.612216132,"data":"          ********************************************************************************\n"}
+,{"stream_name":"stderr","time":315.612220825,"data":"  \n"}
+,{"stream_name":"stderr","time":315.612224002,"data":"  !!\n"}
+,{"stream_name":"stderr","time":315.612227608,"data":"    corresp(dist, value, root_dir)\n"}
+,{"stream_name":"stdout","time":315.613509449,"data":"  Preparing editable metadata (pyproject.toml): started\n"}
+,{"stream_name":"stdout","time":315.830147216,"data":"  Preparing editable metadata (pyproject.toml): finished with status 'done'\n"}
+,{"stream_name":"stderr","time":315.830908783,"data":"  /tmp/pip-build-env-14wayobf/overlay/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:82: BuildBackendWarning: `project.license` as a TOML table is deprecated\n"}
+,{"stream_name":"stderr","time":315.830939931,"data":"  !!\n"}
+,{"stream_name":"stderr","time":315.830944859,"data":"  \n"}
+,{"stream_name":"stderr","time":315.830948505,"data":"          ********************************************************************************\n"}
+,{"stream_name":"stderr","time":315.830952606,"data":"          Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools\u003e=77.0.0).\n"}
+,{"stream_name":"stderr","time":315.830957733,"data":"  \n"}
+,{"stream_name":"stderr","time":315.830960831,"data":"          By 2027-Feb-18, you need to update your project and remove deprecated calls\n"}
+,{"stream_name":"stderr","time":315.830964649,"data":"          or your builds will no longer be supported.\n"}
+,{"stream_name":"stderr","time":315.830968623,"data":"  \n"}
+,{"stream_name":"stderr","time":315.830972734,"data":"          See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.\n"}
+,{"stream_name":"stderr","time":315.830976589,"data":"          ********************************************************************************\n"}
+,{"stream_name":"stderr","time":315.830980502,"data":"  \n"}
+,{"stream_name":"stderr","time":315.830984249,"data":"  !!\n"}
+,{"stream_name":"stderr","time":315.830987991,"data":"    corresp(dist, value, root_dir)\n"}
+,{"stream_name":"stdout","time":315.839348727,"data":"Requirement already satisfied: fastapi\u003e=0.110.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from llm-serving-platform==0.1.0.dev0) (0.136.3)\n"}
+,{"stream_name":"stdout","time":315.840121816,"data":"Requirement already satisfied: httpx\u003e=0.27.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from llm-serving-platform==0.1.0.dev0) (0.28.1)\n"}
+,{"stream_name":"stdout","time":315.840918033,"data":"Requirement already satisfied: uvicorn\u003e=0.29.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from llm-serving-platform==0.1.0.dev0) (0.54.0)\n"}
+,{"stream_name":"stdout","time":315.841713226,"data":"Requirement already satisfied: pydantic\u003e=2.6.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from llm-serving-platform==0.1.0.dev0) (2.14.4)\n"}
+,{"stream_name":"stdout","time":315.842572026,"data":"Requirement already satisfied: prometheus-client\u003c1,\u003e=0.20.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from llm-serving-platform==0.1.0.dev0) (0.26.0)\n"}
+,{"stream_name":"stdout","time":316.230365618,"data":"Collecting matplotlib\u003c4,\u003e=3.8 (from llm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":316.532520714,"data":"  Downloading matplotlib-3.11.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (80 kB)\n"}
+,{"stream_name":"stdout","time":316.791605482,"data":"Collecting contourpy\u003e=1.0.1 (from matplotlib\u003c4,\u003e=3.8-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":316.86059482,"data":"  Downloading contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)\n"}
+,{"stream_name":"stdout","time":316.91715227,"data":"Collecting cycler\u003e=0.10 (from matplotlib\u003c4,\u003e=3.8-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":316.989042522,"data":"  Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)\n"}
+,{"stream_name":"stdout","time":317.298008451,"data":"Collecting fonttools\u003e=4.28.2 (from matplotlib\u003c4,\u003e=3.8-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":317.366011646,"data":"  Downloading fonttools-4.69.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (147 kB)\n"}
+,{"stream_name":"stdout","time":317.612122041,"data":"Collecting kiwisolver\u003e=1.3.1 (from matplotlib\u003c4,\u003e=3.8-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":317.680870884,"data":"  Downloading kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (5.2 kB)\n"}
+,{"stream_name":"stdout","time":317.70652543,"data":"Requirement already satisfied: numpy\u003e=1.25 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from matplotlib\u003c4,\u003e=3.8-\u003ellm-serving-platform==0.1.0.dev0) (2.3.5)\n"}
+,{"stream_name":"stdout","time":317.70731877,"data":"Requirement already satisfied: packaging\u003e=20.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from matplotlib\u003c4,\u003e=3.8-\u003ellm-serving-platform==0.1.0.dev0) (26.4)\n"}
+,{"stream_name":"stdout","time":317.708204115,"data":"Requirement already satisfied: pillow\u003e=9 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from matplotlib\u003c4,\u003e=3.8-\u003ellm-serving-platform==0.1.0.dev0) (13.0.0)\n"}
+,{"stream_name":"stdout","time":317.772261285,"data":"Collecting pyparsing\u003e=3 (from matplotlib\u003c4,\u003e=3.8-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":317.839696051,"data":"  Downloading pyparsing-3.3.3-py3-none-any.whl.metadata (5.9 kB)\n"}
+,{"stream_name":"stdout","time":317.902270645,"data":"Collecting python-dateutil\u003e=2.7 (from matplotlib\u003c4,\u003e=3.8-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":317.969757197,"data":"  Downloading python_dateutil-4.0.0-py3-none-any.whl.metadata (7.3 kB)\n"}
+,{"stream_name":"stdout","time":317.990784371,"data":"Requirement already satisfied: starlette\u003e=0.46.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from fastapi\u003e=0.110.0-\u003ellm-serving-platform==0.1.0.dev0) (1.10.0)\n"}
+,{"stream_name":"stdout","time":317.991814226,"data":"Requirement already satisfied: typing-extensions\u003e=4.8.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from fastapi\u003e=0.110.0-\u003ellm-serving-platform==0.1.0.dev0) (4.16.0)\n"}
+,{"stream_name":"stdout","time":317.992646008,"data":"Requirement already satisfied: typing-inspection\u003e=0.4.2 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from fastapi\u003e=0.110.0-\u003ellm-serving-platform==0.1.0.dev0) (0.4.5)\n"}
+,{"stream_name":"stdout","time":317.993434275,"data":"Requirement already satisfied: annotated-doc\u003e=0.0.2 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from fastapi\u003e=0.110.0-\u003ellm-serving-platform==0.1.0.dev0) (0.0.7)\n"}
+,{"stream_name":"stdout","time":317.997709407,"data":"Requirement already satisfied: anyio in /tmp/llm-serving-python312/lib/python3.12/site-packages (from httpx\u003e=0.27.0-\u003ellm-serving-platform==0.1.0.dev0) (4.16.0)\n"}
+,{"stream_name":"stdout","time":317.998402705,"data":"Requirement already satisfied: certifi in /tmp/llm-serving-python312/lib/python3.12/site-packages (from httpx\u003e=0.27.0-\u003ellm-serving-platform==0.1.0.dev0) (2026.11.20)\n"}
+,{"stream_name":"stdout","time":317.999222374,"data":"Requirement already satisfied: httpcore==1.* in /tmp/llm-serving-python312/lib/python3.12/site-packages (from httpx\u003e=0.27.0-\u003ellm-serving-platform==0.1.0.dev0) (1.0.9)\n"}
+,{"stream_name":"stdout","time":318.000172706,"data":"Requirement already satisfied: idna in /tmp/llm-serving-python312/lib/python3.12/site-packages (from httpx\u003e=0.27.0-\u003ellm-serving-platform==0.1.0.dev0) (3.20)\n"}
+,{"stream_name":"stdout","time":318.002606031,"data":"Requirement already satisfied: h11\u003e=0.16 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from httpcore==1.*-\u003ehttpx\u003e=0.27.0-\u003ellm-serving-platform==0.1.0.dev0) (0.16.0)\n"}
+,{"stream_name":"stdout","time":318.01319654,"data":"Requirement already satisfied: annotated-types\u003e=0.6.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from pydantic\u003e=2.6.0-\u003ellm-serving-platform==0.1.0.dev0) (0.8.0)\n"}
+,{"stream_name":"stdout","time":318.013903357,"data":"Requirement already satisfied: pydantic-core==2.50.5 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from pydantic\u003e=2.6.0-\u003ellm-serving-platform==0.1.0.dev0) (2.50.5)\n"}
+,{"stream_name":"stdout","time":318.056217462,"data":"Collecting tzdata (from python-dateutil\u003e=2.7-\u003ematplotlib\u003c4,\u003e=3.8-\u003ellm-serving-platform==0.1.0.dev0)\n"}
+,{"stream_name":"stdout","time":318.125019461,"data":"  Downloading tzdata-2026.6-py2.py3-none-any.whl.metadata (1.4 kB)\n"}
+,{"stream_name":"stdout","time":318.146936522,"data":"Requirement already satisfied: click\u003e=7.0 in /tmp/llm-serving-python312/lib/python3.12/site-packages (from uvicorn\u003e=0.29.0-\u003ellm-serving-platform==0.1.0.dev0) (8.5.1)\n"}
+,{"stream_name":"stdout","time":318.219353724,"data":"Downloading matplotlib-3.11.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (9.9 MB)\n"}
+,{"stream_name":"stdout","time":318.601520468,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.9/9.9 MB 30.4 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":318.671779457,"data":"Downloading contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (383 kB)\n"}
+,{"stream_name":"stdout","time":318.769150661,"data":"Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)\n"}
+,{"stream_name":"stdout","time":318.852290656,"data":"Downloading fonttools-4.69.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (6.7 MB)\n"}
+,{"stream_name":"stdout","time":318.912959812,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.7/6.7 MB 112.8 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":318.982688248,"data":"Downloading kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (1.5 MB)\n"}
+,{"stream_name":"stdout","time":319.022257442,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 33.3 MB/s  0:00:00\n"}
+,{"stream_name":"stdout","time":319.091284635,"data":"Downloading pyparsing-3.3.3-py3-none-any.whl (126 kB)\n"}
+,{"stream_name":"stdout","time":319.176994831,"data":"Downloading python_dateutil-4.0.0-py3-none-any.whl (92 kB)\n"}
+,{"stream_name":"stdout","time":319.262964569,"data":"Downloading tzdata-2026.6-py2.py3-none-any.whl (348 kB)\n"}
+,{"stream_name":"stdout","time":319.395120289,"data":"Building wheels for collected packages: llm-serving-platform\n"}
+,{"stream_name":"stdout","time":319.396338356,"data":"  Building editable for llm-serving-platform (pyproject.toml): started\n"}
+,{"stream_name":"stdout","time":319.642679703,"data":"  Building editable for llm-serving-platform (pyproject.toml): finished with status 'done'\n"}
+,{"stream_name":"stderr","time":319.6433338,"data":"  /tmp/pip-build-env-14wayobf/overlay/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:82: BuildBackendWarning: `project.license` as a TOML table is deprecated\n"}
+,{"stream_name":"stderr","time":319.64334529,"data":"  !!\n"}
+,{"stream_name":"stderr","time":319.643349105,"data":"  \n"}
+,{"stream_name":"stderr","time":319.643352675,"data":"          ********************************************************************************\n"}
+,{"stream_name":"stderr","time":319.643356676,"data":"          Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools\u003e=77.0.0).\n"}
+,{"stream_name":"stderr","time":319.643373201,"data":"  \n"}
+,{"stream_name":"stderr","time":319.643377538,"data":"          By 2027-Feb-18, you need to update your project and remove deprecated calls\n"}
+,{"stream_name":"stderr","time":319.643381806,"data":"          or your builds will no longer be supported.\n"}
+,{"stream_name":"stderr","time":319.643385787,"data":"  \n"}
+,{"stream_name":"stderr","time":319.643389269,"data":"          See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.\n"}
+,{"stream_name":"stderr","time":319.643393896,"data":"          ********************************************************************************\n"}
+,{"stream_name":"stderr","time":319.643398234,"data":"  \n"}
+,{"stream_name":"stderr","time":319.643402348,"data":"  !!\n"}
+,{"stream_name":"stderr","time":319.643406221,"data":"    corresp(dist, value, root_dir)\n"}
+,{"stream_name":"stdout","time":319.644095458,"data":"  Created wheel for llm-serving-platform: filename=llm_serving_platform-0.1.0.dev0-0.editable-py3-none-any.whl size=6213 sha256=1e2b806adbcd3c078d38068e341f8095f68e4c1772d18f523fe63228bd580039\n"}
+,{"stream_name":"stdout","time":319.644383307,"data":"  Stored in directory: /tmp/pip-ephem-wheel-cache-wqrnbg5t/wheels/5c/77/69/5991e501da5b1b646b85ce5a8f43b3dea556ad802fa9b5774b\n"}
+,{"stream_name":"stdout","time":319.647033267,"data":"Successfully built llm-serving-platform\n"}
+,{"stream_name":"stdout","time":319.877315107,"data":"Installing collected packages: tzdata, pyparsing, kiwisolver, fonttools, cycler, contourpy, python-dateutil, matplotlib, llm-serving-platform\n"}
+,{"stream_name":"stdout","time":323.187622521,"data":"  Attempting uninstall: llm-serving-platform\n"}
+,{"stream_name":"stdout","time":323.196326829,"data":"    Found existing installation: llm-serving-platform 0.1.0.dev0\n"}
+,{"stream_name":"stdout","time":323.198829276,"data":"    Uninstalling llm-serving-platform-0.1.0.dev0:\n"}
+,{"stream_name":"stdout","time":323.701966475,"data":"      Successfully uninstalled llm-serving-platform-0.1.0.dev0\n"}
+,{"stream_name":"stdout","time":323.7994068,"data":"\n"}
+,{"stream_name":"stdout","time":323.813435245,"data":"Successfully installed contourpy-1.4.0 cycler-0.12.1 fonttools-4.69.1 kiwisolver-1.5.1 llm-serving-platform-0.1.0.dev0 matplotlib-3.11.2 pyparsing-3.3.3 python-dateutil-4.0.0 tzdata-2026.6\n"}
+,{"stream_name":"stdout","time":324.523618572,"data":"Thu Nov 26 04:05:36 2026       \n"}
+,{"stream_name":"stdout","time":324.523669169,"data":"+-----------------------------------------------------------------------------------------+\n"}
+,{"stream_name":"stdout","time":324.523675235,"data":"| NVIDIA-SMI 580.178.04             Driver Version: 580.178.04     CUDA Version: 13.0     |\n"}
+,{"stream_name":"stdout","time":324.523678825,"data":"+-----------------------------------------+------------------------+----------------------+\n"}
+,{"stream_name":"stdout","time":324.523682764,"data":"| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n"}
+,{"stream_name":"stdout","time":324.523687187,"data":"| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n"}
+,{"stream_name":"stdout","time":324.523690699,"data":"|                                         |                        |               MIG M. |\n"}
+,{"stream_name":"stdout","time":324.523741995,"data":"|=========================================+========================+======================|\n"}
+,{"stream_name":"stdout","time":324.554445647,"data":"|   0  Tesla T4                       Off |   00000000:00:04.0 Off |                    0 |\n"}
+,{"stream_name":"stdout","time":324.554488885,"data":"| N/A   48C    P8             12W /   70W |       0MiB /  15360MiB |      0%      Default |\n"}
+,{"stream_name":"stdout","time":324.554508357,"data":"|                                         |                        |                  N/A |\n"}
+,{"stream_name":"stdout","time":324.554516484,"data":"+-----------------------------------------+------------------------+----------------------+\n"}
+,{"stream_name":"stdout","time":324.554518969,"data":"|   1  Tesla T4                       Off |   00000000:00:05.0 Off |                    0 |\n"}
+,{"stream_name":"stdout","time":324.554521381,"data":"| N/A   43C    P8              9W /   70W |       0MiB /  15360MiB |      0%      Default |\n"}
+,{"stream_name":"stdout","time":324.554523692,"data":"|                                         |                        |                  N/A |\n"}
+,{"stream_name":"stdout","time":324.554526028,"data":"+-----------------------------------------+------------------------+----------------------+\n"}
+,{"stream_name":"stdout","time":324.555076948,"data":"\n"}
+,{"stream_name":"stdout","time":324.555094811,"data":"+-----------------------------------------------------------------------------------------+\n"}
+,{"stream_name":"stdout","time":324.555100012,"data":"| Processes:                                                                              |\n"}
+,{"stream_name":"stdout","time":324.555104059,"data":"|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n"}
+,{"stream_name":"stdout","time":324.555108706,"data":"|        ID   ID                                                               Usage      |\n"}
+,{"stream_name":"stdout","time":324.555112448,"data":"|=========================================================================================|\n"}
+,{"stream_name":"stdout","time":324.556852332,"data":"|  No running processes found                                                             |\n"}
+,{"stream_name":"stdout","time":324.556867166,"data":"+-----------------------------------------------------------------------------------------+\n"}
+,{"stream_name":"stdout","time":325.392634176,"data":"Starting separate 18-run calibration\n"}
+,{"stream_name":"stdout","time":325.459280117,"data":"Thu Nov 26 04:05:37 2026       \n"}
+,{"stream_name":"stdout","time":325.459319574,"data":"+-----------------------------------------------------------------------------------------+\n"}
+,{"stream_name":"stdout","time":325.459326519,"data":"| NVIDIA-SMI 580.178.04             Driver Version: 580.178.04     CUDA Version: 13.0     |\n"}
+,{"stream_name":"stdout","time":325.459330285,"data":"+-----------------------------------------+------------------------+----------------------+\n"}
+,{"stream_name":"stdout","time":325.459334204,"data":"| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n"}
+,{"stream_name":"stdout","time":325.459337467,"data":"| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n"}
+,{"stream_name":"stdout","time":325.459341049,"data":"|                                         |                        |               MIG M. |\n"}
+,{"stream_name":"stdout","time":325.459344476,"data":"|=========================================+========================+======================|\n"}
+,{"stream_name":"stdout","time":325.489548898,"data":"|   0  Tesla T4                       Off |   00000000:00:04.0 Off |                    0 |\n"}
+,{"stream_name":"stdout","time":325.48957872,"data":"| N/A   48C    P8             10W /   70W |       0MiB /  15360MiB |      0%      Default |\n"}
+,{"stream_name":"stdout","time":325.489583471,"data":"|                                         |                        |                  N/A |\n"}
+,{"stream_name":"stdout","time":325.489603968,"data":"+-----------------------------------------+------------------------+----------------------+\n"}
+,{"stream_name":"stdout","time":325.489619604,"data":"|   1  Tesla T4                       Off |   00000000:00:05.0 Off |                    0 |\n"}
+,{"stream_name":"stdout","time":325.489623885,"data":"| N/A   42C    P8             10W /   70W |       0MiB /  15360MiB |      0%      Default |\n"}
+,{"stream_name":"stdout","time":325.489627841,"data":"|                                         |                        |                  N/A |\n"}
+,{"stream_name":"stdout","time":325.489631356,"data":"+-----------------------------------------+------------------------+----------------------+\n"}
+,{"stream_name":"stdout","time":325.490300496,"data":"\n"}
+,{"stream_name":"stdout","time":325.490319771,"data":"+-----------------------------------------------------------------------------------------+\n"}
+,{"stream_name":"stdout","time":325.490323797,"data":"| Processes:                                                                              |\n"}
+,{"stream_name":"stdout","time":325.490327249,"data":"|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n"}
+,{"stream_name":"stdout","time":325.490330647,"data":"|        ID   ID                                                               Usage      |\n"}
+,{"stream_name":"stdout","time":325.490334287,"data":"|=========================================================================================|\n"}
+,{"stream_name":"stdout","time":325.491788144,"data":"|  No running processes found                                                             |\n"}
+,{"stream_name":"stdout","time":325.491809356,"data":"+-----------------------------------------------------------------------------------------+\n"}
+,{"stream_name":"stdout","time":342.989767932,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 1, \"total\": 18, \"manifest\": \"w8-steady-medium-round_robin-r1.json\"}\n"}
+,{"stream_name":"stdout","time":509.353142124,"data":"READY worker-vllm-0\n"}
+,{"stream_name":"stdout","time":608.00790348,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":633.103426736,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 1, \"total\": 18, \"run_id\": \"20261126T041021Z-w8-steady-medium-round-robin-r1-910b5d0-a3c82c\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":634.602219634,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 2, \"total\": 18, \"manifest\": \"w8-steady-medium-least_loaded-r1.json\"}\n"}
+,{"stream_name":"stdout","time":717.430326341,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":740.645956452,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 2, \"total\": 18, \"run_id\": \"20261126T041210Z-w8-steady-medium-least-loaded-r1-910b5d0-f8df26\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":742.145245512,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 3, \"total\": 18, \"manifest\": \"w8-steady-medium-least_loaded-r2.json\"}\n"}
+,{"stream_name":"stdout","time":824.741902753,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":848.314319641,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 3, \"total\": 18, \"run_id\": \"20261126T041357Z-w8-steady-medium-least-loaded-r2-910b5d0-2469e1\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":849.863273736,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 4, \"total\": 18, \"manifest\": \"w8-steady-medium-round_robin-r2.json\"}\n"}
+,{"stream_name":"stdout","time":932.654216968,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":955.878215699,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 4, \"total\": 18, \"run_id\": \"20261126T041545Z-w8-steady-medium-round-robin-r2-910b5d0-a32ca7\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":957.377271454,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 5, \"total\": 18, \"manifest\": \"w8-steady-medium-round_robin-r3.json\"}\n"}
+,{"stream_name":"stdout","time":1040.229236433,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":1063.440174307,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 5, \"total\": 18, \"run_id\": \"20261126T041732Z-w8-steady-medium-round-robin-r3-910b5d0-f56dac\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":1064.989401855,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 6, \"total\": 18, \"manifest\": \"w8-steady-medium-least_loaded-r3.json\"}\n"}
+,{"stream_name":"stdout","time":1147.668365149,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":1171.215037605,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 6, \"total\": 18, \"run_id\": \"20261126T041920Z-w8-steady-medium-least-loaded-r3-910b5d0-6aefae\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":1172.814131856,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 7, \"total\": 18, \"manifest\": \"w8-burst-medium-round_robin-r1.json\"}\n"}
+,{"stream_name":"stdout","time":1255.4846959,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":1277.567705189,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 7, \"total\": 18, \"run_id\": \"20261126T042108Z-w8-burst-medium-round-robin-r1-910b5d0-bd0d49\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":1279.066843633,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 8, \"total\": 18, \"manifest\": \"w8-burst-medium-least_loaded-r1.json\"}\n"}
+,{"stream_name":"stdout","time":1361.720139913,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":1383.823679382,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 8, \"total\": 18, \"run_id\": \"20261126T042254Z-w8-burst-medium-least-loaded-r1-910b5d0-2aae12\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":1385.272161938,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 9, \"total\": 18, \"manifest\": \"w8-burst-medium-least_loaded-r2.json\"}\n"}
+,{"stream_name":"stdout","time":1467.966691438,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":1490.360870027,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 9, \"total\": 18, \"run_id\": \"20261126T042441Z-w8-burst-medium-least-loaded-r2-910b5d0-09f2f7\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":1491.860043962,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 10, \"total\": 18, \"manifest\": \"w8-burst-medium-round_robin-r2.json\"}\n"}
+,{"stream_name":"stdout","time":1576.64161782,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":1598.880883327,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 10, \"total\": 18, \"run_id\": \"20261126T042629Z-w8-burst-medium-round-robin-r2-910b5d0-ce1015\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":1600.430584491,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 11, \"total\": 18, \"manifest\": \"w8-burst-medium-round_robin-r3.json\"}\n"}
+,{"stream_name":"stdout","time":1683.239999872,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":1705.538568357,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 11, \"total\": 18, \"run_id\": \"20261126T042816Z-w8-burst-medium-round-robin-r3-910b5d0-354445\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":1707.038010465,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 12, \"total\": 18, \"manifest\": \"w8-burst-medium-least_loaded-r3.json\"}\n"}
+,{"stream_name":"stdout","time":1789.889522186,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":1812.020881344,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 12, \"total\": 18, \"run_id\": \"20261126T043002Z-w8-burst-medium-least-loaded-r3-910b5d0-d63a2f\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":1813.620418538,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 13, \"total\": 18, \"manifest\": \"w8-heterogeneous-medium-round_robin-r1.json\"}\n"}
+,{"stream_name":"stdout","time":1896.411372244,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":1920.226115783,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 13, \"total\": 18, \"run_id\": \"20261126T043149Z-w8-heterogeneous-medium-round-ro-910b5d0-47af59\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":1921.82506111,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 14, \"total\": 18, \"manifest\": \"w8-heterogeneous-medium-least_loaded-r1.json\"}\n"}
+,{"stream_name":"stdout","time":2004.501347055,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":2028.144119881,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 14, \"total\": 18, \"run_id\": \"20261126T043337Z-w8-heterogeneous-medium-least-lo-910b5d0-5c1891\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":2029.743145363,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 15, \"total\": 18, \"manifest\": \"w8-heterogeneous-medium-least_loaded-r2.json\"}\n"}
+,{"stream_name":"stdout","time":2112.389097792,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":2136.11427826,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 15, \"total\": 18, \"run_id\": \"20261126T043525Z-w8-heterogeneous-medium-least-lo-910b5d0-94638c\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":2137.663528307,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 16, \"total\": 18, \"manifest\": \"w8-heterogeneous-medium-round_robin-r2.json\"}\n"}
+,{"stream_name":"stdout","time":2220.405001871,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":2244.401557192,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 16, \"total\": 18, \"run_id\": \"20261126T043713Z-w8-heterogeneous-medium-round-ro-910b5d0-dfa6fc\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":2246.000725309,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 17, \"total\": 18, \"manifest\": \"w8-heterogeneous-medium-round_robin-r3.json\"}\n"}
+,{"stream_name":"stdout","time":2328.797887316,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":2352.489946583,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 17, \"total\": 18, \"run_id\": \"20261126T043901Z-w8-heterogeneous-medium-round-ro-910b5d0-1d4527\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stdout","time":2354.039573935,"data":"{\"event\": \"run_started\", \"phase\": \"calibration\", \"index\": 18, \"total\": 18, \"manifest\": \"w8-heterogeneous-medium-least_loaded-r3.json\"}\n"}
+,{"stream_name":"stdout","time":2436.793304848,"data":"READY worker-vllm-0 and worker-vllm-1\n"}
+,{"stream_name":"stdout","time":2460.449671011,"data":"{\"event\": \"run_finished\", \"phase\": \"calibration\", \"index\": 18, \"total\": 18, \"run_id\": \"20261126T044049Z-w8-heterogeneous-medium-least-lo-910b5d0-bd4200\", \"status\": \"completed\", \"failure_type\": null}\n"}
+,{"stream_name":"stderr","time":2470.12707009,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stdout","time":2470.127094088,"data":"{\"event\": \"study_finished\", \"report\": {\"schema_version\": 1, \"source\": {\"git_revision\": \"910b5d035aefd14c5cfc2ee4ba6bbc3ee6387fc0\", \"branch\": \"feat/w8-b-workload-analysis\", \"git_dirty\": false}, \"test_mode\": \"live_dual_t4\", \"started_at_utc\": \"2026-11-26T04:05:37.198169+00:00\", \"status\": \"failed\", \"methodology_gate_passed\": false, \"failure_type\": \"ValueError\", \"failure\": \"Calibration noise exceeds preregistered limit; main run stopped\", \"ended_at_utc\": \"2026-11-26T04:41:21.997871+00:00\"}, \"archive\": \"/kaggle/working/week8-controlled-artifacts.zip\"}\n"}
+,{"stream_name":"stderr","time":2470.127107137,"data":"  File \"/tmp/week8-kaggle-mip6494j/checkout/infra/kaggle/week8_controlled_benchmark/run.py\", line 256, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":2470.127252686,"data":"    main()\n"}
+,{"stream_name":"stderr","time":2470.127574667,"data":"  File \"/tmp/week8-kaggle-mip6494j/checkout/infra/kaggle/week8_controlled_benchmark/run.py\", line 252, in main\n"}
+,{"stream_name":"stderr","time":2470.127593666,"data":"    print(json.dumps(run_study(args.output_dir.resolve(), args.revision), indent=2))\n"}
+,{"stream_name":"stderr","time":2470.127598556,"data":"                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":2470.127603199,"data":"  File \"/tmp/week8-kaggle-mip6494j/checkout/infra/kaggle/week8_controlled_benchmark/run.py\", line 157, in run_study\n"}
+,{"stream_name":"stderr","time":2470.127750217,"data":"    tolerances = derive_tolerances(analysis)\n"}
+,{"stream_name":"stderr","time":2470.127763857,"data":"                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":2470.127769437,"data":"  File \"/tmp/week8-kaggle-mip6494j/checkout/infra/kaggle/week8_controlled_benchmark/run.py\", line 92, in derive_tolerances\n"}
+,{"stream_name":"stderr","time":2470.127920563,"data":"    raise ValueError(\"Calibration noise exceeds preregistered limit; main run stopped\")\n"}
+,{"stream_name":"stderr","time":2470.127941301,"data":"ValueError: Calibration noise exceeds preregistered limit; main run stopped\n"}
+,{"stream_name":"stderr","time":2470.35897632,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":2470.360146776,"data":"  File \"/tmp/week8-kaggle-mip6494j/checkout/infra/kaggle/week8_controlled_benchmark/run.py\", line 256, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":2470.36017506,"data":"    main()\n"}
+,{"stream_name":"stderr","time":2470.360180794,"data":"    ~~~~^^\n"}
+,{"stream_name":"stderr","time":2470.360185577,"data":"  File \"/tmp/week8-kaggle-mip6494j/checkout/infra/kaggle/week8_controlled_benchmark/run.py\", line 237, in main\n"}
+,{"stream_name":"stderr","time":2470.360190904,"data":"    subprocess.run(\n"}
+,{"stream_name":"stderr","time":2470.36019547,"data":"    ~~~~~~~~~~~~~~^\n"}
+,{"stream_name":"stderr","time":2470.360212768,"data":"        [\n"}
+,{"stream_name":"stderr","time":2470.360216802,"data":"        ^\n"}
+,{"stream_name":"stderr","time":2470.360220047,"data":"    ...\u003c10 lines\u003e...\n"}
+,{"stream_name":"stderr","time":2470.36022377,"data":"        timeout=38000,\n"}
+,{"stream_name":"stderr","time":2470.360227178,"data":"        ^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":2470.360230544,"data":"    )\n"}
+,{"stream_name":"stderr","time":2470.360234164,"data":"    ^\n"}
+,{"stream_name":"stderr","time":2470.360237224,"data":"  File \"/usr/lib/python3.13/subprocess.py\", line 578, in run\n"}
+,{"stream_name":"stderr","time":2470.360241238,"data":"    raise CalledProcessError(retcode, process.args,\n"}
+,{"stream_name":"stderr","time":2470.360244847,"data":"                             output=stdout, stderr=stderr)\n"}
+,{"stream_name":"stderr","time":2470.360249566,"data":"subprocess.CalledProcessError: Command '['/tmp/llm-serving-python312/bin/python', '/tmp/week8-kaggle-mip6494j/checkout/infra/kaggle/week8_controlled_benchmark/run.py', '--dual-t4', '--revision', '910b5d035aefd14c5cfc2ee4ba6bbc3ee6387fc0', '--output-dir', '/kaggle/working/week8-controlled']' returned non-zero exit status 1.\n"}
+,{"stream_name":"stderr","time":2470.479371215,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":2470.480613099,"data":"  File \"/kaggle/src/script.py\", line 142, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":2470.48062854,"data":"    main()\n"}
+,{"stream_name":"stderr","time":2470.480632471,"data":"    ~~~~^^\n"}
+,{"stream_name":"stderr","time":2470.481619422,"data":"  File \"/kaggle/src/script.py\", line 129, in main\n"}
+,{"stream_name":"stderr","time":2470.481641624,"data":"    subprocess.run(\n"}
+,{"stream_name":"stderr","time":2470.481646774,"data":"    ~~~~~~~~~~~~~~^\n"}
+,{"stream_name":"stderr","time":2470.481650971,"data":"        [\n"}
+,{"stream_name":"stderr","time":2470.481654744,"data":"        ^\n"}
+,{"stream_name":"stderr","time":2470.481768287,"data":"    ...\u003c6 lines\u003e...\n"}
+,{"stream_name":"stderr","time":2470.48177241,"data":"        timeout=39600,\n"}
+,{"stream_name":"stderr","time":2470.481776436,"data":"        ^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":2470.481780037,"data":"    )\n"}
+,{"stream_name":"stderr","time":2470.481783432,"data":"    ^\n"}
+,{"stream_name":"stderr","time":2470.481787185,"data":"  File \"/usr/lib/python3.13/subprocess.py\", line 578, in run\n"}
+,{"stream_name":"stderr","time":2470.481790948,"data":"    raise CalledProcessError(retcode, process.args,\n"}
+,{"stream_name":"stderr","time":2470.481794677,"data":"                             output=stdout, stderr=stderr)\n"}
+,{"stream_name":"stderr","time":2470.481826877,"data":"subprocess.CalledProcessError: Command '['/usr/bin/python3', 'infra/kaggle/week8_controlled_benchmark/run.py', '--dual-t4', '--bootstrap', '--revision', '910b5d035aefd14c5cfc2ee4ba6bbc3ee6387fc0', '--vllm-version', '0.33.0']' returned non-zero exit status 1.\n"}
+,{"stream_name":"stderr","time":2473.230883661,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":2473.230931547,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":2473.573507932,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":2473.573537301,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":2474.76716368,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":2475.964944956,"data":"[NbConvertApp] Writing 292142 bytes to __results__.html\n"}
+]
