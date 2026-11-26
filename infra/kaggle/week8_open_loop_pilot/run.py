@@ -138,6 +138,7 @@ def _start_vllm_replica(
     model: str,
     *,
     disable_prefix_caching: bool,
+    model_revision: str | None = None,
 ) -> tuple[Any, dict[str, Any]]:
     """Start one TP=1 float16 vLLM worker strictly pinned to physical GPU `index`."""
     require_unused_port(8000 + index)
@@ -168,6 +169,8 @@ def _start_vllm_replica(
     ]
     if disable_prefix_caching:
         args.append("--no-enable-prefix-caching")
+    if model_revision is not None:
+        args.extend(("--revision", model_revision, "--tokenizer-revision", model_revision))
     launch = {
         "CUDA_VISIBLE_DEVICES": str(index),
         "args": args[1:],

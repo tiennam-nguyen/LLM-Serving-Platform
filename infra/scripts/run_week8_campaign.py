@@ -7,6 +7,7 @@ import asyncio
 import hashlib
 import json
 import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -24,6 +25,47 @@ from llm_serving_platform.benchmark.runner import ExperimentRunner  # noqa: E402
 from llm_serving_platform.benchmark.workload import load_workload  # noqa: E402
 
 
+class GpuTelemetry:
+    """Owned, read-only 1 Hz NVML/SMI sampler; constructed only on explicit live runs."""
+
+    fields = (
+        "timestamp,index,uuid,name,temperature.gpu,utilization.gpu,"
+        "clocks.current.sm,pstate,power.draw,memory.used"
+    )
+
+    def __init__(self, path: Path):
+        self.output = path.open("wb")
+        self.output.write((self.fields + "\n").encode())
+        self.output.flush()
+        try:
+            self.process = subprocess.Popen(
+                [
+                    "nvidia-smi",
+                    "--query-gpu=" + self.fields,
+                    "--format=csv,noheader,nounits",
+                    "--loop=1",
+                ],
+                stdout=self.output,
+                stderr=subprocess.STDOUT,
+            )
+        except BaseException:
+            self.output.close()
+            raise
+
+    def stop(self):
+        try:
+            if self.process.poll() is not None:
+                raise RuntimeError("GPU telemetry sampler terminated unexpectedly")
+            self.process.terminate()
+            try:
+                self.process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                self.process.kill()
+                self.process.wait(timeout=5)
+        finally:
+            self.output.close()
+
+
 def execute_campaign(
     protocol_path: Path,
     *,
@@ -32,6 +74,9 @@ def execute_campaign(
     revision: str | None = None,
     limit: int | None = None,
     calibration: bool = False,
+    prefetched_model: bool = False,
+    model_revision: str | None = None,
+    gpu_telemetry: bool = False,
 ) -> dict:
     """Never install an engine or download weights in mock mode. Preserve failed runs."""
     from infra.kaggle.week8_open_loop_pilot import run as pilot
@@ -44,8 +89,14 @@ def execute_campaign(
     if limit is not None and (not no_gpu or type(limit) is not int or limit < 1):
         raise ValueError("--limit is for explicit CPU smoke checks only")
     phase = protocol.get("experiment_phase", "main")
-    if calibration != (phase == "calibration"):
+    if phase not in {"main", "calibration", "conditioning"}:
+        raise ValueError("Unknown study phase")
+    if calibration != (phase in {"calibration", "conditioning"}):
         raise ValueError("Calibration requires both the explicit flag and calibration protocol")
+    if no_gpu and (prefetched_model or gpu_telemetry or model_revision is not None):
+        raise ValueError("GPU preparation/telemetry options require explicit live mode")
+    if prefetched_model and not model_revision:
+        raise ValueError("Prefetched model requires its recorded snapshot revision")
     selected = records[:limit] if limit is not None else records
     manifests = []
     for row in selected:
@@ -123,6 +174,7 @@ def execute_campaign(
                 flush=True,
             )
             services, gateway, launches, bindings = {}, None, {}, {}
+            sampler = None
             logs = output_dir / "service-logs" / f"run-{index:03d}"
             logs.mkdir(parents=True)
             pilot.dual_t4.REPO, pilot.dual_t4.OUTPUT = ROOT, logs
@@ -130,6 +182,10 @@ def execute_campaign(
             url = f"http://127.0.0.1:{port}"
             try:
                 if not no_gpu:
+                    if gpu_telemetry:
+                        sampler = GpuTelemetry(logs / "gpu_telemetry.csv")
+                    if prefetched_model:
+                        env.update(HF_HUB_OFFLINE="1", TRANSFORMERS_OFFLINE="1")
                     # Restart every replica before each run; use first-start serialization
                     # to avoid concurrent model-download races on an empty HF cache.
                     for gpu in (0, 1):
@@ -138,8 +194,9 @@ def execute_campaign(
                             env,
                             cfg.model.id,
                             disable_prefix_caching=prefix_flag,
+                            model_revision=model_revision,
                         )
-                        if index == 0 and gpu == 0:
+                        if index == 0 and gpu == 0 and not prefetched_model:
                             import httpx
 
                             with httpx.Client(timeout=4, trust_env=False) as client:
@@ -150,6 +207,8 @@ def execute_campaign(
                                     (services[0],),
                                 )
                     pilot._wait_both_replicas_ready(services, cfg.model.id)
+                    if sampler is not None and sampler.process.poll() is not None:
+                        raise RuntimeError("GPU telemetry failed; see gpu_telemetry.csv")
                     bindings = pilot.dual_t4.capture_processes("initial", services)
                 pilot.require_unused_port(port)
                 gateway_env = {
@@ -200,10 +259,18 @@ def execute_campaign(
                         "test_mode": report["test_mode"],
                         "experiment_phase": phase,
                         "campaign_run_index": index,
+                        "model_revision": model_revision,
+                        "gpu_telemetry_interval_s": 1 if gpu_telemetry else None,
                         "cache_control": {
                             "workers_restarted_between_runs": not no_gpu,
                             "fresh_mock_gateway": no_gpu,
                             "prefix_cache_disabled": prefix_flag,
+                            "worker_startup": "fresh_mock_gateway"
+                            if no_gpu
+                            else "parallel_prefetched"
+                            if prefetched_model
+                            else "legacy_first_start_serialization",
+                            "model_cache_offline": prefetched_model,
                         },
                         "worker_runtime_args": {str(i): v["args"] for i, v in launches.items()},
                         "worker_gpu_bindings": bindings,
@@ -238,16 +305,20 @@ def execute_campaign(
                     report["run_status"] = "failed"
                     break
             finally:
-                if gateway is not None:
-                    gateway.stop()
-                for service in services.values():
-                    service.stop()
-                if not no_gpu:
+                try:
+                    if gateway is not None:
+                        gateway.stop()
                     for service in services.values():
-                        if pilot.dual_t4.group_pids(service.process.pid):
-                            raise RuntimeError("Owned worker processes did not terminate")
-                    for worker_port in (8000, 8001):
-                        pilot._wait_port_free(worker_port)
+                        service.stop()
+                    if not no_gpu:
+                        for service in services.values():
+                            if pilot.dual_t4.group_pids(service.process.pid):
+                                raise RuntimeError("Owned worker processes did not terminate")
+                        for worker_port in (8000, 8001):
+                            pilot._wait_port_free(worker_port)
+                finally:
+                    if sampler is not None:
+                        sampler.stop()
         if report["run_status"] == "running":
             report["run_status"] = "completed"
     except BaseException as exc:
@@ -270,6 +341,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--revision")
     parser.add_argument("--limit", type=int)
     parser.add_argument("--calibration", action="store_true")
+    parser.add_argument("--prefetched-model-revision")
+    parser.add_argument("--gpu-telemetry", action="store_true")
     args = parser.parse_args(argv)
     report = execute_campaign(
         args.campaign,
@@ -278,6 +351,9 @@ def main(argv: list[str] | None = None) -> int:
         revision=args.revision,
         limit=args.limit,
         calibration=args.calibration,
+        prefetched_model=args.prefetched_model_revision is not None,
+        model_revision=args.prefetched_model_revision,
+        gpu_telemetry=args.gpu_telemetry,
     )
     print(json.dumps(report, indent=2))
     return 0 if report["run_status"] == "completed" else 1

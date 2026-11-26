@@ -39,7 +39,7 @@ def main() -> None:
             args.vllm_version,
         ],
         kernel_name=args.kernel_name,
-        title="LLM Serving W8 Calibration and Controlled Benchmark",
+        title=args.kernel_name.replace("-", " ").title(),
         timeout_seconds=39600,
     )
 

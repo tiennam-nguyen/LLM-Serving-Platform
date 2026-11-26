@@ -474,6 +474,8 @@ def compute_summary_v2(
         eligible_reasons.append("gpu_campaign_not_verified")
     if env.get("experiment_phase") == "calibration":
         eligible_reasons.append("calibration_not_main_campaign")
+    if env.get("experiment_phase") == "conditioning":
+        eligible_reasons.append("conditioning_not_main_campaign")
     cache = env.get("cache_control") or {}
     if not cache.get("workers_restarted_between_runs"):
         eligible_reasons.append("cache_procedure_not_verified")

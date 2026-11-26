@@ -142,6 +142,8 @@ def analyze_runs(
         )
         invariant["cache_control"] = environment.get("cache_control")
         invariant["worker_runtime_args"] = environment.get("worker_runtime_args")
+        invariant["model_revision"] = environment.get("model_revision")
+        invariant["gpu_telemetry_interval_s"] = environment.get("gpu_telemetry_interval_s")
         pairs[key][summary["policy"]].append(invariant)
         group_conditions[(summary["comparison"]["id"], summary["policy"])].add(
             json.dumps(invariant, sort_keys=True)

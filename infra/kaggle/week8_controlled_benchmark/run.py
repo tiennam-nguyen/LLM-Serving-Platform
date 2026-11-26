@@ -37,6 +37,34 @@ CALIBRATION_RULE = {
     "primary_metrics": list(PRIMARY_METRICS),
 }
 
+PREPARATION_PLAN = {
+    "model_cache": "prefetch_snapshot_then_offline_workers",
+    "worker_startup": "parallel_for_every_conditioning_calibration_and_main_run",
+    "conditioning_runs": 6,
+    "conditioning_profile_load": "one_pair_per_profile_at_medium",
+    "conditioning_not_used_to_derive_tolerances": True,
+    "gpu_telemetry_interval_s": 1,
+}
+
+
+def prefetch_model(model: str) -> dict:
+    """Executed only on the remote GPU host; no CUDA used during model download."""
+    from huggingface_hub import snapshot_download
+
+    path = Path(
+        snapshot_download(
+            repo_id=model,
+            token=False,
+            allow_patterns=["*.json", "*.safetensors", "*.txt", "*.model", "*.jinja", "*.tiktoken"],
+        )
+    )
+    return {
+        "model_id": model,
+        "snapshot_revision": path.name,
+        "snapshot_path": str(path),
+        "prefetched_at_utc": datetime.now(timezone.utc).isoformat(),
+    }
+
 
 def derive_tolerances(analysis: dict) -> dict[str, float]:
     """Use only independent calibration runs; never tune against main results."""
@@ -121,6 +149,7 @@ def run_study(output: Path, revision: str) -> dict:
         "model": "Qwen/Qwen2.5-3B-Instruct",
         "window_ms": 20000,
         "main_analysis_may_fail_repeatability": True,
+        "preparation_plan": PREPARATION_PLAN,
     }
     write_json_atomic(output / "preregistration.json", preregistration)
     study = {
@@ -132,6 +161,42 @@ def run_study(output: Path, revision: str) -> dict:
         "methodology_gate_passed": False,
     }
     try:
+        cache = prefetch_model(preregistration["model"])
+        write_json_atomic(output / "model_cache.json", cache)
+        study["model_cache"] = cache
+        live_options = dict(
+            no_gpu=False,
+            revision=revision,
+            prefetched_model=True,
+            model_revision=cache["snapshot_revision"],
+            gpu_telemetry=True,
+        )
+        conditioning = prepare_campaign(
+            manifests_dir=output / "conditioning/manifests",
+            workloads_dir=output / "conditioning/workloads",
+        )
+        protocol = json.loads(conditioning.read_text())
+        protocol["runs"] = [
+            r
+            for r in protocol["runs"]
+            if r["comparison_id"].endswith("-medium") and r["repetition"] == 1
+        ]
+        protocol["name"] = "week8-unmeasured-conditioning"
+        protocol["experiment_phase"] = "conditioning"
+        protocol["repeatability"]["status"] = "calibration_only"
+        protocol["preparation_plan"] = PREPARATION_PLAN
+        write_json_atomic(conditioning, protocol)
+        print("Starting six conditioning runs; excluded from calibration and main", flush=True)
+        execution = execute_campaign(
+            conditioning,
+            output_dir=output / "conditioning/execution",
+            calibration=True,
+            **live_options,
+        )
+        if execution["run_status"] != "completed" or len(execution["runs"]) != 6:
+            raise RuntimeError("Conditioning failed; calibration and main stopped")
+        study["conditioning_runs"] = len(execution["runs"])
+        study["conditioning_run_ids"] = [r["run_id"] for r in execution["runs"]]
         calibration = prepare_campaign(
             manifests_dir=output / "calibration/manifests",
             workloads_dir=output / "calibration/workloads",
@@ -147,9 +212,8 @@ def run_study(output: Path, revision: str) -> dict:
         execution = execute_campaign(
             calibration,
             output_dir=output / "calibration/execution",
-            no_gpu=False,
-            revision=revision,
             calibration=True,
+            **live_options,
         )
         if execution["run_status"] != "completed":
             raise RuntimeError("Calibration execution failed; partial raw preserved")
@@ -162,9 +226,12 @@ def run_study(output: Path, revision: str) -> dict:
             "preregistration_sha256": _hash(output / "preregistration.json"),
             "calibration_protocol_sha256": _hash(calibration),
             "calibration_analysis_sha256": _hash(output / "calibration/analysis/analysis.json"),
+            "model_cache_sha256": _hash(output / "model_cache.json"),
+            "conditioning_run_ids": study["conditioning_run_ids"],
             "calibration_run_ids": [r["run_id"] for r in analysis["runs"]],
         }
         write_json_atomic(output / "frozen_tolerances.json", frozen)
+        print(json.dumps({"event": "calibration_frozen", "tolerances": tolerances}), flush=True)
         study["frozen_tolerances"] = frozen
         write_json_atomic(output / "study_report.json", study)
         main = prepare_campaign(
@@ -177,9 +244,7 @@ def run_study(output: Path, revision: str) -> dict:
         protocol["repeatability"]["calibration_evidence"] = frozen
         write_json_atomic(main, protocol)
         print("Calibration frozen; starting independent 54-run main campaign", flush=True)
-        execution = execute_campaign(
-            main, output_dir=output / "main/execution", no_gpu=False, revision=revision
-        )
+        execution = execute_campaign(main, output_dir=output / "main/execution", **live_options)
         if execution["run_status"] != "completed":
             raise RuntimeError("Main execution failed; partial raw preserved")
         analysis = _analysis(execution, main, output / "main/analysis")

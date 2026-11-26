@@ -280,6 +280,8 @@ class ExperimentRunner:
             "worker_gpu_bindings",
             "campaign_run_index",
             "experiment_phase",
+            "model_revision",
+            "gpu_telemetry_interval_s",
         }
         self._run_context = {k: v for k, v in (run_context or {}).items() if k in allowed_context}
 
