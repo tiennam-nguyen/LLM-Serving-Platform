@@ -472,6 +472,8 @@ def compute_summary_v2(
         eligible_reasons.append("historical_pilot_not_controlled_campaign")
     if env.get("test_mode") != "live_dual_t4":
         eligible_reasons.append("gpu_campaign_not_verified")
+    if env.get("experiment_phase") == "calibration":
+        eligible_reasons.append("calibration_not_main_campaign")
     cache = env.get("cache_control") or {}
     if not cache.get("workers_restarted_between_runs"):
         eligible_reasons.append("cache_procedure_not_verified")
@@ -495,6 +497,7 @@ def compute_summary_v2(
         "execution_mode": env.get(
             "test_mode", "historical_pilot" if manifest.get("pilot_only") else "unverified"
         ),
+        "experiment_phase": env.get("experiment_phase", "main"),
         "requests": {
             "planned": planned,
             "sent": len(sent),

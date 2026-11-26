@@ -29,6 +29,11 @@ def package(
     vllm_version: str | None,
     *,
     extra_launcher_args: list[str] | None = None,
+    launcher_script: str = "infra/kaggle/week8_open_loop_pilot/run.py",
+    launcher_arguments: list[str] | None = None,
+    kernel_name: str = KERNEL_NAME,
+    title: str = "LLM Serving Week 8 Open-Loop Pilot",
+    timeout_seconds: int = 3550,
 ) -> None:
     if git("status", "--porcelain"):
         raise RuntimeError(
@@ -55,6 +60,8 @@ def package(
         launcher_args.extend(("--vllm-version", vllm_version))
     if extra_launcher_args:
         launcher_args.extend(extra_launcher_args)
+    if launcher_arguments is not None:
+        launcher_args = launcher_arguments
 
     script = f'''"""Restore the committed Week 8 pilot checkout and run its dual-T4 launcher."""
 
@@ -102,12 +109,12 @@ def main():
         subprocess.run(
             [
                 sys.executable,
-                "infra/kaggle/week8_open_loop_pilot/run.py",
+                {launcher_script!r},
                 *LAUNCHER_ARGS,
             ],
             cwd=checkout,
             check=True,
-            timeout=3550,
+            timeout={timeout_seconds!r},
         )
 
 
@@ -116,8 +123,8 @@ if __name__ == "__main__":
 '''
     compile(script, "run.py", "exec")
     metadata = {
-        "id": f"{owner}/{KERNEL_NAME}",
-        "title": "LLM Serving Week 8 Open-Loop Pilot",
+        "id": f"{owner}/{kernel_name}",
+        "title": title,
         "code_file": "run.py",
         "language": "python",
         "kernel_type": "script",

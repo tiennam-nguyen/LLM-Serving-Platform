@@ -279,6 +279,7 @@ class ExperimentRunner:
             "worker_runtime_args",
             "worker_gpu_bindings",
             "campaign_run_index",
+            "experiment_phase",
         }
         self._run_context = {k: v for k, v in (run_context or {}).items() if k in allowed_context}
 

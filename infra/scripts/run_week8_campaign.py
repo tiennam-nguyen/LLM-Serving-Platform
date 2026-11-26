@@ -31,6 +31,7 @@ def execute_campaign(
     no_gpu: bool,
     revision: str | None = None,
     limit: int | None = None,
+    calibration: bool = False,
 ) -> dict:
     """Never install an engine or download weights in mock mode. Preserve failed runs."""
     from infra.kaggle.week8_open_loop_pilot import run as pilot
@@ -42,6 +43,9 @@ def execute_campaign(
         raise ValueError("Invalid campaign protocol")
     if limit is not None and (not no_gpu or type(limit) is not int or limit < 1):
         raise ValueError("--limit is for explicit CPU smoke checks only")
+    phase = protocol.get("experiment_phase", "main")
+    if calibration != (phase == "calibration"):
+        raise ValueError("Calibration requires both the explicit flag and calibration protocol")
     selected = records[:limit] if limit is not None else records
     manifests = []
     for row in selected:
@@ -77,8 +81,10 @@ def execute_campaign(
             or source["git_dirty"] is not False
         ):
             raise ValueError("Live dual-T4 campaign requires a clean Linux checkout at --revision")
-        if protocol.get("repeatability", {}).get("status") != "predeclared":
+        if not calibration and protocol.get("repeatability", {}).get("status") != "predeclared":
             raise ValueError("Freeze repeated-pilot tolerances before the live campaign")
+        if calibration and protocol.get("repeatability", {}).get("status") != "calibration_only":
+            raise ValueError("Calibration protocol must remain separate from main acceptance")
         pilot.checked_inventory()
         torch = pilot.dual_t4.torch_info()
         if len(torch["devices"]) != 2 or not all("T4" in name for name in torch["devices"]):
@@ -88,6 +94,7 @@ def execute_campaign(
     report = {
         "schema_version": 1,
         "test_mode": "cpu_mock" if no_gpu else "live_dual_t4",
+        "experiment_phase": phase,
         "protocol_sha256": protocol_hash,
         "source_git": capture_git_info(ROOT),
         "full_campaign": len(selected) == len(records),
@@ -99,10 +106,22 @@ def execute_campaign(
     report_path = output_dir / "campaign_report.json"
     write_json_atomic(report_path, report)
     old_repo, old_output = pilot.dual_t4.REPO, pilot.dual_t4.OUTPUT
-    prefix_flag = False if no_gpu else pilot._supports_no_prefix_caching_flag()
     env = {**os.environ, "PYTHONPATH": str(ROOT / "src"), "PYTHONUNBUFFERED": "1"}
     try:
+        prefix_flag = False if no_gpu else pilot._supports_no_prefix_caching_flag()
         for index, (manifest, cfg) in enumerate(manifests):
+            print(
+                json.dumps(
+                    {
+                        "event": "run_started",
+                        "phase": phase,
+                        "index": index + 1,
+                        "total": len(manifests),
+                        "manifest": manifest.name,
+                    }
+                ),
+                flush=True,
+            )
             services, gateway, launches, bindings = {}, None, {}, {}
             logs = output_dir / "service-logs" / f"run-{index:03d}"
             logs.mkdir(parents=True)
@@ -179,6 +198,7 @@ def execute_campaign(
                     run_context={
                         "protocol_sha256": protocol_hash,
                         "test_mode": report["test_mode"],
+                        "experiment_phase": phase,
                         "campaign_run_index": index,
                         "cache_control": {
                             "workers_restarted_between_runs": not no_gpu,
@@ -200,6 +220,20 @@ def execute_campaign(
                     }
                 )
                 write_json_atomic(report_path, report)
+                print(
+                    json.dumps(
+                        {
+                            "event": "run_finished",
+                            "phase": phase,
+                            "index": index + 1,
+                            "total": len(manifests),
+                            "run_id": result.run_id,
+                            "status": result.run_status,
+                            "failure_type": result.failure_type,
+                        }
+                    ),
+                    flush=True,
+                )
                 if not result.succeeded:
                     report["run_status"] = "failed"
                     break
@@ -235,6 +269,7 @@ def main(argv: list[str] | None = None) -> int:
     mode.add_argument("--dual-t4", action="store_true")
     parser.add_argument("--revision")
     parser.add_argument("--limit", type=int)
+    parser.add_argument("--calibration", action="store_true")
     args = parser.parse_args(argv)
     report = execute_campaign(
         args.campaign,
@@ -242,6 +277,7 @@ def main(argv: list[str] | None = None) -> int:
         no_gpu=args.no_gpu,
         revision=args.revision,
         limit=args.limit,
+        calibration=args.calibration,
     )
     print(json.dumps(report, indent=2))
     return 0 if report["run_status"] == "completed" else 1
