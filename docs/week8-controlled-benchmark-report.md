@@ -1,18 +1,19 @@
 # Week 8 controlled GPU benchmark — studies and evidence
 
-## Latest result — 26 November 2026
+## Latest result — 27 November 2026 (UTC+7)
 
-Study v2 recorded 31/54 main runs after six separate conditioning runs and an
-independent 18-run calibration. Its preregistered calibration precondition passed.
-**30 main runs completed; run31 stopped at the old dispatch-lag guard; 23 did not start.**
-Within the observed runs, **4,727/5,120 planned requests completed**; 0 errors, 0 cancellations and 0 missing traces. The complete 54-run plan contained 11,880 requests.
+Replacement study v4 used clean source `e9a1e780a6686210bafcce5aa26fc0bbe5b25d14` on Kaggle dual-T4.
+Its structured status is **completed** and methodology gate is
+**False**. Main observed
+90/90 runs, sending 13,865/19,800 planned requests; 13,865 completed,
+0 errors, 0 cancellations and
+0 missing traces. Detailed warnings, coverage and
+eligibility are reported below. Execution completion does not establish a policy ranking.
 
-The complete methodology gate **did not pass**. Main results below are descriptive; they do not establish a policy ranking.
-
-CPU/mock remains the default for pytest and the verifier. GPU execution is explicit
-and remote; no local vLLM, CUDA workload or Docker was used. Measurement source a448b01
-had 262 CPU tests and W7/W8 default gates passing before submission. The subsequent
-implementation update is described separately below and has not been measured on GPU.
+V1/v2 retain their original outcomes; v3 was blocked during tokenizer preparation
+before any measured request. None was rewritten as evidence of v4.
+CPU/mock remains the default. The corrected helper passed all 313 CPU/mock tests,
+Ruff and a separate real-Qwen-tokenizer CPU check. No local GPU/vLLM/Docker was used.
 
 ## Historical study v1 — 26 November 2026
 
@@ -168,7 +169,7 @@ The old launcher raised RuntimeError after any failed main run, producing Kaggle
 This is not evidence that the GPU could not process28RPS, and the retained failure
 does not show GPU quota exhaustion. The deeper source of scheduling delay was not profiled.
 
-## Implementation update after v2 — CPU verified, GPU unverified
+## Implementation update after v2 — observation semantics
 
 Production replay now records late dispatch and continues the complete schedule, even
 after the nominal arrival window. At the hard in-flight cap it records that request
@@ -212,9 +213,158 @@ These changes have 313 CPU/mock tests passing, plus Ruff and offline lock valida
 The CPU W8 gate passed 16 real HTTP runs, 168 measured requests and 48 figures; W7 also passed.
 [CPU verification and code hashes](../experiments/processed/week8/controlled/20261126-observation-cpu/verification.json)
 record the working tree actually checked. The new reader reproduced all 73 retained v1/v2
-run summaries and numeric analyses without changing their legacy interpretation. New GPU execution has not been performed, and neither
-v1 nor v2 is evidence of the new implementation on GPU. All original measurement source
+run summaries and numeric analyses without changing their legacy interpretation. Replacement GPU v4 is reported separately below. V1/v2 are not evidence of
+the new implementation; v3 records a preparation block. All original source
 commits and dates remain intact.
+
+## Study v4 — retained execution and measurement quality
+
+| Item | Recorded value |
+| --- | --- |
+| Measurement source | `e9a1e780a6686210bafcce5aa26fc0bbe5b25d14` (clean checkout) |
+| Model / topology | Qwen/Qwen2.5-3B-Instruct @ `aa8e72537993ba99e69dfaafa59ed015b17504d1`; two independent TP=1 replicas |
+| Study start / end UTC | 2026-11-26T12:19:54.548957+00:00 / 2026-11-26T17:00:28.229964+00:00 |
+| Structured study status / methodology gate | completed / False |
+| Suite / planned cases | stress: 10 conditioning + 30 calibration + 90 main |
+| Arrivals | steady, irregular, finite spike, ramp, microburst; all mix input lengths |
+| Nominal main loads / repetitions | 1/4/28 RPS over 20s; RR/LL ×3 independent repetitions |
+| HTTP in-flight cap | 350, safety limit rather than configured concurrency |
+| GPU/driver | GPU0 Tesla T4 15360MiB driver 580.178.04; GPU1 Tesla T4 15360MiB driver 580.178.04 |
+| Python / vLLM / torch / Transformers | 3.12.16 / 0.33.0 / 2.14.0 / 5.20.2 |
+| Cache controls | `{"workers_restarted_between_runs": true, "fresh_mock_gateway": false, "prefix_cache_disabled": false, "worker_startup": "parallel_prefetched", "model_cache_offline": true}` |
+| Execution semantics / dispatch clock | observe_v1 / before_http_client_call |
+| Archive SHA-256 | `4c8046d46a2efdb20c4242ae1eda392d9600905f9f81002d0a78d053cf7ceb6a` |
+
+`prefix_cache_disabled=false` records that the launcher did not apply a disable
+flag. Worker processes were restarted, but these controls do not establish that
+within-run prefix reuse was disabled. No cause of the calibration variation was isolated.
+
+Each RR/LL pair replays the same materialized workload bytes, including timestamps
+and prompt ordering. At the client cap, some scheduled requests are not transmitted;
+matching planned hashes does not imply identical delivered request sets. These are
+client admission omissions, not gateway rejections or inference errors. Their counts
+remain in planned totals and noncompletion rates; affected runs are ineligible for
+comparison under the intended schedule. Prompt bands are 96–192, 384–640, 1024–1664 input tokens including
+chat-template overhead, checked using the pinned Qwen tokenizer. Generation remains
+temperature=0, max_tokens=64, top_p=1. Two warm-up requests per run are outside measured counts.
+
+An independent offline CPU recount matched all 9,900 prepared workload rows across
+the three phase copies (627 unique messages). Actual input lengths in this study
+were 99/393/1044 tokens for short/medium/long. These are three discrete input lengths,
+not uniformly sampled lengths throughout the allowed bands; ordering mixes them.
+
+| Phase | Observed runs / planned | Completed / planned requests | Errors / missing trace | Raw valid | Remote numeric report reproduced |
+| --- | --- | --- | --- | --- | --- |
+| conditioning | 10/10 | 800/800 | 0/0 | 10 | n/a (no remote analysis) |
+| calibration | 30/30 | 2400/2400 | 0/0 | 30 | True |
+| main | 90/90 | 13865/19800 | 0/0 | 90 | True |
+
+Main status counts: `{"completed": 90}`.
+Main observed-policy checks: `{"passed": 90}`.
+Main warning counts: `{"dispatch_late": 95, "in_flight_limit": 5935}`.
+Maximum reconstructed simultaneous HTTP requests: **350**;
+maximum dispatch lag: **324.286ms**.
+The timestamp is immediately before HTTP-client invocation, not arrival at the gateway.
+Warnings reflect generator/measurement limitations and remain in the results.
+The tokenizer correction also has its own [full 313-test CPU result](../experiments/processed/week8/controlled/20261126-tokenizer-compatibility/pytest-junit.xml),
+separate from the earlier observation-mode CPU gate evidence.
+Main runs without both workers observed idle at the end:
+**0**.
+Runs whose dispatch exceeds 250ms: **14**; their final
+statuses are retained in the raw summaries. Delays do not trigger the old hard-stop guard.
+
+### Eligibility and calibration
+
+Calibration uses twice the maximum relative deviation from each profile/policy
+group's median, with the preregistered 20% maximum acceptance cap. Required bands
+below are calculations, not automatically accepted tolerances.
+
+| Metric | Required band | Frozen tolerance |
+| --- | --- | --- |
+| latency_ms.ttft_p50 | 61.354200% | not frozen |
+| latency_ms.e2e_p50 | 14.544490% | not frozen |
+| rates.completed_drain_rps | 4.266832% | not frozen |
+
+Study warnings: `[{"type": "calibration_unreliable", "detail": "Calibration noise exceeds preregistered tolerance limit"}, {"type": "measurement_warnings", "phase": "main", "counts": {"dispatch_late": 95, "in_flight_limit": 5935}}, {"type": "methodology_gate_not_passed"}]`.
+Main structurally valid runs: **90**;
+individually comparison-eligible runs: **60**.
+Pair matching: `{"True": 45}`.
+Repeatability groups: `{"not_evaluated_no_predeclared_tolerances": 30}`.
+Main comparison eligibility: **False**.
+
+Protocol coverage and hash checks are `{"coverage_complete": true, "hash_matched": true, "predeclared": false}`.
+Here `predeclared=false` is the reader's repeatability-tolerance gate: calibration
+did not yield accepted tolerances, so protocol repeatability status is
+`calibration_unreliable`. The workload design and policy order were not tuned from
+main outcomes. All 45 planned RR/LL pairs matched their input/settings invariants,
+while 30 high-load runs were ineligible because of cap omissions; 14 of those also
+exceeded the dispatch-lag warning threshold. The 60 individually eligible runs do
+not establish a whole-study comparison without accepted tolerances.
+
+Ineligible reasons: `{"dispatch_late": 14, "in_flight_limit": 30}`.
+These distinguish source/input matching from the ability to reproduce the scheduled
+load and repeat the measurements. Unreliable calibration does not create a verified
+tolerance; main observations continue with that limitation visible. No thresholds
+were relaxed after main observation and no runs were removed to improve the result.
+
+### Main descriptive medians
+
+Rows are medians of per-run metrics across the observed repetitions, rather than pooled
+request percentiles. They describe this synthetic workload and environment; completion
+and matching inputs alone do not support a general policy ranking.
+Timeout/error/cancellation cleanup has CPU/mock and HTTP-test coverage. The GPU
+suite does not establish fault-injection coverage for outcomes it did not observe.
+
+| Profile | Load | Policy | Runs | Completed/planned | TTFT P50 ms | E2E P50 ms | Drain RPS |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| burst_mixed | low | least_loaded | 3 | 60/60 | 212.335 | 1221.260 | 0.982 |
+| burst_mixed | low | round_robin | 3 | 60/60 | 222.870 | 1242.005 | 0.981 |
+| burst_mixed | medium | least_loaded | 3 | 240/240 | 599.945 | 2468.475 | 3.838 |
+| burst_mixed | medium | round_robin | 3 | 240/240 | 637.015 | 2493.930 | 3.840 |
+| burst_mixed | near_saturation | least_loaded | 3 | 1132/1680 | 15388.290 | 33394.790 | 7.844 |
+| burst_mixed | near_saturation | round_robin | 3 | 1117/1680 | 15045.910 | 33414.130 | 7.710 |
+| irregular_mixed | low | least_loaded | 3 | 60/60 | 196.385 | 1155.060 | 0.960 |
+| irregular_mixed | low | round_robin | 3 | 60/60 | 158.140 | 1088.845 | 0.969 |
+| irregular_mixed | medium | least_loaded | 3 | 240/240 | 348.825 | 1485.830 | 3.830 |
+| irregular_mixed | medium | round_robin | 3 | 240/240 | 281.915 | 1462.980 | 3.796 |
+| irregular_mixed | near_saturation | least_loaded | 3 | 1073/1680 | 14182.150 | 33576.935 | 7.695 |
+| irregular_mixed | near_saturation | round_robin | 3 | 1073/1680 | 14544.305 | 33651.360 | 7.731 |
+| microburst_mixed | low | least_loaded | 3 | 60/60 | 171.030 | 1259.775 | 1.000 |
+| microburst_mixed | low | round_robin | 3 | 60/60 | 152.995 | 1181.445 | 1.000 |
+| microburst_mixed | medium | least_loaded | 3 | 240/240 | 796.710 | 1584.550 | 4.000 |
+| microburst_mixed | medium | round_robin | 3 | 240/240 | 758.145 | 1555.070 | 4.000 |
+| microburst_mixed | near_saturation | least_loaded | 3 | 1058/1680 | 15130.080 | 34677.670 | 7.686 |
+| microburst_mixed | near_saturation | round_robin | 3 | 1056/1680 | 15658.910 | 34043.580 | 7.568 |
+| ramp_mixed | low | least_loaded | 3 | 60/60 | 174.985 | 1243.270 | 0.915 |
+| ramp_mixed | low | round_robin | 3 | 60/60 | 179.355 | 1246.425 | 0.919 |
+| ramp_mixed | medium | least_loaded | 3 | 240/240 | 294.595 | 1693.835 | 3.705 |
+| ramp_mixed | medium | round_robin | 3 | 240/240 | 364.665 | 1783.765 | 3.675 |
+| ramp_mixed | near_saturation | least_loaded | 3 | 1111/1680 | 12608.050 | 32930.020 | 7.428 |
+| ramp_mixed | near_saturation | round_robin | 3 | 1098/1680 | 12772.480 | 33164.635 | 7.371 |
+| steady_mixed | low | least_loaded | 3 | 60/60 | 153.065 | 1206.400 | 0.966 |
+| steady_mixed | low | round_robin | 3 | 60/60 | 145.030 | 1148.410 | 0.965 |
+| steady_mixed | medium | least_loaded | 3 | 240/240 | 220.935 | 1375.930 | 3.767 |
+| steady_mixed | medium | round_robin | 3 | 240/240 | 229.270 | 1390.325 | 3.776 |
+| steady_mixed | near_saturation | least_loaded | 3 | 1074/1680 | 14663.805 | 34186.035 | 7.697 |
+| steady_mixed | near_saturation | round_robin | 3 | 1073/1680 | 14614.270 | 34468.090 | 7.648 |
+
+### Inspect v4 evidence
+
+- [Preregistration](../experiments/raw/week8/controlled/20261126-e9a1e78-v4/preregistration.json), [study report](../experiments/raw/week8/controlled/20261126-e9a1e78-v4/study_report.json)
+- [Import checksums and independent recomputation](../experiments/processed/week8/controlled/20261126-e9a1e78-v4/import_verification.json)
+- [Main raw](../experiments/raw/week8/controlled/20261126-e9a1e78-v4/main/execution/runs), [main numeric analysis](../experiments/processed/week8/controlled/20261126-e9a1e78-v4/main/recomputed/analysis.json)
+- [Calibration numeric analysis](../experiments/processed/week8/controlled/20261126-e9a1e78-v4/calibration/recomputed/analysis.json)
+- [Real-tokenizer CPU proof](../experiments/processed/week8/controlled/20261126-tokenizer-compatibility/real-tokenizer-verification.json)
+- [Independent recount of imported workload tokens](../experiments/processed/week8/controlled/20261126-e9a1e78-v4/workload-tokenizer-verification.json)
+- [Provider log/status verification](../experiments/processed/week8/controlled/20261126-e9a1e78-v4/provider_verification.json)
+- [Git byte-preservation verification](../experiments/processed/week8/controlled/20261126-e9a1e78-v4/git_byte_verification.json)
+- [Main figures](../experiments/figures/week8/controlled/20261126-e9a1e78-v4/main)
+
+Recompute into a new output directory with CPU and the analysis extra:
+
+```powershell
+python -m llm_serving_platform.benchmark analyze --runs-root experiments/raw/week8/controlled/20261126-e9a1e78-v4/main/execution/runs --protocol experiments/manifests/week8/controlled/20261126-e9a1e78-v4/main/campaign.json --output-dir .cache/week8-replay-v4 --figures
+```
 
 ### Limits and interpretation
 
