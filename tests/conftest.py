@@ -1,4 +1,4 @@
-"""Pytest configuration supporting --no-gpu and --prompt flags for dual-mode testing."""
+"""CPU/mock tests by default; live GPU tests require an explicit --gpu opt-in."""
 
 import pytest
 
@@ -11,7 +11,13 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         "--no-gpu",
         action="store_true",
         default=False,
-        help="Run tests in CPU/mock mode without requiring a live vLLM GPU server.",
+        help="Explicitly select CPU/mock mode (the default).",
+    )
+    parser.addoption(
+        "--gpu",
+        action="store_true",
+        default=False,
+        help="Opt in to live GPU tests; requires an already running GPU service.",
     )
     parser.addoption(
         "--prompt",
@@ -23,8 +29,13 @@ def pytest_addoption(parser: pytest.Parser) -> None:
 
 @pytest.fixture
 def no_gpu(request: pytest.FixtureRequest) -> bool:
-    """Return True if --no-gpu flag was passed to pytest."""
-    return bool(request.config.getoption("--no-gpu"))
+    """Use mock mode unless the caller deliberately selected live GPU execution."""
+    return not request.config.getoption("--gpu")
+
+
+def pytest_configure(config: pytest.Config) -> None:
+    if config.getoption("--gpu") and config.getoption("--no-gpu"):
+        raise pytest.UsageError("Choose either --gpu or --no-gpu, not both")
 
 
 @pytest.fixture
@@ -34,10 +45,10 @@ def prompt_text(request: pytest.FixtureRequest) -> str:
 
 
 def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
-    """Skip tests explicitly marked @pytest.mark.gpu when --no-gpu is set."""
-    if not config.getoption("--no-gpu"):
+    """Keep real GPU tests out of ordinary CPU test runs."""
+    if config.getoption("--gpu"):
         return
-    skip_gpu = pytest.mark.skip(reason="Skipped live GPU test because --no-gpu was passed.")
+    skip_gpu = pytest.mark.skip(reason="Live GPU test requires explicit --gpu.")
     for item in items:
         if "gpu" in item.keywords:
             item.add_marker(skip_gpu)

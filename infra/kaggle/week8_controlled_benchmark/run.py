@@ -210,6 +210,12 @@ def run_study(output: Path, revision: str) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--dual-t4",
+        action="store_true",
+        required=True,
+        help="Explicitly authorize this remote GPU study.",
+    )
     parser.add_argument("--bootstrap", action="store_true")
     parser.add_argument("--revision", required=True)
     parser.add_argument("--vllm-version", default="0.33.0")
@@ -232,6 +238,7 @@ def main() -> None:
             [
                 python,
                 str(Path(__file__).resolve()),
+                "--dual-t4",
                 "--revision",
                 args.revision,
                 "--output-dir",

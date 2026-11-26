@@ -31,6 +31,7 @@ def main() -> None:
         args.vllm_version,
         launcher_script="infra/kaggle/week8_controlled_benchmark/run.py",
         launcher_arguments=[
+            "--dual-t4",
             "--bootstrap",
             "--revision",
             git("rev-parse", "HEAD"),

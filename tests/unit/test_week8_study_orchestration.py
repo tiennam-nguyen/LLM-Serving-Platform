@@ -1,4 +1,4 @@
-"""GPU study orchestration tests using synthetic analysis, never local CUDA or Docker."""
+"""CPU-only orchestration tests: synthetic analysis and mocks, no CUDA/vLLM execution."""
 
 import copy
 import json

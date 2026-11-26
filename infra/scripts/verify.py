@@ -2,13 +2,15 @@
 """Unified Open-Closed Verification & Cumulative Milestone Gate Runner.
 
 Supports:
-  1. Full E2E Verification (Default = Live GPU):
+  1. Full E2E Verification (Default = CPU/Mock):
      python infra/scripts/verify.py
 
-  2. Full E2E Verification without GPU (CI & CPU laptops):
+  2. Explicit CPU mode (backward compatible):
      python infra/scripts/verify.py --no-gpu
 
-  3. Partial / Component Verification (both GPU default and --no-gpu):
+  Live GPU checks require --gpu and already running vLLM/Gateway services.
+
+  3. Partial / Component Verification (CPU by default; optional --gpu):
      python infra/scripts/verify.py --target lint [--no-gpu]
      python infra/scripts/verify.py --target unit [--no-gpu]
      python infra/scripts/verify.py --target integration [--no-gpu]
@@ -266,7 +268,7 @@ def _run_pytest_or_fallback(subdir: str, ctx: VerifyContext) -> bool:
         if ctx.no_gpu:
             cmd.append("--no-gpu")
         else:
-            cmd.extend(["--prompt", ctx.prompt])
+            cmd.extend(["--gpu", "--prompt", ctx.prompt])
         env = {"REQUIRE_LIVE_GPU": "0" if ctx.no_gpu else "1"}
         _run_subprocess(cmd, env=env)
         return True
@@ -602,15 +604,21 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
             "Unified Verification & Cumulative Gate Runner. "
-            "Defaults to LIVE GPU mode; pass --no-gpu for CPU/Mock/CI mode."
+            "Defaults to CPU/Mock mode; pass --gpu to opt in to live services."
         )
     )
-    parser.add_argument(
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument(
         "--no-gpu",
         "--mock",
         dest="no_gpu",
         action="store_true",
+        default=True,
         help="Run in No-GPU mode using MockInferenceWorker (CI & CPU hosts).",
+    )
+    modes.add_argument(
+        "--gpu", dest="no_gpu", action="store_false",
+        help="Opt in to live GPU checks against already running vLLM/Gateway services.",
     )
     target_choices = [
         "all",
