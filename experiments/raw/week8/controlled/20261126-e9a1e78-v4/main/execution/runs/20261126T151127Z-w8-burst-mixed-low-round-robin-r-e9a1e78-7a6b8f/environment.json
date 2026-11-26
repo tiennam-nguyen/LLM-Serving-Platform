@@ -1,0 +1,184 @@
+{
+  "schema_version": 2,
+  "run_id": "20261126T151127Z-w8-burst-mixed-low-round-robin-r-e9a1e78-7a6b8f",
+  "started_at": "2026-11-26T15:11:27.784865+00:00",
+  "ended_at": "2026-11-26T15:11:50.108282+00:00",
+  "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+  "git_dirty": false,
+  "branch": "feat/w8-b-workload-analysis",
+  "python_version": "3.12.16",
+  "platform": {
+    "system": "Linux",
+    "release": "6.18.55+",
+    "machine": "x86_64",
+    "platform": "Linux-6.18.55+-x86_64-with-glibc2.39"
+  },
+  "packages": {
+    "llm-serving-platform": "0.1.0.dev0",
+    "fastapi": "0.136.3",
+    "httpx": "0.28.1",
+    "pydantic": "2.14.4",
+    "prometheus-client": "0.26.0",
+    "uvicorn": "0.54.0",
+    "vllm": "0.33.0",
+    "torch": "2.14.0",
+    "transformers": "5.20.2"
+  },
+  "gpu": [
+    {
+      "index": "0",
+      "name": "Tesla T4",
+      "memory_total_mib": "15360",
+      "driver_version": "580.178.04"
+    },
+    {
+      "index": "1",
+      "name": "Tesla T4",
+      "memory_total_mib": "15360",
+      "driver_version": "580.178.04"
+    }
+  ],
+  "model_id": "Qwen/Qwen2.5-3B-Instruct",
+  "routing_policy": "round_robin",
+  "expected_worker_count": 2,
+  "gateway_url": "http://127.0.0.1:8080",
+  "observed_workers": [
+    {
+      "worker_id": "worker-vllm-0",
+      "endpoint": "http://127.0.0.1:8000",
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "status": "HEALTHY",
+      "active_requests": 0
+    },
+    {
+      "worker_id": "worker-vllm-1",
+      "endpoint": "http://127.0.0.1:8001",
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "status": "HEALTHY",
+      "active_requests": 0
+    }
+  ],
+  "workload_sha256": "0e8e46564cae7de32d69bdc2dc9818bee784c9a47de699bc8f1ff05425e60528",
+  "schedule_sha256": "425e9de086b3c9eb6cdb8b7ad85ff196683f0169250fd0b00265d1a44f85eec2",
+  "measured_started_at": "2026-11-26T15:11:29.715037+00:00",
+  "measurement_window_ms": 20000.0,
+  "drain_end_offset_ms": 20384.074,
+  "final_workers": [
+    {
+      "worker_id": "worker-vllm-0",
+      "endpoint": "http://127.0.0.1:8000",
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "status": "HEALTHY",
+      "active_requests": 0
+    },
+    {
+      "worker_id": "worker-vllm-1",
+      "endpoint": "http://127.0.0.1:8001",
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "status": "HEALTHY",
+      "active_requests": 0
+    }
+  ],
+  "http_pool_limits": {
+    "isolated_pools": true,
+    "inference_max_connections": 366,
+    "inference_max_keepalive_connections": 100,
+    "control_max_connections": 64,
+    "control_max_keepalive_connections": 32,
+    "inference_timeout_s": 120.0,
+    "control_timeout_s": 10.0
+  },
+  "run_status": "completed",
+  "failure": null,
+  "protocol_sha256": "bc39e41d83206c761c4296db46dc80d7986860f481eaf1005d9629204db24625",
+  "test_mode": "live_dual_t4",
+  "experiment_phase": "main",
+  "campaign_run_index": 39,
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "gpu_telemetry_interval_s": 1,
+  "cache_control": {
+    "workers_restarted_between_runs": true,
+    "fresh_mock_gateway": false,
+    "prefix_cache_disabled": false,
+    "worker_startup": "parallel_prefetched",
+    "model_cache_offline": true
+  },
+  "worker_runtime_args": {
+    "0": [
+      "-m",
+      "vllm.entrypoints.openai.api_server",
+      "--model",
+      "Qwen/Qwen2.5-3B-Instruct",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8000",
+      "--tensor-parallel-size",
+      "1",
+      "--dtype",
+      "float16",
+      "--gpu-memory-utilization",
+      "0.85",
+      "--max-model-len",
+      "4096",
+      "--revision",
+      "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+      "--tokenizer-revision",
+      "aa8e72537993ba99e69dfaafa59ed015b17504d1"
+    ],
+    "1": [
+      "-m",
+      "vllm.entrypoints.openai.api_server",
+      "--model",
+      "Qwen/Qwen2.5-3B-Instruct",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8001",
+      "--tensor-parallel-size",
+      "1",
+      "--dtype",
+      "float16",
+      "--gpu-memory-utilization",
+      "0.85",
+      "--max-model-len",
+      "4096",
+      "--revision",
+      "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+      "--tokenizer-revision",
+      "aa8e72537993ba99e69dfaafa59ed015b17504d1"
+    ]
+  },
+  "worker_gpu_bindings": {
+    "worker-vllm-0": {
+      "gpu_index": 0,
+      "gpu_uuid": "GPU-0a336ef0-b21c-d08b-6b0f-94138b45b945",
+      "server_pid": 24463,
+      "compute_processes": [
+        [
+          "GPU-0a336ef0-b21c-d08b-6b0f-94138b45b945",
+          "24505",
+          "VLLM::EngineCore",
+          "12688"
+        ]
+      ]
+    },
+    "worker-vllm-1": {
+      "gpu_index": 1,
+      "gpu_uuid": "GPU-f3e5d3eb-c4d3-a4a2-0249-4fb9433291b2",
+      "server_pid": 24474,
+      "compute_processes": [
+        [
+          "GPU-f3e5d3eb-c4d3-a4a2-0249-4fb9433291b2",
+          "24514",
+          "VLLM::EngineCore",
+          "12688"
+        ]
+      ]
+    }
+  },
+  "execution_semantics": "observe_v1",
+  "dispatch_timestamp": "before_http_client_call",
+  "warnings": [],
+  "max_observed_in_flight": 5
+}

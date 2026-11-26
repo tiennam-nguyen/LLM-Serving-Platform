@@ -1,0 +1,11 @@
+run_id,policy,profile,load_level,repetition,valid,offered_rps,completed_window_rps,completed_drain_rps,ttft_p50,ttft_p95,ttft_p99,e2e_p50,e2e_p95,e2e_p99
+20261126T122435Z-w8-steady-mixed-medium-round-rob-e9a1e78-a5060e,round_robin,steady_mixed,medium,1,True,4.0,3.75,3.851653,194.545,546.408,567.995,1221.735,1999.16,2228.992
+20261126T122709Z-w8-steady-mixed-medium-least-loa-e9a1e78-713dda,least_loaded,steady_mixed,medium,1,True,4.0,3.75,3.827231,212.015,584.401,633.42,1254.535,1914.889,2086.713
+20261126T122909Z-w8-irregular-mixed-medium-round-e9a1e78-7e11b0,round_robin,irregular_mixed,medium,1,True,4.0,3.55,3.796751,302.66,881.24,1190.049,1464.875,2692.322,2955.415
+20261126T123110Z-w8-irregular-mixed-medium-least-e9a1e78-1be7be,least_loaded,irregular_mixed,medium,1,True,4.0,3.5,3.793897,297.01,778.732,1155.144,1452.725,2229.77,2644.76
+20261126T123310Z-w8-burst-mixed-medium-round-robi-e9a1e78-d2e5af,round_robin,burst_mixed,medium,1,True,4.0,3.9,3.829381,649.725,1653.3,1966.17,2511.6,4795.307,5298.205
+20261126T123512Z-w8-burst-mixed-medium-least-load-e9a1e78-f0c75d,least_loaded,burst_mixed,medium,1,True,4.0,3.9,3.818055,607.705,1635.69,1908.699,2456.205,4712.176,5222.349
+20261126T123710Z-w8-ramp-mixed-medium-round-robin-e9a1e78-cf1960,round_robin,ramp_mixed,medium,1,True,4.0,2.85,3.677303,364.415,956.247,1191.769,1777.355,3963.72,4707.639
+20261126T123914Z-w8-ramp-mixed-medium-least-loade-e9a1e78-a45682,least_loaded,ramp_mixed,medium,1,True,4.0,3.05,3.672791,262.21,930.035,1099.151,1750.54,3107.343,3703.071
+20261126T124115Z-w8-microburst-mixed-medium-round-e9a1e78-71cf0b,round_robin,microburst_mixed,medium,1,True,4.0,4.0,4.0,780.03,1261.671,1329.101,1559.645,2396.479,3298.158
+20261126T124317Z-w8-microburst-mixed-medium-least-e9a1e78-433141,least_loaded,microburst_mixed,medium,1,True,4.0,4.0,4.0,801.555,1297.105,1775.428,1603.61,2712.803,2811.051

@@ -1,0 +1,1689 @@
+{
+  "schema_version": 2,
+  "run_id": "20261126T161334Z-w8-ramp-mixed-near-saturation-le-e9a1e78-4b3fff",
+  "started_at": "2026-11-26T16:13:34.324691+00:00",
+  "ended_at": "2026-11-26T16:14:27.016295+00:00",
+  "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+  "git_dirty": false,
+  "branch": "feat/w8-b-workload-analysis",
+  "python_version": "3.12.16",
+  "platform": {
+    "system": "Linux",
+    "release": "6.18.55+",
+    "machine": "x86_64",
+    "platform": "Linux-6.18.55+-x86_64-with-glibc2.39"
+  },
+  "packages": {
+    "llm-serving-platform": "0.1.0.dev0",
+    "fastapi": "0.136.3",
+    "httpx": "0.28.1",
+    "pydantic": "2.14.4",
+    "prometheus-client": "0.26.0",
+    "uvicorn": "0.54.0",
+    "vllm": "0.33.0",
+    "torch": "2.14.0",
+    "transformers": "5.20.2"
+  },
+  "gpu": [
+    {
+      "index": "0",
+      "name": "Tesla T4",
+      "memory_total_mib": "15360",
+      "driver_version": "580.178.04"
+    },
+    {
+      "index": "1",
+      "name": "Tesla T4",
+      "memory_total_mib": "15360",
+      "driver_version": "580.178.04"
+    }
+  ],
+  "model_id": "Qwen/Qwen2.5-3B-Instruct",
+  "routing_policy": "least_loaded",
+  "expected_worker_count": 2,
+  "gateway_url": "http://127.0.0.1:8080",
+  "observed_workers": [
+    {
+      "worker_id": "worker-vllm-0",
+      "endpoint": "http://127.0.0.1:8000",
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "status": "HEALTHY",
+      "active_requests": 0
+    },
+    {
+      "worker_id": "worker-vllm-1",
+      "endpoint": "http://127.0.0.1:8001",
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "status": "HEALTHY",
+      "active_requests": 0
+    }
+  ],
+  "workload_sha256": "b8cc3e7a03554c946176c7004f225eee478056b7a80991ff8951c9d7d8b8bfb0",
+  "schedule_sha256": "b625525c2a98a8c5978b09d7785013657cf7d0ba2f4eb0997b8b7d9928a53a47",
+  "measured_started_at": "2026-11-26T16:13:36.763890+00:00",
+  "measurement_window_ms": 20000.0,
+  "drain_end_offset_ms": 50216.455,
+  "final_workers": [
+    {
+      "worker_id": "worker-vllm-0",
+      "endpoint": "http://127.0.0.1:8000",
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "status": "HEALTHY",
+      "active_requests": 0
+    },
+    {
+      "worker_id": "worker-vllm-1",
+      "endpoint": "http://127.0.0.1:8001",
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "status": "HEALTHY",
+      "active_requests": 0
+    }
+  ],
+  "http_pool_limits": {
+    "isolated_pools": true,
+    "inference_max_connections": 366,
+    "inference_max_keepalive_connections": 100,
+    "control_max_connections": 64,
+    "control_max_keepalive_connections": 32,
+    "inference_timeout_s": 120.0,
+    "control_timeout_s": 10.0
+  },
+  "run_status": "completed",
+  "failure": null,
+  "protocol_sha256": "bc39e41d83206c761c4296db46dc80d7986860f481eaf1005d9629204db24625",
+  "test_mode": "live_dual_t4",
+  "experiment_phase": "main",
+  "campaign_run_index": 68,
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "gpu_telemetry_interval_s": 1,
+  "cache_control": {
+    "workers_restarted_between_runs": true,
+    "fresh_mock_gateway": false,
+    "prefix_cache_disabled": false,
+    "worker_startup": "parallel_prefetched",
+    "model_cache_offline": true
+  },
+  "worker_runtime_args": {
+    "0": [
+      "-m",
+      "vllm.entrypoints.openai.api_server",
+      "--model",
+      "Qwen/Qwen2.5-3B-Instruct",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8000",
+      "--tensor-parallel-size",
+      "1",
+      "--dtype",
+      "float16",
+      "--gpu-memory-utilization",
+      "0.85",
+      "--max-model-len",
+      "4096",
+      "--revision",
+      "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+      "--tokenizer-revision",
+      "aa8e72537993ba99e69dfaafa59ed015b17504d1"
+    ],
+    "1": [
+      "-m",
+      "vllm.entrypoints.openai.api_server",
+      "--model",
+      "Qwen/Qwen2.5-3B-Instruct",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8001",
+      "--tensor-parallel-size",
+      "1",
+      "--dtype",
+      "float16",
+      "--gpu-memory-utilization",
+      "0.85",
+      "--max-model-len",
+      "4096",
+      "--revision",
+      "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+      "--tokenizer-revision",
+      "aa8e72537993ba99e69dfaafa59ed015b17504d1"
+    ]
+  },
+  "worker_gpu_bindings": {
+    "worker-vllm-0": {
+      "gpu_index": 0,
+      "gpu_uuid": "GPU-0a336ef0-b21c-d08b-6b0f-94138b45b945",
+      "server_pid": 33218,
+      "compute_processes": [
+        [
+          "GPU-0a336ef0-b21c-d08b-6b0f-94138b45b945",
+          "33260",
+          "VLLM::EngineCore",
+          "12688"
+        ]
+      ]
+    },
+    "worker-vllm-1": {
+      "gpu_index": 1,
+      "gpu_uuid": "GPU-f3e5d3eb-c4d3-a4a2-0249-4fb9433291b2",
+      "server_pid": 33229,
+      "compute_processes": [
+        [
+          "GPU-f3e5d3eb-c4d3-a4a2-0249-4fb9433291b2",
+          "33269",
+          "VLLM::EngineCore",
+          "12688"
+        ]
+      ]
+    }
+  },
+  "execution_semantics": "observe_v1",
+  "dispatch_timestamp": "before_http_client_call",
+  "warnings": [
+    {
+      "type": "in_flight_limit",
+      "sequence": 367,
+      "scheduled_offset_ms": 16191.494971,
+      "attempt_offset_ms": 16193.882102001226,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 368,
+      "scheduled_offset_ms": 16233.466671,
+      "attempt_offset_ms": 16234.011387001374,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 369,
+      "scheduled_offset_ms": 16240.747854,
+      "attempt_offset_ms": 16241.60474600103,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 370,
+      "scheduled_offset_ms": 16264.93718,
+      "attempt_offset_ms": 16266.05064100113,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 371,
+      "scheduled_offset_ms": 16286.207138,
+      "attempt_offset_ms": 16286.578590999852,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 372,
+      "scheduled_offset_ms": 16313.199931,
+      "attempt_offset_ms": 16314.072077000674,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 373,
+      "scheduled_offset_ms": 16327.985507,
+      "attempt_offset_ms": 16328.567657999884,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 374,
+      "scheduled_offset_ms": 16350.688569,
+      "attempt_offset_ms": 16351.036800000657,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 375,
+      "scheduled_offset_ms": 16366.924928,
+      "attempt_offset_ms": 16367.478097001367,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 376,
+      "scheduled_offset_ms": 16409.000796,
+      "attempt_offset_ms": 16410.001449001356,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 377,
+      "scheduled_offset_ms": 16416.421497,
+      "attempt_offset_ms": 16417.40519800078,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 378,
+      "scheduled_offset_ms": 16441.011475,
+      "attempt_offset_ms": 16441.840784000306,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 379,
+      "scheduled_offset_ms": 16454.860442,
+      "attempt_offset_ms": 16456.22047300094,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 380,
+      "scheduled_offset_ms": 16478.007821,
+      "attempt_offset_ms": 16478.645526000037,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 381,
+      "scheduled_offset_ms": 16505.143261,
+      "attempt_offset_ms": 16505.428879001556,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 382,
+      "scheduled_offset_ms": 16521.054275,
+      "attempt_offset_ms": 16521.86282600087,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 384,
+      "scheduled_offset_ms": 16582.713877,
+      "attempt_offset_ms": 16583.416389001286,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 385,
+      "scheduled_offset_ms": 16583.803769,
+      "attempt_offset_ms": 16584.77123100056,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 386,
+      "scheduled_offset_ms": 16625.141084,
+      "attempt_offset_ms": 16626.19842300046,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 387,
+      "scheduled_offset_ms": 16630.456592,
+      "attempt_offset_ms": 16631.557063999935,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 388,
+      "scheduled_offset_ms": 16652.225243,
+      "attempt_offset_ms": 16652.936422000494,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 389,
+      "scheduled_offset_ms": 16681.255756,
+      "attempt_offset_ms": 16682.351561999894,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 390,
+      "scheduled_offset_ms": 16698.388257,
+      "attempt_offset_ms": 16698.792140001387,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 391,
+      "scheduled_offset_ms": 16722.171476,
+      "attempt_offset_ms": 16723.291657001027,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 392,
+      "scheduled_offset_ms": 16740.49401,
+      "attempt_offset_ms": 16740.732359001413,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 393,
+      "scheduled_offset_ms": 16769.879197,
+      "attempt_offset_ms": 16770.216640999934,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 394,
+      "scheduled_offset_ms": 16779.751529,
+      "attempt_offset_ms": 16780.747815000723,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 395,
+      "scheduled_offset_ms": 16811.818823,
+      "attempt_offset_ms": 16812.194404001275,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 396,
+      "scheduled_offset_ms": 16836.299717,
+      "attempt_offset_ms": 16836.80238300076,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 397,
+      "scheduled_offset_ms": 16854.091928,
+      "attempt_offset_ms": 16856.39852300119,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 398,
+      "scheduled_offset_ms": 16865.012014,
+      "attempt_offset_ms": 16866.985387001478,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 399,
+      "scheduled_offset_ms": 16892.350207,
+      "attempt_offset_ms": 16894.422964000114,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 400,
+      "scheduled_offset_ms": 16916.742864,
+      "attempt_offset_ms": 16917.94449400004,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 401,
+      "scheduled_offset_ms": 16935.738463,
+      "attempt_offset_ms": 16937.40938600058,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 402,
+      "scheduled_offset_ms": 16952.696858,
+      "attempt_offset_ms": 16953.894915001,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 403,
+      "scheduled_offset_ms": 16968.028942,
+      "attempt_offset_ms": 16968.390007999915,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 404,
+      "scheduled_offset_ms": 16992.504766,
+      "attempt_offset_ms": 16992.99400700147,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 405,
+      "scheduled_offset_ms": 17009.491307,
+      "attempt_offset_ms": 17010.58499700048,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 406,
+      "scheduled_offset_ms": 17037.176494,
+      "attempt_offset_ms": 17038.149441001224,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 407,
+      "scheduled_offset_ms": 17057.004153,
+      "attempt_offset_ms": 17057.731444001547,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 408,
+      "scheduled_offset_ms": 17086.331998,
+      "attempt_offset_ms": 17087.28373700069,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 409,
+      "scheduled_offset_ms": 17107.909026,
+      "attempt_offset_ms": 17109.98116600058,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 410,
+      "scheduled_offset_ms": 17129.958055,
+      "attempt_offset_ms": 17131.12300100147,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 411,
+      "scheduled_offset_ms": 17136.159756,
+      "attempt_offset_ms": 17136.721852000846,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 412,
+      "scheduled_offset_ms": 17162.21307,
+      "attempt_offset_ms": 17164.219727999807,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 413,
+      "scheduled_offset_ms": 17175.916244,
+      "attempt_offset_ms": 17176.614842001072,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 414,
+      "scheduled_offset_ms": 17199.021577,
+      "attempt_offset_ms": 17200.047042000733,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 415,
+      "scheduled_offset_ms": 17234.416144,
+      "attempt_offset_ms": 17235.429090000252,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 416,
+      "scheduled_offset_ms": 17245.392302,
+      "attempt_offset_ms": 17245.902223001394,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 417,
+      "scheduled_offset_ms": 17261.155482,
+      "attempt_offset_ms": 17262.403784001435,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 418,
+      "scheduled_offset_ms": 17292.794977,
+      "attempt_offset_ms": 17294.016810999892,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 419,
+      "scheduled_offset_ms": 17308.322746,
+      "attempt_offset_ms": 17309.46044400116,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 420,
+      "scheduled_offset_ms": 17340.3119,
+      "attempt_offset_ms": 17340.955038000175,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 421,
+      "scheduled_offset_ms": 17342.152318,
+      "attempt_offset_ms": 17342.606124000667,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 422,
+      "scheduled_offset_ms": 17377.144668,
+      "attempt_offset_ms": 17378.136273000564,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 423,
+      "scheduled_offset_ms": 17382.612381,
+      "attempt_offset_ms": 17383.78585600003,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 424,
+      "scheduled_offset_ms": 17417.221114,
+      "attempt_offset_ms": 17418.37695400136,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 425,
+      "scheduled_offset_ms": 17441.752636,
+      "attempt_offset_ms": 17442.2963850011,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 426,
+      "scheduled_offset_ms": 17448.395516,
+      "attempt_offset_ms": 17448.89774100011,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 427,
+      "scheduled_offset_ms": 17466.330591,
+      "attempt_offset_ms": 17467.65885000059,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 429,
+      "scheduled_offset_ms": 17508.956846,
+      "attempt_offset_ms": 17511.047575000703,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 430,
+      "scheduled_offset_ms": 17539.119875,
+      "attempt_offset_ms": 17539.625282000998,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 431,
+      "scheduled_offset_ms": 17564.071381,
+      "attempt_offset_ms": 17565.29550200139,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 432,
+      "scheduled_offset_ms": 17584.29595,
+      "attempt_offset_ms": 17584.957868000856,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 433,
+      "scheduled_offset_ms": 17597.005574,
+      "attempt_offset_ms": 17597.594229000606,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 434,
+      "scheduled_offset_ms": 17626.516528,
+      "attempt_offset_ms": 17627.189844000895,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 435,
+      "scheduled_offset_ms": 17628.038386,
+      "attempt_offset_ms": 17628.6578119998,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 436,
+      "scheduled_offset_ms": 17666.28655,
+      "attempt_offset_ms": 17667.215651999868,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 437,
+      "scheduled_offset_ms": 17668.438474,
+      "attempt_offset_ms": 17668.872541000383,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 438,
+      "scheduled_offset_ms": 17701.313287,
+      "attempt_offset_ms": 17702.44128000013,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 439,
+      "scheduled_offset_ms": 17710.056581,
+      "attempt_offset_ms": 17711.215273000562,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 440,
+      "scheduled_offset_ms": 17746.702213,
+      "attempt_offset_ms": 17748.94071000017,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 441,
+      "scheduled_offset_ms": 17751.668556,
+      "attempt_offset_ms": 17752.597025000796,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 442,
+      "scheduled_offset_ms": 17777.761379,
+      "attempt_offset_ms": 17778.24378400146,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 443,
+      "scheduled_offset_ms": 17806.555555,
+      "attempt_offset_ms": 17806.996252000317,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 444,
+      "scheduled_offset_ms": 17809.810221,
+      "attempt_offset_ms": 17810.709197001415,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 445,
+      "scheduled_offset_ms": 17830.643158,
+      "attempt_offset_ms": 17831.337730000087,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 446,
+      "scheduled_offset_ms": 17861.398662,
+      "attempt_offset_ms": 17862.067287000173,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 447,
+      "scheduled_offset_ms": 17875.819226,
+      "attempt_offset_ms": 17876.668958000664,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 448,
+      "scheduled_offset_ms": 17888.702921,
+      "attempt_offset_ms": 17889.196482001353,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 449,
+      "scheduled_offset_ms": 17920.975455,
+      "attempt_offset_ms": 17921.770020000622,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 450,
+      "scheduled_offset_ms": 17939.03871,
+      "attempt_offset_ms": 17939.332875001128,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 451,
+      "scheduled_offset_ms": 17953.706831,
+      "attempt_offset_ms": 17955.020576000607,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 452,
+      "scheduled_offset_ms": 17976.343549,
+      "attempt_offset_ms": 17977.667393000957,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 453,
+      "scheduled_offset_ms": 17997.221317,
+      "attempt_offset_ms": 17998.316182000053,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 454,
+      "scheduled_offset_ms": 18008.62331,
+      "attempt_offset_ms": 18009.06311500148,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 455,
+      "scheduled_offset_ms": 18030.791879,
+      "attempt_offset_ms": 18031.783262000317,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 456,
+      "scheduled_offset_ms": 18057.586611,
+      "attempt_offset_ms": 18059.425416000522,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 457,
+      "scheduled_offset_ms": 18068.493584,
+      "attempt_offset_ms": 18070.087997000883,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 458,
+      "scheduled_offset_ms": 18091.573878,
+      "attempt_offset_ms": 18092.68148100091,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 459,
+      "scheduled_offset_ms": 18113.05796,
+      "attempt_offset_ms": 18120.11452200022,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 460,
+      "scheduled_offset_ms": 18138.509434,
+      "attempt_offset_ms": 18139.70930100004,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 461,
+      "scheduled_offset_ms": 18162.971102,
+      "attempt_offset_ms": 18163.31259600156,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 462,
+      "scheduled_offset_ms": 18171.773225,
+      "attempt_offset_ms": 18173.89619700043,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 463,
+      "scheduled_offset_ms": 18191.907586,
+      "attempt_offset_ms": 18193.47757000105,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 464,
+      "scheduled_offset_ms": 18208.321709,
+      "attempt_offset_ms": 18209.063460000834,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 465,
+      "scheduled_offset_ms": 18242.130309,
+      "attempt_offset_ms": 18242.64937100088,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 466,
+      "scheduled_offset_ms": 18262.716299,
+      "attempt_offset_ms": 18263.231704000646,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 467,
+      "scheduled_offset_ms": 18264.742223,
+      "attempt_offset_ms": 18265.69859400115,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 468,
+      "scheduled_offset_ms": 18290.952383,
+      "attempt_offset_ms": 18293.24779200033,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 469,
+      "scheduled_offset_ms": 18312.833922,
+      "attempt_offset_ms": 18313.866960999803,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 470,
+      "scheduled_offset_ms": 18324.142024,
+      "attempt_offset_ms": 18325.441050001245,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 471,
+      "scheduled_offset_ms": 18350.311451,
+      "attempt_offset_ms": 18351.025260000824,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 472,
+      "scheduled_offset_ms": 18375.62673,
+      "attempt_offset_ms": 18376.66365699988,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 473,
+      "scheduled_offset_ms": 18383.564502,
+      "attempt_offset_ms": 18384.210995000103,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 474,
+      "scheduled_offset_ms": 18409.856241,
+      "attempt_offset_ms": 18411.753051001142,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 475,
+      "scheduled_offset_ms": 18431.92146,
+      "attempt_offset_ms": 18432.363102001545,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 476,
+      "scheduled_offset_ms": 18445.18124,
+      "attempt_offset_ms": 18447.070737000104,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 477,
+      "scheduled_offset_ms": 18460.489386,
+      "attempt_offset_ms": 18461.69379300045,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 478,
+      "scheduled_offset_ms": 18480.020277,
+      "attempt_offset_ms": 18481.255686001532,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 479,
+      "scheduled_offset_ms": 18501.588552,
+      "attempt_offset_ms": 18502.907015001256,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 480,
+      "scheduled_offset_ms": 18526.410309,
+      "attempt_offset_ms": 18527.90756000104,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 481,
+      "scheduled_offset_ms": 18544.103724,
+      "attempt_offset_ms": 18544.485270000223,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 482,
+      "scheduled_offset_ms": 18568.734239,
+      "attempt_offset_ms": 18569.75037400116,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 483,
+      "scheduled_offset_ms": 18579.242583,
+      "attempt_offset_ms": 18579.622768000263,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 484,
+      "scheduled_offset_ms": 18594.108258,
+      "attempt_offset_ms": 18595.433962000243,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 487,
+      "scheduled_offset_ms": 18656.305537,
+      "attempt_offset_ms": 18656.937125000695,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 488,
+      "scheduled_offset_ms": 18683.666744,
+      "attempt_offset_ms": 18684.654134000084,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 489,
+      "scheduled_offset_ms": 18707.149687,
+      "attempt_offset_ms": 18708.182547999968,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 490,
+      "scheduled_offset_ms": 18710.235446,
+      "attempt_offset_ms": 18710.656778001066,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 491,
+      "scheduled_offset_ms": 18738.458959,
+      "attempt_offset_ms": 18739.200784000786,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 492,
+      "scheduled_offset_ms": 18762.420185,
+      "attempt_offset_ms": 18762.76983200114,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 493,
+      "scheduled_offset_ms": 18783.605307,
+      "attempt_offset_ms": 18784.317645000556,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 494,
+      "scheduled_offset_ms": 18798.645713,
+      "attempt_offset_ms": 18799.976315000094,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 495,
+      "scheduled_offset_ms": 18811.510002,
+      "attempt_offset_ms": 18812.775273001535,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 496,
+      "scheduled_offset_ms": 18838.097534,
+      "attempt_offset_ms": 18838.631542999792,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 497,
+      "scheduled_offset_ms": 18844.035363,
+      "attempt_offset_ms": 18845.228415000747,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 498,
+      "scheduled_offset_ms": 18872.713552,
+      "attempt_offset_ms": 18873.773384000742,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 499,
+      "scheduled_offset_ms": 18883.404917,
+      "attempt_offset_ms": 18884.327290001238,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 500,
+      "scheduled_offset_ms": 18901.976305,
+      "attempt_offset_ms": 18903.8741559998,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 501,
+      "scheduled_offset_ms": 18926.463076,
+      "attempt_offset_ms": 18927.39371800053,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 502,
+      "scheduled_offset_ms": 18952.365938,
+      "attempt_offset_ms": 18952.952281000762,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 503,
+      "scheduled_offset_ms": 18969.932732,
+      "attempt_offset_ms": 18970.574487000704,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 504,
+      "scheduled_offset_ms": 18991.055704,
+      "attempt_offset_ms": 18992.18223800017,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 505,
+      "scheduled_offset_ms": 18996.619362,
+      "attempt_offset_ms": 18997.72954600121,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 506,
+      "scheduled_offset_ms": 19015.103575,
+      "attempt_offset_ms": 19017.185970000355,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 507,
+      "scheduled_offset_ms": 19037.955158,
+      "attempt_offset_ms": 19038.68753200004,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 508,
+      "scheduled_offset_ms": 19057.090213,
+      "attempt_offset_ms": 19058.214046001012,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 509,
+      "scheduled_offset_ms": 19083.361824,
+      "attempt_offset_ms": 19083.75399900069,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 510,
+      "scheduled_offset_ms": 19087.444481,
+      "attempt_offset_ms": 19088.304149001488,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 511,
+      "scheduled_offset_ms": 19116.229324,
+      "attempt_offset_ms": 19117.127528999845,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 512,
+      "scheduled_offset_ms": 19127.464038,
+      "attempt_offset_ms": 19128.61219000115,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 513,
+      "scheduled_offset_ms": 19146.792735,
+      "attempt_offset_ms": 19148.141135001424,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 514,
+      "scheduled_offset_ms": 19168.687099,
+      "attempt_offset_ms": 19169.60568200011,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 515,
+      "scheduled_offset_ms": 19194.773642,
+      "attempt_offset_ms": 19195.20907700098,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 516,
+      "scheduled_offset_ms": 19216.677783,
+      "attempt_offset_ms": 19217.7371100006,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 517,
+      "scheduled_offset_ms": 19228.527559,
+      "attempt_offset_ms": 19229.22260100131,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 518,
+      "scheduled_offset_ms": 19248.894969,
+      "attempt_offset_ms": 19249.719561001257,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 519,
+      "scheduled_offset_ms": 19263.477647,
+      "attempt_offset_ms": 19264.166386999932,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 520,
+      "scheduled_offset_ms": 19287.932925,
+      "attempt_offset_ms": 19288.694787001077,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 521,
+      "scheduled_offset_ms": 19301.935352,
+      "attempt_offset_ms": 19303.20793000101,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 522,
+      "scheduled_offset_ms": 19312.246816,
+      "attempt_offset_ms": 19313.694701000713,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 523,
+      "scheduled_offset_ms": 19332.945141,
+      "attempt_offset_ms": 19334.127218000503,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 524,
+      "scheduled_offset_ms": 19349.498879,
+      "attempt_offset_ms": 19350.591934000477,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 525,
+      "scheduled_offset_ms": 19370.520347,
+      "attempt_offset_ms": 19371.00441900111,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 526,
+      "scheduled_offset_ms": 19394.051377,
+      "attempt_offset_ms": 19394.50772100099,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 527,
+      "scheduled_offset_ms": 19402.919844,
+      "attempt_offset_ms": 19405.04169400083,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 528,
+      "scheduled_offset_ms": 19423.979049,
+      "attempt_offset_ms": 19424.466903001303,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 529,
+      "scheduled_offset_ms": 19443.807262,
+      "attempt_offset_ms": 19445.010878000176,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 530,
+      "scheduled_offset_ms": 19465.194754,
+      "attempt_offset_ms": 19465.675887000543,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 531,
+      "scheduled_offset_ms": 19477.887908,
+      "attempt_offset_ms": 19478.212624000662,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 532,
+      "scheduled_offset_ms": 19509.210031,
+      "attempt_offset_ms": 19510.118947000592,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 534,
+      "scheduled_offset_ms": 19535.759787,
+      "attempt_offset_ms": 19536.705165000967,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 535,
+      "scheduled_offset_ms": 19555.737005,
+      "attempt_offset_ms": 19556.900600000517,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 536,
+      "scheduled_offset_ms": 19574.351118,
+      "attempt_offset_ms": 19576.412239001,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 537,
+      "scheduled_offset_ms": 19589.655436,
+      "attempt_offset_ms": 19590.943761000744,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 538,
+      "scheduled_offset_ms": 19615.352303,
+      "attempt_offset_ms": 19616.414961999908,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 539,
+      "scheduled_offset_ms": 19630.660295,
+      "attempt_offset_ms": 19630.98362800156,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 540,
+      "scheduled_offset_ms": 19656.674424,
+      "attempt_offset_ms": 19658.493423001346,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 541,
+      "scheduled_offset_ms": 19659.356747,
+      "attempt_offset_ms": 19660.000787000172,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 542,
+      "scheduled_offset_ms": 19676.799321,
+      "attempt_offset_ms": 19677.45740800092,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 543,
+      "scheduled_offset_ms": 19695.11479,
+      "attempt_offset_ms": 19697.014596000372,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 544,
+      "scheduled_offset_ms": 19728.020451,
+      "attempt_offset_ms": 19728.627038000923,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 545,
+      "scheduled_offset_ms": 19739.150186,
+      "attempt_offset_ms": 19740.161630999864,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 546,
+      "scheduled_offset_ms": 19754.168486,
+      "attempt_offset_ms": 19754.77862000116,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 547,
+      "scheduled_offset_ms": 19781.681892,
+      "attempt_offset_ms": 19782.359450000513,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 548,
+      "scheduled_offset_ms": 19784.94881,
+      "attempt_offset_ms": 19785.98881900143,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 549,
+      "scheduled_offset_ms": 19816.046376,
+      "attempt_offset_ms": 19816.47672500003,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 550,
+      "scheduled_offset_ms": 19822.783165,
+      "attempt_offset_ms": 19823.03259299988,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 551,
+      "scheduled_offset_ms": 19847.062326,
+      "attempt_offset_ms": 19847.500446001504,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 552,
+      "scheduled_offset_ms": 19858.621678,
+      "attempt_offset_ms": 19859.034977000192,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 553,
+      "scheduled_offset_ms": 19877.538752,
+      "attempt_offset_ms": 19878.482140000415,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 554,
+      "scheduled_offset_ms": 19893.165193,
+      "attempt_offset_ms": 19894.01619400087,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 555,
+      "scheduled_offset_ms": 19917.569565,
+      "attempt_offset_ms": 19918.46601100042,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 556,
+      "scheduled_offset_ms": 19931.778772,
+      "attempt_offset_ms": 19932.96492599984,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 557,
+      "scheduled_offset_ms": 19946.777044,
+      "attempt_offset_ms": 19947.36825200016,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 558,
+      "scheduled_offset_ms": 19964.639287,
+      "attempt_offset_ms": 19966.870995000136,
+      "active_http_in_flight": 350,
+      "limit": 350
+    },
+    {
+      "type": "in_flight_limit",
+      "sequence": 559,
+      "scheduled_offset_ms": 19987.727023,
+      "attempt_offset_ms": 19988.34158000136,
+      "active_http_in_flight": 350,
+      "limit": 350
+    }
+  ],
+  "max_observed_in_flight": 350
+}

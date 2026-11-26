@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "name": "w8-microburst_mixed-near_saturation-least_loaded-r1",
+  "model": {
+    "id": "Qwen/Qwen2.5-3B-Instruct"
+  },
+  "topology": {
+    "worker_count": 2
+  },
+  "policy": {
+    "name": "least_loaded"
+  },
+  "workload": {
+    "path": "/kaggle/working/week8-controlled/main/workloads/microburst_mixed_near_saturation.jsonl",
+    "request_count": 560,
+    "profile": "microburst_mixed"
+  },
+  "seed": 42,
+  "warmup": {
+    "request_count": 2
+  },
+  "generation": {
+    "temperature": 0.0,
+    "max_tokens": 64,
+    "top_p": 1.0
+  },
+  "runner": {
+    "gateway_url": "http://127.0.0.1:8080",
+    "request_timeout_s": 120.0,
+    "max_in_flight": 350,
+    "max_dispatch_lag_ms": 250.0
+  },
+  "load": {
+    "mode": "open_loop",
+    "measurement_window_ms": 20000.0
+  },
+  "comparison": {
+    "id": "w8-microburst_mixed-near_saturation",
+    "load_level": "near_saturation",
+    "repetition": 1
+  }
+}

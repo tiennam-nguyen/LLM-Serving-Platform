@@ -1,0 +1,1563 @@
+{
+  "schema_version": 1,
+  "analysis_git": {
+    "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": true
+  },
+  "runs": [
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T122435Z-w8-steady-mixed-medium-round-rob-e9a1e78-a5060e",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-steady_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.770305,
+      "workload_sha256": "12e45954d1c5837d6a6d4f8f162b23dc2cdb6fb8461beab2e537faace4397d15",
+      "schedule_sha256": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+      "schedule_file_sha256": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "conditioning",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.75,
+        "completed_drain_rps": 3.851653,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.053,
+        "routing_p95": 0.092,
+        "routing_p99": 0.123,
+        "ttft_p50": 194.545,
+        "ttft_p95": 546.408,
+        "ttft_p99": 567.995,
+        "e2e_p50": 1221.735,
+        "e2e_p95": 1999.16,
+        "e2e_p99": 2228.992
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.95,
+        "p95": 1.856,
+        "p99": 2.188,
+        "max": 2.375
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 5,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "conditioning_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "steady_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T122709Z-w8-steady-mixed-medium-least-loa-e9a1e78-713dda",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-steady_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.902838,
+      "workload_sha256": "12e45954d1c5837d6a6d4f8f162b23dc2cdb6fb8461beab2e537faace4397d15",
+      "schedule_sha256": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+      "schedule_file_sha256": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "conditioning",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.75,
+        "completed_drain_rps": 3.827231,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.056,
+        "routing_p95": 0.11,
+        "routing_p99": 0.153,
+        "ttft_p50": 212.015,
+        "ttft_p95": 584.401,
+        "ttft_p99": 633.42,
+        "e2e_p50": 1254.535,
+        "e2e_p95": 1914.889,
+        "e2e_p99": 2086.713
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.869,
+        "p95": 1.877,
+        "p99": 2.033,
+        "max": 2.237
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 41,
+        "worker-vllm-1": 39
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 5,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "conditioning_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "steady_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T122909Z-w8-irregular-mixed-medium-round-e9a1e78-7e11b0",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-irregular_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.070648,
+      "workload_sha256": "206de7eacf1ca2e10b4501ea6c9e00204e19cd107f46fba32e6500a1829bad0c",
+      "schedule_sha256": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+      "schedule_file_sha256": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "conditioning",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.55,
+        "completed_drain_rps": 3.796751,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.054,
+        "routing_p95": 0.098,
+        "routing_p99": 0.395,
+        "ttft_p50": 302.66,
+        "ttft_p95": 881.24,
+        "ttft_p99": 1190.049,
+        "e2e_p50": 1464.875,
+        "e2e_p95": 2692.322,
+        "e2e_p99": 2955.415
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.881,
+        "p95": 1.932,
+        "p99": 2.335,
+        "max": 2.39
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 9,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "conditioning_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "irregular_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T123110Z-w8-irregular-mixed-medium-least-e9a1e78-1be7be",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-irregular_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.086495,
+      "workload_sha256": "206de7eacf1ca2e10b4501ea6c9e00204e19cd107f46fba32e6500a1829bad0c",
+      "schedule_sha256": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+      "schedule_file_sha256": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "conditioning",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.5,
+        "completed_drain_rps": 3.793897,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.058,
+        "routing_p95": 0.123,
+        "routing_p99": 0.188,
+        "ttft_p50": 297.01,
+        "ttft_p95": 778.732,
+        "ttft_p99": 1155.144,
+        "e2e_p50": 1452.725,
+        "e2e_p95": 2229.77,
+        "e2e_p99": 2644.76
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.99,
+        "p95": 1.833,
+        "p99": 2.283,
+        "max": 2.699
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 41,
+        "worker-vllm-1": 39
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 10,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "conditioning_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "irregular_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T123310Z-w8-burst-mixed-medium-round-robi-e9a1e78-d2e5af",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-burst_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.891107,
+      "workload_sha256": "7e0cd4f56699db12663af6b0057cd96ca09303c20bc66f6ef9e923ae3ace4094",
+      "schedule_sha256": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+      "schedule_file_sha256": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "conditioning",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.9,
+        "completed_drain_rps": 3.829381,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.054,
+        "routing_p95": 0.101,
+        "routing_p99": 0.112,
+        "ttft_p50": 649.725,
+        "ttft_p95": 1653.3,
+        "ttft_p99": 1966.17,
+        "e2e_p50": 2511.6,
+        "e2e_p95": 4795.307,
+        "e2e_p99": 5298.205
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.996,
+        "p95": 2.063,
+        "p99": 2.375,
+        "max": 2.384
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 2,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "conditioning_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "burst_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T123512Z-w8-burst-mixed-medium-least-load-e9a1e78-f0c75d",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-burst_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.953077,
+      "workload_sha256": "7e0cd4f56699db12663af6b0057cd96ca09303c20bc66f6ef9e923ae3ace4094",
+      "schedule_sha256": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+      "schedule_file_sha256": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "conditioning",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.9,
+        "completed_drain_rps": 3.818055,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.057,
+        "routing_p95": 0.11,
+        "routing_p99": 0.142,
+        "ttft_p50": 607.705,
+        "ttft_p95": 1635.69,
+        "ttft_p99": 1908.699,
+        "e2e_p50": 2456.205,
+        "e2e_p95": 4712.176,
+        "e2e_p99": 5222.349
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 1.007,
+        "p95": 1.689,
+        "p99": 2.058,
+        "max": 2.375
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 41,
+        "worker-vllm-1": 39
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 2,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "conditioning_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "burst_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T123710Z-w8-ramp-mixed-medium-round-robin-e9a1e78-cf1960",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-ramp_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.755077,
+      "workload_sha256": "a1bf0ad1836d00c0c06c76ee07872f192665cd13c2b153d7b1d814e160b88eaf",
+      "schedule_sha256": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+      "schedule_file_sha256": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "conditioning",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 2.85,
+        "completed_drain_rps": 3.677303,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.055,
+        "routing_p95": 0.109,
+        "routing_p99": 0.126,
+        "ttft_p50": 364.415,
+        "ttft_p95": 956.247,
+        "ttft_p99": 1191.769,
+        "e2e_p50": 1777.355,
+        "e2e_p95": 3963.72,
+        "e2e_p99": 4707.639
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.863,
+        "p95": 1.882,
+        "p99": 2.229,
+        "max": 2.275
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 23,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "conditioning_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "ramp_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T123914Z-w8-ramp-mixed-medium-least-loade-e9a1e78-a45682",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-ramp_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.781803,
+      "workload_sha256": "a1bf0ad1836d00c0c06c76ee07872f192665cd13c2b153d7b1d814e160b88eaf",
+      "schedule_sha256": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+      "schedule_file_sha256": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "conditioning",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.05,
+        "completed_drain_rps": 3.672791,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.059,
+        "routing_p95": 0.108,
+        "routing_p99": 0.208,
+        "ttft_p50": 262.21,
+        "ttft_p95": 930.035,
+        "ttft_p99": 1099.151,
+        "e2e_p50": 1750.54,
+        "e2e_p95": 3107.343,
+        "e2e_p99": 3703.071
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 1.03,
+        "p95": 2.151,
+        "p99": 2.535,
+        "max": 2.657
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 41,
+        "worker-vllm-1": 39
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 19,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "conditioning_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "ramp_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T124115Z-w8-microburst-mixed-medium-round-e9a1e78-71cf0b",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-microburst_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "ad5e89252d6fa731d273c9a0bb7ec5d16663c71e7be490eb287868615e092350",
+      "schedule_sha256": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+      "schedule_file_sha256": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "conditioning",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 4.0,
+        "completed_drain_rps": 4.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.063,
+        "routing_p95": 0.112,
+        "routing_p99": 0.204,
+        "ttft_p50": 780.03,
+        "ttft_p95": 1261.671,
+        "ttft_p99": 1329.101,
+        "e2e_p50": 1559.645,
+        "e2e_p95": 2396.479,
+        "e2e_p99": 3298.158
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 3.147,
+        "p95": 5.195,
+        "p99": 5.957,
+        "max": 6.155
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "conditioning_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "microburst_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T124317Z-w8-microburst-mixed-medium-least-e9a1e78-433141",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-microburst_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "ad5e89252d6fa731d273c9a0bb7ec5d16663c71e7be490eb287868615e092350",
+      "schedule_sha256": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+      "schedule_file_sha256": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "conditioning",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 4.0,
+        "completed_drain_rps": 4.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.066,
+        "routing_p95": 0.093,
+        "routing_p99": 1.14,
+        "ttft_p50": 801.555,
+        "ttft_p95": 1297.105,
+        "ttft_p99": 1775.428,
+        "e2e_p50": 1603.61,
+        "e2e_p95": 2712.803,
+        "e2e_p99": 2811.051
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 3.208,
+        "p95": 5.965,
+        "p99": 6.602,
+        "max": 6.765
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 42,
+        "worker-vllm-1": 38
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "conditioning_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "microburst_mixed"
+    }
+  ],
+  "provenance": [
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-e9a1e78-v4\\conditioning\\execution\\runs\\20261126T122435Z-w8-steady-mixed-medium-round-rob-e9a1e78-a5060e",
+      "run_id": "20261126T122435Z-w8-steady-mixed-medium-round-rob-e9a1e78-a5060e",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "environment.json": "966005d39958b97d45544593e0c788bae082ae4f2e73cf1d8ae8d7e51d62b4b0",
+        "manifest.json": "2da20c0e7627355be9709116c627e49c599267ddfb703f89e427f9e2ea3e49b6",
+        "metrics.before.prom": "22da898230e9fce6463d7e86623b5955aa62add3e1a0be92f6a1a95d8271ba92",
+        "metrics.prom": "98c2464483ac44cf006740357f2269c6b820a85a38bb6abb1ec1b8781569f090",
+        "requests.jsonl": "57d09b1b3021e06a8ee31d3573c47c7eb500ce59f1dddb8241daeea941d15ce0",
+        "schedule.jsonl": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+        "summary.json": "6917040a830f66044bb390e8d7ead8e6036a754b1b76f5cd9af6fd1eedd6ca8e",
+        "traces.jsonl": "c3d3d34f97547f39706626716f94bbe297ebb43fe065c4cb95a517e1fda7e31c"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-e9a1e78-v4\\conditioning\\execution\\runs\\20261126T122709Z-w8-steady-mixed-medium-least-loa-e9a1e78-713dda",
+      "run_id": "20261126T122709Z-w8-steady-mixed-medium-least-loa-e9a1e78-713dda",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "environment.json": "c7d9e0605bc33efa84962d8ebb098a97f1bfb87b6a4a47fd7e5887281c091365",
+        "manifest.json": "2bc525af96f499aacea986d42ac3419c50f3a6d724715705cb05e52542b07ed3",
+        "metrics.before.prom": "246d27d2606463c3cbe450022936750e0d0ac42b59d262c84df9589d0ab94068",
+        "metrics.prom": "5b0a8c865413f6f8ebc68a67fa03b63efd067ec518e15d71d7e976ff7fa57246",
+        "requests.jsonl": "2a08f642731690e6bbbce55bd9224d3d6c37432b6bee817264e258a3c686c3a0",
+        "schedule.jsonl": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+        "summary.json": "14ecb1faeecaddd409d7eac96eb529d8c673ed53d47356455e02bda7b40e6378",
+        "traces.jsonl": "fd6a1b1e380840f9361acce0a6c0bb34d769688f9d871711307ec049e9830e1b"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-e9a1e78-v4\\conditioning\\execution\\runs\\20261126T122909Z-w8-irregular-mixed-medium-round-e9a1e78-7e11b0",
+      "run_id": "20261126T122909Z-w8-irregular-mixed-medium-round-e9a1e78-7e11b0",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "environment.json": "df846d1b7b8b4626cbe6ddae8e2652bc32dcdbb52373b8f1fd8220d07813ea7b",
+        "manifest.json": "fc5da203f0a56a3284b1ef15d27c09da8835945081de00f0514d7a89213cbadc",
+        "metrics.before.prom": "8ad83987aae85df1aeb84730cb35906c2a4701c3c15799638474f2c3f5a24f66",
+        "metrics.prom": "0add8b77bae6ccde7d036759a1c3879baf1e5acf1e49d35ba8a039ee0edede78",
+        "requests.jsonl": "70e5bd7d2be452f7e3a536216971e88c3c6c28474859e8e3d9d3e48a2d551850",
+        "schedule.jsonl": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+        "summary.json": "03500b9c1b742ba02fe5c48a33f46a5bed127d0f98b1b2fb72c24097f759fe0a",
+        "traces.jsonl": "463a060cbbe2afec1dfbea712536dd805ee4860160c90ac85cc57c58d15d6d8a"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-e9a1e78-v4\\conditioning\\execution\\runs\\20261126T123110Z-w8-irregular-mixed-medium-least-e9a1e78-1be7be",
+      "run_id": "20261126T123110Z-w8-irregular-mixed-medium-least-e9a1e78-1be7be",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "environment.json": "3938780c99a924cc097716eebf41d6e41e0fa7352fdbd5c8a55142e6389c2586",
+        "manifest.json": "c89c3654d17248944e35bb812ee0309e5db7194a8d4b9c662aa88163e7601e9a",
+        "metrics.before.prom": "d2c6cfef4b11b6df005c8c6667cc9f6f33549d4c920087d827d5051dc058c9c3",
+        "metrics.prom": "3a2492578f5fd0ef160a8ea7f69dcd21328e6f2d50e684f6e4e9a5dc3e25d869",
+        "requests.jsonl": "3f04227e78a73fa21c822da06916ff5cdc5d15819acf8e7f00e1764508f8f43b",
+        "schedule.jsonl": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+        "summary.json": "030b9ae36b4d0ad7bb6bd5e83885ef277e6d873c195dc68bf5b57663fa20f0b4",
+        "traces.jsonl": "4611a2152aa01a0b87c7c69e519475e0c2df98af16e6d6fee5562e7b15058a27"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-e9a1e78-v4\\conditioning\\execution\\runs\\20261126T123310Z-w8-burst-mixed-medium-round-robi-e9a1e78-d2e5af",
+      "run_id": "20261126T123310Z-w8-burst-mixed-medium-round-robi-e9a1e78-d2e5af",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "environment.json": "f14de7b112c15857867a2fc7772cfe6c3ca9ad1354be1bbfc9e228b4c08968d5",
+        "manifest.json": "36f2b31f4479658b49082383d308ab083a86746cd8411a15d39d7322a6a15784",
+        "metrics.before.prom": "6cfaa32998dca737eaf0e65b079fc8aae89270cc590c41c4b6158b3d3a7ba60b",
+        "metrics.prom": "db33e250e1a25675f7d21f4b1aab0c09b22d7f86f391fe2a6291a8d18e965f2e",
+        "requests.jsonl": "d6b6d31fa53e9a9c67be8194836b112e289235dee90e94f742b3eda22d7e963c",
+        "schedule.jsonl": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+        "summary.json": "7d8546af3c8f1d827fd39e2f55b4f1b996c779de7a51554d983bfc184929df4e",
+        "traces.jsonl": "c06a5cbc069586bf73d69a8d1a9523cb772a7aa20605c297be92cf279eeac8ab"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-e9a1e78-v4\\conditioning\\execution\\runs\\20261126T123512Z-w8-burst-mixed-medium-least-load-e9a1e78-f0c75d",
+      "run_id": "20261126T123512Z-w8-burst-mixed-medium-least-load-e9a1e78-f0c75d",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "environment.json": "617f1feea5fe58c2d06564d22ee1274e4fe06a479f0c65c3e56fbc3541edf987",
+        "manifest.json": "8ce594e9aad4e24316f850c3a29c2bbaea03d1c73d38a341b7ae2d6f54b2550c",
+        "metrics.before.prom": "79250fe4165076672177790eaa8012261759a4ac74f120482a28c3e77cb14703",
+        "metrics.prom": "eba51b42705eacb1078709ae0a8f59e8e0a8f295e7eee38d0e347c6d418c421f",
+        "requests.jsonl": "0b6143dad7b76cee83cf41ef164d997c4862c0d25a932b7b090d140c65c257d7",
+        "schedule.jsonl": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+        "summary.json": "5532193553fb0647268a9584122fb4037a184c690e1d46131c870d77bf19e735",
+        "traces.jsonl": "0d6b1cd1d3b366251607369e7ba017ca3092e0065a1391c749f222f9925475c5"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-e9a1e78-v4\\conditioning\\execution\\runs\\20261126T123710Z-w8-ramp-mixed-medium-round-robin-e9a1e78-cf1960",
+      "run_id": "20261126T123710Z-w8-ramp-mixed-medium-round-robin-e9a1e78-cf1960",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "environment.json": "0e6847b8aaa67aaa8b3202124f6c57a0ecc4aa809c2bfad2a12d3fdf6156f5f6",
+        "manifest.json": "8006bfb56b427bd9763def4c16f1e39a3e237cc998250975a1eda7aacd9e1b91",
+        "metrics.before.prom": "318575bb3c3d4509bca504622e82c6137055aa369855b9cfc2133c10275b104a",
+        "metrics.prom": "19ad00862439527e25dff9a1f417929a86a49858f4fae6d101894fc4e2fd05f4",
+        "requests.jsonl": "5ae54cd544ae6ef62a8e1dfa12c602d355ad2f14ace68a5d0a92ab145863df03",
+        "schedule.jsonl": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+        "summary.json": "47bde88133d96d55192a6fae05eb28eac5088bf8f88f77473ebc23960a635064",
+        "traces.jsonl": "aa787501b7818df99175f41a5717c4fe82e03ae84f4cfc6689829c3ea65f1822"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-e9a1e78-v4\\conditioning\\execution\\runs\\20261126T123914Z-w8-ramp-mixed-medium-least-loade-e9a1e78-a45682",
+      "run_id": "20261126T123914Z-w8-ramp-mixed-medium-least-loade-e9a1e78-a45682",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "environment.json": "9083636e2474d55c49aa0e6eae1a82c17506950234b562beeb83ea4b65adc0ad",
+        "manifest.json": "e3b4dfa52f5228d45d16252c03f35becd346ac3b49f856e0545765ca04ae1ff9",
+        "metrics.before.prom": "15d3385846fb42d8f920eeffe5432ecdc84b2781d8e1c14b23abb9faf169ef8c",
+        "metrics.prom": "4068a3b2ca9009077336c2902694a7fb6a0e03b5a55a72d76ec1cb33c66764d5",
+        "requests.jsonl": "cf4d76635a02fb34ddcd0e676038838339f1280d3b05240d3d5cade3d45c3e6b",
+        "schedule.jsonl": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+        "summary.json": "1d01e2c2fed1a1fe806af240c8e0f89b2020abfc43ca25af670fbc705830b9a9",
+        "traces.jsonl": "6bd1a405b87a02c4ea9babf132fae57390d075d8bb3007ff497dc1b8686cb34a"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-e9a1e78-v4\\conditioning\\execution\\runs\\20261126T124115Z-w8-microburst-mixed-medium-round-e9a1e78-71cf0b",
+      "run_id": "20261126T124115Z-w8-microburst-mixed-medium-round-e9a1e78-71cf0b",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "environment.json": "bf4ea20c87804122165b9a1a45a88a5f08e42f547832c5b2de6042980baa1073",
+        "manifest.json": "90af733989da5e51df8da45746f8f8bcbf7f443c9c5b63b470bd9b265dfdf1ce",
+        "metrics.before.prom": "be42ab23337e8d0987832a33f150218c0078e07d81d9274b2a797edb0ee747ab",
+        "metrics.prom": "f8c87e04003480923eb3117534b04f1dec5c22f0ea7a0ef4d9bcf4f00c93ac92",
+        "requests.jsonl": "529fa8228a21d57207fa4d29c08510964d566f33a364c960cd95f4ba24f44573",
+        "schedule.jsonl": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+        "summary.json": "725339053efdedfa5ba6933bd84318cf29cf0e44388d4c3636400ae0375d4844",
+        "traces.jsonl": "a14fbeaa7b58495000aa5bccf5ffec35345ced6c933d7c288265a907dfa7b732"
+      }
+    },
+    {
+      "run_dir": "D:\\dath\\LLM-Serving-Platform\\experiments\\raw\\week8\\controlled\\20261126-e9a1e78-v4\\conditioning\\execution\\runs\\20261126T124317Z-w8-microburst-mixed-medium-least-e9a1e78-433141",
+      "run_id": "20261126T124317Z-w8-microburst-mixed-medium-least-e9a1e78-433141",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "environment.json": "9b5cf2c756df38c7dd589bfe7066b962976be32929d1db56f18e66f068d99049",
+        "manifest.json": "817365ba8b5eeed7cdc73bb2df52adb5a28dd35f7291fba0ff8fb2d90c65fdfc",
+        "metrics.before.prom": "7d78c98165bfe52b71e44a2a6aa7bcc8afab73940dd25d9ea642c02fafadfcda",
+        "metrics.prom": "e44c629f6d6fb59b27b768cb657c78d28df0bb4bd3fce443736e114a45a18857",
+        "requests.jsonl": "68d238de7431ed03df4797ff22f77c506fb5908af421d210d559c344c33fe4a5",
+        "schedule.jsonl": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+        "summary.json": "a7c63c0aa4fe0ad3f9a3e665db1958b9299ca122149834b01958af32b29d1787",
+        "traces.jsonl": "693388786e447760ed98e35f3e7a74ae826e9154b04ef2ca3e27fc1632c8669c"
+      }
+    }
+  ],
+  "pair_checks": [
+    {
+      "comparison_id": "w8-burst_mixed-medium",
+      "repetition": 1,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-irregular_mixed-medium",
+      "repetition": 1,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-microburst_mixed-medium",
+      "repetition": 1,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-ramp_mixed-medium",
+      "repetition": 1,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-steady_mixed-medium",
+      "repetition": 1,
+      "matched": true,
+      "reason": null
+    }
+  ],
+  "repeatability": [
+    {
+      "comparison_id": "w8-burst_mixed-medium",
+      "policy": "least_loaded",
+      "status": "insufficient_repetitions",
+      "repetitions": [
+        1
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            607.705
+          ],
+          "median": 607.705,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            2456.205
+          ],
+          "median": 2456.205,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.818055
+          ],
+          "median": 3.818055,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-burst_mixed-medium",
+      "policy": "round_robin",
+      "status": "insufficient_repetitions",
+      "repetitions": [
+        1
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            649.725
+          ],
+          "median": 649.725,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            2511.6
+          ],
+          "median": 2511.6,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.829381
+          ],
+          "median": 3.829381,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-irregular_mixed-medium",
+      "policy": "least_loaded",
+      "status": "insufficient_repetitions",
+      "repetitions": [
+        1
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            297.01
+          ],
+          "median": 297.01,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1452.725
+          ],
+          "median": 1452.725,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.793897
+          ],
+          "median": 3.793897,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-irregular_mixed-medium",
+      "policy": "round_robin",
+      "status": "insufficient_repetitions",
+      "repetitions": [
+        1
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            302.66
+          ],
+          "median": 302.66,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1464.875
+          ],
+          "median": 1464.875,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.796751
+          ],
+          "median": 3.796751,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-microburst_mixed-medium",
+      "policy": "least_loaded",
+      "status": "insufficient_repetitions",
+      "repetitions": [
+        1
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            801.555
+          ],
+          "median": 801.555,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1603.61
+          ],
+          "median": 1603.61,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            4.0
+          ],
+          "median": 4.0,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-microburst_mixed-medium",
+      "policy": "round_robin",
+      "status": "insufficient_repetitions",
+      "repetitions": [
+        1
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            780.03
+          ],
+          "median": 780.03,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1559.645
+          ],
+          "median": 1559.645,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            4.0
+          ],
+          "median": 4.0,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-ramp_mixed-medium",
+      "policy": "least_loaded",
+      "status": "insufficient_repetitions",
+      "repetitions": [
+        1
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            262.21
+          ],
+          "median": 262.21,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1750.54
+          ],
+          "median": 1750.54,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.672791
+          ],
+          "median": 3.672791,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-ramp_mixed-medium",
+      "policy": "round_robin",
+      "status": "insufficient_repetitions",
+      "repetitions": [
+        1
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            364.415
+          ],
+          "median": 364.415,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1777.355
+          ],
+          "median": 1777.355,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.677303
+          ],
+          "median": 3.677303,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-steady_mixed-medium",
+      "policy": "least_loaded",
+      "status": "insufficient_repetitions",
+      "repetitions": [
+        1
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            212.015
+          ],
+          "median": 212.015,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1254.535
+          ],
+          "median": 1254.535,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.827231
+          ],
+          "median": 3.827231,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-steady_mixed-medium",
+      "policy": "round_robin",
+      "status": "insufficient_repetitions",
+      "repetitions": [
+        1
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            194.545
+          ],
+          "median": 194.545,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1221.735
+          ],
+          "median": 1221.735,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.851653
+          ],
+          "median": 3.851653,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    }
+  ],
+  "protocol_validation": {
+    "coverage_complete": true,
+    "hash_matched": true,
+    "predeclared": false
+  },
+  "eligible_for_policy_comparison": false,
+  "protocol_sha256": "845d9d7abb47a41fbd581e9db67ef5dc89fbd6f11553501c9e4872d86a4b7880"
+}

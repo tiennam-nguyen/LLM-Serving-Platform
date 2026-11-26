@@ -1,0 +1,3983 @@
+{
+  "schema_version": 1,
+  "analysis_git": {
+    "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": false
+  },
+  "runs": [
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T124623Z-w8-steady-mixed-medium-round-rob-e9a1e78-393b4b",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-steady_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.878477,
+      "workload_sha256": "12e45954d1c5837d6a6d4f8f162b23dc2cdb6fb8461beab2e537faace4397d15",
+      "schedule_sha256": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+      "schedule_file_sha256": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.75,
+        "completed_drain_rps": 3.831697,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.054,
+        "routing_p95": 0.099,
+        "routing_p99": 0.133,
+        "ttft_p50": 210.725,
+        "ttft_p95": 590.08,
+        "ttft_p99": 613.272,
+        "e2e_p50": 1276.175,
+        "e2e_p95": 2313.902,
+        "e2e_p99": 2602.141
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.945,
+        "p95": 1.769,
+        "p99": 2.197,
+        "max": 2.313
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 5,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "steady_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T124826Z-w8-steady-mixed-medium-least-loa-e9a1e78-4b65db",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-steady_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.302429,
+      "workload_sha256": "12e45954d1c5837d6a6d4f8f162b23dc2cdb6fb8461beab2e537faace4397d15",
+      "schedule_sha256": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+      "schedule_file_sha256": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.8,
+        "completed_drain_rps": 3.75544,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.056,
+        "routing_p95": 0.102,
+        "routing_p99": 0.13,
+        "ttft_p50": 225.755,
+        "ttft_p95": 615.939,
+        "ttft_p99": 737.97,
+        "e2e_p50": 1373.55,
+        "e2e_p95": 2056.264,
+        "e2e_p99": 2218.314
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 1.007,
+        "p95": 2.052,
+        "p99": 2.356,
+        "max": 2.441
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 41,
+        "worker-vllm-1": 39
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 4,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "steady_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T125028Z-w8-steady-mixed-medium-least-loa-e9a1e78-420af2",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-steady_mixed-medium",
+        "load_level": "medium",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.013919,
+      "workload_sha256": "12e45954d1c5837d6a6d4f8f162b23dc2cdb6fb8461beab2e537faace4397d15",
+      "schedule_sha256": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+      "schedule_file_sha256": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.8,
+        "completed_drain_rps": 3.807,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.058,
+        "routing_p95": 0.102,
+        "routing_p99": 0.138,
+        "ttft_p50": 233.155,
+        "ttft_p95": 650.45,
+        "ttft_p99": 833.496,
+        "e2e_p50": 1396.99,
+        "e2e_p95": 2104.026,
+        "e2e_p99": 2532.233
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.93,
+        "p95": 1.859,
+        "p99": 2.232,
+        "max": 2.339
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 4,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "steady_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T125228Z-w8-steady-mixed-medium-round-rob-e9a1e78-fdc28a",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-steady_mixed-medium",
+        "load_level": "medium",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.157784,
+      "workload_sha256": "12e45954d1c5837d6a6d4f8f162b23dc2cdb6fb8461beab2e537faace4397d15",
+      "schedule_sha256": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+      "schedule_file_sha256": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.75,
+        "completed_drain_rps": 3.781114,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.053,
+        "routing_p95": 0.096,
+        "routing_p99": 0.446,
+        "ttft_p50": 225.77,
+        "ttft_p95": 620.142,
+        "ttft_p99": 689.837,
+        "e2e_p50": 1389.68,
+        "e2e_p95": 2399.925,
+        "e2e_p99": 2925.7
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.863,
+        "p95": 1.74,
+        "p99": 2.431,
+        "max": 3.131
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 5,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "steady_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T125429Z-w8-steady-mixed-medium-round-rob-e9a1e78-cf2f67",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-steady_mixed-medium",
+        "load_level": "medium",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.144797,
+      "workload_sha256": "12e45954d1c5837d6a6d4f8f162b23dc2cdb6fb8461beab2e537faace4397d15",
+      "schedule_sha256": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+      "schedule_file_sha256": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.75,
+        "completed_drain_rps": 3.783437,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.055,
+        "routing_p95": 0.099,
+        "routing_p99": 0.112,
+        "ttft_p50": 222.27,
+        "ttft_p95": 609.161,
+        "ttft_p99": 683.787,
+        "e2e_p50": 1376.26,
+        "e2e_p95": 2359.626,
+        "e2e_p99": 2866.078
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.898,
+        "p95": 2.076,
+        "p99": 2.383,
+        "max": 2.532
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 5,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "steady_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T125630Z-w8-steady-mixed-medium-least-loa-e9a1e78-2c7e6a",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-steady_mixed-medium",
+        "load_level": "medium",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.28803,
+      "workload_sha256": "12e45954d1c5837d6a6d4f8f162b23dc2cdb6fb8461beab2e537faace4397d15",
+      "schedule_sha256": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+      "schedule_file_sha256": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.75,
+        "completed_drain_rps": 3.75798,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.055,
+        "routing_p95": 0.105,
+        "routing_p99": 0.119,
+        "ttft_p50": 220.465,
+        "ttft_p95": 747.218,
+        "ttft_p99": 875.353,
+        "e2e_p50": 1401.935,
+        "e2e_p95": 2192.11,
+        "e2e_p99": 2558.076
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 1.105,
+        "p95": 2.091,
+        "p99": 2.396,
+        "max": 2.43
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 43,
+        "worker-vllm-1": 37
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 5,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "steady_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T125831Z-w8-irregular-mixed-medium-round-e9a1e78-21d05a",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-irregular_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.130578,
+      "workload_sha256": "206de7eacf1ca2e10b4501ea6c9e00204e19cd107f46fba32e6500a1829bad0c",
+      "schedule_sha256": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+      "schedule_file_sha256": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.55,
+        "completed_drain_rps": 3.785983,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.053,
+        "routing_p95": 0.112,
+        "routing_p99": 0.306,
+        "ttft_p50": 299.28,
+        "ttft_p95": 740.076,
+        "ttft_p99": 963.319,
+        "e2e_p50": 1466.405,
+        "e2e_p95": 2501.49,
+        "e2e_p99": 2736.371
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.96,
+        "p95": 1.988,
+        "p99": 2.434,
+        "max": 2.455
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 9,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "irregular_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T130031Z-w8-irregular-mixed-medium-least-e9a1e78-96a9c2",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-irregular_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.314712,
+      "workload_sha256": "206de7eacf1ca2e10b4501ea6c9e00204e19cd107f46fba32e6500a1829bad0c",
+      "schedule_sha256": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+      "schedule_file_sha256": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.5,
+        "completed_drain_rps": 3.753276,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.059,
+        "routing_p95": 0.104,
+        "routing_p99": 0.125,
+        "ttft_p50": 313.1,
+        "ttft_p95": 836.645,
+        "ttft_p99": 1176.139,
+        "e2e_p50": 1494.735,
+        "e2e_p95": 2275.879,
+        "e2e_p99": 2636.358
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 1.019,
+        "p95": 2.065,
+        "p99": 2.478,
+        "max": 3.405
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 42,
+        "worker-vllm-1": 38
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 10,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "irregular_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T130234Z-w8-irregular-mixed-medium-least-e9a1e78-9e80c2",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-irregular_mixed-medium",
+        "load_level": "medium",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.77936,
+      "workload_sha256": "206de7eacf1ca2e10b4501ea6c9e00204e19cd107f46fba32e6500a1829bad0c",
+      "schedule_sha256": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+      "schedule_file_sha256": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.5,
+        "completed_drain_rps": 3.673203,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.059,
+        "routing_p95": 0.101,
+        "routing_p99": 0.366,
+        "ttft_p50": 288.705,
+        "ttft_p95": 964.904,
+        "ttft_p99": 1212.564,
+        "e2e_p50": 1446.64,
+        "e2e_p95": 2232.772,
+        "e2e_p99": 2549.546
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.956,
+        "p95": 2.103,
+        "p99": 2.742,
+        "max": 4.051
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 44,
+        "worker-vllm-1": 36
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 10,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "irregular_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T130434Z-w8-irregular-mixed-medium-round-e9a1e78-5570c9",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-irregular_mixed-medium",
+        "load_level": "medium",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.132668,
+      "workload_sha256": "206de7eacf1ca2e10b4501ea6c9e00204e19cd107f46fba32e6500a1829bad0c",
+      "schedule_sha256": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+      "schedule_file_sha256": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.55,
+        "completed_drain_rps": 3.785608,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.054,
+        "routing_p95": 0.115,
+        "routing_p99": 0.396,
+        "ttft_p50": 324.135,
+        "ttft_p95": 922.228,
+        "ttft_p99": 1218.161,
+        "e2e_p50": 1549.32,
+        "e2e_p95": 2689.169,
+        "e2e_p99": 2985.343
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 1.047,
+        "p95": 2.015,
+        "p99": 2.306,
+        "max": 2.416
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 9,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "irregular_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T130636Z-w8-irregular-mixed-medium-round-e9a1e78-c6ba40",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-irregular_mixed-medium",
+        "load_level": "medium",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.07475,
+      "workload_sha256": "206de7eacf1ca2e10b4501ea6c9e00204e19cd107f46fba32e6500a1829bad0c",
+      "schedule_sha256": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+      "schedule_file_sha256": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.55,
+        "completed_drain_rps": 3.796012,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.054,
+        "routing_p95": 0.101,
+        "routing_p99": 0.343,
+        "ttft_p50": 279.765,
+        "ttft_p95": 840.256,
+        "ttft_p99": 1173.702,
+        "e2e_p50": 1448.475,
+        "e2e_p95": 2476.133,
+        "e2e_p99": 2695.077
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.875,
+        "p95": 2.026,
+        "p99": 2.407,
+        "max": 3.194
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 9,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "irregular_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T130836Z-w8-irregular-mixed-medium-least-e9a1e78-fd8e0f",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-irregular_mixed-medium",
+        "load_level": "medium",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.870296,
+      "workload_sha256": "206de7eacf1ca2e10b4501ea6c9e00204e19cd107f46fba32e6500a1829bad0c",
+      "schedule_sha256": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+      "schedule_file_sha256": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.45,
+        "completed_drain_rps": 3.833199,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.058,
+        "routing_p95": 0.099,
+        "routing_p99": 0.132,
+        "ttft_p50": 409.15,
+        "ttft_p95": 804.821,
+        "ttft_p99": 1139.013,
+        "e2e_p50": 1472.045,
+        "e2e_p95": 2358.193,
+        "e2e_p99": 2600.819
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.927,
+        "p95": 1.86,
+        "p99": 2.284,
+        "max": 2.326
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 42,
+        "worker-vllm-1": 38
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 11,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "irregular_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T131039Z-w8-burst-mixed-medium-round-robi-e9a1e78-4053a5",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-burst_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.928054,
+      "workload_sha256": "7e0cd4f56699db12663af6b0057cd96ca09303c20bc66f6ef9e923ae3ace4094",
+      "schedule_sha256": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+      "schedule_file_sha256": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.9,
+        "completed_drain_rps": 3.82262,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.056,
+        "routing_p95": 0.077,
+        "routing_p99": 0.103,
+        "ttft_p50": 609.375,
+        "ttft_p95": 1618.432,
+        "ttft_p99": 1882.749,
+        "e2e_p50": 2410.225,
+        "e2e_p95": 4694.792,
+        "e2e_p99": 5197.458
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.972,
+        "p95": 2.305,
+        "p99": 2.575,
+        "max": 2.831
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 2,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "burst_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T131238Z-w8-burst-mixed-medium-least-load-e9a1e78-19f865",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-burst_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.878691,
+      "workload_sha256": "7e0cd4f56699db12663af6b0057cd96ca09303c20bc66f6ef9e923ae3ace4094",
+      "schedule_sha256": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+      "schedule_file_sha256": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.9,
+        "completed_drain_rps": 3.831658,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.058,
+        "routing_p95": 0.083,
+        "routing_p99": 0.117,
+        "ttft_p50": 611.645,
+        "ttft_p95": 1644.35,
+        "ttft_p99": 1935.908,
+        "e2e_p50": 2486.36,
+        "e2e_p95": 4754.17,
+        "e2e_p99": 5266.107
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 1.012,
+        "p95": 2.08,
+        "p99": 2.356,
+        "max": 2.503
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 41,
+        "worker-vllm-1": 39
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 2,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "burst_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T131441Z-w8-burst-mixed-medium-least-load-e9a1e78-606c1f",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-burst_mixed-medium",
+        "load_level": "medium",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.884149,
+      "workload_sha256": "7e0cd4f56699db12663af6b0057cd96ca09303c20bc66f6ef9e923ae3ace4094",
+      "schedule_sha256": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+      "schedule_file_sha256": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.9,
+        "completed_drain_rps": 3.830656,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.058,
+        "routing_p95": 0.105,
+        "routing_p99": 0.245,
+        "ttft_p50": 612.27,
+        "ttft_p95": 1624.468,
+        "ttft_p99": 1898.362,
+        "e2e_p50": 2443.94,
+        "e2e_p95": 4707.444,
+        "e2e_p99": 5217.257
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.964,
+        "p95": 1.829,
+        "p99": 2.258,
+        "max": 2.495
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 41,
+        "worker-vllm-1": 39
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 2,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "burst_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T131640Z-w8-burst-mixed-medium-round-robi-e9a1e78-aebc17",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-burst_mixed-medium",
+        "load_level": "medium",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.816655,
+      "workload_sha256": "7e0cd4f56699db12663af6b0057cd96ca09303c20bc66f6ef9e923ae3ace4094",
+      "schedule_sha256": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+      "schedule_file_sha256": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.9,
+        "completed_drain_rps": 3.843077,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.055,
+        "routing_p95": 0.117,
+        "routing_p99": 0.196,
+        "ttft_p50": 634.125,
+        "ttft_p95": 1647.806,
+        "ttft_p99": 1957.036,
+        "e2e_p50": 2473.235,
+        "e2e_p95": 4783.162,
+        "e2e_p99": 5286.556
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.894,
+        "p95": 2.027,
+        "p99": 2.189,
+        "max": 2.256
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 2,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "burst_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T131840Z-w8-burst-mixed-medium-round-robi-e9a1e78-556183",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-burst_mixed-medium",
+        "load_level": "medium",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.837362,
+      "workload_sha256": "7e0cd4f56699db12663af6b0057cd96ca09303c20bc66f6ef9e923ae3ace4094",
+      "schedule_sha256": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+      "schedule_file_sha256": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.9,
+        "completed_drain_rps": 3.839258,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.053,
+        "routing_p95": 0.12,
+        "routing_p99": 0.186,
+        "ttft_p50": 621.71,
+        "ttft_p95": 1616.881,
+        "ttft_p99": 1902.924,
+        "e2e_p50": 2468.715,
+        "e2e_p95": 4717.792,
+        "e2e_p99": 5218.557
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 1.116,
+        "p95": 2.079,
+        "p99": 2.55,
+        "max": 3.306
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 2,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "burst_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T132040Z-w8-burst-mixed-medium-least-load-e9a1e78-e7aa0a",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-burst_mixed-medium",
+        "load_level": "medium",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.908684,
+      "workload_sha256": "7e0cd4f56699db12663af6b0057cd96ca09303c20bc66f6ef9e923ae3ace4094",
+      "schedule_sha256": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+      "schedule_file_sha256": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.9,
+        "completed_drain_rps": 3.826161,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.057,
+        "routing_p95": 0.15,
+        "routing_p99": 0.376,
+        "ttft_p50": 620.965,
+        "ttft_p95": 1633.469,
+        "ttft_p99": 1940.956,
+        "e2e_p50": 2526.835,
+        "e2e_p95": 4759.432,
+        "e2e_p99": 5276.072
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 1.091,
+        "p95": 2.222,
+        "p99": 4.274,
+        "max": 4.454
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 41,
+        "worker-vllm-1": 39
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 2,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "burst_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T132241Z-w8-ramp-mixed-medium-round-robin-e9a1e78-ff3a3f",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-ramp_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.784634,
+      "workload_sha256": "a1bf0ad1836d00c0c06c76ee07872f192665cd13c2b153d7b1d814e160b88eaf",
+      "schedule_sha256": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+      "schedule_file_sha256": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 2.85,
+        "completed_drain_rps": 3.672313,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.056,
+        "routing_p95": 0.16,
+        "routing_p99": 0.58,
+        "ttft_p50": 377.41,
+        "ttft_p95": 957.371,
+        "ttft_p99": 1184.963,
+        "e2e_p50": 1744.76,
+        "e2e_p95": 4412.482,
+        "e2e_p99": 4742.962
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.876,
+        "p95": 1.813,
+        "p99": 2.306,
+        "max": 2.337
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 23,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "ramp_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T132442Z-w8-ramp-mixed-medium-least-loade-e9a1e78-6307b5",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-ramp_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.79063,
+      "workload_sha256": "a1bf0ad1836d00c0c06c76ee07872f192665cd13c2b153d7b1d814e160b88eaf",
+      "schedule_sha256": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+      "schedule_file_sha256": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.05,
+        "completed_drain_rps": 3.671303,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.06,
+        "routing_p95": 0.129,
+        "routing_p99": 0.196,
+        "ttft_p50": 344.06,
+        "ttft_p95": 1012.599,
+        "ttft_p99": 1113.936,
+        "e2e_p50": 1737.065,
+        "e2e_p95": 3140.486,
+        "e2e_p99": 3773.197
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.893,
+        "p95": 1.723,
+        "p99": 3.197,
+        "max": 4.786
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 41,
+        "worker-vllm-1": 39
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 19,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "ramp_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T132646Z-w8-ramp-mixed-medium-least-loade-e9a1e78-9483bf",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-ramp_mixed-medium",
+        "load_level": "medium",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.587953,
+      "workload_sha256": "a1bf0ad1836d00c0c06c76ee07872f192665cd13c2b153d7b1d814e160b88eaf",
+      "schedule_sha256": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+      "schedule_file_sha256": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.05,
+        "completed_drain_rps": 3.705771,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.057,
+        "routing_p95": 0.098,
+        "routing_p99": 0.497,
+        "ttft_p50": 385.435,
+        "ttft_p95": 1020.212,
+        "ttft_p99": 1067.576,
+        "e2e_p50": 1723.68,
+        "e2e_p95": 2704.987,
+        "e2e_p99": 3253.919
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.993,
+        "p95": 1.855,
+        "p99": 2.523,
+        "max": 3.066
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 19,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "ramp_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T132847Z-w8-ramp-mixed-medium-round-robin-e9a1e78-21433e",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-ramp_mixed-medium",
+        "load_level": "medium",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.759191,
+      "workload_sha256": "a1bf0ad1836d00c0c06c76ee07872f192665cd13c2b153d7b1d814e160b88eaf",
+      "schedule_sha256": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+      "schedule_file_sha256": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 2.85,
+        "completed_drain_rps": 3.676607,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.055,
+        "routing_p95": 0.089,
+        "routing_p99": 0.286,
+        "ttft_p50": 360.27,
+        "ttft_p95": 959.116,
+        "ttft_p99": 1197.974,
+        "e2e_p50": 1700.65,
+        "e2e_p95": 3956.907,
+        "e2e_p99": 4715.722
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 1.11,
+        "p95": 2.192,
+        "p99": 2.474,
+        "max": 2.886
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 23,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "ramp_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T133051Z-w8-ramp-mixed-medium-round-robin-e9a1e78-6dd474",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-ramp_mixed-medium",
+        "load_level": "medium",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.690765,
+      "workload_sha256": "a1bf0ad1836d00c0c06c76ee07872f192665cd13c2b153d7b1d814e160b88eaf",
+      "schedule_sha256": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+      "schedule_file_sha256": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.0,
+        "completed_drain_rps": 3.688206,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.053,
+        "routing_p95": 0.091,
+        "routing_p99": 0.111,
+        "ttft_p50": 350.785,
+        "ttft_p95": 869.824,
+        "ttft_p99": 1089.733,
+        "e2e_p50": 1715.19,
+        "e2e_p95": 3567.033,
+        "e2e_p99": 3772.599
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 0.885,
+        "p95": 2.062,
+        "p99": 2.855,
+        "max": 3.752
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 20,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "ramp_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T133253Z-w8-ramp-mixed-medium-least-loade-e9a1e78-2a377f",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-ramp_mixed-medium",
+        "load_level": "medium",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 21.569003,
+      "workload_sha256": "a1bf0ad1836d00c0c06c76ee07872f192665cd13c2b153d7b1d814e160b88eaf",
+      "schedule_sha256": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+      "schedule_file_sha256": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 3.05,
+        "completed_drain_rps": 3.709026,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.058,
+        "routing_p95": 0.097,
+        "routing_p99": 0.119,
+        "ttft_p50": 384.355,
+        "ttft_p95": 908.96,
+        "ttft_p99": 1060.329,
+        "e2e_p50": 1702.815,
+        "e2e_p95": 2690.403,
+        "e2e_p99": 3218.013
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 1.074,
+        "p95": 2.174,
+        "p99": 2.297,
+        "max": 2.406
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 19,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "ramp_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T133454Z-w8-microburst-mixed-medium-round-e9a1e78-06105c",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-microburst_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "ad5e89252d6fa731d273c9a0bb7ec5d16663c71e7be490eb287868615e092350",
+      "schedule_sha256": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+      "schedule_file_sha256": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 4.0,
+        "completed_drain_rps": 4.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.057,
+        "routing_p95": 0.087,
+        "routing_p99": 0.244,
+        "ttft_p50": 771.815,
+        "ttft_p95": 1296.426,
+        "ttft_p99": 1501.08,
+        "e2e_p50": 1550.465,
+        "e2e_p95": 2466.707,
+        "e2e_p99": 3308.716
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 2.893,
+        "p95": 5.033,
+        "p99": 5.449,
+        "max": 5.555
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "microburst_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T133654Z-w8-microburst-mixed-medium-least-e9a1e78-6c6447",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-microburst_mixed-medium",
+        "load_level": "medium",
+        "repetition": 1
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "ad5e89252d6fa731d273c9a0bb7ec5d16663c71e7be490eb287868615e092350",
+      "schedule_sha256": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+      "schedule_file_sha256": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 4.0,
+        "completed_drain_rps": 4.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.061,
+        "routing_p95": 0.091,
+        "routing_p99": 0.358,
+        "ttft_p50": 803.635,
+        "ttft_p95": 1329.476,
+        "ttft_p99": 1774.709,
+        "e2e_p50": 1592.915,
+        "e2e_p95": 2706.544,
+        "e2e_p99": 2812.208
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 3.495,
+        "p95": 5.57,
+        "p99": 6.138,
+        "max": 6.271
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 42,
+        "worker-vllm-1": 38
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "microburst_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T133853Z-w8-microburst-mixed-medium-least-e9a1e78-efa43f",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-microburst_mixed-medium",
+        "load_level": "medium",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "ad5e89252d6fa731d273c9a0bb7ec5d16663c71e7be490eb287868615e092350",
+      "schedule_sha256": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+      "schedule_file_sha256": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 4.0,
+        "completed_drain_rps": 4.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.06,
+        "routing_p95": 0.103,
+        "routing_p99": 0.487,
+        "ttft_p50": 790.865,
+        "ttft_p95": 1288.942,
+        "ttft_p99": 1775.475,
+        "e2e_p50": 1586.755,
+        "e2e_p95": 2706.539,
+        "e2e_p99": 2804.436
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 3.326,
+        "p95": 5.619,
+        "p99": 6.244,
+        "max": 6.697
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 43,
+        "worker-vllm-1": 37
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "microburst_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T134051Z-w8-microburst-mixed-medium-round-e9a1e78-f407fb",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-microburst_mixed-medium",
+        "load_level": "medium",
+        "repetition": 2
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "ad5e89252d6fa731d273c9a0bb7ec5d16663c71e7be490eb287868615e092350",
+      "schedule_sha256": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+      "schedule_file_sha256": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 4.0,
+        "completed_drain_rps": 4.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.064,
+        "routing_p95": 0.101,
+        "routing_p99": 0.344,
+        "ttft_p50": 738.645,
+        "ttft_p95": 1261.538,
+        "ttft_p99": 1328.208,
+        "e2e_p50": 1544.87,
+        "e2e_p95": 2362.099,
+        "e2e_p99": 3301.275
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 3.622,
+        "p95": 6.22,
+        "p99": 7.392,
+        "max": 7.646
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "microburst_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T134250Z-w8-microburst-mixed-medium-round-e9a1e78-fa7a5a",
+      "run_status": "completed",
+      "policy": "round_robin",
+      "comparison": {
+        "id": "w8-microburst_mixed-medium",
+        "load_level": "medium",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "round_robin"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "ad5e89252d6fa731d273c9a0bb7ec5d16663c71e7be490eb287868615e092350",
+      "schedule_sha256": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+      "schedule_file_sha256": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 4.0,
+        "completed_drain_rps": 4.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.059,
+        "routing_p95": 0.098,
+        "routing_p99": 0.536,
+        "ttft_p50": 792.195,
+        "ttft_p95": 1264.324,
+        "ttft_p99": 1324.043,
+        "e2e_p50": 1567.16,
+        "e2e_p95": 2231.445,
+        "e2e_p99": 3238.327
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 3.253,
+        "p95": 5.302,
+        "p99": 5.767,
+        "max": 6.059
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 40,
+        "worker-vllm-1": 40
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "microburst_mixed"
+    },
+    {
+      "schema_version": 2,
+      "artifact_role": "benchmark_summary",
+      "run_id": "20261126T134447Z-w8-microburst-mixed-medium-least-e9a1e78-003a17",
+      "run_status": "completed",
+      "policy": "least_loaded",
+      "comparison": {
+        "id": "w8-microburst_mixed-medium",
+        "load_level": "medium",
+        "repetition": 3
+      },
+      "observed_policies": [
+        "least_loaded"
+      ],
+      "percentile_method": "linear_interpolation_r7",
+      "measurement_window_ms": 20000.0,
+      "drain_span_s": 20.0,
+      "workload_sha256": "ad5e89252d6fa731d273c9a0bb7ec5d16663c71e7be490eb287868615e092350",
+      "schedule_sha256": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+      "schedule_file_sha256": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+      "hash_normalization": "crlf_to_lf",
+      "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "source_git_dirty": false,
+      "execution_mode": "live_dual_t4",
+      "experiment_phase": "calibration",
+      "requests": {
+        "planned": 80,
+        "sent": 80,
+        "not_dispatched": 0,
+        "ledger_missing": 0,
+        "observed": 80,
+        "completed": 80,
+        "error": 0,
+        "cancelled": 0,
+        "missing_trace": 0,
+        "both_completed": 80
+      },
+      "rates": {
+        "offered_rps": 4.0,
+        "dispatched_rps": 4.0,
+        "completed_window_rps": 4.0,
+        "completed_drain_rps": 4.0,
+        "gateway_error_rate": 0.0,
+        "gateway_cancelled_rate": 0.0,
+        "noncompletion_rate": 0.0
+      },
+      "latency_ms": {
+        "routing_p50": 0.065,
+        "routing_p95": 0.113,
+        "routing_p99": 0.267,
+        "ttft_p50": 786.515,
+        "ttft_p95": 1294.588,
+        "ttft_p99": 1774.738,
+        "e2e_p50": 1567.455,
+        "e2e_p95": 2700.511,
+        "e2e_p99": 2812.899
+      },
+      "latency_sample_counts": {
+        "routing": {
+          "present": 80,
+          "missing": 0
+        },
+        "ttft": {
+          "present": 80,
+          "missing": 0
+        },
+        "e2e": {
+          "present": 80,
+          "missing": 0
+        }
+      },
+      "dispatch_lag_ms": {
+        "sample_count": 80,
+        "p50": 3.4,
+        "p95": 5.781,
+        "p99": 6.144,
+        "max": 6.292
+      },
+      "worker_distribution": {
+        "worker-vllm-0": 43,
+        "worker-vllm-1": 37
+      },
+      "no_worker_count": 0,
+      "backlog_at_window_end": 0,
+      "validation": {
+        "valid": true,
+        "issues": [],
+        "comparison_eligible": false,
+        "ineligible_reasons": [
+          "calibration_not_main_campaign"
+        ]
+      },
+      "p99_statistical_note": "TTFT/E2E use n=80 completed traces; low-N P99 is descriptive.",
+      "execution_semantics": "observe_v1",
+      "policy_check": "passed",
+      "warning_counts": {},
+      "dispatch_span_s": 20.0,
+      "workload_profile": "microburst_mixed"
+    }
+  ],
+  "provenance": [
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T124623Z-w8-steady-mixed-medium-round-rob-e9a1e78-393b4b",
+      "run_id": "20261126T124623Z-w8-steady-mixed-medium-round-rob-e9a1e78-393b4b",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+        "summary.json": "d59a07762fc5ff9a2cf2e9a503a8da21fbfa702c5c01a08a9d75c3d67d9d4a10",
+        "metrics.before.prom": "218995aa4c3d721a03761600b7052a988eee1590e4f510af331a711f8d281394",
+        "environment.json": "ae27cb6fd8b964e21350d364fc5281ce19cae2d8bd33eaa6f3b62a2613798b5f",
+        "requests.jsonl": "a713b6f1de2893e5484e90fea48a6e2a30d4841367e141668e134ba4c1623d9f",
+        "manifest.json": "28ca22380e7d64d798d0070d358e19b4efa71991466201e57e7cad426e7842a8",
+        "metrics.prom": "bb66defc1a33f657ea42a836252a3a7ee423617e2d928176933ecc06c8c21bbe",
+        "traces.jsonl": "94bb164678b50be95774aaa6ef18b24b0aa07411911a2dc1594b0b9c6976ac3a"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T124826Z-w8-steady-mixed-medium-least-loa-e9a1e78-4b65db",
+      "run_id": "20261126T124826Z-w8-steady-mixed-medium-least-loa-e9a1e78-4b65db",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+        "summary.json": "752e9368afa5695dd8ba45c4d204c99120339c8e475bc8b6243ccdb9a99fe55c",
+        "metrics.before.prom": "d539e271a0c1bbaf59b75adce933ef0ee735c9b0215f8ab52883305c7574a1a8",
+        "environment.json": "8059d49bb5c61d19467e4f7bf8e0b96015892a579db2e46815796e226579501e",
+        "requests.jsonl": "da20027c036921224e58fec7f45f256e3acf9f74e83229c5f5e69d87b56b13c9",
+        "manifest.json": "58f9c0bfe88ed0dd323e42c9885a2e5a8dd652c4c1e0b339735158924b9760d1",
+        "metrics.prom": "cbfd1f37afde6b335010b197a09694d6a629a821e2e6ecbf981377cdc65759c0",
+        "traces.jsonl": "043e639b7389ecd9257e32d02801d5b0c0a6ced591e282b44de2dc2b4a1e89bc"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T125028Z-w8-steady-mixed-medium-least-loa-e9a1e78-420af2",
+      "run_id": "20261126T125028Z-w8-steady-mixed-medium-least-loa-e9a1e78-420af2",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+        "summary.json": "9428dcfe15376c543f3833a094b19b799089335e6d433cfcb6565dbea79e0467",
+        "metrics.before.prom": "e3578eaf6c5667ff6efdfab3c379ac7f09e5e66a30c83435066595cc12d95898",
+        "environment.json": "ffb6cbc5875a739dd72316845c2957ff180301c44742e608f56eb5caf049f063",
+        "requests.jsonl": "b19b595fa959911f2e20ba4a3d5a15ff49b18801ddcd28f8a345e293233fda24",
+        "manifest.json": "76b667726eee3824d938f36ba7d4c31a2c0e0cc260976fe2b026d00f07f3d4b9",
+        "metrics.prom": "513f66c979a8fed9b09423532013325425ef9dab48d2a366a9ef4534f5b53f23",
+        "traces.jsonl": "dddadb5f7804633e389ba1c68e9245a5c75f408b884544d95e0d10f0404ca6d2"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T125228Z-w8-steady-mixed-medium-round-rob-e9a1e78-fdc28a",
+      "run_id": "20261126T125228Z-w8-steady-mixed-medium-round-rob-e9a1e78-fdc28a",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+        "summary.json": "63a1941bffbeb12205aeaae37bb969e274cb229d1935f99593431bdb77dc5caa",
+        "metrics.before.prom": "d62e92ad48fe811a754a87b5aa7d9458facaf062d89ededc20065afd606b60e2",
+        "environment.json": "44652c9eba76c2346d84b373838ff4c5ef3a4d4298979931edc0d02931b83ffc",
+        "requests.jsonl": "2c773306eab205ec77b6c455b9588631223773b0664d7b9f1abbc9a44ee41bbb",
+        "manifest.json": "6e3ac5c7872d82d85e7d4aefce2c73cab121b0039183f7db4f6c6619afd7a966",
+        "metrics.prom": "d7ce46f480819536e8a6eee10f8bb2d082b8624ad4420c2f837c2391a04f40c9",
+        "traces.jsonl": "927b1b71a133517d3a63054b6e61ef5d5ff935d983cec31d37b3e39c165561af"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T125429Z-w8-steady-mixed-medium-round-rob-e9a1e78-cf2f67",
+      "run_id": "20261126T125429Z-w8-steady-mixed-medium-round-rob-e9a1e78-cf2f67",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+        "summary.json": "651eb870063e16dbcc8cd23d2d707d4e2172920f25528e598344c66e3ef3cb03",
+        "metrics.before.prom": "acc350c2b2843f9fa918df71fe0e5b6608f14775cff8cc4ce8e0dfa75cece7b7",
+        "environment.json": "5e62f9412c023e05f68fa7f667e011b56ca3b38e5a32d57523e687017c09ab23",
+        "requests.jsonl": "bd82d2dc428a158d0d33a4d37c0034f78620509766f3d33d3a94f3b84c204956",
+        "manifest.json": "f38317bd6f7ea8aac2445046f09e83edb41cf563dbf5f83aa72192f19d1effac",
+        "metrics.prom": "c9b4c5e269cc2dcac6deb7bb5a508f3bc9a30fca3f00ac407c2bd178e087ef34",
+        "traces.jsonl": "edb8f5823be135d838a30162050eb6f3e8d57123e9a8cf6124ebb8cb5ea1cabe"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T125630Z-w8-steady-mixed-medium-least-loa-e9a1e78-2c7e6a",
+      "run_id": "20261126T125630Z-w8-steady-mixed-medium-least-loa-e9a1e78-2c7e6a",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "21c2cef5237acb910d989ecb83cc7f638821a73def119d49626c07be05faf1d7",
+        "summary.json": "1c2e484e9b7de6bfdb94224a3de310f23745710525f99179b1cf7e00e7f7d542",
+        "metrics.before.prom": "dace89d78d7e350e50e7b387f9eef85fe11bf5c729e5aaa6da67000cf563a750",
+        "environment.json": "8d1c98b1f8cdab5cec4c1416bac5b19261c748c4a973e13fd280146f03d4a118",
+        "requests.jsonl": "a23e0cb1e7149805c13d65dd829b8d26a4bd77c15ab2f22e6199fd0ae52d60d8",
+        "manifest.json": "de161cef596ccd4715177039f1e8036a6c082902f86ea0aa4b02e576ec855c69",
+        "metrics.prom": "e20a14dba54eaa0263d6bdb80cb5cc232617ab2687213bfc68e6ce027445a4ac",
+        "traces.jsonl": "715d9c4ca745e1e14c684f07b5a738eefd9db3b87221c8c8964a18cb3e5f0975"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T125831Z-w8-irregular-mixed-medium-round-e9a1e78-21d05a",
+      "run_id": "20261126T125831Z-w8-irregular-mixed-medium-round-e9a1e78-21d05a",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+        "summary.json": "9bd5eb5fc3a42c28a00eac3dc4891c34dff9e39c5ec863e0dd11cecc258d6b03",
+        "metrics.before.prom": "f27d44bf29e06592592ecd1f413e5f17c93bdd6bd39e33f7f76bbe90236921cf",
+        "environment.json": "0b4365fce33167318f5e6ff23f1844c4a4bac826f1347d6a3c6aaeb8a33ac781",
+        "requests.jsonl": "0e4dce66576e3f2633cb44024a4f075bed5ee94f626b2f542a29522d58fe5ee5",
+        "manifest.json": "531cd6d028fe12d5922874b2fca00ead48949b58cb1566ceb9160c14c61f59a6",
+        "metrics.prom": "3de46dcc3d14f691a20639bee95569a0e1de6de58c083295808c4d10d9b4d86d",
+        "traces.jsonl": "eafb38498490e07138249b5bc6c24b33e94505b719b0489df82f3d0c672049ce"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T130031Z-w8-irregular-mixed-medium-least-e9a1e78-96a9c2",
+      "run_id": "20261126T130031Z-w8-irregular-mixed-medium-least-e9a1e78-96a9c2",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+        "summary.json": "373b77a93650a3b8d793a30dc0d9c9a77bb640a4d7ff9ae719bbf69f153c05d7",
+        "metrics.before.prom": "a437d77c7a736d3ffe40145c201c9cdad0f2c420e1a4fa23b9f8be0a10bdf3b5",
+        "environment.json": "106a432de871b704d1838d1a5cd9d2d6cbe9d918e54c160f9dbb5692fd2d7099",
+        "requests.jsonl": "963ec3261d1dc456cc5cdadf49e654cdbe5b546f663789735f8a8cd1e4263f6b",
+        "manifest.json": "17301f21a9145ab0b64d54d1fdf813e1cd4b10a3bf556fce93823c244c0cc715",
+        "metrics.prom": "0d9ec96ff246268eba69c0590a6b7daa1d1e03f51e397206f693979920b3877e",
+        "traces.jsonl": "cad91ad4ff626865de552067de93b44f4ee01812dae296c1c20b683b0dfe7bc8"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T130234Z-w8-irregular-mixed-medium-least-e9a1e78-9e80c2",
+      "run_id": "20261126T130234Z-w8-irregular-mixed-medium-least-e9a1e78-9e80c2",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+        "summary.json": "163f81f2b3ea7eea602d5ae5b2d8b8c00d14f788251ef50630b6d519e81185f2",
+        "metrics.before.prom": "09ab468b237d68036054c469aa813c09ed8c8d387b0e1acb04bfb3e93c2fb079",
+        "environment.json": "238526cb227a34e44b21773750e5a0d9df1ee99f13fb78d02e44c3896e7cb476",
+        "requests.jsonl": "cfc0e6cc991903b4d4ff9e422bac3c5be5e29e5405a895bd84b4fbcf2e9691ba",
+        "manifest.json": "e9ef2067f793cff9b545f11b3bf497f329aee2990a84d8587d72939054031c18",
+        "metrics.prom": "791e079fe6b321c69fee9866b3c49cec8b40f28e8fa2ed6a994b4baae9acc74a",
+        "traces.jsonl": "b4192ce7a357b14c76197d88a33c364acab72e044e43d784ab837d69d3354d9e"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T130434Z-w8-irregular-mixed-medium-round-e9a1e78-5570c9",
+      "run_id": "20261126T130434Z-w8-irregular-mixed-medium-round-e9a1e78-5570c9",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+        "summary.json": "f6f48b824c345799198596ab13d85b725a924a8c2255800a66b10ec7998caf23",
+        "metrics.before.prom": "cbb43b2079f605d7fd7ae0486220f337388a92a45e09a03a18d4a3011a729727",
+        "environment.json": "4dc53cb7bb23f6aa87bf452d47c2ec18016769ac67ee15bdc516570f92d70eef",
+        "requests.jsonl": "98bc678a982783be5cd878b5aec49f1e6155de6a5822fe7c997db543e0a4a8ac",
+        "manifest.json": "6e49bc63eed02faa100e2943aa35519ebda27d38209537b316e75cf2fe30548b",
+        "metrics.prom": "741a32e2f4b65c41aedb0c50d3209c9d5cd394a23367df4d3c9459882aec1ed2",
+        "traces.jsonl": "b311521651da6741c84582b04e8cdda6cf4617203c0838dd7e80ecb871876b97"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T130636Z-w8-irregular-mixed-medium-round-e9a1e78-c6ba40",
+      "run_id": "20261126T130636Z-w8-irregular-mixed-medium-round-e9a1e78-c6ba40",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+        "summary.json": "a8d25d0480bf25a83f83b43fb5a57fa94501a8f868f97298b4a7695de18f5640",
+        "metrics.before.prom": "4de162dc882f6054264d7ee74722dbf5be5c3267ddf5ed533f760c8d4d11056f",
+        "environment.json": "c7e775fc035946cd65a178e4652f994d9b30bd50112b01ef53cb6020df161f39",
+        "requests.jsonl": "6ca9dfb5cd699f81e344749325778ccf1fe1a289dd8f27036d094cc50b9270ae",
+        "manifest.json": "192701a12eda84fe4274506b5dd39cae7a417ada92e50f708ccc1a8abe3edc8a",
+        "metrics.prom": "8e3583582851e08caefa106672cdafda84f8b313944967ea59a8b4d992f1c2a2",
+        "traces.jsonl": "8216f4e115804c1295894619fcb61b500b9d2aa58c60f8fc6202097adedbeaab"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T130836Z-w8-irregular-mixed-medium-least-e9a1e78-fd8e0f",
+      "run_id": "20261126T130836Z-w8-irregular-mixed-medium-least-e9a1e78-fd8e0f",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "95551375f4e1939774be0d081eaca42db51a8688ab6eee70bbb7a735741ca6bc",
+        "summary.json": "0bc48dea83f1b4aa666d6963ec69e8c8fa4731cfba40dc9388a2f0d389492f70",
+        "metrics.before.prom": "23431bd7dbf353cedf74699771cd397928b570963fd24ab2c4e663ec621aa30a",
+        "environment.json": "26ffd72f685a2e2d8ad652e6d43ad8c90318684f6a7a1d6c25a853628bffd83b",
+        "requests.jsonl": "a8de0c0ebfffd8549c9886843c694452b9e70758613a4d068939d92e25bb54e8",
+        "manifest.json": "a7c8c46196d2bc77167d606f03303e82bb96b9795f0f6884d03efeec8424e84f",
+        "metrics.prom": "05edc6991888b7fb35f3272554125a3d76963081c2570fe09e4d75b28a8eda07",
+        "traces.jsonl": "2c293934dbeb22dc902057fdc858957ad1bee9b05095fdfd3afe05e98ee9c7ba"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T131039Z-w8-burst-mixed-medium-round-robi-e9a1e78-4053a5",
+      "run_id": "20261126T131039Z-w8-burst-mixed-medium-round-robi-e9a1e78-4053a5",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+        "summary.json": "27c3f7a0a2d21a0fb7758ffe86efa47aa7257e7e981ff6bcf52bfceab90da92c",
+        "metrics.before.prom": "2718f07c7e233b540356ff989ed336e74341edc76961449d5980c15ef989436f",
+        "environment.json": "45a2d3479ef5aa2d4e044b0f411074800c312822855c4dfe7f8ab913cff24207",
+        "requests.jsonl": "db17be234da80376479c14dffa967cb7aa103b01dfe9f520de70787ed26db795",
+        "manifest.json": "984918c7db53f29481032627d2cf5214d1946b064d7055401f36056b85e44192",
+        "metrics.prom": "44ab6f150fe653e2b7646bb11b3f3dbe21cfd27e0f2884aca1eea5509d6f3f6f",
+        "traces.jsonl": "f4957b39e1776041b48d1ac27b4f895402288e51558508077256705ff9a3f505"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T131238Z-w8-burst-mixed-medium-least-load-e9a1e78-19f865",
+      "run_id": "20261126T131238Z-w8-burst-mixed-medium-least-load-e9a1e78-19f865",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+        "summary.json": "c3562d0ba1b007125e96458590ead369c2b6c977ae26c3733b0b4157722b0579",
+        "metrics.before.prom": "169b65b9c5cb23d400793bb8f690f8a9d29855bd0283a49fb2f4099e3da03b2f",
+        "environment.json": "0b23de9204ea18e7d62382bb6b0f8a79de42c1fa457c9c97a9f25376da994815",
+        "requests.jsonl": "eb2329a0804ab8a3f31c4ca2c5b0e9e944d44948e74bf30a1f0dc8363fb77963",
+        "manifest.json": "35a97a73ea4f8bc7c3b660c19789b092d6abd5e92e49250c022c630c65554e5f",
+        "metrics.prom": "2f0de36030870f3ae17ae8da6028d2d758c15ea974cfc8798484519806658038",
+        "traces.jsonl": "7657e51a1ff39194ef5a0946bb798b4f3da67bf74caba08669c15400be0ae8ea"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T131441Z-w8-burst-mixed-medium-least-load-e9a1e78-606c1f",
+      "run_id": "20261126T131441Z-w8-burst-mixed-medium-least-load-e9a1e78-606c1f",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+        "summary.json": "fedbd90cad5855962fb5139933e9131ce96d7a8745c5b0625569840d43ab3139",
+        "metrics.before.prom": "51c05963c2ad4595cdb57005871eae234e744a370f0079b70ee113241007461a",
+        "environment.json": "e0ca5cc71cf0e03d69d0b2ed3b0f06c9fd1e01a1a0c0249a8a2b38e5d8271ed2",
+        "requests.jsonl": "212fce9c024fc285f4fc08af0c57845574baef53b775e7f435a3ba05172af7e6",
+        "manifest.json": "fbf98e00c5ec099453dd655d76dcc5304897ebf8114f8e0d6f3cead7c650abb9",
+        "metrics.prom": "2f3da44ad8e01b43d6aa9d6ba4c3a55c60ee5ad485d0ec95a19b837be1bea3a2",
+        "traces.jsonl": "28261ae2ea69dc1bba91ca1c7166223ac9e00b470578f82796ed2cec2822ee1a"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T131640Z-w8-burst-mixed-medium-round-robi-e9a1e78-aebc17",
+      "run_id": "20261126T131640Z-w8-burst-mixed-medium-round-robi-e9a1e78-aebc17",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+        "summary.json": "843f889e560ab8d97e6a0396470d6b74ac03b10ffa6dbfe8a5f7b58f74e7538e",
+        "metrics.before.prom": "ec55a0e1603ec60613294c86749e4fc1f9ae8498dada342620e7f7defb34ce1b",
+        "environment.json": "4e298202f150a5b728d2dc7a99c580e7322f1dec6ac085917f3fbfabcb320507",
+        "requests.jsonl": "f5332fe29c49dd49c9fcf795b4c70db574b338778d21532a41e443d88fbb1dd7",
+        "manifest.json": "bdac16b454021700072f746a02419bf0209f5d72578cf98f61bf0032d49568aa",
+        "metrics.prom": "0347f6fc7de9cdae0a471eebfa02eab74708ce422f9dbc15e7da9f791f9b1785",
+        "traces.jsonl": "feec657292ec09c6b6792acab9a738cae1ab95d3ff447590939ae2715b0e5058"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T131840Z-w8-burst-mixed-medium-round-robi-e9a1e78-556183",
+      "run_id": "20261126T131840Z-w8-burst-mixed-medium-round-robi-e9a1e78-556183",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+        "summary.json": "71864ba31eacc8db36009920fbb93f54316f20a8a5e223ada47cf1c7feb3b259",
+        "metrics.before.prom": "b3918e89d5c6945c339b1edf9f7745ab9a17edc5ba7fd539fe0a38066bd95683",
+        "environment.json": "81b9c375b0463fc39625d03e96dd6d872d5f5376c064b2187d3e11e406761186",
+        "requests.jsonl": "d979b1f875b2b3801c507fe3f0b66d11b3a665a4a5c03cafc200986faee48b0d",
+        "manifest.json": "4cb108999b994d22ee853bed244965a4ca9dbfedfbff853f56b1afb0ca8b698b",
+        "metrics.prom": "940598ae03a712a646dbcc31aa7957d3b4acc72aa388a110ee9f6c3abc30a443",
+        "traces.jsonl": "f3b2c195eb6897e19e3b82a9b691da58e3daf4281c9ba5e57013c6d101a63551"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T132040Z-w8-burst-mixed-medium-least-load-e9a1e78-e7aa0a",
+      "run_id": "20261126T132040Z-w8-burst-mixed-medium-least-load-e9a1e78-e7aa0a",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "11d7c5fe7e3f49bab5ccc218a793b34bc4927ff0e323d4f2b96bd8435c0974b0",
+        "summary.json": "ef6ca92d14af766f13943cf4815dc5d9d2566f5debba003fffca87015027c2a5",
+        "metrics.before.prom": "1c7b8c377b7c4e6dcba36e5d0e027e32fa1268098d4ad2c2fadd325778cf163a",
+        "environment.json": "fb2d435acdab325737ad452c299fc642287815ac38d12962a6027854afb29855",
+        "requests.jsonl": "474409a058e75e3b0f1e6a708ac6de2236e37944857c7813c51e709188646425",
+        "manifest.json": "ddad219202ca8dbc0f69bf05ca9a8d6cca1424c83cf585616ee6f0a169b8724c",
+        "metrics.prom": "bc9dde984fb726512137b38f8a2ad8fbe8cd2110b2132ae3d6fa6c9912a977db",
+        "traces.jsonl": "6d02f3b2f9ff7c9d50d403058e0cc996348c28cbc79b8de065855d9673b38c6d"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T132241Z-w8-ramp-mixed-medium-round-robin-e9a1e78-ff3a3f",
+      "run_id": "20261126T132241Z-w8-ramp-mixed-medium-round-robin-e9a1e78-ff3a3f",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+        "summary.json": "805103ea2f8e18e603b7166afd02e9b7682befc9eb9f9dfa0c7ab77b759b0b06",
+        "metrics.before.prom": "94868e8dd4c7eb5c447b2f7c74fbcd6e284a703b0870d630c31b08fbe11610d6",
+        "environment.json": "132efd73e7aa41d17617c1967b05fa23e060cb494e0de03bd2b53076697590a8",
+        "requests.jsonl": "51aa42393a5a492346a2703ced4c7da4e46a65dbcbb125a784dcc3f1a25b0dbe",
+        "manifest.json": "af5799729a78c361bc0a0ce4cca0231cd6ce964bb3b5a25b4b3c2d1663b1ccb7",
+        "metrics.prom": "7f2cc6eb9c9d0f03620fe934f43839f6578ec32f08712967ce20253d28852ddd",
+        "traces.jsonl": "8bf940d986b92836ccdfcdbfb414ac54133bea1fbeaa00c03b8ed589bbdb4070"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T132442Z-w8-ramp-mixed-medium-least-loade-e9a1e78-6307b5",
+      "run_id": "20261126T132442Z-w8-ramp-mixed-medium-least-loade-e9a1e78-6307b5",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+        "summary.json": "65d226f4fb13fedc3f8589aa87d52e1ee6c2f251ddbb5540f3a34eaa0c447d82",
+        "metrics.before.prom": "100143b8a99bf84ceb13c7e5c68d86085303458a6f1f457a34b941d0e242392b",
+        "environment.json": "e1b1e4bba9c280d1d1bc6ba1673bb9740fa55b44ae99d6ee3bf38cfb0ad6d927",
+        "requests.jsonl": "8ca005975952bc96ae86053e92be45c73763fb0f662b50a06ba8706b0f2f32a7",
+        "manifest.json": "e9aef5b9f6678949bfc53c3363ec95130fe3d1fe95f6c8941945ad1ee70b3d2a",
+        "metrics.prom": "27e8588fb8467393cef654622c0f0e5777a234feff0dc77fe7917890a6c27a6f",
+        "traces.jsonl": "b91a01c6910b9bfd0d8e141935c418fc673b08d25a9716eb46dc64f484a77b5a"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T132646Z-w8-ramp-mixed-medium-least-loade-e9a1e78-9483bf",
+      "run_id": "20261126T132646Z-w8-ramp-mixed-medium-least-loade-e9a1e78-9483bf",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+        "summary.json": "e9724091d58831135e54a332d11c6f6ed1a6dac657009ee0861566282483ce53",
+        "metrics.before.prom": "74a2cdbb40a53d6f286f1a75753f6a5ba19fb9ec90cbc07ade201db881c5928a",
+        "environment.json": "b0fb5674ba0ebc0acc28ff93e4b5a9662fd7c7ceb2bb574e81aa8c049b8fb91c",
+        "requests.jsonl": "19c34443ed93054b5373853e6980429d3894133074176f0eec4aeb7dfb2c5398",
+        "manifest.json": "dc88724bb7c15890c19eb32ecbd70b8aec5dec8b691e63a7d5764314c69cfd9d",
+        "metrics.prom": "58d54099faf8ae188564ebec562bdaa40b95a9495e127525349c8a2a9b7c0410",
+        "traces.jsonl": "6b952201b2c900da2e09a36ec91d07c2dc3140754b8e1b25ab02373781d41453"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T132847Z-w8-ramp-mixed-medium-round-robin-e9a1e78-21433e",
+      "run_id": "20261126T132847Z-w8-ramp-mixed-medium-round-robin-e9a1e78-21433e",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+        "summary.json": "e91b49cd64c07b6c6a42f6725fdb415f0cc84e38ac0636f9aeac6e6a1ef9473f",
+        "metrics.before.prom": "493a38d983aa2e1fbfe42f1190d32186de58a167ff33c4058dff5b56aefbf75d",
+        "environment.json": "fe491bdbb6076b67449e2e37e0be4ba351f52e3d4eaeea7386509ffb613bfd6d",
+        "requests.jsonl": "6774007390c3d2c35391ee47c6a9d618593126d086d0bfc1bb6d96445321df30",
+        "manifest.json": "535d2ebcd57c4b522bc59d442b09118d46ec24cde0b2cd2e1d6a1ea777e88c9c",
+        "metrics.prom": "08a8a4d2dfcf5caf71b70977b2c50a3b183ff5f91ebcdf9b6e78a22fe5d243a2",
+        "traces.jsonl": "66a3f37f381f07bae567c5cc104cbab1b6b1692b4b62c4a25d42536360107cec"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T133051Z-w8-ramp-mixed-medium-round-robin-e9a1e78-6dd474",
+      "run_id": "20261126T133051Z-w8-ramp-mixed-medium-round-robin-e9a1e78-6dd474",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+        "summary.json": "b5448e806c12f060c9524444b715e622ee05156eb95775fd2ec036a7748af096",
+        "metrics.before.prom": "9b7db0a666530f1d811233c168cfaa4acc6ba72a95132bde3c640c462f07ac21",
+        "environment.json": "bbbc9b7d938305aee8fe364ce5ea30b5405266989d4232ef81f2e8cd27e6cd77",
+        "requests.jsonl": "ba7b0fa2883711641a82da05e125fe92e555fd141e1c05abcbf3bb14ab6f58ea",
+        "manifest.json": "fab50d4e1da86520737b234fe66d700892d9378e7e4fc2269bb6862326999364",
+        "metrics.prom": "01efa501f070b8b77e5ec17f1107951f8fafcc72d6f7049db1b3691733786238",
+        "traces.jsonl": "abeeccb46bee89565af225b57891977c9104853c57e2d38065117f41be4e598a"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T133253Z-w8-ramp-mixed-medium-least-loade-e9a1e78-2a377f",
+      "run_id": "20261126T133253Z-w8-ramp-mixed-medium-least-loade-e9a1e78-2a377f",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "7c49f5a0da59b9266af110728c9ef3e4de292af43beb8c8ab63af81efd370e74",
+        "summary.json": "20eec5aa995ebb47ba264c8a98d29892cfd3f63deaa0de21b577c47040946550",
+        "metrics.before.prom": "0ff52ee15b3ec9a4584cb9f496fe14992e01cd4ebbac3209483005bfd4e76b33",
+        "environment.json": "1e23503e0f0cc2142a9b2545c74760d731fe8938cfb771ee522af58606dfcc91",
+        "requests.jsonl": "837a862b7ee1da0d03eedff448515d75471f0565c2327e54a8d74cb437efa138",
+        "manifest.json": "847f9310d168ea694c9ce5c0f510b1c8b5dab699695af16d7093a3a832dd7e3c",
+        "metrics.prom": "5bfef8b9a8df46e1cddaed0c6f89262c7c0953350f48397596d767377dbabeb1",
+        "traces.jsonl": "fc3cfe8f6ba67f25eec49ce71bac8763a1e2ca1ebcafb48956781ef126bc8c0b"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T133454Z-w8-microburst-mixed-medium-round-e9a1e78-06105c",
+      "run_id": "20261126T133454Z-w8-microburst-mixed-medium-round-e9a1e78-06105c",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+        "summary.json": "0e9fae7cf3d69b68e046cc4262910bf857ebad8e099409bc65cb2ebb71df88a4",
+        "metrics.before.prom": "8c67f05bff326266d8e9fd509e9365e8c3380434402edcb9d8dd30bd0371002d",
+        "environment.json": "e8e9691dd29f1201e5912256bca8aec9b2424915c460f1f16151666b561b5195",
+        "requests.jsonl": "e5b60051cf5520a2b849f4dec1c8d9b1d26165391696136314d523abf41cfd2d",
+        "manifest.json": "747b044337fd208a5eb7a3aa690fa162a05f3419c0e8569975aa91b1ce110ab9",
+        "metrics.prom": "f3d8b31152f832ccfeb50d82f2144950de63b87ffd64ed388c105089fa253f1c",
+        "traces.jsonl": "e2359c4000e2c5b1ccffb859a8c7adc2ca55374597f59cb3d25a9047093a5f70"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T133654Z-w8-microburst-mixed-medium-least-e9a1e78-6c6447",
+      "run_id": "20261126T133654Z-w8-microburst-mixed-medium-least-e9a1e78-6c6447",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+        "summary.json": "f11bcdd6cf2d077c1cfa2d0123fa0d9ab88c06d317f3d1762dbfe3053860cffc",
+        "metrics.before.prom": "4eee7c467a635b8f8ac0685881e5abc60703a45b20ab19e4c014e8a62118dcb7",
+        "environment.json": "59d15490fee27ed614272c9c7713fcbd60c46919df63bfa31a804b9b6f7eeca5",
+        "requests.jsonl": "2bf35d189a6876e3806bd59caed42b30f931fa592c4d9f1cd1f33e24304a035b",
+        "manifest.json": "2d456a04c54eec82c79810a2a29ce414c7a91cd15efdf963abef17b53c15b1f3",
+        "metrics.prom": "310fb80f6fa55e8a7d501537569ac19482940ecfc1e369ca6f1f3dfd741e5b64",
+        "traces.jsonl": "e51126f1369abbc4111d04a129fbe0b9f9faeeed8624613896e26a72b5806919"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T133853Z-w8-microburst-mixed-medium-least-e9a1e78-efa43f",
+      "run_id": "20261126T133853Z-w8-microburst-mixed-medium-least-e9a1e78-efa43f",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+        "summary.json": "e8e0c63bab017f65cb3709f3f67b6b02a41cfa6f336a0998a2f0d79fc006bc2f",
+        "metrics.before.prom": "b2bd7a446be2d3080ae029e1a78874453a1a88f662fb80a5811e67a712f34333",
+        "environment.json": "9f3fa0f05d312aac5de3200fd73dad2c55cda3eba48291b4e80faf78c09fb996",
+        "requests.jsonl": "907db0dc06ce24003c082cbe2907b67b0d1a023380f474574e6944cb95a8237e",
+        "manifest.json": "40cb2f322da73e075cb75b192b0eab2e4615caf1aa1923ebfb24c0e594518e08",
+        "metrics.prom": "7d5ecb6cb309d6677cbefaeaf430a586b7f02289936777c79e5eb0370a069756",
+        "traces.jsonl": "c985039aca6ccc7940533f91ae9905fce706ff975ff54810569949750af86409"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T134051Z-w8-microburst-mixed-medium-round-e9a1e78-f407fb",
+      "run_id": "20261126T134051Z-w8-microburst-mixed-medium-round-e9a1e78-f407fb",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+        "summary.json": "6aeb15fa9315725252f69b3fcddd90b8ff4fe2162e331438ba77d73452e5081d",
+        "metrics.before.prom": "8a2d8be8b7ea51a3bea014f021d7a9abeed64f1fa295a2252c3134b7a7847a69",
+        "environment.json": "aa85c792170303feac89c106e8409fb7f775f15f0c0edd5e60e06e1cfdd6655d",
+        "requests.jsonl": "5eb0a86eae080ff45a55659f7e682c3443564b905fc6c817b6c5cab03155b006",
+        "manifest.json": "675467a59187bca1e9544465369b861e0a474c7907946577371a1aeea2571476",
+        "metrics.prom": "fd5cdf517f0e151966fedefa27f3f3a2c919c43ca173b8fc33d5e5d1cce39d35",
+        "traces.jsonl": "7ff6d032f17ab191cdeef9db0da9f23462860a4ecdd262f35439a13aa1f0b96c"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T134250Z-w8-microburst-mixed-medium-round-e9a1e78-fa7a5a",
+      "run_id": "20261126T134250Z-w8-microburst-mixed-medium-round-e9a1e78-fa7a5a",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+        "summary.json": "816ce7c2e665389bc1afa6c2d420943aabbfca1fee210387c5ca5a2ff1f3d427",
+        "metrics.before.prom": "fee8e884c332ef9d0f30eda7c3a3d70e978235800c62bfd6f4134983ea986fc0",
+        "environment.json": "c7c7a41ba2da722147a5fe6c0012827a88702636de9b96ed7e3da4c184ff657f",
+        "requests.jsonl": "3bf9e438ddb9db7f0788ece67dfcc5032cc8138a0bffc693e6c663effd3a896f",
+        "manifest.json": "9ab90e1f6f0a76def0d345b4d1dda924465e74ed5d7d13aa53498b8a03bb5068",
+        "metrics.prom": "cf9ca05e1cdf1b139de1152386d39c60977274ec2daede88624abbbfe56ef98b",
+        "traces.jsonl": "a4177d73f4f654e2a280cf9c7a2e16413ede782fac0781f50f29ec904203394a"
+      }
+    },
+    {
+      "run_dir": "/kaggle/working/week8-controlled/calibration/execution/runs/20261126T134447Z-w8-microburst-mixed-medium-least-e9a1e78-003a17",
+      "run_id": "20261126T134447Z-w8-microburst-mixed-medium-least-e9a1e78-003a17",
+      "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+      "files": {
+        "schedule.jsonl": "e705802ef0e2e12200f8da880c5e3e423ba8d0b535ac0e881ea715d7c17faf94",
+        "summary.json": "cb4c0141fda3a5bf13527adf5f501536ebc1367a65bffc73bcec379f643d2b69",
+        "metrics.before.prom": "1fb415ae064c76aea2908a472c20c0aa621d601ccbd4a1af95563cc5dd2b4f42",
+        "environment.json": "47938c36ecfa6f360e6211371286d5cc3930757f3e8dafe44e070d98042d7836",
+        "requests.jsonl": "318b6810a0ab07756ba80b2da52b57c86dbc87270daf0a1f520c5716613ef841",
+        "manifest.json": "5738d3b8636e7a4fb4ac19eb769446d7c3d9c3285447d39371d4ee38e33f7a0a",
+        "metrics.prom": "2e448e4c778dcd21ec0ae413c6ae257914eba2d9f72ef67fed389291ae3e0c9c",
+        "traces.jsonl": "3fc6fa81a13f74553541966a6a7970a279b5518419d20007f5a16e4439d9f31d"
+      }
+    }
+  ],
+  "pair_checks": [
+    {
+      "comparison_id": "w8-burst_mixed-medium",
+      "repetition": 1,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-burst_mixed-medium",
+      "repetition": 2,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-burst_mixed-medium",
+      "repetition": 3,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-irregular_mixed-medium",
+      "repetition": 1,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-irregular_mixed-medium",
+      "repetition": 2,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-irregular_mixed-medium",
+      "repetition": 3,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-microburst_mixed-medium",
+      "repetition": 1,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-microburst_mixed-medium",
+      "repetition": 2,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-microburst_mixed-medium",
+      "repetition": 3,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-ramp_mixed-medium",
+      "repetition": 1,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-ramp_mixed-medium",
+      "repetition": 2,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-ramp_mixed-medium",
+      "repetition": 3,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-steady_mixed-medium",
+      "repetition": 1,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-steady_mixed-medium",
+      "repetition": 2,
+      "matched": true,
+      "reason": null
+    },
+    {
+      "comparison_id": "w8-steady_mixed-medium",
+      "repetition": 3,
+      "matched": true,
+      "reason": null
+    }
+  ],
+  "repeatability": [
+    {
+      "comparison_id": "w8-burst_mixed-medium",
+      "policy": "least_loaded",
+      "status": "not_evaluated_no_predeclared_tolerances",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            611.645,
+            612.27,
+            620.965
+          ],
+          "median": 612.27,
+          "max_relative_deviation": 0.014201251082039052,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            2486.36,
+            2443.94,
+            2526.835
+          ],
+          "median": 2486.36,
+          "max_relative_deviation": 0.017061085281294772,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.831658,
+            3.830656,
+            3.826161
+          ],
+          "median": 3.830656,
+          "max_relative_deviation": 0.001173428258762968,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-burst_mixed-medium",
+      "policy": "round_robin",
+      "status": "not_evaluated_no_predeclared_tolerances",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            609.375,
+            634.125,
+            621.71
+          ],
+          "median": 621.71,
+          "max_relative_deviation": 0.019969117434173428,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            2410.225,
+            2473.235,
+            2468.715
+          ],
+          "median": 2468.715,
+          "max_relative_deviation": 0.023692487792232087,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.82262,
+            3.843077,
+            3.839258
+          ],
+          "median": 3.839258,
+          "max_relative_deviation": 0.004333649887556379,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-irregular_mixed-medium",
+      "policy": "least_loaded",
+      "status": "not_evaluated_no_predeclared_tolerances",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            313.1,
+            288.705,
+            409.15
+          ],
+          "median": 313.1,
+          "max_relative_deviation": 0.30677099968061305,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1494.735,
+            1446.64,
+            1472.045
+          ],
+          "median": 1472.045,
+          "max_relative_deviation": 0.017258303924132735,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.753276,
+            3.673203,
+            3.833199
+          ],
+          "median": 3.753276,
+          "max_relative_deviation": 0.021334162475661278,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-irregular_mixed-medium",
+      "policy": "round_robin",
+      "status": "not_evaluated_no_predeclared_tolerances",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            299.28,
+            324.135,
+            279.765
+          ],
+          "median": 299.28,
+          "max_relative_deviation": 0.08304931836407385,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1466.405,
+            1549.32,
+            1448.475
+          ],
+          "median": 1466.405,
+          "max_relative_deviation": 0.05654304233823532,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.785983,
+            3.785608,
+            3.796012
+          ],
+          "median": 3.785983,
+          "max_relative_deviation": 0.002648981783594984,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-microburst_mixed-medium",
+      "policy": "least_loaded",
+      "status": "not_evaluated_no_predeclared_tolerances",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            803.635,
+            790.865,
+            786.515
+          ],
+          "median": 790.865,
+          "max_relative_deviation": 0.016146877153496466,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1592.915,
+            1586.755,
+            1567.455
+          ],
+          "median": 1586.755,
+          "max_relative_deviation": 0.01216318839392356,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            4.0,
+            4.0,
+            4.0
+          ],
+          "median": 4.0,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-microburst_mixed-medium",
+      "policy": "round_robin",
+      "status": "not_evaluated_no_predeclared_tolerances",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            771.815,
+            738.645,
+            792.195
+          ],
+          "median": 771.815,
+          "max_relative_deviation": 0.04297662004495905,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1550.465,
+            1544.87,
+            1567.16
+          ],
+          "median": 1550.465,
+          "max_relative_deviation": 0.010767737420709377,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            4.0,
+            4.0,
+            4.0
+          ],
+          "median": 4.0,
+          "max_relative_deviation": 0.0,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-ramp_mixed-medium",
+      "policy": "least_loaded",
+      "status": "not_evaluated_no_predeclared_tolerances",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            344.06,
+            385.435,
+            384.355
+          ],
+          "median": 384.355,
+          "max_relative_deviation": 0.10483797530928442,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1737.065,
+            1723.68,
+            1702.815
+          ],
+          "median": 1723.68,
+          "max_relative_deviation": 0.012104915065441386,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.671303,
+            3.705771,
+            3.709026
+          ],
+          "median": 3.705771,
+          "max_relative_deviation": 0.009301168366852658,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-ramp_mixed-medium",
+      "policy": "round_robin",
+      "status": "not_evaluated_no_predeclared_tolerances",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            377.41,
+            360.27,
+            350.785
+          ],
+          "median": 360.27,
+          "max_relative_deviation": 0.04757542953895701,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1744.76,
+            1700.65,
+            1715.19
+          ],
+          "median": 1715.19,
+          "max_relative_deviation": 0.017240072528407892,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.672313,
+            3.676607,
+            3.688206
+          ],
+          "median": 3.676607,
+          "max_relative_deviation": 0.0031548109438947146,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-steady_mixed-medium",
+      "policy": "least_loaded",
+      "status": "not_evaluated_no_predeclared_tolerances",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            225.755,
+            233.155,
+            220.465
+          ],
+          "median": 225.755,
+          "max_relative_deviation": 0.0327788974773538,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1373.55,
+            1396.99,
+            1401.935
+          ],
+          "median": 1396.99,
+          "max_relative_deviation": 0.016778931846326783,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.75544,
+            3.807,
+            3.75798
+          ],
+          "median": 3.75798,
+          "max_relative_deviation": 0.013044241853336119,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    },
+    {
+      "comparison_id": "w8-steady_mixed-medium",
+      "policy": "round_robin",
+      "status": "not_evaluated_no_predeclared_tolerances",
+      "repetitions": [
+        1,
+        2,
+        3
+      ],
+      "metrics": {
+        "latency_ms.ttft_p50": {
+          "values": [
+            210.725,
+            225.77,
+            222.27
+          ],
+          "median": 222.27,
+          "max_relative_deviation": 0.05194133261348817,
+          "tolerance": null,
+          "passed": null
+        },
+        "latency_ms.e2e_p50": {
+          "values": [
+            1276.175,
+            1389.68,
+            1376.26
+          ],
+          "median": 1376.26,
+          "max_relative_deviation": 0.07272245069972247,
+          "tolerance": null,
+          "passed": null
+        },
+        "rates.completed_drain_rps": {
+          "values": [
+            3.831697,
+            3.781114,
+            3.783437
+          ],
+          "median": 3.783437,
+          "max_relative_deviation": 0.012755597621950615,
+          "tolerance": null,
+          "passed": null
+        }
+      }
+    }
+  ],
+  "protocol_validation": {
+    "coverage_complete": true,
+    "hash_matched": true,
+    "predeclared": false
+  },
+  "eligible_for_policy_comparison": false,
+  "protocol_sha256": "9cbe58f53c0445f4e8635d3d54d3c5a9ca6697d37575de9c6cbc7f7be2ee7e14"
+}

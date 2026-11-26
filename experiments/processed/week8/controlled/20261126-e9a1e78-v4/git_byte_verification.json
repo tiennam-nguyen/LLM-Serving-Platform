@@ -1,0 +1,15 @@
+{
+  "artifact_role": "staged_artifact_byte_verification",
+  "verified_at_utc": "2026-11-26T17:08:40.092981+00:00",
+  "measurement_source": {
+    "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": false
+  },
+  "files_checked": 2088,
+  "imported_payload_files_sha256_match_archive": 2078,
+  "git_index_blobs_equal_workspace_bytes": true,
+  "index_entry_manifest_sha256": "eaa9817fc82004213b46b6a519cc02e7957f552568f57465eb0f23240765b540",
+  "algorithm": "Compare SHA256 to imported archive manifest; compare direct SHA1 Git blob of workspace bytes to staged index for every new artifact.",
+  "proof_file_excluded_from_own_manifest": true
+}

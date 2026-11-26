@@ -1,0 +1,905 @@
+{
+  "schema_version": 1,
+  "test_mode": "live_dual_t4",
+  "experiment_phase": "main",
+  "protocol_sha256": "bc39e41d83206c761c4296db46dc80d7986860f481eaf1005d9629204db24625",
+  "source_git": {
+    "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": false
+  },
+  "full_campaign": true,
+  "planned_runs": 90,
+  "selected_runs": 90,
+  "run_status": "completed",
+  "runs": [
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-low-round_robin-r1.json",
+      "run_id": "20261126T134809Z-w8-steady-mixed-low-round-robin-e9a1e78-bf6708",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T134809Z-w8-steady-mixed-low-round-robin-e9a1e78-bf6708",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-low-least_loaded-r1.json",
+      "run_id": "20261126T135008Z-w8-steady-mixed-low-least-loaded-e9a1e78-7a34ce",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T135008Z-w8-steady-mixed-low-least-loaded-e9a1e78-7a34ce",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-low-least_loaded-r2.json",
+      "run_id": "20261126T135206Z-w8-steady-mixed-low-least-loaded-e9a1e78-7a67c2",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T135206Z-w8-steady-mixed-low-least-loaded-e9a1e78-7a67c2",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-low-round_robin-r2.json",
+      "run_id": "20261126T135408Z-w8-steady-mixed-low-round-robin-e9a1e78-43dbaa",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T135408Z-w8-steady-mixed-low-round-robin-e9a1e78-43dbaa",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-low-round_robin-r3.json",
+      "run_id": "20261126T135609Z-w8-steady-mixed-low-round-robin-e9a1e78-aa2970",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T135609Z-w8-steady-mixed-low-round-robin-e9a1e78-aa2970",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-low-least_loaded-r3.json",
+      "run_id": "20261126T135810Z-w8-steady-mixed-low-least-loaded-e9a1e78-6c48c5",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T135810Z-w8-steady-mixed-low-least-loaded-e9a1e78-6c48c5",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-medium-round_robin-r1.json",
+      "run_id": "20261126T140010Z-w8-steady-mixed-medium-round-rob-e9a1e78-ace91e",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T140010Z-w8-steady-mixed-medium-round-rob-e9a1e78-ace91e",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-medium-least_loaded-r1.json",
+      "run_id": "20261126T140211Z-w8-steady-mixed-medium-least-loa-e9a1e78-f60cbe",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T140211Z-w8-steady-mixed-medium-least-loa-e9a1e78-f60cbe",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-medium-least_loaded-r2.json",
+      "run_id": "20261126T140409Z-w8-steady-mixed-medium-least-loa-e9a1e78-902a86",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T140409Z-w8-steady-mixed-medium-least-loa-e9a1e78-902a86",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-medium-round_robin-r2.json",
+      "run_id": "20261126T140610Z-w8-steady-mixed-medium-round-rob-e9a1e78-e97db6",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T140610Z-w8-steady-mixed-medium-round-rob-e9a1e78-e97db6",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-medium-round_robin-r3.json",
+      "run_id": "20261126T140808Z-w8-steady-mixed-medium-round-rob-e9a1e78-ba8b24",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T140808Z-w8-steady-mixed-medium-round-rob-e9a1e78-ba8b24",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-medium-least_loaded-r3.json",
+      "run_id": "20261126T141009Z-w8-steady-mixed-medium-least-loa-e9a1e78-669d1d",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T141009Z-w8-steady-mixed-medium-least-loa-e9a1e78-669d1d",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-near_saturation-round_robin-r1.json",
+      "run_id": "20261126T141208Z-w8-steady-mixed-near-saturation-e9a1e78-5f8c52",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T141208Z-w8-steady-mixed-near-saturation-e9a1e78-5f8c52",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "dispatch_late": 3,
+        "in_flight_limit": 202
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-near_saturation-least_loaded-r1.json",
+      "run_id": "20261126T141434Z-w8-steady-mixed-near-saturation-e9a1e78-465246",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T141434Z-w8-steady-mixed-near-saturation-e9a1e78-465246",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "in_flight_limit": 202
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-near_saturation-least_loaded-r2.json",
+      "run_id": "20261126T141700Z-w8-steady-mixed-near-saturation-e9a1e78-d3ea7e",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T141700Z-w8-steady-mixed-near-saturation-e9a1e78-d3ea7e",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "in_flight_limit": 202
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-near_saturation-round_robin-r2.json",
+      "run_id": "20261126T141928Z-w8-steady-mixed-near-saturation-e9a1e78-8d58b7",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T141928Z-w8-steady-mixed-near-saturation-e9a1e78-8d58b7",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "dispatch_late": 2,
+        "in_flight_limit": 202
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-near_saturation-round_robin-r3.json",
+      "run_id": "20261126T142155Z-w8-steady-mixed-near-saturation-e9a1e78-14d530",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T142155Z-w8-steady-mixed-near-saturation-e9a1e78-14d530",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "dispatch_late": 2,
+        "in_flight_limit": 203
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-steady_mixed-near_saturation-least_loaded-r3.json",
+      "run_id": "20261126T142421Z-w8-steady-mixed-near-saturation-e9a1e78-ea4129",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T142421Z-w8-steady-mixed-near-saturation-e9a1e78-ea4129",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "in_flight_limit": 202
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-low-round_robin-r1.json",
+      "run_id": "20261126T142647Z-w8-irregular-mixed-low-round-rob-e9a1e78-b3212e",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T142647Z-w8-irregular-mixed-low-round-rob-e9a1e78-b3212e",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-low-least_loaded-r1.json",
+      "run_id": "20261126T142846Z-w8-irregular-mixed-low-least-loa-e9a1e78-4ec6c3",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T142846Z-w8-irregular-mixed-low-least-loa-e9a1e78-4ec6c3",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-low-least_loaded-r2.json",
+      "run_id": "20261126T143046Z-w8-irregular-mixed-low-least-loa-e9a1e78-af4bdd",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T143046Z-w8-irregular-mixed-low-least-loa-e9a1e78-af4bdd",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-low-round_robin-r2.json",
+      "run_id": "20261126T143247Z-w8-irregular-mixed-low-round-rob-e9a1e78-b74962",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T143247Z-w8-irregular-mixed-low-round-rob-e9a1e78-b74962",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-low-round_robin-r3.json",
+      "run_id": "20261126T143448Z-w8-irregular-mixed-low-round-rob-e9a1e78-ad9705",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T143448Z-w8-irregular-mixed-low-round-rob-e9a1e78-ad9705",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-low-least_loaded-r3.json",
+      "run_id": "20261126T143648Z-w8-irregular-mixed-low-least-loa-e9a1e78-4bd201",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T143648Z-w8-irregular-mixed-low-least-loa-e9a1e78-4bd201",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-medium-round_robin-r1.json",
+      "run_id": "20261126T143846Z-w8-irregular-mixed-medium-round-e9a1e78-77fa79",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T143846Z-w8-irregular-mixed-medium-round-e9a1e78-77fa79",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-medium-least_loaded-r1.json",
+      "run_id": "20261126T144048Z-w8-irregular-mixed-medium-least-e9a1e78-e33369",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T144048Z-w8-irregular-mixed-medium-least-e9a1e78-e33369",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-medium-least_loaded-r2.json",
+      "run_id": "20261126T144246Z-w8-irregular-mixed-medium-least-e9a1e78-e4eb7e",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T144246Z-w8-irregular-mixed-medium-least-e9a1e78-e4eb7e",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-medium-round_robin-r2.json",
+      "run_id": "20261126T144449Z-w8-irregular-mixed-medium-round-e9a1e78-92ab28",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T144449Z-w8-irregular-mixed-medium-round-e9a1e78-92ab28",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-medium-round_robin-r3.json",
+      "run_id": "20261126T144650Z-w8-irregular-mixed-medium-round-e9a1e78-dc0b46",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T144650Z-w8-irregular-mixed-medium-round-e9a1e78-dc0b46",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-medium-least_loaded-r3.json",
+      "run_id": "20261126T144853Z-w8-irregular-mixed-medium-least-e9a1e78-ec8631",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T144853Z-w8-irregular-mixed-medium-least-e9a1e78-ec8631",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-near_saturation-round_robin-r1.json",
+      "run_id": "20261126T145050Z-w8-irregular-mixed-near-saturati-e9a1e78-17f306",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T145050Z-w8-irregular-mixed-near-saturati-e9a1e78-17f306",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "in_flight_limit": 203
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-near_saturation-least_loaded-r1.json",
+      "run_id": "20261126T145316Z-w8-irregular-mixed-near-saturati-e9a1e78-e9bddc",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T145316Z-w8-irregular-mixed-near-saturati-e9a1e78-e9bddc",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "in_flight_limit": 202
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-near_saturation-least_loaded-r2.json",
+      "run_id": "20261126T145544Z-w8-irregular-mixed-near-saturati-e9a1e78-e68696",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T145544Z-w8-irregular-mixed-near-saturati-e9a1e78-e68696",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "dispatch_late": 1,
+        "in_flight_limit": 202
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-near_saturation-round_robin-r2.json",
+      "run_id": "20261126T145808Z-w8-irregular-mixed-near-saturati-e9a1e78-48d0b5",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T145808Z-w8-irregular-mixed-near-saturati-e9a1e78-48d0b5",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "in_flight_limit": 202
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-near_saturation-round_robin-r3.json",
+      "run_id": "20261126T150034Z-w8-irregular-mixed-near-saturati-e9a1e78-7f1261",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T150034Z-w8-irregular-mixed-near-saturati-e9a1e78-7f1261",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "dispatch_late": 3,
+        "in_flight_limit": 202
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-irregular_mixed-near_saturation-least_loaded-r3.json",
+      "run_id": "20261126T150300Z-w8-irregular-mixed-near-saturati-e9a1e78-60901a",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T150300Z-w8-irregular-mixed-near-saturati-e9a1e78-60901a",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "in_flight_limit": 203
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-low-round_robin-r1.json",
+      "run_id": "20261126T150529Z-w8-burst-mixed-low-round-robin-r-e9a1e78-df0551",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T150529Z-w8-burst-mixed-low-round-robin-r-e9a1e78-df0551",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-low-least_loaded-r1.json",
+      "run_id": "20261126T150728Z-w8-burst-mixed-low-least-loaded-e9a1e78-72f8f9",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T150728Z-w8-burst-mixed-low-least-loaded-e9a1e78-72f8f9",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-low-least_loaded-r2.json",
+      "run_id": "20261126T150927Z-w8-burst-mixed-low-least-loaded-e9a1e78-10a9ad",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T150927Z-w8-burst-mixed-low-least-loaded-e9a1e78-10a9ad",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-low-round_robin-r2.json",
+      "run_id": "20261126T151127Z-w8-burst-mixed-low-round-robin-r-e9a1e78-7a6b8f",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T151127Z-w8-burst-mixed-low-round-robin-r-e9a1e78-7a6b8f",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-low-round_robin-r3.json",
+      "run_id": "20261126T151327Z-w8-burst-mixed-low-round-robin-r-e9a1e78-ba8c05",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T151327Z-w8-burst-mixed-low-round-robin-r-e9a1e78-ba8c05",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-low-least_loaded-r3.json",
+      "run_id": "20261126T151528Z-w8-burst-mixed-low-least-loaded-e9a1e78-5473e5",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T151528Z-w8-burst-mixed-low-least-loaded-e9a1e78-5473e5",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-medium-round_robin-r1.json",
+      "run_id": "20261126T151728Z-w8-burst-mixed-medium-round-robi-e9a1e78-d847ae",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T151728Z-w8-burst-mixed-medium-round-robi-e9a1e78-d847ae",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-medium-least_loaded-r1.json",
+      "run_id": "20261126T151931Z-w8-burst-mixed-medium-least-load-e9a1e78-6f1746",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T151931Z-w8-burst-mixed-medium-least-load-e9a1e78-6f1746",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-medium-least_loaded-r2.json",
+      "run_id": "20261126T152130Z-w8-burst-mixed-medium-least-load-e9a1e78-fdeb20",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T152130Z-w8-burst-mixed-medium-least-load-e9a1e78-fdeb20",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-medium-round_robin-r2.json",
+      "run_id": "20261126T152330Z-w8-burst-mixed-medium-round-robi-e9a1e78-b61cc7",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T152330Z-w8-burst-mixed-medium-round-robi-e9a1e78-b61cc7",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-medium-round_robin-r3.json",
+      "run_id": "20261126T152531Z-w8-burst-mixed-medium-round-robi-e9a1e78-22e9ad",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T152531Z-w8-burst-mixed-medium-round-robi-e9a1e78-22e9ad",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-medium-least_loaded-r3.json",
+      "run_id": "20261126T152732Z-w8-burst-mixed-medium-least-load-e9a1e78-2d7d46",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T152732Z-w8-burst-mixed-medium-least-load-e9a1e78-2d7d46",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-near_saturation-round_robin-r1.json",
+      "run_id": "20261126T152929Z-w8-burst-mixed-near-saturation-r-e9a1e78-545a06",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T152929Z-w8-burst-mixed-near-saturation-r-e9a1e78-545a06",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "in_flight_limit": 192
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-near_saturation-least_loaded-r1.json",
+      "run_id": "20261126T153157Z-w8-burst-mixed-near-saturation-l-e9a1e78-ac6d7d",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T153157Z-w8-burst-mixed-near-saturation-l-e9a1e78-ac6d7d",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "in_flight_limit": 183
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-near_saturation-least_loaded-r2.json",
+      "run_id": "20261126T153425Z-w8-burst-mixed-near-saturation-l-e9a1e78-e0a92d",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T153425Z-w8-burst-mixed-near-saturation-l-e9a1e78-e0a92d",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "dispatch_late": 1,
+        "in_flight_limit": 183
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-near_saturation-round_robin-r2.json",
+      "run_id": "20261126T153655Z-w8-burst-mixed-near-saturation-r-e9a1e78-0c8f32",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T153655Z-w8-burst-mixed-near-saturation-r-e9a1e78-0c8f32",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "dispatch_late": 1,
+        "in_flight_limit": 184
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-near_saturation-round_robin-r3.json",
+      "run_id": "20261126T153922Z-w8-burst-mixed-near-saturation-r-e9a1e78-598b35",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T153922Z-w8-burst-mixed-near-saturation-r-e9a1e78-598b35",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "in_flight_limit": 187
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-burst_mixed-near_saturation-least_loaded-r3.json",
+      "run_id": "20261126T154148Z-w8-burst-mixed-near-saturation-l-e9a1e78-28006a",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T154148Z-w8-burst-mixed-near-saturation-l-e9a1e78-28006a",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "dispatch_late": 3,
+        "in_flight_limit": 182
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-low-round_robin-r1.json",
+      "run_id": "20261126T154416Z-w8-ramp-mixed-low-round-robin-r1-e9a1e78-4612a7",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T154416Z-w8-ramp-mixed-low-round-robin-r1-e9a1e78-4612a7",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-low-least_loaded-r1.json",
+      "run_id": "20261126T154616Z-w8-ramp-mixed-low-least-loaded-r-e9a1e78-814a59",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T154616Z-w8-ramp-mixed-low-least-loaded-r-e9a1e78-814a59",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-low-least_loaded-r2.json",
+      "run_id": "20261126T154819Z-w8-ramp-mixed-low-least-loaded-r-e9a1e78-02ebc7",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T154819Z-w8-ramp-mixed-low-least-loaded-r-e9a1e78-02ebc7",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-low-round_robin-r2.json",
+      "run_id": "20261126T155019Z-w8-ramp-mixed-low-round-robin-r2-e9a1e78-8b21b6",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T155019Z-w8-ramp-mixed-low-round-robin-r2-e9a1e78-8b21b6",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-low-round_robin-r3.json",
+      "run_id": "20261126T155220Z-w8-ramp-mixed-low-round-robin-r3-e9a1e78-6020b0",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T155220Z-w8-ramp-mixed-low-round-robin-r3-e9a1e78-6020b0",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-low-least_loaded-r3.json",
+      "run_id": "20261126T155420Z-w8-ramp-mixed-low-least-loaded-r-e9a1e78-6bf04a",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T155420Z-w8-ramp-mixed-low-least-loaded-r-e9a1e78-6bf04a",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-medium-round_robin-r1.json",
+      "run_id": "20261126T155623Z-w8-ramp-mixed-medium-round-robin-e9a1e78-3dfe2d",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T155623Z-w8-ramp-mixed-medium-round-robin-e9a1e78-3dfe2d",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-medium-least_loaded-r1.json",
+      "run_id": "20261126T155828Z-w8-ramp-mixed-medium-least-loade-e9a1e78-5418f2",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T155828Z-w8-ramp-mixed-medium-least-loade-e9a1e78-5418f2",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-medium-least_loaded-r2.json",
+      "run_id": "20261126T160031Z-w8-ramp-mixed-medium-least-loade-e9a1e78-ab8500",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T160031Z-w8-ramp-mixed-medium-least-loade-e9a1e78-ab8500",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-medium-round_robin-r2.json",
+      "run_id": "20261126T160235Z-w8-ramp-mixed-medium-round-robin-e9a1e78-dbc652",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T160235Z-w8-ramp-mixed-medium-round-robin-e9a1e78-dbc652",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-medium-round_robin-r3.json",
+      "run_id": "20261126T160437Z-w8-ramp-mixed-medium-round-robin-e9a1e78-351163",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T160437Z-w8-ramp-mixed-medium-round-robin-e9a1e78-351163",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-medium-least_loaded-r3.json",
+      "run_id": "20261126T160639Z-w8-ramp-mixed-medium-least-loade-e9a1e78-d92120",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T160639Z-w8-ramp-mixed-medium-least-loade-e9a1e78-d92120",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-near_saturation-round_robin-r1.json",
+      "run_id": "20261126T160839Z-w8-ramp-mixed-near-saturation-ro-e9a1e78-a0612c",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T160839Z-w8-ramp-mixed-near-saturation-ro-e9a1e78-a0612c",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "dispatch_late": 2,
+        "in_flight_limit": 196
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-near_saturation-least_loaded-r1.json",
+      "run_id": "20261126T161108Z-w8-ramp-mixed-near-saturation-le-e9a1e78-495605",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T161108Z-w8-ramp-mixed-near-saturation-le-e9a1e78-495605",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "dispatch_late": 3,
+        "in_flight_limit": 189
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-near_saturation-least_loaded-r2.json",
+      "run_id": "20261126T161334Z-w8-ramp-mixed-near-saturation-le-e9a1e78-4b3fff",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T161334Z-w8-ramp-mixed-near-saturation-le-e9a1e78-4b3fff",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "in_flight_limit": 188
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-near_saturation-round_robin-r2.json",
+      "run_id": "20261126T161604Z-w8-ramp-mixed-near-saturation-ro-e9a1e78-1ab5be",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T161604Z-w8-ramp-mixed-near-saturation-ro-e9a1e78-1ab5be",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "in_flight_limit": 192
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-near_saturation-round_robin-r3.json",
+      "run_id": "20261126T161832Z-w8-ramp-mixed-near-saturation-ro-e9a1e78-16765e",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T161832Z-w8-ramp-mixed-near-saturation-ro-e9a1e78-16765e",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "dispatch_late": 1,
+        "in_flight_limit": 194
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-ramp_mixed-near_saturation-least_loaded-r3.json",
+      "run_id": "20261126T162059Z-w8-ramp-mixed-near-saturation-le-e9a1e78-2d4307",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T162059Z-w8-ramp-mixed-near-saturation-le-e9a1e78-2d4307",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "dispatch_late": 2,
+        "in_flight_limit": 192
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-low-round_robin-r1.json",
+      "run_id": "20261126T162328Z-w8-microburst-mixed-low-round-ro-e9a1e78-67eb7f",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T162328Z-w8-microburst-mixed-low-round-ro-e9a1e78-67eb7f",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-low-least_loaded-r1.json",
+      "run_id": "20261126T162525Z-w8-microburst-mixed-low-least-lo-e9a1e78-97c079",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T162525Z-w8-microburst-mixed-low-least-lo-e9a1e78-97c079",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-low-least_loaded-r2.json",
+      "run_id": "20261126T162725Z-w8-microburst-mixed-low-least-lo-e9a1e78-a17089",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T162725Z-w8-microburst-mixed-low-least-lo-e9a1e78-a17089",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-low-round_robin-r2.json",
+      "run_id": "20261126T162924Z-w8-microburst-mixed-low-round-ro-e9a1e78-3fb814",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T162924Z-w8-microburst-mixed-low-round-ro-e9a1e78-3fb814",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-low-round_robin-r3.json",
+      "run_id": "20261126T163123Z-w8-microburst-mixed-low-round-ro-e9a1e78-da03a6",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T163123Z-w8-microburst-mixed-low-round-ro-e9a1e78-da03a6",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-low-least_loaded-r3.json",
+      "run_id": "20261126T163319Z-w8-microburst-mixed-low-least-lo-e9a1e78-a35a8c",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T163319Z-w8-microburst-mixed-low-least-lo-e9a1e78-a35a8c",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-medium-round_robin-r1.json",
+      "run_id": "20261126T163518Z-w8-microburst-mixed-medium-round-e9a1e78-855849",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T163518Z-w8-microburst-mixed-medium-round-e9a1e78-855849",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-medium-least_loaded-r1.json",
+      "run_id": "20261126T163718Z-w8-microburst-mixed-medium-least-e9a1e78-f36240",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T163718Z-w8-microburst-mixed-medium-least-e9a1e78-f36240",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-medium-least_loaded-r2.json",
+      "run_id": "20261126T163917Z-w8-microburst-mixed-medium-least-e9a1e78-02a54e",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T163917Z-w8-microburst-mixed-medium-least-e9a1e78-02a54e",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-medium-round_robin-r2.json",
+      "run_id": "20261126T164116Z-w8-microburst-mixed-medium-round-e9a1e78-388c0a",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T164116Z-w8-microburst-mixed-medium-round-e9a1e78-388c0a",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-medium-round_robin-r3.json",
+      "run_id": "20261126T164316Z-w8-microburst-mixed-medium-round-e9a1e78-e97eba",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T164316Z-w8-microburst-mixed-medium-round-e9a1e78-e97eba",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-medium-least_loaded-r3.json",
+      "run_id": "20261126T164516Z-w8-microburst-mixed-medium-least-e9a1e78-79dbaf",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T164516Z-w8-microburst-mixed-medium-least-e9a1e78-79dbaf",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {},
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-near_saturation-round_robin-r1.json",
+      "run_id": "20261126T164716Z-w8-microburst-mixed-near-saturat-e9a1e78-e8e9b8",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T164716Z-w8-microburst-mixed-near-saturat-e9a1e78-e8e9b8",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "in_flight_limit": 209
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-near_saturation-least_loaded-r1.json",
+      "run_id": "20261126T164941Z-w8-microburst-mixed-near-saturat-e9a1e78-ac41be",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T164941Z-w8-microburst-mixed-near-saturat-e9a1e78-ac41be",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "in_flight_limit": 207
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-near_saturation-least_loaded-r2.json",
+      "run_id": "20261126T165204Z-w8-microburst-mixed-near-saturat-e9a1e78-b12768",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T165204Z-w8-microburst-mixed-near-saturat-e9a1e78-b12768",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "in_flight_limit": 208
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-near_saturation-round_robin-r2.json",
+      "run_id": "20261126T165430Z-w8-microburst-mixed-near-saturat-e9a1e78-76211b",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T165430Z-w8-microburst-mixed-near-saturat-e9a1e78-76211b",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "dispatch_late": 45,
+        "in_flight_limit": 209
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-near_saturation-round_robin-r3.json",
+      "run_id": "20261126T165656Z-w8-microburst-mixed-near-saturat-e9a1e78-1ccedd",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T165656Z-w8-microburst-mixed-near-saturat-e9a1e78-1ccedd",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "dispatch_late": 26,
+        "in_flight_limit": 206
+      },
+      "policy_check": "passed"
+    },
+    {
+      "manifest": "/kaggle/working/week8-controlled/main/manifests/w8-microburst_mixed-near_saturation-least_loaded-r3.json",
+      "run_id": "20261126T165922Z-w8-microburst-mixed-near-saturat-e9a1e78-702e36",
+      "run_dir": "/kaggle/working/week8-controlled/main/execution/runs/20261126T165922Z-w8-microburst-mixed-near-saturat-e9a1e78-702e36",
+      "run_status": "completed",
+      "failure_type": null,
+      "warning_counts": {
+        "in_flight_limit": 207
+      },
+      "policy_check": "passed"
+    }
+  ],
+  "warning_counts": {
+    "dispatch_late": 95,
+    "in_flight_limit": 5935
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "source": {
+    "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": false
+  },
+  "test_mode": "live_dual_t4",
+  "started_at_utc": "2026-11-26T12:19:54.548957+00:00",
+  "status": "completed",
+  "methodology_gate_passed": false,
+  "warnings": [
+    {
+      "type": "calibration_unreliable",
+      "detail": "Calibration noise exceeds preregistered tolerance limit"
+    },
+    {
+      "type": "measurement_warnings",
+      "phase": "main",
+      "counts": {
+        "dispatch_late": 95,
+        "in_flight_limit": 5935
+      }
+    },
+    {
+      "type": "methodology_gate_not_passed"
+    }
+  ],
+  "model_cache": {
+    "model_id": "Qwen/Qwen2.5-3B-Instruct",
+    "snapshot_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "snapshot_path": "/root/.cache/huggingface/hub/models--Qwen--Qwen2.5-3B-Instruct/snapshots/aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "prefetched_at_utc": "2026-11-26T12:20:30.028244+00:00"
+  },
+  "conditioning_runs": 10,
+  "preparation_complete": true,
+  "conditioning_run_ids": [
+    "20261126T122435Z-w8-steady-mixed-medium-round-rob-e9a1e78-a5060e",
+    "20261126T122709Z-w8-steady-mixed-medium-least-loa-e9a1e78-713dda",
+    "20261126T122909Z-w8-irregular-mixed-medium-round-e9a1e78-7e11b0",
+    "20261126T123110Z-w8-irregular-mixed-medium-least-e9a1e78-1be7be",
+    "20261126T123310Z-w8-burst-mixed-medium-round-robi-e9a1e78-d2e5af",
+    "20261126T123512Z-w8-burst-mixed-medium-least-load-e9a1e78-f0c75d",
+    "20261126T123710Z-w8-ramp-mixed-medium-round-robin-e9a1e78-cf1960",
+    "20261126T123914Z-w8-ramp-mixed-medium-least-loade-e9a1e78-a45682",
+    "20261126T124115Z-w8-microburst-mixed-medium-round-e9a1e78-71cf0b",
+    "20261126T124317Z-w8-microburst-mixed-medium-least-e9a1e78-433141"
+  ],
+  "main_runs": 90,
+  "ended_at_utc": "2026-11-26T17:00:28.229964+00:00"
+}

@@ -1,0 +1,21 @@
+{
+  "verified_at_utc": "2026-11-26T17:06:32.709086+00:00",
+  "kernel_version": 4,
+  "provider_status_observed": "KernelWorkerStatus.COMPLETE",
+  "structured_study_status": "completed",
+  "methodology_gate_passed": false,
+  "source": {
+    "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": false
+  },
+  "downloaded_log_sha256": "baf5a868c617551915dd766c02e8251414e069f44f9d37e7bd5efb4f7dc6efe0",
+  "log_format": "Kaggle JSON stream records, preserved without reformatting",
+  "imported_log_sha256": "baf5a868c617551915dd766c02e8251414e069f44f9d37e7bd5efb4f7dc6efe0",
+  "final_log_report_matches_archive_report": true,
+  "gpu_quota_snapshot_after_completion": {
+    "used_hours": 7.36,
+    "remaining_hours": 22.64,
+    "total_hours": 30
+  }
+}

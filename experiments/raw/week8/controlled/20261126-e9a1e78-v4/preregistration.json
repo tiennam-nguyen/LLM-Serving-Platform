@@ -1,0 +1,49 @@
+{
+  "created_at_utc": "2026-11-26T12:19:54.548957+00:00",
+  "source": {
+    "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": false
+  },
+  "calibration_rule": {
+    "profiles": [
+      "steady_mixed",
+      "irregular_mixed",
+      "burst_mixed",
+      "ramp_mixed",
+      "microburst_mixed"
+    ],
+    "load_level": "medium",
+    "repetitions": 3,
+    "method": "twice_max_relative_deviation_across_policy_profile_groups",
+    "multiplier": 2.0,
+    "maximum_allowed_tolerance": 0.2,
+    "primary_metrics": [
+      "latency_ms.ttft_p50",
+      "latency_ms.e2e_p50",
+      "rates.completed_drain_rps"
+    ]
+  },
+  "calibration_runs": 30,
+  "main_runs": 90,
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "window_ms": 20000,
+  "main_analysis_may_fail_repeatability": true,
+  "preparation_plan": {
+    "model_cache": "prefetch_snapshot_then_offline_workers",
+    "worker_startup": "parallel_for_every_conditioning_calibration_and_main_run",
+    "conditioning_runs": 10,
+    "conditioning_profile_load": "one_pair_per_profile_at_medium",
+    "conditioning_not_used_to_derive_tolerances": true,
+    "gpu_telemetry_interval_s": 1
+  },
+  "suite": "stress",
+  "execution_semantics": "observe_v1",
+  "failure_policy": {
+    "policy_mismatch": "failed",
+    "slow_dispatch_or_inference": "measure_warn_continue",
+    "in_flight_limit": "record_unsent_continue_without_client_queue",
+    "unreliable_calibration": "continue_main_without_verified_tolerances",
+    "unavailable_infrastructure": "blocked"
+  }
+}

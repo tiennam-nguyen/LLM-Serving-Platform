@@ -1,0 +1,100 @@
+{
+  "schema_version": 2,
+  "artifact_role": "benchmark_summary",
+  "run_id": "20261126T165204Z-w8-microburst-mixed-near-saturat-e9a1e78-b12768",
+  "run_status": "completed",
+  "policy": "least_loaded",
+  "comparison": {
+    "id": "w8-microburst_mixed-near_saturation",
+    "load_level": "near_saturation",
+    "repetition": 2
+  },
+  "observed_policies": [
+    "least_loaded"
+  ],
+  "percentile_method": "linear_interpolation_r7",
+  "measurement_window_ms": 20000.0,
+  "drain_span_s": 46.348177,
+  "workload_sha256": "234cb0b28387468117cc33164b8f6cdeb474bb3eac6edd64da6e14c376d339c0",
+  "schedule_sha256": "7589e0983065a4c2bebaa7ceff95c3ba67e4dc50f9fbf4cd85139f4a48a40eec",
+  "schedule_file_sha256": "7589e0983065a4c2bebaa7ceff95c3ba67e4dc50f9fbf4cd85139f4a48a40eec",
+  "hash_normalization": "crlf_to_lf",
+  "source_git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+  "source_git_dirty": false,
+  "execution_mode": "live_dual_t4",
+  "experiment_phase": "main",
+  "requests": {
+    "planned": 560,
+    "sent": 352,
+    "not_dispatched": 208,
+    "ledger_missing": 0,
+    "observed": 352,
+    "completed": 352,
+    "error": 0,
+    "cancelled": 0,
+    "missing_trace": 0,
+    "both_completed": 352
+  },
+  "rates": {
+    "offered_rps": 28.0,
+    "dispatched_rps": 17.6,
+    "completed_window_rps": 0.45,
+    "completed_drain_rps": 7.594689,
+    "gateway_error_rate": 0.0,
+    "gateway_cancelled_rate": 0.0,
+    "noncompletion_rate": 0.371429
+  },
+  "latency_ms": {
+    "routing_p50": 0.039,
+    "routing_p95": 0.093,
+    "routing_p99": 0.811,
+    "ttft_p50": 15130.08,
+    "ttft_p95": 30513.725,
+    "ttft_p99": 32487.024,
+    "e2e_p50": 34341.75,
+    "e2e_p95": 38794.416,
+    "e2e_p99": 39232.572
+  },
+  "latency_sample_counts": {
+    "routing": {
+      "present": 352,
+      "missing": 0
+    },
+    "ttft": {
+      "present": 352,
+      "missing": 0
+    },
+    "e2e": {
+      "present": 352,
+      "missing": 0
+    }
+  },
+  "dispatch_lag_ms": {
+    "sample_count": 352,
+    "p50": 17.724,
+    "p95": 47.363,
+    "p99": 55.525,
+    "max": 59.096
+  },
+  "worker_distribution": {
+    "worker-vllm-0": 176,
+    "worker-vllm-1": 176
+  },
+  "no_worker_count": 0,
+  "backlog_at_window_end": 343,
+  "validation": {
+    "valid": true,
+    "issues": [],
+    "comparison_eligible": false,
+    "ineligible_reasons": [
+      "in_flight_limit"
+    ]
+  },
+  "p99_statistical_note": "TTFT/E2E use n=352 completed traces; low-N P99 is descriptive.",
+  "execution_semantics": "observe_v1",
+  "policy_check": "passed",
+  "warning_counts": {
+    "in_flight_limit": 208
+  },
+  "dispatch_span_s": 20.0
+}

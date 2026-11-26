@@ -1,0 +1,304 @@
+{
+  "artifact_role": "independent_imported_workload_token_verification",
+  "verified_at_utc": "2026-11-26T17:02:15.755605+00:00",
+  "measurement_source": {
+    "git_revision": "e9a1e780a6686210bafcce5aa26fc0bbe5b25d14",
+    "branch": "feat/w8-b-workload-analysis",
+    "git_dirty": false
+  },
+  "model_id": "Qwen/Qwen2.5-3B-Instruct",
+  "snapshot_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "transformers_version": "5.20.2",
+  "execution": "CPU tokenizer only, offline cache; no torch/vllm/GPU/model weights",
+  "unique_messages_tokenized": 627,
+  "phases": {
+    "conditioning": {
+      "workloads": {
+        "steady_mixed_low.jsonl": {
+          "rows_verified": 20,
+          "all_recorded_counts_exact": true,
+          "sha256": "3a509fe481dba2d5671732f7c9af5b43cd45eb51a788605fc69d4efcf85141f6"
+        },
+        "steady_mixed_medium.jsonl": {
+          "rows_verified": 80,
+          "all_recorded_counts_exact": true,
+          "sha256": "12e45954d1c5837d6a6d4f8f162b23dc2cdb6fb8461beab2e537faace4397d15"
+        },
+        "steady_mixed_near_saturation.jsonl": {
+          "rows_verified": 560,
+          "all_recorded_counts_exact": true,
+          "sha256": "6d0436de81c6db411a4ba7c3536d2fe0e32a347f97851c224bd1265a391fabdc"
+        },
+        "irregular_mixed_low.jsonl": {
+          "rows_verified": 20,
+          "all_recorded_counts_exact": true,
+          "sha256": "29ac80ef9a21e72205b84a37344a9e1c57f7c535160a035d6182ac5684877eb1"
+        },
+        "irregular_mixed_medium.jsonl": {
+          "rows_verified": 80,
+          "all_recorded_counts_exact": true,
+          "sha256": "206de7eacf1ca2e10b4501ea6c9e00204e19cd107f46fba32e6500a1829bad0c"
+        },
+        "irregular_mixed_near_saturation.jsonl": {
+          "rows_verified": 560,
+          "all_recorded_counts_exact": true,
+          "sha256": "00788171bbf71662ab4a508337a80b2f5a3fcdedddcff009d61bb9cf71b1d784"
+        },
+        "burst_mixed_low.jsonl": {
+          "rows_verified": 20,
+          "all_recorded_counts_exact": true,
+          "sha256": "0e8e46564cae7de32d69bdc2dc9818bee784c9a47de699bc8f1ff05425e60528"
+        },
+        "burst_mixed_medium.jsonl": {
+          "rows_verified": 80,
+          "all_recorded_counts_exact": true,
+          "sha256": "7e0cd4f56699db12663af6b0057cd96ca09303c20bc66f6ef9e923ae3ace4094"
+        },
+        "burst_mixed_near_saturation.jsonl": {
+          "rows_verified": 560,
+          "all_recorded_counts_exact": true,
+          "sha256": "12d6c816780fb17fc6068f640b42733782b9805728895cbf7f310a65aa158fd4"
+        },
+        "ramp_mixed_low.jsonl": {
+          "rows_verified": 20,
+          "all_recorded_counts_exact": true,
+          "sha256": "6c9e315c0de2fbde6da44091248d0c4ba113efceb4d6edecb565d51b31778461"
+        },
+        "ramp_mixed_medium.jsonl": {
+          "rows_verified": 80,
+          "all_recorded_counts_exact": true,
+          "sha256": "a1bf0ad1836d00c0c06c76ee07872f192665cd13c2b153d7b1d814e160b88eaf"
+        },
+        "ramp_mixed_near_saturation.jsonl": {
+          "rows_verified": 560,
+          "all_recorded_counts_exact": true,
+          "sha256": "b8cc3e7a03554c946176c7004f225eee478056b7a80991ff8951c9d7d8b8bfb0"
+        },
+        "microburst_mixed_low.jsonl": {
+          "rows_verified": 20,
+          "all_recorded_counts_exact": true,
+          "sha256": "6285e49773e9b418b34f16350aea2bcc195aac36e57979f3c60483e5b0cf7297"
+        },
+        "microburst_mixed_medium.jsonl": {
+          "rows_verified": 80,
+          "all_recorded_counts_exact": true,
+          "sha256": "ad5e89252d6fa731d273c9a0bb7ec5d16663c71e7be490eb287868615e092350"
+        },
+        "microburst_mixed_near_saturation.jsonl": {
+          "rows_verified": 560,
+          "all_recorded_counts_exact": true,
+          "sha256": "234cb0b28387468117cc33164b8f6cdeb474bb3eac6edd64da6e14c376d339c0"
+        }
+      },
+      "token_bands_observed": {
+        "short": {
+          "min": 99,
+          "max": 99,
+          "rows": 1105
+        },
+        "long": {
+          "min": 1044,
+          "max": 1044,
+          "rows": 1090
+        },
+        "medium": {
+          "min": 393,
+          "max": 393,
+          "rows": 1105
+        }
+      }
+    },
+    "calibration": {
+      "workloads": {
+        "steady_mixed_low.jsonl": {
+          "rows_verified": 20,
+          "all_recorded_counts_exact": true,
+          "sha256": "3a509fe481dba2d5671732f7c9af5b43cd45eb51a788605fc69d4efcf85141f6"
+        },
+        "steady_mixed_medium.jsonl": {
+          "rows_verified": 80,
+          "all_recorded_counts_exact": true,
+          "sha256": "12e45954d1c5837d6a6d4f8f162b23dc2cdb6fb8461beab2e537faace4397d15"
+        },
+        "steady_mixed_near_saturation.jsonl": {
+          "rows_verified": 560,
+          "all_recorded_counts_exact": true,
+          "sha256": "6d0436de81c6db411a4ba7c3536d2fe0e32a347f97851c224bd1265a391fabdc"
+        },
+        "irregular_mixed_low.jsonl": {
+          "rows_verified": 20,
+          "all_recorded_counts_exact": true,
+          "sha256": "29ac80ef9a21e72205b84a37344a9e1c57f7c535160a035d6182ac5684877eb1"
+        },
+        "irregular_mixed_medium.jsonl": {
+          "rows_verified": 80,
+          "all_recorded_counts_exact": true,
+          "sha256": "206de7eacf1ca2e10b4501ea6c9e00204e19cd107f46fba32e6500a1829bad0c"
+        },
+        "irregular_mixed_near_saturation.jsonl": {
+          "rows_verified": 560,
+          "all_recorded_counts_exact": true,
+          "sha256": "00788171bbf71662ab4a508337a80b2f5a3fcdedddcff009d61bb9cf71b1d784"
+        },
+        "burst_mixed_low.jsonl": {
+          "rows_verified": 20,
+          "all_recorded_counts_exact": true,
+          "sha256": "0e8e46564cae7de32d69bdc2dc9818bee784c9a47de699bc8f1ff05425e60528"
+        },
+        "burst_mixed_medium.jsonl": {
+          "rows_verified": 80,
+          "all_recorded_counts_exact": true,
+          "sha256": "7e0cd4f56699db12663af6b0057cd96ca09303c20bc66f6ef9e923ae3ace4094"
+        },
+        "burst_mixed_near_saturation.jsonl": {
+          "rows_verified": 560,
+          "all_recorded_counts_exact": true,
+          "sha256": "12d6c816780fb17fc6068f640b42733782b9805728895cbf7f310a65aa158fd4"
+        },
+        "ramp_mixed_low.jsonl": {
+          "rows_verified": 20,
+          "all_recorded_counts_exact": true,
+          "sha256": "6c9e315c0de2fbde6da44091248d0c4ba113efceb4d6edecb565d51b31778461"
+        },
+        "ramp_mixed_medium.jsonl": {
+          "rows_verified": 80,
+          "all_recorded_counts_exact": true,
+          "sha256": "a1bf0ad1836d00c0c06c76ee07872f192665cd13c2b153d7b1d814e160b88eaf"
+        },
+        "ramp_mixed_near_saturation.jsonl": {
+          "rows_verified": 560,
+          "all_recorded_counts_exact": true,
+          "sha256": "b8cc3e7a03554c946176c7004f225eee478056b7a80991ff8951c9d7d8b8bfb0"
+        },
+        "microburst_mixed_low.jsonl": {
+          "rows_verified": 20,
+          "all_recorded_counts_exact": true,
+          "sha256": "6285e49773e9b418b34f16350aea2bcc195aac36e57979f3c60483e5b0cf7297"
+        },
+        "microburst_mixed_medium.jsonl": {
+          "rows_verified": 80,
+          "all_recorded_counts_exact": true,
+          "sha256": "ad5e89252d6fa731d273c9a0bb7ec5d16663c71e7be490eb287868615e092350"
+        },
+        "microburst_mixed_near_saturation.jsonl": {
+          "rows_verified": 560,
+          "all_recorded_counts_exact": true,
+          "sha256": "234cb0b28387468117cc33164b8f6cdeb474bb3eac6edd64da6e14c376d339c0"
+        }
+      },
+      "token_bands_observed": {
+        "short": {
+          "min": 99,
+          "max": 99,
+          "rows": 1105
+        },
+        "long": {
+          "min": 1044,
+          "max": 1044,
+          "rows": 1090
+        },
+        "medium": {
+          "min": 393,
+          "max": 393,
+          "rows": 1105
+        }
+      }
+    },
+    "main": {
+      "workloads": {
+        "steady_mixed_low.jsonl": {
+          "rows_verified": 20,
+          "all_recorded_counts_exact": true,
+          "sha256": "3a509fe481dba2d5671732f7c9af5b43cd45eb51a788605fc69d4efcf85141f6"
+        },
+        "steady_mixed_medium.jsonl": {
+          "rows_verified": 80,
+          "all_recorded_counts_exact": true,
+          "sha256": "12e45954d1c5837d6a6d4f8f162b23dc2cdb6fb8461beab2e537faace4397d15"
+        },
+        "steady_mixed_near_saturation.jsonl": {
+          "rows_verified": 560,
+          "all_recorded_counts_exact": true,
+          "sha256": "6d0436de81c6db411a4ba7c3536d2fe0e32a347f97851c224bd1265a391fabdc"
+        },
+        "irregular_mixed_low.jsonl": {
+          "rows_verified": 20,
+          "all_recorded_counts_exact": true,
+          "sha256": "29ac80ef9a21e72205b84a37344a9e1c57f7c535160a035d6182ac5684877eb1"
+        },
+        "irregular_mixed_medium.jsonl": {
+          "rows_verified": 80,
+          "all_recorded_counts_exact": true,
+          "sha256": "206de7eacf1ca2e10b4501ea6c9e00204e19cd107f46fba32e6500a1829bad0c"
+        },
+        "irregular_mixed_near_saturation.jsonl": {
+          "rows_verified": 560,
+          "all_recorded_counts_exact": true,
+          "sha256": "00788171bbf71662ab4a508337a80b2f5a3fcdedddcff009d61bb9cf71b1d784"
+        },
+        "burst_mixed_low.jsonl": {
+          "rows_verified": 20,
+          "all_recorded_counts_exact": true,
+          "sha256": "0e8e46564cae7de32d69bdc2dc9818bee784c9a47de699bc8f1ff05425e60528"
+        },
+        "burst_mixed_medium.jsonl": {
+          "rows_verified": 80,
+          "all_recorded_counts_exact": true,
+          "sha256": "7e0cd4f56699db12663af6b0057cd96ca09303c20bc66f6ef9e923ae3ace4094"
+        },
+        "burst_mixed_near_saturation.jsonl": {
+          "rows_verified": 560,
+          "all_recorded_counts_exact": true,
+          "sha256": "12d6c816780fb17fc6068f640b42733782b9805728895cbf7f310a65aa158fd4"
+        },
+        "ramp_mixed_low.jsonl": {
+          "rows_verified": 20,
+          "all_recorded_counts_exact": true,
+          "sha256": "6c9e315c0de2fbde6da44091248d0c4ba113efceb4d6edecb565d51b31778461"
+        },
+        "ramp_mixed_medium.jsonl": {
+          "rows_verified": 80,
+          "all_recorded_counts_exact": true,
+          "sha256": "a1bf0ad1836d00c0c06c76ee07872f192665cd13c2b153d7b1d814e160b88eaf"
+        },
+        "ramp_mixed_near_saturation.jsonl": {
+          "rows_verified": 560,
+          "all_recorded_counts_exact": true,
+          "sha256": "b8cc3e7a03554c946176c7004f225eee478056b7a80991ff8951c9d7d8b8bfb0"
+        },
+        "microburst_mixed_low.jsonl": {
+          "rows_verified": 20,
+          "all_recorded_counts_exact": true,
+          "sha256": "6285e49773e9b418b34f16350aea2bcc195aac36e57979f3c60483e5b0cf7297"
+        },
+        "microburst_mixed_medium.jsonl": {
+          "rows_verified": 80,
+          "all_recorded_counts_exact": true,
+          "sha256": "ad5e89252d6fa731d273c9a0bb7ec5d16663c71e7be490eb287868615e092350"
+        },
+        "microburst_mixed_near_saturation.jsonl": {
+          "rows_verified": 560,
+          "all_recorded_counts_exact": true,
+          "sha256": "234cb0b28387468117cc33164b8f6cdeb474bb3eac6edd64da6e14c376d339c0"
+        }
+      },
+      "token_bands_observed": {
+        "short": {
+          "min": 99,
+          "max": 99,
+          "rows": 1105
+        },
+        "long": {
+          "min": 1044,
+          "max": 1044,
+          "rows": 1090
+        },
+        "medium": {
+          "min": 393,
+          "max": 393,
+          "rows": 1105
+        }
+      }
+    }
+  }
+}
